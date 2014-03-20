@@ -114,14 +114,14 @@
 
 				function initialize() {
 					geocoder = new google.maps.Geocoder();
-					var center = new google.maps.LatLng(37.4419, -122.1419);
+					var center = new google.maps.LatLng(51.2167, 4.4000);
 
 					map = new google.maps.Map(document.getElementById('map'), {
-						zoom: 7,
+						zoom: 9,
 						center: center,
 						mapTypeId: google.maps.MapTypeId.ROADMAP
 					});
-					console.log(JSONdata);
+					
 					var j = 0;
 					$.each(JSONdata, function(i, item){
 						geocoder.geocode( { 'address': item.locatie}, function(results, status) {
