@@ -1,22 +1,38 @@
 {
-    "etentjes": {
-        "etentje": {
+    "etentjes": [
+        {
             "datum":1397357776,
-            "type":1,
+            "type":0,
             "dieet":0,
             "prijs":5,
             "locatie":"Linkeroever, Antwerpen",
             "organisator":"Yentl"
         },
-        "etentje": {
+        {
+            "datum":1397357776,
+            "type":0,
+            "dieet":0,
+            "prijs":5,
+            "locatie":"Gloriantlaan, Linkeroever, Antwerpen",
+            "organisator":"Yentl"
+        },
+        {
+            "datum":1397357776,
+            "type":0,
+            "dieet":0,
+            "prijs":5,
+            "locatie":"Van Edenplein, Linkeroever, Antwerpen",
+            "organisator":"Yentl"
+        },
+        {
             "datum":1396357776,
             "type":1,
-            "dieet":0,
+            "dieet":2,
             "prijs":10,
             "locatie":"Oostende",
             "organisator":"Bryan"
         },
-        "etentje": {
+        {
             "datum":1396007776,
             "type":1,
             "dieet":0,
@@ -24,21 +40,21 @@
             "locatie":"Brasschaat",
             "organisator":"Ilse"
         },
-        "etentje": {
+        {
             "datum":1398357776,
-            "type":1,
-            "dieet":0,
+            "type":0,
+            "dieet":1,
             "prijs":7,
             "locatie":"Hasselt",
             "organisator":"Tom"
         },
-        "etentje": {
+        {
             "datum":1396850006,
-            "type":1,
+            "type":2,
             "dieet":0,
             "prijs":0,
             "locatie":"Zurenborg, Antwerpen",
             "organisator":"Jurgen"
         }
-    }
+    ]
 }

@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Chaw - Social dining to meet new people</title>
 	<link rel="stylesheet" href="style.css">
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <body>
 	<div class="header">
@@ -19,74 +20,133 @@
 	<div class="body">
 		<div class="container">
 			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur, iusto, illum ratione voluptatibus nesciunt obcaecati dolorum id eaque? Totam, corporis sed repellat consequuntur unde nostrum nulla sunt labore. Maiores, necessitatibus!
-			<table>
-				<tr>
-					<th>Datum</th>
-					<th>Type</th>
-					<th>Di&euml;et</th>
-					<th>Prijs</th>
-					<th>Locatie</th>
-					<th>Organisator</th>
-				</tr>
-				<tr>
-					<td>23/03/2014</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>27/03/2014</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>01/04/2014</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>06/04/2014</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>10/04/2014</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>17/04/2014</td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
+			<div id="map" class="map"></div>
+			<table id="etentjes"></table>
+			<script type="text/javascript">
+				var JSONdata;
+				$.getJSON('data.json', function(data){
+					JSONdata = data.etentjes;
+				})
+
+				$(function(){
+					console.log('ready');
+					generateTable();
+
+					$('#etentjes').on('click', 'th', function(){
+						sortData($(this).data().id);
+						generateTable();
+					})
+
+					function generateTable(){
+						$('#etentjes').empty();
+						$('#etentjes').append(' \
+							<tr> \
+								<th data-id="datum">Datum</th> \
+								<th data-id="type">Type</th> \
+								<th data-id="dieet">Di&euml;et</th> \
+								<th data-id="prijs">Prijs</th> \
+								<th data-id="locatie">Locatie</th> \
+								<th data-id="organisator">Organisator</th> \
+							</tr> \
+						');
+
+						$.each(JSONdata, function(i, item){
+
+							var date = new Date(item.datum * 1000);
+							var datum = date.getDate() + "/";
+							datum += date.getMonth()+1 + "/";
+							datum += date.getFullYear();
+
+							switch(item.type){
+								case 0:
+									type = "Studenten";
+									break;
+								case 1:
+									type = "Vrijgezellen";
+									break;
+								case 2:
+									type = "Koppels";
+									break;
+							}
+
+							switch(item.dieet){
+								case 0:
+									dieet = "Normaal";
+									break;
+								case 1:
+									dieet = "Vegetarisch";
+									break;
+								case 2:
+									dieet = "Voedselzandloper";
+									break;
+							}
+
+							$('#etentjes').append(' \
+								<tr> \
+									<td data-cell="'+item.datum+'">'+datum+'</td> \
+									<td data-cell="'+type+'">'+type+'</td> \
+									<td data-cell="'+dieet+'">'+dieet+'</td> \
+									<td data-cell="'+item.prijs+'">&euro; '+item.prijs+'</td> \
+									<td data-cell="'+item.locatie+'">'+item.locatie+'</td> \
+									<td data-cell="'+item.organisator+'">'+item.organisator+'</td> \
+								</tr> \
+							');
+						})
+					} //generateTable()
+
+					function sortData(prop, asc) {
+						console.log("sort");
+						asc = (typeof asc !== 'undefined' ? asc : true);
+							JSONdata = JSONdata.sort(function(a, b) {
+									if (asc) return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+									else return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+							});
+							return JSONdata;
+					} //sortData()
+				})
+			</script>
+			<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+			<script src="js/maps.markerclusterer.js"></script>
+			<script type="text/javascript">
+				var geocoder;
+				var map;
+				var markers = [];
+
+				function initialize() {
+					geocoder = new google.maps.Geocoder();
+					var center = new google.maps.LatLng(37.4419, -122.1419);
+
+					map = new google.maps.Map(document.getElementById('map'), {
+						zoom: 7,
+						center: center,
+						mapTypeId: google.maps.MapTypeId.ROADMAP
+					});
+					console.log(JSONdata);
+					var j = 0;
+					$.each(JSONdata, function(i, item){
+						geocoder.geocode( { 'address': item.locatie}, function(results, status) {
+							if (status == google.maps.GeocoderStatus.OK) {
+								map.setCenter(results[0].geometry.location);
+								var marker = new google.maps.Marker({
+										map: map,
+										position: results[0].geometry.location
+								});
+								markers.push(marker);
+							} else {
+								alert('Geocode was not successful for the following reason: ' + status);
+							}
+
+							j++;
+							if (j == $(JSONdata).length) {
+								var markerCluster = new MarkerClusterer(map, markers);		
+							};
+						});
+					})
+				}
+
+				google.maps.event.addDomListener(window, 'load', initialize);
+			</script>
 		</div>
 	</div>
-	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script>
-		$(function(){
-			console.log('ready');
-			$.getJSON('data.json', function(data){
-				console.log(data);
-			})
-		})
-	</script>
 </body>
 </html>
