@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chaw - Social dining to meet new people</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="header">
+		<div class="container">	
+			<a href="/" class="logo"></a>
+			<div class="profilebox">
+				<a href="#">Aanmelden</a>
+				<a href="#">Registreren</a>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="body">
+		<div class="container">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur, iusto, illum ratione voluptatibus nesciunt obcaecati dolorum id eaque? Totam, corporis sed repellat consequuntur unde nostrum nulla sunt labore. Maiores, necessitatibus!
+			<table>
+				<tr>
+					<th>Datum</th>
+					<th>Type</th>
+					<th>Di&euml;et</th>
+					<th>Prijs</th>
+					<th>Locatie</th>
+					<th>Organisator</th>
+				</tr>
+				<tr>
+					<td>23/03/2014</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>27/03/2014</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>01/04/2014</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>06/04/2014</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>10/04/2014</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>17/04/2014</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script>
+		$(function(){
+			console.log('ready');
+			$.getJSON('data.json', function(data){
+				console.log(data);
+			})
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+*{
+	@include prefix("box-sizing","border-box");
+}
+
+.clear{
+	clear:both;
+}
+
+body{
+	overflow-y:scroll;
+}

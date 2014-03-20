@@ -1,0 +1,72 @@
+//MIXINS
+@mixin box-sizing{
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+@mixin gradient($color, $size:10%){
+	background-color: $color;
+	$colordark:darken($color,$size);
+	$colorlight:lighten($color,$size);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($colorlight), to($colordark));
+	background-image: -webkit-linear-gradient(top, $colorlight, $colordark); 
+	background-image: -moz-linear-gradient(top, $colorlight, $colordark);
+	background-image: -ms-linear-gradient(top, $colorlight, $colordark);
+	background-image: -o-linear-gradient(top, $colorlight, $colordark);
+}
+
+
+$default-prefixes: webkit moz;
+
+@mixin prefix($property, $value, $prefixes: $default-prefixes) {
+    @each $prefix in $prefixes {
+        -#{$prefix}-#{$property}: #{$value};
+    }
+    #{$property}: #{$value};
+} 
+
+@mixin square($size){
+  width:$size;
+  height:$size;
+}
+
+@mixin minireset(){
+  margin:0;
+  padding:0;
+}
+
+@mixin nolink($color){
+  text-decoration:none;
+  color:$color;
+  &:hover, &:focus, &:active{
+    color:$color;
+  }
+}
+
+@mixin linkcolor($color, $val:10){
+  a{   
+    color:$color;
+    &:hover, &:focus, &:active{
+      color:darken($color,$val);
+    }
+  }
+}
+
+@mixin opacity($val){
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=$val)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=$val);
+
+  $val: $val/100;
+  /* Netscape */
+  -moz-opacity: $val;
+
+  /* Safari 1.x */
+  -khtml-opacity: $val;
+
+  /* Good browsers */
+  opacity: $val;
+}
