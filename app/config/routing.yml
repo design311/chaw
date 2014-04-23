@@ -1,0 +1,4 @@
+design311_website:
+    resource: "@Design311WebsiteBundle/Resources/config/routing.php"
+    prefix:   /
+
