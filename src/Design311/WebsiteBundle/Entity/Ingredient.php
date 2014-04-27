@@ -31,6 +31,14 @@ class Ingredient
     /**
      * @var string
      *
+     * @ORM\Column(name="unit", type="string", length=10)
+     */
+    private $unit;
+
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -90,5 +98,28 @@ class Ingredient
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set unit
+     *
+     * @param string $unit
+     * @return Ingredient
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return string 
+     */
+    public function getUnit()
+    {
+        return $this->unit;
     }
 }
