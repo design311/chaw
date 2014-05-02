@@ -1,1 +1,27 @@
-Hello {{ name }}!
+{% extends 'Design311WebsiteBundle::layout.html.twig' %}
+
+{% block content %}
+	<div class="home">
+		<div class="map">
+			<div class="overlay"></div>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2490.5611787365915!2d4.516467600000011!3d51.3743633999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c405973b71b04b%3A0x60283a3a1167a05d!2sKruisstraat+39!5e0!3m2!1sen!2sbe!4v1399049062612" frameborder="0" style="border:0"></iframe>
+		</div>
+		<div class="picturewall">
+			<div class="overlay"></div>
+			<div class="inner">
+				<img src="/bundles/design311website/img/food%20(1).jpg" alt="">
+				<img src="/bundles/design311website/img/food%20(2).jpg" alt="">
+				<img src="/bundles/design311website/img/food%20(3).jpg" alt="">
+				<img src="/bundles/design311website/img/food%20(4).jpg" alt="">
+				<img src="/bundles/design311website/img/food%20(5).jpg" alt="">
+				<img src="/bundles/design311website/img/food%20(6).jpg" alt="">
+				<img src="/bundles/design311website/img/food%20(7).jpg" alt="">
+				<img src="/bundles/design311website/img/food%20(8).jpg" alt="">
+				<img src="/bundles/design311website/img/food%20(9).jpg" alt="">
+				<img src="/bundles/design311website/img/food%20(1).png" alt="">
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+{% endblock %}
