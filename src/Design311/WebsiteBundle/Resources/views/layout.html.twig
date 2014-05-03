@@ -3,10 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{% block title %}Chaw{% endblock %}</title>
-	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400|Averia+Libre' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/bundles/design311website/style.css">
+	{% block head %}{% endblock %}
 </head>
-<body>
+<body class="{% block bodyclass %}{% endblock %}">
 	<div class="header">
 		<div class="topbar">
 			<div class="container">
@@ -26,5 +27,9 @@
 		</div>
 	</div>
 	{% block content %}{% endblock %}
+	
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	{% block footer %}{% endblock %}
 </body>
 </html>

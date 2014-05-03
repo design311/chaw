@@ -1,27 +1,143 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
+{% block bodyclass %}home{% endblock %}
+
+{% block head %}
+		<link rel="stylesheet" href="/bundles/design311website/js/flexslider/flexslider.css">
+{% endblock %}
+
 {% block content %}
-	<div class="home">
-		<div class="map">
-			<div class="overlay"></div>
-			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2490.5611787365915!2d4.516467600000011!3d51.3743633999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c405973b71b04b%3A0x60283a3a1167a05d!2sKruisstraat+39!5e0!3m2!1sen!2sbe!4v1399049062612" frameborder="0" style="border:0"></iframe>
+	<div class="picturewall section">
+		<div class="overlay"></div>
+		<div class="inner">
+			{% for i in 1..23 %}
+				<img src="/bundles/design311website/img/pictures/food%20({{i}}).jpg" alt="">
+			{% endfor %}
+			<img src="/bundles/design311website/img/pictures/food%20(1).png" alt="">
+			<div class="clear"></div>
 		</div>
-		<div class="picturewall">
-			<div class="overlay"></div>
+	</div>
+
+	<div id="map" class="map section"></div>
+
+	<div class="recepten section">
+		<div class="container">
 			<div class="inner">
-				<img src="/bundles/design311website/img/food%20(1).jpg" alt="">
-				<img src="/bundles/design311website/img/food%20(2).jpg" alt="">
-				<img src="/bundles/design311website/img/food%20(3).jpg" alt="">
-				<img src="/bundles/design311website/img/food%20(4).jpg" alt="">
-				<img src="/bundles/design311website/img/food%20(5).jpg" alt="">
-				<img src="/bundles/design311website/img/food%20(6).jpg" alt="">
-				<img src="/bundles/design311website/img/food%20(7).jpg" alt="">
-				<img src="/bundles/design311website/img/food%20(8).jpg" alt="">
-				<img src="/bundles/design311website/img/food%20(9).jpg" alt="">
-				<img src="/bundles/design311website/img/food%20(1).png" alt="">
+				<div class="onehalf">
+					<h2>Pittige Kipfilet a la Pizzaiola</h2>
+					<ul class="ingredients">
+						<li>400 gram kipfilet</li>
+						<li>Peper, zout</li>
+						<li>Bloem</li>
+						<li>2 eetlepels olijfolie</li>
+						<li>1 blikje tomatenblokjes</li>
+						<li>1 kleine ui</li>
+						<li>2 teentjes knoflook</li>
+						<li>½ rode Spaanse peper</li>
+						<li>2 theelepels oregano</li>
+						<li>100 gram dunne plakjes </li>
+						<li>pittig belegen kaas</li>
+						<li>1 glas droge witte wijn</li>
+					</ul>
+					<p>Ui en knoflook pellen en snipperen. Spaanse peper schoonmaken, pitjes verwijderen en in kleine stukjes snijden. 1 eetlepel olijfolie in een kleine pan verwarmen en hierin de peperstukjes, ui en knoflook even aanzetten. Afblussen met de wijn en laten inkoken tot er nog plm. 1 eetlepel over is. De tomatenblokjes toevoegen en aan de kook brengen. Het geheel laten indikken tot er bijna geen vocht meer over is. Op smaak maken met peper, zout en oregano.</p>
+					<p>Kipfilet in dunne plakken snijden. Bestrooien met wat peper, zout en bloem. Rest olie verhitten en kipfilet snel aan beide kanten lichtbruin bakken.</p>
+					<p>Kip naast elkaar in ovenschaal leggen. Tomatensaus erover verdelen. Wat oregano erover strooien en een lekkere plak kaas erop leggen. Ongeveer 20 minuten in het midden van de oven op 200 graden, zodat de kaas is gesmolten en lichtbruin is.</p>
+					<p class="likes">Nog niemand heeft dit geproefd, wees de eerste!</p>
+				</div>
+				<div class="onehalf last">
+					<h2>Nacho cheese ovenschotel</h2>
+					<ul class="ingredients">
+						<li>1 zak nacho cheese tortilla chips</li>
+						<li>300 gr. rundergehakt</li>
+						<li>1 zakje taco kruiden</li>
+						<li>1 (punt) paprika</li>
+						<li>1 ui</li>
+						<li>2 teentjes knoflook</li>
+						<li>cheddar cheese</li>
+						<li>geraspte kaas</li>
+					</ul>
+					<p>Snij de groenten in kleine stukjes. Bak het gehakt gaar, voeg de groentes toe, en het zakje taco kruiden. Doe de nachochips onderin de ovenschaal, bedek met plakjes cheddar, doe daarover heen het gehakt mengsel en daar overheen de geraspte kaas. Zet 10 min. in een voorverwarmde oven op 220 graden. het gerecht is klaar als de kaas gesmolten is op de bovenkant.</p>
+					<p class="likes">5 mensen vinden dit lekker</p>
+				</div>
 				<div class="clear"></div>
 			</div>
 		</div>
-		<div class="clear"></div>
 	</div>
+
+	<div class="restaurants section">
+		<div class="flexslider">
+			<ul class="slides">
+				{% for i in 1..4 %}
+					<li>
+						<img src="/bundles/design311website/img/restaurants/restaurant%20({{i}}).jpg" />
+						<div class="caption">
+							<h2>La Boheme</h2>
+							<p>The La Boheme Restaurant &amp; Cocktail Lounge is located in the former Ball Room of the Main Manor House. With its painstakingly restored original parquet floors and ceiling ornaments, paintings and modern Scandinavian furniture the restaurant is a seamless blend between traditional old and modern minimalism</p>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block footer %}
+	<script src="/bundles/design311website/js/flexslider/jquery.flexslider-min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
+	<script>
+		$(function(){
+			var coord = new google.maps.LatLng(51.21,4.40);
+
+			var mapStyle = [
+				{
+					"stylers": [
+						{ "hue": "#ff9100" }
+					]
+				},{
+					"featureType": "poi",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "road",
+					"elementType": "labels.icon",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "transit",
+					"elementType": "labels",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "water",
+					"stylers": [
+						{ "visibility": "simplified" }
+					]
+				},{
+					"featureType": "administrative.neighborhood",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				}
+			]
+
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 9,
+				streetViewControl: false,
+				mapTypeControl: false,
+				scrollwheel: false,
+				styles: mapStyle,
+				center: coord
+			});
+		})
+
+		$(window).load(function() {
+			$('.flexslider').flexslider({
+				directionNav: false
+			});
+		});
+	</script>
 {% endblock %}
