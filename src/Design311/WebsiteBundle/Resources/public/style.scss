@@ -1,9 +1,10 @@
 @import "scss/normalize";
-@import "scss/default";
 @import "scss/mixins";
+@import "scss/default";
 
 $black:#333;
 $orange:#ff5c23;
+
 
 html, body{
 	height:100%;
@@ -43,6 +44,11 @@ h5{
 
 h6{
 	font-size:1.1em;
+}
+
+.averia{
+	font-family:'Averia Libre', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+	font-weight:bold;
 }
 
 .clear{
@@ -107,8 +113,7 @@ h6{
 	}
 	.logo{
 		font-size:1.6em;
-		font-family:'Averia Libre', Arial, 'Helvetica Neue', Helvetica, sans-serif;
-		font-weight:bold;
+		@extend .averia;
 		a{
 			color:$orange;
 		}
@@ -127,17 +132,43 @@ h6{
 .home{
 	.section{
 		height:100%;
+		position:relative;
 	}
-}
 
-.picturewall{
-	clear:both;
-	position:relative;
-	overflow:hidden;
-	padding-top:93px;
-	.inner{
-		height:100%;
-		width:200%;
+	a{
+		color:$black;
+		text-decoration:none;
+		border-bottom:1px solid $black;
+		&:hover, &:active, &:focus{
+			color:lighten($black,30);
+			border-bottom-color:lighten($black,30);
+		}
+	}
+
+	.signup{
+		font-size:1.2em;
+		line-height:40px;
+	}
+
+	.register{
+		background:$orange;
+		border-radius:5px;
+		text-decoration:none;
+		padding:0 50px;
+		text-shadow:none;
+		display:inline-block;
+		border-bottom-color:$black $i;
+		margin-right:3px;
+		color:#fff;
+		&:hover, &:active, &:focus{
+			color:#fff;
+			background:darken($orange,5);
+		}
+	}
+	.login{
+		font-size:80%;
+		font-weight:bold;
+		line-height:40px;
 	}
 	.overlay{
 		position:absolute;
@@ -145,13 +176,79 @@ h6{
 		left:0;
 		width:100%;
 		height:100%;
-		background:rgba($orange,0.5);
+		display:table;
+		z-index:50;
+		>div{
+			display:table-cell;
+			vertical-align:middle;
+			text-align:center;
+			font-weight:300;
+		}
 	}
+	h1{
+		@extend .averia;
+		margin:0;
+	}
+	.intro{
+		font-size:2.5em;
+		line-height:1.2em;
+	}
+}
+
+.picturewall{
+	clear:both;
+	overflow:hidden;
+	.inner{
+		height:100%;
+		width:200%;
+	}
+	.overlay{
+		background:rgba($black,0.45);
+		>div{
+			color:#fff;
+			text-shadow:0 0 10px #444;
+		}
+	}
+	h1{
+		color:$orange;
+		font-size:6em;
+	}
+
+	a{
+		color:#fff;
+		text-decoration:none;
+		border-bottom:1px solid #fff;
+		&:hover, &:active, &:focus{
+			color:#ddd;
+			border-bottom-color:#ddd;
+		}
+	}
+
 	img{
 		float:left;
-		height:50%;
+		height:33.4%;
 		width:auto;
 	}
+}
+
+.map{
+	.description{
+		text-shadow:0 0 10px #fff;
+		position:absolute;
+		top:50%;
+		left:50%;
+		width:50%;
+		height:0; //allow grabbing map between text
+		margin-left:-25%;
+		margin-top:-200px;
+		z-index:50;
+		text-align:center;
+	}
+
+}
+
+#map{
+	height:100%;
 }
 
 .recepten{
@@ -165,13 +262,51 @@ h6{
 		display:table-cell;
 		vertical-align:middle;
 	}
-	h2{
-		color:$orange;
-		font-family:'Averia Libre', Arial, 'Helvetica Neue', Helvetica, sans-serif;
-		font-weight:bold;
+
+	.recept{
+		height:400px;
+		position:relative;
+		overflow:hidden;
+		img{
+			position:absolute;	
+			top:0;
+			left:0;
+			min-height:400px;
+			height:auto;
+			width:100%;
+		}
+		.hover{
+			position:absolute;	
+			top:-100%;
+			left:0;
+			z-index:100;
+			background:$orange;
+			background:rgba($orange,0.9);
+			height:100%;
+			width:100%;
+			color:#fff;
+			-webkit-transition:top 1s ease;
+			transition:top 1s ease;
+			h2{
+				position:absolute;
+				bottom:0;
+				left:0;
+				padding:25px;
+				margin:0;
+			}
+		}
+		&:hover{
+			.hover{
+				top:0;
+			}
+		}
 	}
 
-	.ingredients{
+	h2{
+		@extend .averia;
+	}
+
+	/* .ingredients{
 		@include minireset;
 		color:lighten($black, 30);
 		-webkit-column-count:2;
@@ -182,7 +317,7 @@ h6{
 				content:"- "
 			}
 		}
-	}
+	} */
 
 	.likes{
 		font-weight:400;

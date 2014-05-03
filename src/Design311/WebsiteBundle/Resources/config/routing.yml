@@ -1,3 +1,7 @@
 design311website_homepage:
     path:      /
     defaults:  { _controller: Design311WebsiteBundle:Default:index }
+
+design311website_testpage:
+    path:      /user/test/
+    defaults:  { _controller: Design311WebsiteBundle:Default:index }

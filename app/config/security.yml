@@ -1,38 +1,44 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        Design311\WebsiteBundle\Entity\User:
+            algorithm: bcrypt
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN: [ROLE_USER]
 
     providers:
+        chain_provider:
+            chain:
+                providers: [in_memory, user_db]
         in_memory:
             memory:
                 users:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        user_db:
+            entity: { class: Design311\WebsiteBundle\Entity\User, property: username }
 
     firewalls:
-        dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        login:
-            pattern:  ^/demo/secured/login$
-            security: false
-
-        secured_area:
-            pattern:    ^/demo/secured/
+        main:
+            pattern: /.*
+            provider: user_db
             form_login:
-                check_path: _security_check
-                login_path: _demo_login
+                login_path: /login
+                check_path: /login_check
+                remember_me: true
             logout:
-                path:   _demo_logout
-                target: _demo
-            #anonymous: ~
-            #http_basic:
-            #    realm: "Secured Demo Area"
+                path: /logout
+                target: /
+            remember_me:
+                key: V!UtONAWvl2gL-?ORKTm3gy32
+                lifetime: 2592000
+                path: /.*
+                domain: ~
+            security: true
+            anonymous: true
 
     access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /user, roles: ROLE_USER }
+        - { path: /admin, roles: ROLE_ADMIN }
+        - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }

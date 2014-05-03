@@ -3,60 +3,63 @@
 {% block bodyclass %}home{% endblock %}
 
 {% block head %}
-		<link rel="stylesheet" href="/bundles/design311website/js/flexslider/flexslider.css">
+		<link rel="stylesheet" href="{{ asset('bundles/design311website/js/flexslider/flexslider.css') }}">
 {% endblock %}
 
 {% block content %}
 	<div class="picturewall section">
-		<div class="overlay"></div>
+		<div class="overlay">
+			<div>
+				<div class="container">
+					<h1>Chaw</h1>
+					<p class="intro">Laat je inspireren door de smakelijke foto's van andere foodies,<br>meld je aan om zelf ook foto's te delen.</p>
+					<p class="signup"><a href="" class="register">Registreren</a> of <a href="">explore foto's</a></p>
+					<p class="login">Al lid? <a href="">Meld je aan</a></p>
+				</div>
+			</div>
+		</div>
 		<div class="inner">
 			{% for i in 1..23 %}
-				<img src="/bundles/design311website/img/pictures/food%20({{i}}).jpg" alt="">
+				<img src="{{ asset('bundles/design311website/img/pictures/food%20(' ~ i ~ ').jpg') }}" alt="">
 			{% endfor %}
-			<img src="/bundles/design311website/img/pictures/food%20(1).png" alt="">
+			<img src="{{ asset('bundles/design311website/img/pictures/food%20(1).png') }}" alt="">
 			<div class="clear"></div>
 		</div>
 	</div>
 
-	<div id="map" class="map section"></div>
+	<div class="map section">
+		<div class="description">
+			<h1>Ga eten bij mensen uit je buurt</h1>
+			<p class="intro">Bekijk alle huidige etentjes op de kaart,<br>meld je aan om een etentje te organiseren<br>of om zelf deel de nemen.</p>
+			<p class="signup"><a href="" class="register">Registreren</a> of <a href="">bekijk alle etentjes</a></p>
+			<p class="login">Al lid? <a href="">Meld je aan</a></p>
+		</div>
+		<div id="map"></div>
+	</div>
 
 	<div class="recepten section">
 		<div class="container">
 			<div class="inner">
+				<h1>...of maak zelf lekker eten</h1>
+				<p class="intro">Zoek recepten op basis van je beschikbare ingredi&euml;nten, meld je aan om recepten toe te voegen aan je winkellijstje.</p>
+				<p class="signup"><a href="" class="register">Registreren</a> of <a href="">bekijk alle recepten</a></p>
+				<p class="login">Al lid? <a href="">Meld je aan</a></p>
 				<div class="onehalf">
-					<h2>Pittige Kipfilet a la Pizzaiola</h2>
-					<ul class="ingredients">
-						<li>400 gram kipfilet</li>
-						<li>Peper, zout</li>
-						<li>Bloem</li>
-						<li>2 eetlepels olijfolie</li>
-						<li>1 blikje tomatenblokjes</li>
-						<li>1 kleine ui</li>
-						<li>2 teentjes knoflook</li>
-						<li>½ rode Spaanse peper</li>
-						<li>2 theelepels oregano</li>
-						<li>100 gram dunne plakjes </li>
-						<li>pittig belegen kaas</li>
-						<li>1 glas droge witte wijn</li>
-					</ul>
-					<p>Ui en knoflook pellen en snipperen. Spaanse peper schoonmaken, pitjes verwijderen en in kleine stukjes snijden. 1 eetlepel olijfolie in een kleine pan verwarmen en hierin de peperstukjes, ui en knoflook even aanzetten. Afblussen met de wijn en laten inkoken tot er nog plm. 1 eetlepel over is. De tomatenblokjes toevoegen en aan de kook brengen. Het geheel laten indikken tot er bijna geen vocht meer over is. Op smaak maken met peper, zout en oregano.</p>
-					<p>Kipfilet in dunne plakken snijden. Bestrooien met wat peper, zout en bloem. Rest olie verhitten en kipfilet snel aan beide kanten lichtbruin bakken.</p>
-					<p>Kip naast elkaar in ovenschaal leggen. Tomatensaus erover verdelen. Wat oregano erover strooien en een lekkere plak kaas erop leggen. Ongeveer 20 minuten in het midden van de oven op 200 graden, zodat de kaas is gesmolten en lichtbruin is.</p>
+					<div class="recept">
+						<img src="{{ asset('bundles/design311website/img/pictures/food%20(1).jpg') }}" alt="">
+						<div class="hover">
+							<h2>Pittige Kipfilet a la Pizzaiola</h2>
+						</div>
+					</div>
 					<p class="likes">Nog niemand heeft dit geproefd, wees de eerste!</p>
 				</div>
 				<div class="onehalf last">
-					<h2>Nacho cheese ovenschotel</h2>
-					<ul class="ingredients">
-						<li>1 zak nacho cheese tortilla chips</li>
-						<li>300 gr. rundergehakt</li>
-						<li>1 zakje taco kruiden</li>
-						<li>1 (punt) paprika</li>
-						<li>1 ui</li>
-						<li>2 teentjes knoflook</li>
-						<li>cheddar cheese</li>
-						<li>geraspte kaas</li>
-					</ul>
-					<p>Snij de groenten in kleine stukjes. Bak het gehakt gaar, voeg de groentes toe, en het zakje taco kruiden. Doe de nachochips onderin de ovenschaal, bedek met plakjes cheddar, doe daarover heen het gehakt mengsel en daar overheen de geraspte kaas. Zet 10 min. in een voorverwarmde oven op 220 graden. het gerecht is klaar als de kaas gesmolten is op de bovenkant.</p>
+					<div class="recept">
+						<img src="{{ asset('bundles/design311website/img/pictures/food%20(2).jpg') }}" alt="">
+						<div class="hover">
+							<h2>Nacho cheese ovenschotel</h2>
+						</div>
+					</div>
 					<p class="likes">5 mensen vinden dit lekker</p>
 				</div>
 				<div class="clear"></div>
@@ -69,7 +72,7 @@
 			<ul class="slides">
 				{% for i in 1..4 %}
 					<li>
-						<img src="/bundles/design311website/img/restaurants/restaurant%20({{i}}).jpg" />
+						<img src="{{ asset('bundles/design311website/img/restaurants/restaurant%20(' ~ i ~ ').jpg') }}" />
 						<div class="caption">
 							<h2>La Boheme</h2>
 							<p>The La Boheme Restaurant &amp; Cocktail Lounge is located in the former Ball Room of the Main Manor House. With its painstakingly restored original parquet floors and ceiling ornaments, paintings and modern Scandinavian furniture the restaurant is a seamless blend between traditional old and modern minimalism</p>
@@ -83,7 +86,7 @@
 {% endblock %}
 
 {% block footer %}
-	<script src="/bundles/design311website/js/flexslider/jquery.flexslider-min.js"></script>
+	<script src="{{ asset('bundles/design311website/js/flexslider/jquery.flexslider-min.js') }}"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
 	<script>
 		$(function(){
@@ -92,7 +95,8 @@
 			var mapStyle = [
 				{
 					"stylers": [
-						{ "hue": "#ff9100" }
+						{ "hue": "#ff9100" },
+						{ "lightness": 70 }
 					]
 				},{
 					"featureType": "poi",
