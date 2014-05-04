@@ -8,7 +8,8 @@
 	{% block head %}{% endblock %}
 </head>
 <body class="{% block bodyclass %}{% endblock %}">
-	<!-- <div class="header">
+	{% if not (app.request.attributes.get('_route') == 'design311website_homepage' and not app.user) %}
+	<div class="header">
 		<div class="topbar">
 			<div class="container">
 				<div class="login"><a href="#">Login</a><a href="#">Registreren</a></div>
@@ -25,7 +26,8 @@
 			</ul>
 			<div class="clear"></div>
 		</div>
-	</div> -->
+	</div>
+	{% endif %}
 	{% block content %}{% endblock %}
 	
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

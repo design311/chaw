@@ -62,13 +62,13 @@ class UserController extends GeocodeController
 
             $latLng = $this->geocode($user->getAddress());
             if (is_object($latLng)) {
-                $this->getAddress()->setLat($latLng->lat);
-                $this->getAddress()->setLng($latLng->lng);
+                $user->getAddress()->setLat($latLng->lat);
+                $user->getAddress()->setLng($latLng->lng);
             }
             else{
                 //coords could not be found
-                $this->getAddress()->setLat(0);
-                $this->getAddress()->setLng(0);
+                $user->getAddress()->setLat(0);
+                $user->getAddress()->setLng(0);
             }
 
 	        //set default display name

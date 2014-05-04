@@ -198,4 +198,50 @@ class Address
     public function __toString(){
         return $this->getStreet().' '.$this->getNumber().', '.$this->getZipcode().' '.$this->getCity().', '.$this->getCountry();
     }
+
+    /**
+     * Set lat
+     *
+     * @param float $lat
+     * @return Address
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    /**
+     * Get lat
+     *
+     * @return float 
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * Set lng
+     *
+     * @param float $lng
+     * @return Address
+     */
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    /**
+     * Get lng
+     *
+     * @return float 
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
 }
