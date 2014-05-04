@@ -18,7 +18,7 @@ class UserType extends AbstractType
            'type'        => 'password',
         ));
         $builder->add('address', new AddressType());
-        $builder->add('Register', 'submit');
+        $builder->add('Registreer', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

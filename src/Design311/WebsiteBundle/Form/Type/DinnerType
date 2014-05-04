@@ -1,0 +1,21 @@
+<?php 
+
+namespace Design311\WebsiteBundle\Form\Type;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+class DinnerType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('datum', 'date');
+        $builder->add('tijdstip', 'time');
+        $builder->add('menu', 'textarea');
+    }
+
+    public function getName()
+    {
+        return 'dinner';
+    }
+}
