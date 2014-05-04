@@ -19,3 +19,7 @@ design311website_register:
 design311website_register_create:
     path:     /register/create
     defaults: { _controller: Design311WebsiteBundle:User:create }
+
+design311website_geocode:
+    path:     /geocode/
+    defaults: { _controller: Design311WebsiteBundle:User:geocode }

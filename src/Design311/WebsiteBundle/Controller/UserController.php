@@ -10,7 +10,7 @@ use Design311\WebsiteBundle\Form\Type\UserType;
 use Design311\WebsiteBundle\Entity\User;
 
 
-class UserController extends Controller
+class UserController extends GeocodeController
 {
     public function loginAction(Request $request)
     {
@@ -59,6 +59,17 @@ class UserController extends Controller
 
 	    if ($form->isValid()) {
 	        $user = $form->getData();
+
+            $latLng = $this->geocode($user->getAddress());
+            if (is_object($latLng)) {
+                $this->getAddress()->setLat($latLng->lat);
+                $this->getAddress()->setLng($latLng->lng);
+            }
+            else{
+                //coords could not be found
+                $this->getAddress()->setLat(0);
+                $this->getAddress()->setLng(0);
+            }
 
 	        //set default display name
 	        $user->setDisplayName($user->getUsername());

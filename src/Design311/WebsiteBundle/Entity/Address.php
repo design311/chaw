@@ -57,6 +57,20 @@ class Address
     private $country;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="lat", type="float")
+     */
+    private $lat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lng", type="float")
+     */
+    private $lng;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -179,5 +193,9 @@ class Address
     public function getCountry()
     {
         return $this->country;
+    }
+
+    public function __toString(){
+        return $this->getStreet().' '.$this->getNumber().', '.$this->getZipcode().' '.$this->getCity().', '.$this->getCountry();
     }
 }
