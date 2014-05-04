@@ -20,68 +20,41 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255)
+     * @ORM\Column(name="username", type="string", unique=true, length=255)
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
-    private $password;
- 
-    /**
-     * @ORM\Column(name="salt", type="string", length=255)
-     */
-    private $salt;
+    protected $password;
 
     /**
      * @var string
      *
      * @ORM\Column(name="display_name", type="string", length=255)
      */
-    private $displayName;
+    protected $displayName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="street", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255)
      */
-    private $street;
+    protected $email;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="number", type="string", length=10)
+     * @ORM\ManyToOne(targetEntity="Address", cascade={"persist"})
+     * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      */
-    private $number;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="zipcode", type="string", length=10)
-     */
-    private $zipcode;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255)
-     */
-    private $city;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=255)
-     */
-    private $country;
+    protected $address;
 
     /**
      * @inheritDoc
@@ -299,15 +272,53 @@ class User implements UserInterface
     }
 
     /**
-     * Set salt
+     * Set email
      *
-     * @param string $salt
+     * @param string $email
      * @return User
      */
-    public function setSalt($salt)
+    public function setEmail($email)
     {
-        $this->salt = $salt;
+        $this->email = $email;
 
         return $this;
     }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set address
+     *
+     * @param \Design311\WebsiteBundle\Entity\Address $address
+     * @return User
+     */
+    public function setAddress(\Design311\WebsiteBundle\Entity\Address $address = null)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return \Design311\WebsiteBundle\Entity\Address 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    public function __sleep(){
+        return array('id', 'username', 'displayName', 'password', 'email');
+    }
+
 }

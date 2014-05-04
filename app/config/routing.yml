@@ -1,13 +1,3 @@
 design311_website:
     resource: "@Design311WebsiteBundle/Resources/config/routing.yml"
     prefix:   /
-
-login:
-    pattern: /login
-    defaults: { _controller: Design311WebsiteBundle:User:login }
-
-login_check:
-    pattern: /login_check
-
-logout:
-    pattern: /logout

@@ -34,42 +34,7 @@ class Dinner
      * @ORM\Column(name="menu", type="text")
      */
     private $menu;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="street", type="string", length=255)
-     */
-    private $street;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="number", type="string", length=10)
-     */
-    private $number;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="zipcode", type="string", length=10)
-     */
-    private $zipcode;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255)
-     */
-    private $city;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=255)
-     */
-    private $country;
-
+    
     /**
      * @var integer
      *
@@ -83,6 +48,12 @@ class Dinner
      * @ORM\Column(name="price", type="smallint")
      */
     private $price;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Address")
+     * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
+     */
+    private $address;
 
 
     /**
@@ -300,5 +271,28 @@ class Dinner
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set address
+     *
+     * @param \Design311\WebsiteBundle\Entity\Address $address
+     * @return Dinner
+     */
+    public function setAddress(\Design311\WebsiteBundle\Entity\Address $address = null)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return \Design311\WebsiteBundle\Entity\Address 
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 }

@@ -6,7 +6,7 @@
 	<div>{{ error.message }}</div>
 	{% endif %}
 	
-	<form action="{{ path('login_check') }}" method="post">
+	<form action="{{ path('design311website_login_check') }}" method="post">
 		<label for="username">User:</label>
 		<input id="username" type="text" name="_username" value="{{ last_username }}" />
 		<label for="password">Password:</label>

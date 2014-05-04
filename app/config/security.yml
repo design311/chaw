@@ -23,11 +23,11 @@ security:
             pattern: /.*
             provider: user_db
             form_login:
-                login_path: /login
+                login_path: /login/
                 check_path: /login_check
                 remember_me: true
             logout:
-                path: /logout
+                path: /logout/
                 target: /
             remember_me:
                 key: V!UtONAWvl2gL-?ORKTm3gy32

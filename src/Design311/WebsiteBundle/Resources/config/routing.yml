@@ -2,6 +2,20 @@ design311website_homepage:
     path:      /
     defaults:  { _controller: Design311WebsiteBundle:Default:index }
 
-design311website_testpage:
-    path:      /user/test/
-    defaults:  { _controller: Design311WebsiteBundle:Default:index }
+design311website_login:
+    pattern: /login/
+    defaults: { _controller: Design311WebsiteBundle:User:login }
+
+design311website_login_check:
+    pattern: /login_check
+
+design311website_logout:
+    pattern: /logout/
+
+design311website_register:
+    path:      /registreren/
+    defaults:  { _controller: Design311WebsiteBundle:User:register }
+
+design311website_register_create:
+    path:     /register/create
+    defaults: { _controller: Design311WebsiteBundle:User:create }
