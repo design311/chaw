@@ -13,12 +13,12 @@ class DinnerController extends GeocodeController
 {
     public function indexAction(Request $request)
     {
-        //TODO only get dinners in the future
+        //TODO only get dinners in the future & not fully booked
         $dinners = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findAll();
 
-        foreach ($dinners as $key => $dinner) {
-            $locations[$key][0] = $dinner->getAddress()->getLat();
-            $locations[$key][1] = $dinner->getAddress()->getLng();
+        foreach ($dinners as $dinner) {
+            $locations[$dinner->getId()][0] = $dinner->getAddress()->getLat();
+            $locations[$dinner->getId()][1] = $dinner->getAddress()->getLng();
         }
 
         return $this->render(

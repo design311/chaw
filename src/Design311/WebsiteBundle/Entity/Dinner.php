@@ -22,6 +22,13 @@ class Dinner
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    protected $title;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
@@ -294,5 +301,28 @@ class Dinner
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Dinner
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }
