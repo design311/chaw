@@ -17,9 +17,17 @@ design311website_register:
     defaults:  { _controller: Design311WebsiteBundle:User:register }
 
 design311website_register_create:
-    path:     /register/create
+    path:     /register/create/
     defaults: { _controller: Design311WebsiteBundle:User:create }
 
-design311website_geocode:
-    path:     /geocode/
-    defaults: { _controller: Design311WebsiteBundle:User:geocode }
+design311website_dinners:
+    path:     /dinners/
+    defaults: { _controller: Design311WebsiteBundle:Dinner:index }
+
+design311website_dinners_add:
+    path:     /dinners/add/
+    defaults: { _controller: Design311WebsiteBundle:Dinner:add }
+
+design311website_dinners_add_create:
+    path:     /dinners/add/create/
+    defaults: { _controller: Design311WebsiteBundle:Dinner:create }

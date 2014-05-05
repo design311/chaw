@@ -50,7 +50,7 @@ class Dinner
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Address")
+     * @ORM\ManyToOne(targetEntity="Address",cascade={"persist"})
      * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      */
     private $address;
