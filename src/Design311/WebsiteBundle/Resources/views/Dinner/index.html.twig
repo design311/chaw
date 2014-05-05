@@ -7,21 +7,23 @@
 <div class="content">
 	<div class="container">
 		<table id="dinners">
-			<tr>
-				<th>Datum</th>
-				<th>Titel</th>
-				<th>Plaats</th>
-				<th>Prijs</th>
-			</tr>
+			<thead>
+				<tr>
+					<th>Datum</th>
+					<th>Titel</th>
+					<th>Plaats</th>
+					<th>Prijs</th>
+				</tr>
+			</thead>
 			<tbody>
-			{% for dinner in dinners %}
-			<tr>
-				<td>{{dinner.date|date('d-m-Y')}}</td>
-				<td>{{dinner.title}}</td>
-				<td>{{dinner.address.city}}</td>
-				<td>{{dinner.price}}</td>
-			</tr>
-			{% endfor %}
+				{% for dinner in dinners %}
+				<tr>
+					<td>{{dinner.date|date('d-m-Y')}}</td>
+					<td>{{dinner.title}}</td>
+					<td>{{dinner.address.city}}</td>
+					<td>{{dinner.price}}</td>
+				</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
@@ -39,11 +41,7 @@
 
 		google.maps.event.addDomListener(window, 'load', function(){
 
-			var center = new google.maps.LatLng(51.2167, 4.4000);
-
 			map = new google.maps.Map(document.getElementById('map'), {
-				zoom: 9,
-				center: center,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			});
 			
@@ -66,16 +64,39 @@
 			map.setCenter(latlngbounds.getCenter());
 			map.fitBounds(latlngbounds);
 
-			/*google.maps.event.addListener(map, 'bounds_changed', function() {
+			google.maps.event.addListener(map, 'bounds_changed', function() {
 				var bounds = map.getBounds();
+				var visibleDinners = [];
 				for (var i=0; i<markers.length; i++){
 					if( bounds.contains(markers[i].getPosition()) ){
-						var tbody = $('#dinners tbody');
-						tbody.empty();
-						markers[i].dinnerId
+						visibleDinners.push(markers[i].dinnerId);
 					}
 				}
-			});*/
+
+				var tbody = $('#dinners tbody');
+				tbody.empty();
+
+				//TODO error message if no markers
+				if (visibleDinners.length !== 0) {
+					var dinners = {{dinners|serialize|raw}};
+					$.each(dinners, function(i, dinner){
+						if ($.inArray('' + dinner.id, visibleDinners) > -1) {
+							var formattedDate = new Date(dinner.date);
+							var d = formattedDate.getDate();
+							var m =  formattedDate.getMonth();
+							m += 1;  // JavaScript months are 0-11
+							var y = formattedDate.getFullYear();
+							tbody.append(' \
+								<tr> \
+									<td>'+d+'-'+m+'-'+y+'</td> \
+									<td>'+dinner.title+'</td> \
+									<td>'+dinner.address.city+'</td> \
+									<td>'+dinner.price+'</td> \
+								</tr>')
+						};
+					})
+				};
+			});
 		});
 
 
