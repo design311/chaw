@@ -62,6 +62,12 @@ class Dinner
      */
     private $address;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="DinnerMeta", inversedBy="dinners")
+     * @ORM\JoinTable(name="dinner_has_meta")
+     */
+    private $meta;
+
 
     /**
      * Get id
@@ -71,6 +77,36 @@ class Dinner
     public function getId()
     {
         return $this->id;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->meta = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Dinner
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -117,121 +153,6 @@ class Dinner
     public function getMenu()
     {
         return $this->menu;
-    }
-
-    /**
-     * Set street
-     *
-     * @param string $street
-     * @return Dinner
-     */
-    public function setStreet($street)
-    {
-        $this->street = $street;
-
-        return $this;
-    }
-
-    /**
-     * Get street
-     *
-     * @return string 
-     */
-    public function getStreet()
-    {
-        return $this->street;
-    }
-
-    /**
-     * Set number
-     *
-     * @param string $number
-     * @return Dinner
-     */
-    public function setNumber($number)
-    {
-        $this->number = $number;
-
-        return $this;
-    }
-
-    /**
-     * Get number
-     *
-     * @return string 
-     */
-    public function getNumber()
-    {
-        return $this->number;
-    }
-
-    /**
-     * Set zipcode
-     *
-     * @param string $zipcode
-     * @return Dinner
-     */
-    public function setZipcode($zipcode)
-    {
-        $this->zipcode = $zipcode;
-
-        return $this;
-    }
-
-    /**
-     * Get zipcode
-     *
-     * @return string 
-     */
-    public function getZipcode()
-    {
-        return $this->zipcode;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     * @return Dinner
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string 
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set country
-     *
-     * @param string $country
-     * @return Dinner
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * Get country
-     *
-     * @return string 
-     */
-    public function getCountry()
-    {
-        return $this->country;
     }
 
     /**
@@ -304,25 +225,35 @@ class Dinner
     }
 
     /**
-     * Set title
+     * Add meta
      *
-     * @param string $title
+     * @param \Design311\WebsiteBundle\Entity\DinnerMeta $meta
      * @return Dinner
      */
-    public function setTitle($title)
+    public function addMetum(\Design311\WebsiteBundle\Entity\DinnerMeta $meta)
     {
-        $this->title = $title;
+        $this->meta[] = $meta;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Remove meta
      *
-     * @return string 
+     * @param \Design311\WebsiteBundle\Entity\DinnerMeta $meta
      */
-    public function getTitle()
+    public function removeMetum(\Design311\WebsiteBundle\Entity\DinnerMeta $meta)
     {
-        return $this->title;
+        $this->meta->removeElement($meta);
+    }
+
+    /**
+     * Get meta
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMeta()
+    {
+        return $this->meta;
     }
 }

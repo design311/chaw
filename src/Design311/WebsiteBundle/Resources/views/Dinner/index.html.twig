@@ -6,6 +6,11 @@
 
 <div class="content">
 	<div class="container">
+		<div class="filters">
+			<p><label for="locatie">Zoeken op locatie</label></p>
+			<p><input type="text" id="locatie"></p>
+			<p>TIP: Versleep de map om resultaten te filteren</p>
+		</div>
 		<table id="dinners">
 			<thead>
 				<tr>
@@ -34,12 +39,12 @@
     <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script src="{{ asset('bundles/design311website/js/maps.markerclusterer.js') }}"></script>
 	<script type="text/javascript">
-		var geocoder;
-		var map;
-		var markers = [];
-		var locations = {{ locations|json_encode|raw }};
 
-		google.maps.event.addDomListener(window, 'load', function(){
+		$(function(){
+			var map;
+			var markers = [];
+			var geocoder = new google.maps.Geocoder();
+			var locations = {{ locations|json_encode|raw }};
 
 			map = new google.maps.Map(document.getElementById('map'), {
 				mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -49,15 +54,16 @@
 
 			$.each(locations, function(i, item){
 
-					var coords = new google.maps.LatLng(item[0], item[1]);
-					
-					var marker = new google.maps.Marker({
-							map: map,
-							position: coords,
-							dinnerId: i
-					});
-					markers.push(marker);
-					latlngbounds.extend(coords);
+				var coords = new google.maps.LatLng(item[0], item[1]);
+				
+				var marker = new google.maps.Marker({
+					map: map,
+					position: coords,
+					icon: "{{ asset('bundles/design311website/img/marker.png')}}",
+					dinnerId: i
+				});
+				markers.push(marker);
+				latlngbounds.extend(coords);
 				
 			})
 			var markerCluster = new MarkerClusterer(map, markers);
@@ -97,6 +103,33 @@
 					})
 				};
 			});
+
+			var circle;
+			$('#locatie').blur(function(){
+				if (typeof circle == 'object') {
+					circle.setMap(null);
+				}
+
+				var address = $(this).val();
+					geocoder.geocode( { 'address': address}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+
+						var latLng = results[0].geometry.location;
+						var radius = 10000; //meter
+						circle = new google.maps.Circle({
+							center: latLng,
+							radius: radius
+						});
+						
+						map.fitBounds(circle.getBounds());
+						map.setCenter(results[0].geometry.location);
+					}
+					else {
+						//TODO proper error message
+						alert('Geocode was not successful for the following reason: ' + status);
+					}
+				});
+			})
 		});
 
 
