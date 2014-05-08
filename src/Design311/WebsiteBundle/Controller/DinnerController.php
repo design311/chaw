@@ -15,6 +15,7 @@ class DinnerController extends GeocodeController
     {
         //TODO only get dinners in the future & not fully booked
         $dinners = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findAll();
+        $filters = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsFilter(1);
 
         foreach ($dinners as $dinner) {
             $locations[$dinner->getId()][0] = $dinner->getAddress()->getLat();
@@ -25,7 +26,8 @@ class DinnerController extends GeocodeController
             'Design311WebsiteBundle:Dinner:index.html.twig',
             array(
                 'dinners' => $dinners,
-                'locations' => $locations
+                'locations' => $locations,
+                'filters' => $filters
                 )
         );
     }

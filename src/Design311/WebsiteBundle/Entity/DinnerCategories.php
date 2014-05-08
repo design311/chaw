@@ -36,6 +36,13 @@ class DinnerCategories
     private $isFilter;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_calculated", type="boolean")
+     */
+    private $isCalculated;
+
+    /**
      * @ORM\OneToMany(targetEntity="DinnerMeta", mappedBy="category")
      **/
     private $children;

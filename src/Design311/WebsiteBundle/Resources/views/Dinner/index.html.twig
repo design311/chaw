@@ -7,9 +7,16 @@
 <div class="content">
 	<div class="container">
 		<div class="filters">
-			<p><label for="locatie">Zoeken op locatie</label></p>
+			<p><strong>Filter de zoekresultaten</strong></p>
+			<p><label for="locatie"><strong>Locatie</strong></label></p>
 			<p><input type="text" id="locatie"></p>
-			<p>TIP: Versleep de map om resultaten te filteren</p>
+			<p>TIP: Versleep de kaart om te filteren</p>
+			{% for filter in filters %}
+					<p><strong>{{filter.name}}</strong></p>
+					{% for child in filter.children %}
+							<p><input type="checkbox" name="{{filter.name|lower}}" value="{{child.value|lower}}" id="{{child.value|lower}}"> <label for="{{child.value|lower}}">{{child.value}}</label></p>
+					{% endfor %}
+			{% endfor %}
 		</div>
 		<table id="dinners">
 			<thead>
@@ -36,7 +43,7 @@
 {% endblock %}
 
 {% block footer %}
-    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script src="{{ asset('bundles/design311website/js/maps.markerclusterer.js') }}"></script>
 	<script type="text/javascript">
 
@@ -47,7 +54,10 @@
 			var locations = {{ locations|json_encode|raw }};
 
 			map = new google.maps.Map(document.getElementById('map'), {
-				mapTypeId: google.maps.MapTypeId.ROADMAP
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				streetViewControl: false,
+				mapTypeControl: false,
+				scrollwheel: false
 			});
 			
 			var latlngbounds = new google.maps.LatLngBounds();
@@ -66,9 +76,37 @@
 				latlngbounds.extend(coords);
 				
 			})
-			var markerCluster = new MarkerClusterer(map, markers);
-			map.setCenter(latlngbounds.getCenter());
-			map.fitBounds(latlngbounds);
+
+			if(navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+					centerLocation(currentPosition);
+				}, function() {
+					// if failed
+					showAllMarkers();
+				});
+			} else {
+				// if no browser support
+				showAllMarkers();
+			}
+
+			function showAllMarkers() {
+				var markerCluster = new MarkerClusterer(map, markers);
+				map.setCenter(latlngbounds.getCenter());
+				map.fitBounds(latlngbounds);
+			}
+
+			function centerLocation(coords){
+				var radius = 2500; //meter
+				var circle = new google.maps.Circle({
+					center: coords,
+					radius: radius
+				});
+				
+				map.fitBounds(circle.getBounds());
+				map.setCenter(coords);
+			}
+
 
 			google.maps.event.addListener(map, 'bounds_changed', function() {
 				var bounds = map.getBounds();
@@ -104,25 +142,15 @@
 				};
 			});
 
-			var circle;
 			$('#locatie').blur(function(){
-				if (typeof circle == 'object') {
-					circle.setMap(null);
-				}
+				if ($(this).val()) {};
 
 				var address = $(this).val();
-					geocoder.geocode( { 'address': address}, function(results, status) {
+				geocoder.geocode( { 'address': address}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 
 						var latLng = results[0].geometry.location;
-						var radius = 10000; //meter
-						circle = new google.maps.Circle({
-							center: latLng,
-							radius: radius
-						});
-						
-						map.fitBounds(circle.getBounds());
-						map.setCenter(results[0].geometry.location);
+						centerLocation(latLng);
 					}
 					else {
 						//TODO proper error message
