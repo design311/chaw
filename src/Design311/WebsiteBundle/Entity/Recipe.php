@@ -35,6 +35,20 @@ class Recipe
      */
     private $title;
 
+    /**
+     * @var smallint
+     *
+     * @ORM\Column(name="cooking_time", type="smallint")
+     */
+    private $cookingTime;
+
+    /**
+     * @var smallint
+     *
+     * @ORM\Column(name="ready_time", type="smallint")
+     */
+    private $readyTime;
+
 
     /**
      * Get id

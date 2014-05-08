@@ -156,4 +156,27 @@ class DinnerCategories
     {
         $this->children->removeElement($children);
     }
+
+    /**
+     * Set isCalculated
+     *
+     * @param boolean $isCalculated
+     * @return DinnerCategories
+     */
+    public function setIsCalculated($isCalculated)
+    {
+        $this->isCalculated = $isCalculated;
+
+        return $this;
+    }
+
+    /**
+     * Get isCalculated
+     *
+     * @return boolean 
+     */
+    public function getIsCalculated()
+    {
+        return $this->isCalculated;
+    }
 }

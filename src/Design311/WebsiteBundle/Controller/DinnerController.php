@@ -34,7 +34,8 @@ class DinnerController extends GeocodeController
 
     public function addAction(Request $request)
     {
-        $form = $this->createForm(new DinnerType(), new Dinner(), array(
+        $metadata = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsCalculated(0);
+        $form = $this->createForm(new DinnerType($metadata), new Dinner(), array(
             'action' => $this->generateUrl('design311website_dinners_add_create'),
         ));
 
@@ -48,7 +49,8 @@ class DinnerController extends GeocodeController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(new DinnerType(), new Dinner());
+        $metadata = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsCalculated(0);
+        $form = $this->createForm(new DinnerType($metadata), new Dinner());
 
         $form->handleRequest($request);
 
@@ -66,6 +68,8 @@ class DinnerController extends GeocodeController
                 $dinner->getAddress()->setLat(0);
                 $dinner->getAddress()->setLng(0);
             }
+
+            //print_r($dinner);die;
 
             $em->persist($dinner);
             $em->flush();

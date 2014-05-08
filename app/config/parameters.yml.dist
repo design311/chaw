@@ -13,3 +13,5 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    geocoding_api_key: AIzaSyCj2gmjRFFYoZoR45QTUMauwNuF5j9ET5k

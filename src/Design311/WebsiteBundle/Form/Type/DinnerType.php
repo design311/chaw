@@ -8,17 +8,26 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class DinnerType extends AbstractType
 {
+    private $metadata;
+
+    public function __construct(Array $metadata)
+    {
+        $this->metadata = $metadata;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('date', 'datetime');
         $builder->add('menu', 'textarea');
-        $builder->add('maxinvitees', 'number');
-        $builder->add('price', 'number');
+        $builder->add('maxinvitees', 'integer');
+        $builder->add('price', 'money');
         $builder->add('address_change', 'checkbox', array(
             'required' => false,
             'mapped' => false
             ));
         $builder->add('address', new AddressType());
+        $builder->add('meta', new MetaType($this->metadata));
+
         $builder->add('Register', 'submit');
     }
 
