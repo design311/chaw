@@ -49,6 +49,6 @@ class MetaType extends AbstractType
 
     public function getName()
     {
-        return 'dinnerCategories';
+        return 'dinnerMeta';
     }
 }

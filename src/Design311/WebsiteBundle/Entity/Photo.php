@@ -3,15 +3,21 @@
 namespace Design311\WebsiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Photo
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Photo
 {
+
+    private $temp;
+
     /**
      * @var integer
      *
@@ -24,16 +30,62 @@ class Photo
     /**
      * @var string
      *
-     * @ORM\Column(name="source", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255)
      */
-    private $source;
+    private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="filename", type="string", length=255)
      */
-    private $title;
+    private $filename;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="extension", type="string", length=255)
+     */
+    private $extension;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Recipe", mappedBy="photos")
+     **/
+    private $recipe;
+
+
+    /**
+     * @Assert\File(maxSize="1M")
+     */
+    private $file;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image filename
+        if (isset($this->filename)) {
+            // store the old name to delete after the update
+            $this->temp = $this->filename;
+            $this->filename = null;
+        } else {
+            $this->filename = 'initial';
+        }
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
 
 
     /**
@@ -44,29 +96,6 @@ class Photo
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set source
-     *
-     * @param string $source
-     * @return Photo
-     */
-    public function setSource($source)
-    {
-        $this->source = $source;
-
-        return $this;
-    }
-
-    /**
-     * Get source
-     *
-     * @return string 
-     */
-    public function getSource()
-    {
-        return $this->source;
     }
 
     /**
@@ -90,5 +119,158 @@ class Photo
     public function getTitle()
     {
         return $this->title;
+    }
+
+    private function getPath(){
+        return $this->getFilename().'-'.$this->id.'.'.$this->getExtension();
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->filename
+            ? null
+            : $this->getUploadRootDir().'/'.$this->getPath();
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->filename ? null : $this->getUploadDir().'/'.$this->getPath();
+    }
+
+    private function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    private function getUploadDir()
+    {
+        return 'uploads';
+    }
+
+    private function getFileParts(){
+        $filename = iconv("UTF-8", "ISO-8859-1//IGNORE", $this->getFile()->getClientOriginalName());
+        $filepieces = explode( '.', $filename);
+        $extension = array_pop($filepieces);
+        $filename = implode('.', $filepieces);
+
+        return array($filename, $extension);
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {   
+        if (null !== $this->getFile()) {
+            $this->filename = $this->getFileParts()[0];
+            $this->extension = $this->getFileParts()[1];
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        if (isset($this->temp)) {
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            $this->temp = null;
+        }
+
+        $this->getFile()->move($this->getUploadRootDir(), $this->getPath());
+        $this->file = null;
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function storeFilenameForRemove()
+    {
+        $this->temp = $this->getAbsolutePath();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if (isset($this->temp)) {
+            unlink($this->temp);
+        }
+    }
+
+    /**
+     * Set filename
+     *
+     * @param string $filename
+     * @return Photo
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * Get filename
+     *
+     * @return string 
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Set recipe
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $recipe
+     * @return Photo
+     */
+    public function setRecipe(\Design311\WebsiteBundle\Entity\Recipe $recipe = null)
+    {
+        $this->recipe = $recipe;
+
+        return $this;
+    }
+
+    /**
+     * Get recipe
+     *
+     * @return \Design311\WebsiteBundle\Entity\Recipe 
+     */
+    public function getRecipe()
+    {
+        return $this->recipe;
+    }
+
+    /**
+     * Set extension
+     *
+     * @param string $extension
+     * @return Photo
+     */
+    public function setExtension($extension)
+    {
+        $this->extension = $extension;
+
+        return $this;
+    }
+
+    /**
+     * Get extension
+     *
+     * @return string 
+     */
+    public function getExtension()
+    {
+        return $this->extension;
     }
 }

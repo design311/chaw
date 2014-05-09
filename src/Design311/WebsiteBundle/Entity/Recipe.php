@@ -24,16 +24,16 @@ class Recipe
     /**
      * @var string
      *
-     * @ORM\Column(name="recipe", type="text")
+     * @ORM\Column(name="title", type="string", length=255)
      */
-    private $recipe;
+    private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="recipe", type="text")
      */
-    private $title;
+    private $recipe;
 
     /**
      * @var smallint
@@ -48,6 +48,11 @@ class Recipe
      * @ORM\Column(name="ready_time", type="smallint")
      */
     private $readyTime;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Photo", inversedBy="recipe", cascade={"persist"})
+    **/
+    private $photos;
 
 
     /**
@@ -104,5 +109,97 @@ class Recipe
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set cookingTime
+     *
+     * @param integer $cookingTime
+     * @return Recipe
+     */
+    public function setCookingTime($cookingTime)
+    {
+        $this->cookingTime = $cookingTime;
+
+        return $this;
+    }
+
+    /**
+     * Get cookingTime
+     *
+     * @return integer 
+     */
+    public function getCookingTime()
+    {
+        return $this->cookingTime;
+    }
+
+    /**
+     * Set readyTime
+     *
+     * @param integer $readyTime
+     * @return Recipe
+     */
+    public function setReadyTime($readyTime)
+    {
+        $this->readyTime = $readyTime;
+
+        return $this;
+    }
+
+    /**
+     * Get readyTime
+     *
+     * @return integer 
+     */
+    public function getReadyTime()
+    {
+        return $this->readyTime;
+    }
+
+    /**
+     * Add photos
+     *
+     * @param \Design311\WebsiteBundle\Entity\Photo $photos
+     * @return Recipe
+     */
+    public function addPhoto(\Design311\WebsiteBundle\Entity\Photo $photos)
+    {
+        $this->photos[] = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \Design311\WebsiteBundle\Entity\Photo $photos
+     */
+    public function removePhoto(\Design311\WebsiteBundle\Entity\Photo $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+
+    /**
+     * Set photos
+     *
+     * @param \Design311\WebsiteBundle\Entity\Photo $photos
+     * @return Recipe
+     */
+    public function setPhotos(\Design311\WebsiteBundle\Entity\Photo $photos = null)
+    {
+        $this->photos = $photos;
+
+        return $this;
     }
 }

@@ -1,0 +1,16 @@
+{% extends 'Design311WebsiteBundle::layout.html.twig' %}
+
+{% block content %}
+    <a href="{{ path('design311website_recepten_add') }}">add</a>
+
+	{% for recipe in recipes %}
+	<div>
+		{{recipe.title}}
+		{% if recipe.photos %}
+			<img src="{{ asset(recipe.photos.webPath) }}" alt="">
+		{% endif %}
+	</div>
+	<hr>
+	{% endfor %}
+
+{% endblock %}
