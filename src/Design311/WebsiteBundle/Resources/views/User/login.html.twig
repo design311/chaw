@@ -10,7 +10,9 @@
 		<label for="username">User:</label>
 		<input id="username" type="text" name="_username" value="{{ last_username }}" />
 		<label for="password">Password:</label>
-		<input id="password" type="password" name="_password" /> <input type="submit" name="login" />
+		<input id="password" type="password" name="_password" />
+        <input type="hidden" name="_target_path" value="{{app.request.headers.get('referer')}}" />
+		<input type="submit" name="login" />
 	</form>
 
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
 {% block content %}
-    <a href="{{ path('design311website_recepten_add') }}">add</a>
+	<a href="{{ path('design311website_recepten_add') }}">add</a>
 
 	{% for recipe in recipes %}
 	<div>
@@ -16,13 +16,21 @@
 		</ul>
 		{{recipe.category}}
 
-		<a href="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" class="like-button">
-			{% if app.user in recipe.likedBy %}
-			dislike this recipe
-			{% else %}
-			like this recipe
-			{% endif %}
-		</a>
+		{% if app.user %}
+			<a href="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" class="like-button">
+				{% if app.user in recipe.likedBy %}
+				dislike this recipe
+				{% else %}
+				like this recipe
+				{% endif %}
+			</a>
+		{% else %}
+		    <a href="{{ path('design311website_login') }}">Login om dit recept te liken</a>
+		{% endif %}
+
+		{% if app.user == recipe.user %}
+		    <a href="{{ path('design311website_recepten_edit', {'recipeId': recipe.id}) }}">edit</a>
+		{% endif %}
 	</div>
 	<hr>
 	{% endfor %}
@@ -30,11 +38,11 @@
 {% endblock %}
 
 {% block footer %}
-    <script>
-    	$(function(){
-    		$('.like-button').click(function(){
-    			var link = $(this);
-    			//TODO add loader gif for slow json
+	<script>
+		$(function(){
+			$('.like-button').click(function(){
+				var link = $(this);
+				//TODO add loader gif for slow json
 				$.getJSON( $(this).attr('href'), function( data ) {
 					if (data === 1) {
 						link.text('dislike this recipe');
@@ -44,8 +52,8 @@
 					}
 				});
 
-    			return false;
-    		})
-    	})
-    </script>
+				return false;
+			})
+		})
+	</script>
 {% endblock %}

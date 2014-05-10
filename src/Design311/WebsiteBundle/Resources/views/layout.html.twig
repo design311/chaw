@@ -12,7 +12,11 @@
 	<div class="header">
 		<div class="topbar">
 			<div class="container">
-				<div class="login"><a href="#">Login</a><a href="#">Registreren</a></div>
+				{% if app.user %}
+				<div class="login"><a href="#">{{app.user.displayname}}</a><a href="{{ path('design311website_logout') }}">Logout</a></div>
+				{% else %}
+				<div class="login"><a href="{{ path('design311website_login') }}">Login</a><a href="{{ path('design311website_register') }}">Registreren</a></div>
+				{% endif %}
 				<div class="clear"></div>
 			</div>
 		</div>

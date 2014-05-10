@@ -68,4 +68,51 @@ class RecipeController extends Controller
             array('form' => $form->createView())
         );
     }
+
+    public function editAction($recipeId, Request $request)
+    {
+        $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->find($recipeId);
+
+        $form = $this->createForm(new RecipeType(), $recipe);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $recept = $form->getData();
+            //print_r($recept);die;
+
+            $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
+
+            $serializer = $this->container->get('jms_serializer');
+            //$currentIngredients = json_decode($serializer->serialize($currentIngredients, 'json'));
+            //print_r($currentIngredients);die;
+
+            if ($recept->getRecipeIngredients()) {
+                foreach ($recept->getRecipeIngredients() as $key => $recipeingredient) {
+                    foreach ($currentIngredients as $currentIngredient) {
+                        if ($recipeingredient->getIngredient()->getName() == $currentIngredient->getName()) {
+                            $ingredient = $recipeingredient->getIngredient();
+                            $ingredient = $currentIngredient;
+                            //print_r(json_decode($serializer->serialize($ingredient, 'json')));die;
+                            $recipeingredient->setIngredient($ingredient);
+                        }
+                    }
+                }
+            }
+
+            $recept->setUser($this->getUser());
+
+            $em->persist($recept);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('design311website_recepten'));
+        }
+
+        return $this->render(
+            'Design311WebsiteBundle:Recipe:add.html.twig',
+            array('form' => $form->createView())
+        );
+    }
 }
