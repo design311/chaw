@@ -24,22 +24,21 @@ class Ingredient
     /**
      * @var string
      *
-     * @ORM\Column(name="amount", type="string", length=255, nullable=true)
-     */
-    private $amount;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Recipe", inversedBy="ingredients")
+     * @ORM\OneToMany(targetEntity="RecipeIngredient", mappedBy="ingredients")
      **/
-    private $recipes;
-
+    private $recipeIngredients;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recipeIngredients = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -49,29 +48,6 @@ class Ingredient
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set amount
-     *
-     * @param float $amount
-     * @return Ingredient
-     */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    /**
-     * Get amount
-     *
-     * @return float 
-     */
-    public function getAmount()
-    {
-        return $this->amount;
     }
 
     /**
@@ -98,67 +74,39 @@ class Ingredient
     }
 
     /**
-     * Set unit
+     * Add recipeIngredients
      *
-     * @param string $unit
+     * @param \Design311\WebsiteBundle\Entity\RecipeIngredient $recipeIngredients
      * @return Ingredient
      */
-    public function setUnit($unit)
+    public function addRecipeIngredient(\Design311\WebsiteBundle\Entity\RecipeIngredient $recipeIngredients)
     {
-        $this->unit = $unit;
+        $this->recipeIngredients[] = $recipeIngredients;
 
         return $this;
     }
 
     /**
-     * Get unit
+     * Remove recipeIngredients
      *
-     * @return string 
+     * @param \Design311\WebsiteBundle\Entity\RecipeIngredient $recipeIngredients
      */
-    public function getUnit()
+    public function removeRecipeIngredient(\Design311\WebsiteBundle\Entity\RecipeIngredient $recipeIngredients)
     {
-        return $this->unit;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->recipeIngredients->removeElement($recipeIngredients);
     }
 
     /**
-     * Add recipes
-     *
-     * @param \Design311\WebsiteBundle\Entity\Recipe $recipes
-     * @return Ingredient
-     */
-    public function addRecipe(\Design311\WebsiteBundle\Entity\Recipe $recipes)
-    {
-        if (!$this->recipes->contains($recipes)) {
-            $this->recipes[] = $recipes;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove recipes
-     *
-     * @param \Design311\WebsiteBundle\Entity\Recipe $recipes
-     */
-    public function removeRecipe(\Design311\WebsiteBundle\Entity\Recipe $recipes)
-    {
-        $this->recipes->removeElement($recipes);
-    }
-
-    /**
-     * Get recipes
+     * Get recipeIngredients
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getRecipes()
+    public function getRecipeIngredients()
     {
-        return $this->recipes;
+        return $this->recipeIngredients;
+    }
+
+    public function __tostring(){
+        return $this->name;
     }
 }

@@ -34,6 +34,25 @@ class RecipeController extends GeocodeController
             $em = $this->getDoctrine()->getManager();
 
             $recept = $form->getData();
+            //print_r($recept);die;
+
+            $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
+
+            $serializer = $this->container->get('jms_serializer');
+            //$currentIngredients = json_decode($serializer->serialize($currentIngredients, 'json'));
+            //print_r($currentIngredients);die;
+
+
+            foreach ($recept->getRecipeIngredients() as $key => $recipeingredient) {
+                foreach ($currentIngredients as $currentIngredient) {
+                    if ($recipeingredient->getIngredient()->getName() == $currentIngredient->getName()) {
+                        $ingredient = $recipeingredient->getIngredient();
+                        $ingredient = $currentIngredient;
+                        //print_r(json_decode($serializer->serialize($ingredient, 'json')));die;
+                        $recipeingredient->setIngredient($ingredient);
+                    }
+                }
+            }
 
             $em->persist($recept);
             $em->flush();

@@ -12,9 +12,10 @@ class RecipeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text');
-        $builder->add('ingredients', 'collection', array(
-            'type' => new IngredientType(),
+        $builder->add('recipeingredients', 'collection', array(
+            'type' => new RecipeIngredientType(),
             'allow_add'    => true,
+            'allow_delete' => true,
             'by_reference' => false,
         ));
         $builder->add('recipe', 'textarea');
@@ -23,6 +24,7 @@ class RecipeType extends AbstractType
         $builder->add('photos', 'collection', array(
             'type' => new PhotoType(),
             'allow_add'    => true,
+            'allow_delete' => true,
             'by_reference' => false,
         ));
         $builder->add('Recept toevoegen', 'submit');

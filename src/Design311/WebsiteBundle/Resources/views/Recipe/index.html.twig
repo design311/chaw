@@ -10,8 +10,8 @@
 			<img src="{{ asset(photo.webPath) }}" width="500">
 		{% endfor %}
 		<ul>
-		{% for ingredient in recipe.ingredients %}
-			<li>{{ingredient.amount}} {{ingredient.name}}</li>
+		{% for recipeingredient in recipe.recipeingredients %}
+			<li>{{recipeingredient.amount}} {{recipeingredient.ingredient}}</li>
 		{% endfor %}
 		</ul>
 	</div>

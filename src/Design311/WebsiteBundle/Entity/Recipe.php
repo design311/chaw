@@ -55,9 +55,9 @@ class Recipe
     private $photos;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Ingredient", mappedBy="recipes", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="RecipeIngredient", mappedBy="recipes" ,cascade={"persist"})
     **/
-    private $ingredients;
+    private $recipeIngredients;
 
     /**
      * Constructor
@@ -204,36 +204,36 @@ class Recipe
     }
 
     /**
-     * Add ingredients
+     * Add recipeIngredients
      *
-     * @param \Design311\WebsiteBundle\Entity\Ingredient $ingredients
+     * @param \Design311\WebsiteBundle\Entity\RecipeIngredient $recipeIngredients
      * @return Recipe
      */
-    public function addIngredient(\Design311\WebsiteBundle\Entity\Ingredient $ingredients)
+    public function addRecipeIngredient(\Design311\WebsiteBundle\Entity\RecipeIngredient $recipeIngredients)
     {
-        $ingredients->addRecipe($this);
-        $this->ingredients[] = $ingredients;
+        $recipeIngredients->setRecipes($this);
+        $this->recipeIngredients[] = $recipeIngredients;
 
         return $this;
     }
 
     /**
-     * Remove ingredients
+     * Remove recipeIngredients
      *
-     * @param \Design311\WebsiteBundle\Entity\Ingredient $ingredients
+     * @param \Design311\WebsiteBundle\Entity\RecipeIngredient $recipeIngredients
      */
-    public function removeIngredient(\Design311\WebsiteBundle\Entity\Ingredient $ingredients)
+    public function removeRecipeIngredient(\Design311\WebsiteBundle\Entity\RecipeIngredient $recipeIngredients)
     {
-        $this->ingredients->removeElement($ingredients);
+        $this->recipeIngredients->removeElement($recipeIngredients);
     }
 
     /**
-     * Get ingredients
+     * Get recipeIngredients
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getIngredients()
+    public function getRecipeIngredients()
     {
-        return $this->ingredients;
+        return $this->recipeIngredients;
     }
 }
