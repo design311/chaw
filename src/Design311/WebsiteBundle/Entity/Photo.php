@@ -49,7 +49,8 @@ class Photo
     private $extension;
 
     /**
-     * @ORM\OneToOne(targetEntity="Recipe", mappedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="photos")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      **/
     private $recipe;
 

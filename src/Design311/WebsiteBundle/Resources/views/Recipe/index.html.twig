@@ -6,9 +6,14 @@
 	{% for recipe in recipes %}
 	<div>
 		{{recipe.title}}
-		{% if recipe.photos %}
-			<img src="{{ asset(recipe.photos.webPath) }}" alt="">
-		{% endif %}
+		{% for photo in recipe.photos %}
+			<img src="{{ asset(photo.webPath) }}" width="500">
+		{% endfor %}
+		<ul>
+		{% for ingredient in recipe.ingredients %}
+			<li>{{ingredient.amount}} {{ingredient.name}}</li>
+		{% endfor %}
+		</ul>
 	</div>
 	<hr>
 	{% endfor %}

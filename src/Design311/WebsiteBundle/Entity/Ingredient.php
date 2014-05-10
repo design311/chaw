@@ -22,19 +22,11 @@ class Ingredient
     private $id;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="amount", type="float")
-     */
-    private $amount;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="unit", type="string", length=10)
+     * @ORM\Column(name="amount", type="string", length=255, nullable=true)
      */
-    private $unit;
-
+    private $amount;
 
     /**
      * @var string
@@ -42,6 +34,11 @@ class Ingredient
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Recipe", inversedBy="ingredients")
+     **/
+    private $recipes;
 
 
     /**
@@ -121,5 +118,47 @@ class Ingredient
     public function getUnit()
     {
         return $this->unit;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add recipes
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $recipes
+     * @return Ingredient
+     */
+    public function addRecipe(\Design311\WebsiteBundle\Entity\Recipe $recipes)
+    {
+        if (!$this->recipes->contains($recipes)) {
+            $this->recipes[] = $recipes;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove recipes
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $recipes
+     */
+    public function removeRecipe(\Design311\WebsiteBundle\Entity\Recipe $recipes)
+    {
+        $this->recipes->removeElement($recipes);
+    }
+
+    /**
+     * Get recipes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRecipes()
+    {
+        return $this->recipes;
     }
 }

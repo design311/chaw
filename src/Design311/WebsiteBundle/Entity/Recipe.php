@@ -50,10 +50,22 @@ class Recipe
     private $readyTime;
 
     /**
-     * @ORM\OneToOne(targetEntity="Photo", inversedBy="recipe", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="recipe", cascade={"persist"})
     **/
     private $photos;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Ingredient", mappedBy="recipes", cascade={"persist"})
+    **/
+    private $ingredients;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -63,29 +75,6 @@ class Recipe
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set recipe
-     *
-     * @param string $recipe
-     * @return Recipe
-     */
-    public function setRecipe($recipe)
-    {
-        $this->recipe = $recipe;
-
-        return $this;
-    }
-
-    /**
-     * Get recipe
-     *
-     * @return string 
-     */
-    public function getRecipe()
-    {
-        return $this->recipe;
     }
 
     /**
@@ -109,6 +98,29 @@ class Recipe
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set recipe
+     *
+     * @param string $recipe
+     * @return Recipe
+     */
+    public function setRecipe($recipe)
+    {
+        $this->recipe = $recipe;
+
+        return $this;
+    }
+
+    /**
+     * Get recipe
+     *
+     * @return string 
+     */
+    public function getRecipe()
+    {
+        return $this->recipe;
     }
 
     /**
@@ -165,6 +177,7 @@ class Recipe
      */
     public function addPhoto(\Design311\WebsiteBundle\Entity\Photo $photos)
     {
+        $photos->setRecipe($this);
         $this->photos[] = $photos;
 
         return $this;
@@ -191,15 +204,36 @@ class Recipe
     }
 
     /**
-     * Set photos
+     * Add ingredients
      *
-     * @param \Design311\WebsiteBundle\Entity\Photo $photos
+     * @param \Design311\WebsiteBundle\Entity\Ingredient $ingredients
      * @return Recipe
      */
-    public function setPhotos(\Design311\WebsiteBundle\Entity\Photo $photos = null)
+    public function addIngredient(\Design311\WebsiteBundle\Entity\Ingredient $ingredients)
     {
-        $this->photos = $photos;
+        $ingredients->addRecipe($this);
+        $this->ingredients[] = $ingredients;
 
         return $this;
+    }
+
+    /**
+     * Remove ingredients
+     *
+     * @param \Design311\WebsiteBundle\Entity\Ingredient $ingredients
+     */
+    public function removeIngredient(\Design311\WebsiteBundle\Entity\Ingredient $ingredients)
+    {
+        $this->ingredients->removeElement($ingredients);
+    }
+
+    /**
+     * Get ingredients
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIngredients()
+    {
+        return $this->ingredients;
     }
 }
