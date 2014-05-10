@@ -29,15 +29,19 @@ class Ingredient
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="RecipeIngredient", mappedBy="ingredients")
+     * @ORM\OneToMany(targetEntity="RecipeIngredient", mappedBy="ingredient")
      **/
-    private $recipeIngredients;
+    private $recipeIngredient;
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->recipeIngredients = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __tostring(){
+        return $this->name;
     }
 
     /**
@@ -94,19 +98,5 @@ class Ingredient
     public function removeRecipeIngredient(\Design311\WebsiteBundle\Entity\RecipeIngredient $recipeIngredients)
     {
         $this->recipeIngredients->removeElement($recipeIngredients);
-    }
-
-    /**
-     * Get recipeIngredients
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRecipeIngredients()
-    {
-        return $this->recipeIngredients;
-    }
-
-    public function __tostring(){
-        return $this->name;
     }
 }

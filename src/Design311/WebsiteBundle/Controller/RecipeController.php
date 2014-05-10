@@ -3,6 +3,7 @@
 namespace Design311\WebsiteBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 
 use Design311\WebsiteBundle\Form\Type\RecipeType;
@@ -73,6 +74,16 @@ class RecipeController extends Controller
     {
         $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->find($recipeId);
 
+        $originalPhotos = new ArrayCollection();
+        foreach ($recipe->getPhotos() as $photo) {
+            $originalPhotos->add($photo);
+        }
+        $originalIngredients = new ArrayCollection();
+        foreach ($recipe->getRecipeIngredients() as $ingredient) {
+            $originalIngredients->add($ingredient);
+        }
+
+
         $form = $this->createForm(new RecipeType(), $recipe);
         $form->handleRequest($request);
 
@@ -80,31 +91,26 @@ class RecipeController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $recept = $form->getData();
-            //print_r($recept);die;
+            $recipe = $form->getData();
 
-            $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
+            $photos = $recipe->getPhotos();
+            $ingredients = $recipe->getRecipeIngredients();
 
-            $serializer = $this->container->get('jms_serializer');
-            //$currentIngredients = json_decode($serializer->serialize($currentIngredients, 'json'));
-            //print_r($currentIngredients);die;
-
-            if ($recept->getRecipeIngredients()) {
-                foreach ($recept->getRecipeIngredients() as $key => $recipeingredient) {
-                    foreach ($currentIngredients as $currentIngredient) {
-                        if ($recipeingredient->getIngredient()->getName() == $currentIngredient->getName()) {
-                            $ingredient = $recipeingredient->getIngredient();
-                            $ingredient = $currentIngredient;
-                            //print_r(json_decode($serializer->serialize($ingredient, 'json')));die;
-                            $recipeingredient->setIngredient($ingredient);
-                        }
-                    }
+            foreach ($originalIngredients as $ingredient) {
+                if (false === $recipe->getRecipeIngredients()->contains($ingredient)) {
+                    $recipe->getRecipeIngredients()->removeElement($ingredient);
+                    $em->remove($ingredient);
                 }
             }
 
-            $recept->setUser($this->getUser());
+            foreach ($originalPhotos as $photo) {
+                if (false === $recipe->getPhotos()->contains($photo)) {
+                    $recipe->getPhotos()->removeElement($photo);
+                    $em->remove($photo);
+                }
+            }
 
-            $em->persist($recept);
+            $em->persist($recipe);
             $em->flush();
 
             return $this->redirect($this->generateUrl('design311website_recepten'));

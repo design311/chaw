@@ -9,8 +9,9 @@
     	var photoHolder;
 
 		// setup an "add a photo" link
-		var addPhotoLink = $('<a href="#" class="add_photo_link">Add a photo</a>');
-		var addIngredientLink = $('<a href="#" class="add_photo_link">Add an ingredient</a>');
+		var addPhotoLink = $('<p><a href="#" class="add_photo_link">Add a photo</a></p>');
+		var addIngredientLink = $('<p><a href="#" class="add_photo_link">Add an ingredient</a></p>');
+		var deleteLink = '<a href="#" class="deleterow">delete</a>';
 
 		jQuery(document).ready(function() {
 		    // Get the ul that holds the collection of photos
@@ -23,8 +24,15 @@
 
 		    // count the current form inputs we have (e.g. 2), use that as the new
 		    // index when inserting a new item (e.g. 2)
-		    photoHolder.data('index', photoHolder.find(':input').length);
-		    ingredientHolder.data('index', ingredientHolder.find(':input').length);
+		    photoHolder.data('index', photoHolder.children('div').length);
+		    ingredientHolder.data('index', ingredientHolder.children('div').length);
+
+		    photoHolder.children('div').each(function(i, el) {
+		    	$(el).append(deleteLink);
+		    });
+		    ingredientHolder.children('div').each(function(i, el) {
+		    	$(el).append(deleteLink);
+		    });
 
 		    addPhotoLink.on('click', function(e) {
 		        // prevent the link from creating a "#" on the URL
@@ -40,6 +48,11 @@
 
 		        // add a new photo form (see next code block)
 		        addInput(ingredientHolder, addIngredientLink);
+		    });
+
+		    $('form').on('click','.deleterow', function(e) {
+		    	e.preventDefault();
+		    	$(this).parent().remove();
 		    });
 		});
 
@@ -58,8 +71,8 @@
 		    holder.data('index', index + 1);
 
 		    // Display the form in the page in an li, before the "Add a photo" link li
-		    var newFormLi = $('<li></li>').append(newForm);
-		    link.before(newFormLi);
+		    var newFormContainer = $('<div></div>').append(newForm + deleteLink);
+		    link.before(newFormContainer);
 		}
     </script>
 {% endblock %}
