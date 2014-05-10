@@ -21,6 +21,7 @@ class RecipeType extends AbstractType
         $builder->add('recipe', 'textarea');
         $builder->add('cookingTime', 'integer');
         $builder->add('readyTime', 'integer');
+        $builder->add('category', 'entity', array('class' => 'Design311WebsiteBundle:RecipeCategory'));
         $builder->add('photos', 'collection', array(
             'type' => new PhotoType(),
             'allow_add'    => true,

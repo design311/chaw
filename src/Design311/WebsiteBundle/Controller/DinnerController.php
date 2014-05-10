@@ -11,7 +11,7 @@ use Design311\WebsiteBundle\Entity\Dinner;
 
 class DinnerController extends GeocodeController
 {
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         //TODO only get dinners in the future & not fully booked
         $dinners = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findAll();

@@ -14,8 +14,38 @@
 			<li>{{recipeingredient.amount}} {{recipeingredient.ingredient}}</li>
 		{% endfor %}
 		</ul>
+		{{recipe.category}}
+
+		<a href="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" class="like-button">
+			{% if app.user in recipe.likedBy %}
+			dislike this recipe
+			{% else %}
+			like this recipe
+			{% endif %}
+		</a>
 	</div>
 	<hr>
 	{% endfor %}
 
+{% endblock %}
+
+{% block footer %}
+    <script>
+    	$(function(){
+    		$('.like-button').click(function(){
+    			var link = $(this);
+    			//TODO add loader gif for slow json
+				$.getJSON( $(this).attr('href'), function( data ) {
+					if (data === 1) {
+						link.text('dislike this recipe');
+					}
+					else{
+						link.text('like this recipe');
+					}
+				});
+
+    			return false;
+    		})
+    	})
+    </script>
 {% endblock %}

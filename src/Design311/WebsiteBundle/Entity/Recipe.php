@@ -55,9 +55,24 @@ class Recipe
     private $photos;
 
     /**
+     * @ORM\ManyToOne(targetEntity="RecipeCategory", inversedBy="recipe")
+    **/
+    private $category;
+
+    /**
      * @ORM\OneToMany(targetEntity="RecipeIngredient", mappedBy="recipes" ,cascade={"persist"})
     **/
     private $recipeIngredients;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="recipes")
+    **/
+    private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="likedrecipes")
+     */
+    protected $likedby;
 
     /**
      * Constructor
@@ -235,5 +250,84 @@ class Recipe
     public function getRecipeIngredients()
     {
         return $this->recipeIngredients;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \Design311\WebsiteBundle\Entity\RecipeCategory $category
+     * @return Recipe
+     */
+    public function setCategory(\Design311\WebsiteBundle\Entity\RecipeCategory $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Design311\WebsiteBundle\Entity\RecipeCategory 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Design311\WebsiteBundle\Entity\User $user
+     * @return Recipe
+     */
+    public function setUser(\Design311\WebsiteBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Design311\WebsiteBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Add likedby
+     *
+     * @param \Design311\WebsiteBundle\Entity\User $likedby
+     * @return Recipe
+     */
+    public function addLikedby(\Design311\WebsiteBundle\Entity\User $likedby)
+    {
+        $this->likedby[] = $likedby;
+
+        return $this;
+    }
+
+    /**
+     * Remove likedby
+     *
+     * @param \Design311\WebsiteBundle\Entity\User $likedby
+     */
+    public function removeLikedby(\Design311\WebsiteBundle\Entity\User $likedby)
+    {
+        $this->likedby->removeElement($likedby);
+    }
+
+    /**
+     * Get likedby
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLikedby()
+    {
+        return $this->likedby;
     }
 }

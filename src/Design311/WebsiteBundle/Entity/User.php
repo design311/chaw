@@ -52,9 +52,18 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Address", cascade={"persist"})
-     * @ORM\JoinColumn(name="address_id", referencedColumnName="id")
      */
     protected $address;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Recipe", mappedBy="user")
+     */
+    protected $recipes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Recipe", mappedBy="likedby")
+     */
+    protected $likedrecipes;
 
     /**
      * @inheritDoc
@@ -321,4 +330,77 @@ class User implements UserInterface
         return array('id', 'username', 'displayName', 'password', 'email');
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add recipes
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $recipes
+     * @return User
+     */
+    public function addRecipe(\Design311\WebsiteBundle\Entity\Recipe $recipes)
+    {
+        $this->recipes[] = $recipes;
+
+        return $this;
+    }
+
+    /**
+     * Remove recipes
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $recipes
+     */
+    public function removeRecipe(\Design311\WebsiteBundle\Entity\Recipe $recipes)
+    {
+        $this->recipes->removeElement($recipes);
+    }
+
+    /**
+     * Get recipes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRecipes()
+    {
+        return $this->recipes;
+    }
+
+    /**
+     * Add likedrecipes
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $likedrecipes
+     * @return User
+     */
+    public function addLikedrecipe(\Design311\WebsiteBundle\Entity\Recipe $likedrecipes)
+    {
+        $this->likedrecipes[] = $likedrecipes;
+
+        return $this;
+    }
+
+    /**
+     * Remove likedrecipes
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $likedrecipes
+     */
+    public function removeLikedrecipe(\Design311\WebsiteBundle\Entity\Recipe $likedrecipes)
+    {
+        $this->likedrecipes->removeElement($likedrecipes);
+    }
+
+    /**
+     * Get likedrecipes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLikedrecipes()
+    {
+        return $this->likedrecipes;
+    }
 }
