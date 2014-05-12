@@ -2,7 +2,7 @@
 
 {% block content %}
 	<a href="{{ path('design311website_recepten_add') }}">add</a>
-
+	<p><a href="{{ path('design311website_recepten_shoppinglist') }}" id="shoppinglist">{{shoppinglistcount}} {% if shoppinglistcount == 1 %}recept{% else %}recepten{% endif %} op het winkellijstje</a></p>
 	{% for recipe in recipes %}
 	<div>
 		{{recipe.title}}
@@ -17,19 +17,33 @@
 		{{recipe.category}}
 
 		{% if app.user %}
-			<a href="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" class="like-button">
+			<p><a href="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" class="like-button">
 				{% if app.user in recipe.likedBy %}
 				dislike this recipe
 				{% else %}
 				like this recipe
 				{% endif %}
-			</a>
+			</a></p>
+			<p><a href="{{path('design311website_recepten_save', {'recipeId': recipe.id})}}" class="save-button">
+				{% if app.user in recipe.likedBy %}
+				remove this recipe from saves
+				{% else %}
+				save this recipe
+				{% endif %}
+			</a></p>
+			<p><a href="{{path('design311website_recepten_shop', {'recipeId': recipe.id})}}" class="shop-button">
+				{% if app.user in recipe.shoppinglistFrom %}
+				remove this recipe from shoppinglist
+				{% else %}
+				add recipe to shoppinglist
+				{% endif %}
+			</a></p>
 		{% else %}
-		    <a href="{{ path('design311website_login') }}">Login om dit recept te liken</a>
+		    <p><a href="{{ path('design311website_login') }}">Login om dit recept te liken</a></p>
 		{% endif %}
 
 		{% if app.user == recipe.user %}
-		    <a href="{{ path('design311website_recepten_edit', {'recipeId': recipe.id}) }}">edit</a>
+		    <p><a href="{{ path('design311website_recepten_edit', {'recipeId': recipe.id}) }}">edit</a></p>
 		{% endif %}
 	</div>
 	<hr>
@@ -42,14 +56,46 @@
 		$(function(){
 			$('.like-button').click(function(){
 				var link = $(this);
+				//todo use different attribute
 				//TODO add loader gif for slow json
 				$.getJSON( $(this).attr('href'), function( data ) {
-					if (data === 1) {
+					if (data.status === 1) {
 						link.text('dislike this recipe');
 					}
 					else{
 						link.text('like this recipe');
 					}
+				});
+
+				return false;
+			})
+			$('.save-button').click(function(){
+				var link = $(this);
+				//TODO add loader gif for slow json
+				$.getJSON( $(this).attr('href'), function( data ) {
+					if (data.status === 1) {
+						link.text('remove this recipe from saves');
+					}
+					else{
+						link.text('save this recipe');
+					}
+				});
+
+				return false;
+			})
+			$('.shop-button').click(function(){
+				var link = $(this);
+				//TODO add loader gif for slow json
+				$.getJSON( $(this).attr('href'), function( data ) {
+					if (data.status === 1) {
+						link.text('remove this recipe from shoppinglist');
+					}
+					else{
+						link.text('add recipe to shoppinglist');
+					}
+					console.log(data.shoppinglistcount);
+					var text = data.shoppinglistcount + (data.shoppinglistcount === 1 ? ' recept' : ' recepten') + ' op het winkellijstje';
+					$('#shoppinglist').text(text);
 				});
 
 				return false;

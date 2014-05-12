@@ -50,6 +50,13 @@ class Recipe
     private $readyTime;
 
     /**
+     * @var smallint
+     *
+     * @ORM\Column(name="aantal_personen", type="smallint")
+     */
+    private $aantalPersonen;
+
+    /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="recipe", cascade={"persist"})
     **/
     private $photos;
@@ -71,8 +78,21 @@ class Recipe
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="likedrecipes")
+     * @ORM\JoinTable(name="RecipeLikes")
      */
-    protected $likedby;
+    protected $likedBy;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="savedrecipes")
+     * @ORM\JoinTable(name="RecipeSaves")
+     */
+    protected $savedBy;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="shoppinglist")
+     * @ORM\JoinTable(name="Shoppinglist")
+     */
+    protected $shoppinglistFrom;
 
     /**
      * Constructor
@@ -299,35 +319,124 @@ class Recipe
     }
 
     /**
-     * Add likedby
+     * Add likedBy
      *
-     * @param \Design311\WebsiteBundle\Entity\User $likedby
+     * @param \Design311\WebsiteBundle\Entity\User $likedBy
      * @return Recipe
      */
-    public function addLikedby(\Design311\WebsiteBundle\Entity\User $likedby)
+    public function addLikedBy(\Design311\WebsiteBundle\Entity\User $likedBy)
     {
-        $this->likedby[] = $likedby;
+        $this->likedBy[] = $likedBy;
 
         return $this;
     }
 
     /**
-     * Remove likedby
+     * Remove likedBy
      *
-     * @param \Design311\WebsiteBundle\Entity\User $likedby
+     * @param \Design311\WebsiteBundle\Entity\User $likedBy
      */
-    public function removeLikedby(\Design311\WebsiteBundle\Entity\User $likedby)
+    public function removeLikedBy(\Design311\WebsiteBundle\Entity\User $likedBy)
     {
-        $this->likedby->removeElement($likedby);
+        $this->likedBy->removeElement($likedBy);
     }
 
     /**
-     * Get likedby
+     * Get likedBy
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getLikedby()
+    public function getLikedBy()
     {
-        return $this->likedby;
+        return $this->likedBy;
+    }
+
+    /**
+     * Add savedBy
+     *
+     * @param \Design311\WebsiteBundle\Entity\User $savedBy
+     * @return Recipe
+     */
+    public function addSavedBy(\Design311\WebsiteBundle\Entity\User $savedBy)
+    {
+        $this->savedBy[] = $savedBy;
+
+        return $this;
+    }
+
+    /**
+     * Remove savedBy
+     *
+     * @param \Design311\WebsiteBundle\Entity\User $savedBy
+     */
+    public function removeSavedBy(\Design311\WebsiteBundle\Entity\User $savedBy)
+    {
+        $this->savedBy->removeElement($savedBy);
+    }
+
+    /**
+     * Get savedBy
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSavedBy()
+    {
+        return $this->savedBy;
+    }
+
+    /**
+     * Add shoppinglistFrom
+     *
+     * @param \Design311\WebsiteBundle\Entity\User $shoppinglistFrom
+     * @return Recipe
+     */
+    public function addShoppinglistFrom(\Design311\WebsiteBundle\Entity\User $shoppinglistFrom)
+    {
+        $this->shoppinglistFrom[] = $shoppinglistFrom;
+
+        return $this;
+    }
+
+    /**
+     * Remove shoppinglistFrom
+     *
+     * @param \Design311\WebsiteBundle\Entity\User $shoppinglistFrom
+     */
+    public function removeShoppinglistFrom(\Design311\WebsiteBundle\Entity\User $shoppinglistFrom)
+    {
+        $this->shoppinglistFrom->removeElement($shoppinglistFrom);
+    }
+
+    /**
+     * Get shoppinglistFrom
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getShoppinglistFrom()
+    {
+        return $this->shoppinglistFrom;
+    }
+
+    /**
+     * Set aantalPersonen
+     *
+     * @param integer $aantalPersonen
+     * @return Recipe
+     */
+    public function setAantalPersonen($aantalPersonen)
+    {
+        $this->aantalPersonen = $aantalPersonen;
+
+        return $this;
+    }
+
+    /**
+     * Get aantalPersonen
+     *
+     * @return integer 
+     */
+    public function getAantalPersonen()
+    {
+        return $this->aantalPersonen;
     }
 }

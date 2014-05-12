@@ -20,7 +20,8 @@ class RecipeController extends Controller
         return $this->render(
             'Design311WebsiteBundle:Recipe:index.html.twig',
             array(
-                'recipes' => $recipes
+                'recipes' => $recipes,
+                'shoppinglistcount' => count($this->getUser()->getShoppinglist())
                 )
         );
     }
@@ -120,5 +121,122 @@ class RecipeController extends Controller
             'Design311WebsiteBundle:Recipe:add.html.twig',
             array('form' => $form->createView())
         );
+    }
+
+    public function shoppinglistAction()
+    {
+        $shoppinglist = $this->getUser()->getShoppinglist();
+
+        $ingredients = [];
+
+        foreach ($shoppinglist as $recipe) {
+            $recipeIngredients = $recipe->getRecipeIngredients();
+
+            foreach ($recipeIngredients as $recipeIngredient) {
+                $ingredient = $recipeIngredient->getIngredient()->getName();
+                if (array_key_exists($ingredient, $ingredients)) {
+                    $ingredients[$ingredient] = $this->smartadd(array($ingredients[$ingredient], $recipeIngredient->getAmount()));
+                }
+                else{
+                    $ingredients[$ingredient] = $recipeIngredient->getAmount();
+                }
+            }
+        }
+
+        return $this->render('Design311WebsiteBundle:Recipe:shoppinglist.html.twig', array(
+            'shoppinglist' => $shoppinglist,
+            'ingredients' => $ingredients
+        ));
+    }
+
+    function smartAdd($values){
+        $units = array(
+            'weight' => array(
+                0.001 => array('mg', 'miligram'),
+                1 => array('g', 'gram'),
+                1000 => array('kg', 'kilogram'),
+                1000000 => array('ton'),
+            ),
+            'length' => array(
+                0.001 => array('mm', 'milimeter'),
+                0.01 => array('cm', 'centimeter'),
+                0.1 => array('dm', 'decimeter'),
+                1 => array('m', 'meter'),
+                1000 => array('km', 'kilometer'),
+            ),
+            'liquid' => array(
+                0.001 => array('ml', 'mililiter'),
+                0.01 => array('cl', 'centiliter'),
+                0.1 => array('dl', 'deciliter'),
+                1 => array('l', 'liter'),
+            )
+        );
+
+        $total = '';
+        $unittype = false;
+
+        foreach ($values as $key => $value) {
+            preg_match_all('/([\d]+)/', $value, $numberparts);
+
+            $number = '';
+            preg_match('/'.$numberparts[0][count($numberparts[0])-1].'(.+)/',$value, $unit);
+            if (array_key_exists(1, $unit)) {
+                $currentUnit = $unit[1];
+            }
+            else{
+                $currentUnit = false;
+            }
+
+            foreach ($numberparts[0] as $key => $part) {
+                if (count($numberparts[0])-1 === $key && $key !== 0) {
+                    $number.= localeconv()['decimal_point'];
+                }
+                $number .= $part;
+            }
+
+            echo $number . $currentUnit;
+            echo "\r\n";
+
+            if ($currentUnit) {
+                if ($unittype == '') {
+                    foreach ($units as $type => $unit) {
+                        foreach ($unit as $key => $scale) {
+                            if (array_search($currentUnit, $scale) !== FALSE) {
+                                $unittype = $type;
+                                $number *= $key;
+                            }
+                        }
+                    }
+                }
+                else{
+                    $found = false;
+                    foreach ($units[$unittype] as $key => $scale) {
+                        if (array_search($currentUnit, $scale) !== FALSE) {
+                            $found = true;
+                            $number *= $key;
+                        }
+                    }
+                    if (!$found) {
+                        throw new Exception('Unit mismatch');
+                    }
+                }
+            }
+
+            $total += $number;
+        }
+
+        //echo ((strlen((int)$total) + 1) / 3);die;
+        /*  if (strlen((int)$total) > 5) {
+            if (array_key_exists(1000, $units[$unittype])) {
+                $total = $total / 1000 . $units[$unittype][1000][0];
+            }
+        }*/
+        if ($unittype) {
+            return $total . $units[$unittype][1][0];
+        }
+        else{
+            return $total;
+        }
+
     }
 }

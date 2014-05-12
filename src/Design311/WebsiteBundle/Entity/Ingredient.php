@@ -99,4 +99,14 @@ class Ingredient
     {
         $this->recipeIngredients->removeElement($recipeIngredients);
     }
+
+    /**
+     * Get recipeIngredient
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRecipeIngredient()
+    {
+        return $this->recipeIngredient;
+    }
 }

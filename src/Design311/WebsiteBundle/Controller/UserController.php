@@ -43,22 +43,10 @@ class UserController extends GeocodeController
             'action' => $this->generateUrl('design311website_register_create'),
         ));
 
-	    return $this->render(
-	        'Design311WebsiteBundle:User:register.html.twig',
-	        array('form' => $form->createView())
-	    );
-    }
+        $form->handleRequest($request);
 
-    public function createAction(Request $request)
-	{
-	    $em = $this->getDoctrine()->getManager();
-
-	    $form = $this->createForm(new UserType(), new User());
-
-	    $form->handleRequest($request);
-
-	    if ($form->isValid()) {
-	        $user = $form->getData();
+        if ($form->isValid()) {
+            $user = $form->getData();
 
             $latLng = $this->geocode($user->getAddress());
             if (is_object($latLng)) {
@@ -71,24 +59,25 @@ class UserController extends GeocodeController
                 $user->getAddress()->setLng(0);
             }
 
-	        //set default display name
-	        $user->setDisplayName($user->getUsername());
-	        
-	        //hash password
-	        $factory = $this->get('security.encoder_factory');
-			$encoder = $factory->getEncoder($user);
-			$password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-			$user->setPassword($password);
+            //set default display name
+            $user->setDisplayName($user->getUsername());
+            
+            //hash password
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($user);
+            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $user->setPassword($password);
 
-	        $em->persist($user);
-	        $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
-	        return $this->redirect($this->generateUrl('design311website_homepage'));
-	    }
+            return $this->redirect($this->generateUrl('design311website_homepage'));
+        }
 
 	    return $this->render(
 	        'Design311WebsiteBundle:User:register.html.twig',
 	        array('form' => $form->createView())
 	    );
-	}
+    }
 }

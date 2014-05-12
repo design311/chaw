@@ -1,0 +1,17 @@
+{% extends 'Design311WebsiteBundle::layout.html.twig' %}
+
+{% block content %}
+<ul>
+    {% for recipe in shoppinglist %}
+        {% for recipeingredient in recipe.recipeingredients %}
+			<li>{{recipeingredient.amount}} {{recipeingredient.ingredient}}</li>
+		{% endfor %}
+    {% endfor %}
+</ul>
+-----------------
+<ul>
+	{% for ingredient, amount in ingredients %}
+		<li>{{amount}} {{ingredient}}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

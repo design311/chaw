@@ -66,6 +66,16 @@ class User implements UserInterface
     protected $likedrecipes;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Recipe", mappedBy="savedby")
+     */
+    protected $savedrecipes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Recipe", mappedBy="shoppinglistFrom")
+     */
+    protected $shoppinglist;
+
+    /**
      * @inheritDoc
      */
     public function getUsername()
@@ -402,5 +412,71 @@ class User implements UserInterface
     public function getLikedrecipes()
     {
         return $this->likedrecipes;
+    }
+
+    /**
+     * Add savedrecipes
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $savedrecipes
+     * @return User
+     */
+    public function addSavedrecipe(\Design311\WebsiteBundle\Entity\Recipe $savedrecipes)
+    {
+        $this->savedrecipes[] = $savedrecipes;
+
+        return $this;
+    }
+
+    /**
+     * Remove savedrecipes
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $savedrecipes
+     */
+    public function removeSavedrecipe(\Design311\WebsiteBundle\Entity\Recipe $savedrecipes)
+    {
+        $this->savedrecipes->removeElement($savedrecipes);
+    }
+
+    /**
+     * Get savedrecipes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSavedrecipes()
+    {
+        return $this->savedrecipes;
+    }
+
+    /**
+     * Add shoppinglist
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $shoppinglist
+     * @return User
+     */
+    public function addShoppinglist(\Design311\WebsiteBundle\Entity\Recipe $shoppinglist)
+    {
+        $this->shoppinglist[] = $shoppinglist;
+
+        return $this;
+    }
+
+    /**
+     * Remove shoppinglist
+     *
+     * @param \Design311\WebsiteBundle\Entity\Recipe $shoppinglist
+     */
+    public function removeShoppinglist(\Design311\WebsiteBundle\Entity\Recipe $shoppinglist)
+    {
+        $this->shoppinglist->removeElement($shoppinglist);
+    }
+
+    /**
+     * Get shoppinglist
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getShoppinglist()
+    {
+        return $this->shoppinglist;
     }
 }
