@@ -5,6 +5,7 @@ namespace Design311\WebsiteBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Design311\WebsiteBundle\Form\Type\UserType;
 use Design311\WebsiteBundle\Entity\User;
@@ -79,5 +80,28 @@ class UserController extends GeocodeController
 	        'Design311WebsiteBundle:User:register.html.twig',
 	        array('form' => $form->createView())
 	    );
+    }
+
+    public function changeAantalAction(Request $request)
+    {
+
+        $aantal = (int)$request->get('aantal');
+
+        //prevent injection
+        if (is_int($aantal)) {
+            if ($aantal <= 0) {
+                $aantal = 1;
+            }
+            $this->getUser()->setAantalPersonen($aantal);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($this->getUser());
+            $em->flush();
+        }
+
+        if ($request->headers->get('referer')) {
+            return new RedirectResponse($request->headers->get('referer'));
+        }
+        return new RedirectResponse($this->generateUrl('design311website_homepage'));
     }
 }

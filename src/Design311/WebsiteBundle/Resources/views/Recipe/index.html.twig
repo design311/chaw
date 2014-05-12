@@ -56,7 +56,7 @@
 		$(function(){
 			$('.like-button').click(function(){
 				var link = $(this);
-				//todo use different attribute
+				//TODO use different attribute
 				//TODO add loader gif for slow json
 				$.getJSON( $(this).attr('href'), function( data ) {
 					if (data.status === 1) {

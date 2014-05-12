@@ -49,6 +49,13 @@ class User implements UserInterface
      * @ORM\Column(name="email", type="string", length=255)
      */
     protected $email;
+    
+    /**
+     * @var smallint
+     *
+     * @ORM\Column(name="aantal_personen", type="smallint")
+     */
+    private $aantalPersonen;
 
     /**
      * @ORM\ManyToOne(targetEntity="Address", cascade={"persist"})
@@ -478,5 +485,28 @@ class User implements UserInterface
     public function getShoppinglist()
     {
         return $this->shoppinglist;
+    }
+
+    /**
+     * Set aantalPersonen
+     *
+     * @param integer $aantalPersonen
+     * @return User
+     */
+    public function setAantalPersonen($aantalPersonen)
+    {
+        $this->aantalPersonen = $aantalPersonen;
+
+        return $this;
+    }
+
+    /**
+     * Get aantalPersonen
+     *
+     * @return integer 
+     */
+    public function getAantalPersonen()
+    {
+        return $this->aantalPersonen;
     }
 }

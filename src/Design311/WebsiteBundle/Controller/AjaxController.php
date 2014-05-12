@@ -76,7 +76,6 @@ class AjaxController extends Controller
         $em->persist($recipe);
         $em->flush();
 
-        //return new Response(count($this->getUser()->getShoppinglist()));
         return new JsonResponse(array(
             'status' => $response,
             'shoppinglistcount' => count($this->getUser()->getShoppinglist())

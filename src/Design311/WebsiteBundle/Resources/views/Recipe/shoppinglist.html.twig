@@ -1,13 +1,17 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
 {% block content %}
-<ul>
+<form action="{{ path('design311website_user_aantal_personen') }}" method="get">
+	<input type="text" name="aantal" value="{{app.user.aantalPersonen}}"><input type="submit">
+</form>
     {% for recipe in shoppinglist %}
+    <p><strong>{{recipe.title}}</strong> aantal pers {{recipe.aantalPersonen}}</p>
+	<ul>
         {% for recipeingredient in recipe.recipeingredients %}
 			<li>{{recipeingredient.amount}} {{recipeingredient.ingredient}}</li>
 		{% endfor %}
+	</ul>
     {% endfor %}
-</ul>
 -----------------
 <ul>
 	{% for ingredient, amount in ingredients %}
