@@ -1,9 +1,52 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
+{% block bodyclass %}receptenindex{% endblock %}
+
 {% block content %}
-	<a href="{{ path('design311website_recepten_add') }}">add</a>
-	<p><a href="{{ path('design311website_recepten_shoppinglist') }}" id="shoppinglist">{{shoppinglistcount}} {% if shoppinglistcount == 1 %}recept{% else %}recepten{% endif %} op het winkellijstje</a></p>
-	{% for recipe in recipes %}
+	<div class="newestrecipes">
+		<div class="container">
+			<h1 class="averia">Nieuwste recepten</h1>
+			<div class="flexslider">
+				<ul class="slides">
+				{% for recipe in newestrecipes %}
+					<li>
+					{% if recipe.photos[0] is defined %}
+						<div class="imagecontainer"><img src="{{ asset(recipe.photos[0].webPath) }}" alt="{{ recipe.photos[0].title }}" /></div>
+					{% endif %}
+						<div class="caption">
+							<a href="#">{{ recipe.title }}</a>
+						</div>
+					</li>
+				{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="recipecategories">	
+		<div class="container">
+			<div class="one-third sidebar">
+				<p><a href="{{ path('design311website_recepten_add') }}" class="button addrecipe">Recept toevoegen</a></p>
+				<p><a href="{{ path('design311website_recepten_shoppinglist') }}" class="button shoppinglist">Winkellijstje bekijken (<span class="shoppinglistcount">{{app.user.shoppinglist|length}}</span>)</a></p>
+				<p><h3>Recepten zoeken op ingredient</h3></p>
+				<p>FORM Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, quidem, omnis sapiente autem quaerat pariatur dolor fugit est assumenda in ipsam quis optio tenetur. Odit culpa soluta officiis odio provident!</p>
+			</div>
+			<div class="two-third main">
+				{% for key, category in categories %}
+				    <div class="category{% if loop.index is even %} even{% endif %}">
+				    	{% set lastrecipe = category.recipe | last %}
+				    	<div class="orangehover inversed">
+				    		<img src="{{ asset(lastrecipe.photos[0].webPath) }}" alt="{{ lastrecipe.photos[0].title }}" />
+				    		<div class="hover">
+				    			<h2 class="text">{{category.name}}</h2>
+				    		</div>
+				    	</div>
+				    </div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<!-- {% for recipe in recipes %}
 	<div>
 		{{recipe.title}}
 		{% for photo in recipe.photos %}
@@ -15,7 +58,7 @@
 		{% endfor %}
 		</ul>
 		{{recipe.category}}
-
+	
 		{% if app.user %}
 			<p><a href="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" class="like-button">
 				{% if app.user in recipe.likedBy %}
@@ -41,17 +84,22 @@
 		{% else %}
 		    <p><a href="{{ path('design311website_login') }}">Login om dit recept te liken</a></p>
 		{% endif %}
-
+	
 		{% if app.user == recipe.user %}
 		    <p><a href="{{ path('design311website_recepten_edit', {'recipeId': recipe.id}) }}">edit</a></p>
 		{% endif %}
 	</div>
 	<hr>
-	{% endfor %}
+	{% endfor %} -->
 
 {% endblock %}
 
+{% block head %}
+		<link rel="stylesheet" href="{{ asset('bundles/design311website/js/flexslider/flexslider.css') }}">
+{% endblock %}
+
 {% block footer %}
+	<script src="{{ asset('bundles/design311website/js/flexslider/jquery.flexslider-min.js') }}"></script>
 	<script>
 		$(function(){
 			$('.like-button').click(function(){
@@ -93,9 +141,7 @@
 					else{
 						link.text('add recipe to shoppinglist');
 					}
-					console.log(data.shoppinglistcount);
-					var text = data.shoppinglistcount + (data.shoppinglistcount === 1 ? ' recept' : ' recepten') + ' op het winkellijstje';
-					$('#shoppinglist').text(text);
+					$('.shoppinglistcount').text(data.shoppinglistcount);
 				});
 
 				return false;

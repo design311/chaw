@@ -14,14 +14,16 @@ class RecipeController extends Controller
 {
     public function indexAction()
     {
-        //TODO only get recepten in the future & not fully booked
         $recipes = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findAll();
+        $newestrecipes = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findBy(array(), array('id' => 'DESC'), 5);
+        $categories = $this->getDoctrine()->getRepository('Design311WebsiteBundle:RecipeCategory')->findAll();
 
         return $this->render(
             'Design311WebsiteBundle:Recipe:index.html.twig',
             array(
                 'recipes' => $recipes,
-                'shoppinglistcount' => count($this->getUser()->getShoppinglist())
+                'newestrecipes' => $newestrecipes,
+                'categories' => $categories,
                 )
         );
     }
@@ -197,7 +199,7 @@ class RecipeController extends Controller
             $numberAndUnit = $this->getNumberAndUnit($value);
             $number = $numberAndUnit[0];
             $currentUnit = $numberAndUnit[1];
-            
+
             if ($currentUnit) {
                 if ($unittype == '') {
                     foreach ($this->units as $type => $unit) {

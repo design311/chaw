@@ -20,7 +20,8 @@
         "sensio/generator-bundle": "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
         "ircmaxell/password-compat": "1.*",
-        "jms/serializer-bundle": "0.*"
+        "jms/serializer-bundle": "0.*",
+        "raulfraile/ladybug-bundle": "~1.0"
     },
     "scripts": {
         "post-install-cmd": [

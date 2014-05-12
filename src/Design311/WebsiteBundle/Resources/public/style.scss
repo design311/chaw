@@ -46,6 +46,12 @@ h6{
 	font-size:1.1em;
 }
 
+p{
+	margin:0 0 1em;
+}
+
+@include linkcolor($orange, 100);
+
 .averia{
 	font-family:'Averia Libre', Arial, 'Helvetica Neue', Helvetica, sans-serif;
 	font-weight:bold;
@@ -66,15 +72,33 @@ h6{
 }
 
 .container{
+	position:relative;
+	overflow:auto;
 	width:1240px;
-	padding:0 50px;
+	padding:50px;
 	margin:0 auto;
+}
+
+.column{
+	float:left;
+}
+
+.one-fourth{
+	width:25%;
+	padding-right:25px;
+}
+
+.three-fourth{
+	width:75%;
+	padding-left:25px;
 }
 
 .topbar{
 	background:$black;
 	.login{
 		float:right;
+		position:relative;
+		right:-15px;
 	}
 	a{
 		color:#eee;
@@ -100,10 +124,15 @@ h6{
 	border-bottom:3px solid $orange;
 	height:95px;
 	box-shadow:0 0 3px $black;
+	.container{
+		padding:0 50px;
+	}
 }
 
 .menu{
 	@include minireset;
+	position:relative;
+	left:-30px; //padding first item
 	li{
 		float:left;
 	}
@@ -327,34 +356,27 @@ h6{
 
 .restaurants{
 	position:relative;
-	.flexslider, .slides, li{
-		height:100%;
-	}
 
-	img{
-		height:100%;
-		min-width:100%;
-		width:auto;
+	.flexslider{	
+		img{
+			height:100%;
+			min-width:100%;
+			width:auto;
+			top:0;
+		}
 	}
 
 	.flex-control-nav{
 		position:absolute;
 		bottom:100px;
 		left:100px;
-		z-index:100;
-		line-height:0;
+		width:auto;
 		li{
-			display:inline-block;
+			margin-left:0;
 			margin-right:5px;
 		}
 		a{
-			display:block;
-			width:15px;
-			height:15px;
-			text-indent:-999em;
-			border:1px solid #fff;
-			border-radius:50px;
-			cursor:pointer;
+			border-color:#fff;
 			&.flex-active{
 				background:#fff;
 			}
@@ -378,6 +400,91 @@ h6{
 	}
 }
 
+
+.flexslider{
+	height:100%;
+	position:relative;
+	.slides, li{
+		height:100%;
+		overflow:hidden;
+	}
+	img{
+		position:relative;
+		top:-50%;
+	}
+}
+
+.flex-control-nav{
+	position:absolute;
+	right:0;
+	bottom:15px;
+	z-index:100;
+	line-height:0;
+	li{
+		display:inline-block;
+		margin-left:5px;
+	}
+	a{
+		display:block;
+		width:15px;
+		height:15px;
+		text-indent:-999em;
+		border:1px solid $black;
+		border-radius:50px;
+		cursor:pointer;
+		&.flex-active{
+			background:$black;
+		}
+	}
+}
+
 .map{
 	height:400px;
+}
+
+.newestrecipes{
+	h1{
+		margin-top:0;
+	}
+	.flexslider{
+		height:345px;
+	}
+	.imagecontainer{
+		height:300px;
+		overflow:hidden;
+	}
+	.caption{
+		line-height:45px;
+		position:absolute;
+		bottom:0;
+		left:0;
+		font-size:140%;
+		a{
+			text-decoration:none;
+			color:$black;
+			&:hover, &:focus, &:active{
+				color:lighten($black,20);
+			}
+		}
+	}
+}
+
+.recipecategories{
+	background:#eee;
+	border-bottom:1px solid #ddd;
+	border-top:1px solid #ddd;
+	.button{
+		border-radius:7px;
+		display:block;
+		padding:10px 20px;
+		text-decoration:none;
+	}
+	.addrecipe{
+		background:$orange;
+		color:#fff;
+	}
+	.shoppinglist{
+		background:#ddd;
+		color:$black;
+	}
 }

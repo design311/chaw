@@ -4,8 +4,8 @@
 	<meta charset="UTF-8">
 	<title>{% block title %}Chaw{% endblock %}</title>
 	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400|Averia+Libre' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css') }}">
 	{% block head %}{% endblock %}
+	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css') }}">
 </head>
 <body class="{% block bodyclass %}{% endblock %}">
 	{% if not (app.request.attributes.get('_route') == 'design311website_homepage' and not app.user) %}
@@ -13,7 +13,7 @@
 		<div class="topbar">
 			<div class="container">
 				{% if app.user %}
-				<div class="login"><a href="#">{{app.user.displayname}}</a><a href="{{ path('design311website_logout') }}">Logout</a></div>
+				<div class="login"><a href="#">{{app.user.displayname}}</a><a href="{{ path('design311website_recepten_shoppinglist') }}">Winkellijstje bekijken (<span class="shoppinglistcount">{{app.user.shoppinglist|length}}</span>)</a><a href="{{ path('design311website_logout') }}">Logout</a></div>
 				{% else %}
 				<div class="login"><a href="{{ path('design311website_login') }}">Login</a><a href="{{ path('design311website_register') }}">Registreren</a></div>
 				{% endif %}
@@ -22,7 +22,7 @@
 		</div>
 		<div class="container">
 			<ul class="menu">
-				<li class="logo"><a href="#">Chaw</a></li>
+				<li class="logo"><a href="{{ path('design311website_homepage') }}">Chaw</a></li>
 				<li><a href="{{ path('design311website_dinners') }}">Dinners</a></li>
 				<li><a href="{{ path('design311website_recepten') }}">Recepten</a></li>
 				<li><a href="#">Restaurants</a></li>
@@ -36,7 +36,7 @@
 	
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<script src="{{ asset('bundles/design311website/js/script.js') }}"></script>
 	{% block footer %}{% endblock %}
+	<script src="{{ asset('bundles/design311website/js/script.js') }}"></script>
 </body>
 </html>

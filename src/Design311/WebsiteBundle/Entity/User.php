@@ -68,12 +68,12 @@ class User implements UserInterface
     protected $recipes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Recipe", mappedBy="likedby")
+     * @ORM\ManyToMany(targetEntity="Recipe", mappedBy="likedBy")
      */
     protected $likedrecipes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Recipe", mappedBy="savedby")
+     * @ORM\ManyToMany(targetEntity="Recipe", mappedBy="savedBy")
      */
     protected $savedrecipes;
 

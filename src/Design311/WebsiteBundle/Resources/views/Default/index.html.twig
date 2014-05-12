@@ -45,19 +45,19 @@
 				<p class="signup"><a href="{{ path('design311website_register') }}" class="register">Registreren</a> of <a href="{{ path('design311website_recepten') }}">bekijk alle recepten</a></p>
 				<p class="login">Al lid? <a href="{{ path('design311website_login') }}">Meld je aan</a></p>
 				<div class="onehalf">
-					<div class="recept">
+					<div class="recept orangehover">
 						<img src="{{ asset('bundles/design311website/img/pictures/food%20(1).jpg') }}" alt="">
 						<div class="hover">
-							<h2>Pittige Kipfilet a la Pizzaiola</h2>
+							<h2 class="text">Pittige Kipfilet a la Pizzaiola</h2>
 						</div>
 					</div>
 					<p class="likes">Nog niemand heeft dit geproefd, wees de eerste!</p>
 				</div>
 				<div class="onehalf last">
-					<div class="recept">
+					<div class="recept orangehover">
 						<img src="{{ asset('bundles/design311website/img/pictures/food%20(2).jpg') }}" alt="">
 						<div class="hover">
-							<h2>Nacho cheese ovenschotel</h2>
+							<h2 class="text">Nacho cheese ovenschotel</h2>
 						</div>
 					</div>
 					<p class="likes">5 mensen vinden dit lekker</p>
@@ -87,6 +87,7 @@
 
 {% block footer %}
 	<script src="{{ asset('bundles/design311website/js/flexslider/jquery.flexslider-min.js') }}"></script>
+	<script src="{{ asset('bundles/design311website/js/script.js') }}"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
 	<script>
 		$(function(){
@@ -137,11 +138,5 @@
 				center: coord
 			});
 		})
-
-		$(window).load(function() {
-			$('.flexslider').flexslider({
-				directionNav: false
-			});
-		});
 	</script>
 {% endblock %}

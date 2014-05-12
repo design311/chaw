@@ -20,7 +20,7 @@ security:
 
     firewalls:
         main:
-            pattern: /.*
+            pattern: /
             provider: user_db
             form_login:
                 use_referer: true
@@ -33,7 +33,7 @@ security:
             remember_me:
                 key: V!UtONAWvl2gL-?ORKTm3gy32
                 lifetime: 2592000
-                path: /.*
+                path: /
                 domain: ~
             security: true
             anonymous: true

@@ -23,12 +23,12 @@ class RecipeIngredient
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="RecipeIngredients")
+     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="recipeIngredients")
      **/
     private $recipes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ingredient", inversedBy="RecipeIngredient", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Ingredient", inversedBy="recipeIngredient", cascade={"persist"})
      **/
     private $ingredient;
 
