@@ -43,6 +43,18 @@ class RecipeController extends Controller
         );
     }
 
+    public function detailAction($category, $permalink)
+    {
+        $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
+
+        return $this->render(
+            'Design311WebsiteBundle:Recipe:detail.html.twig',
+            array(
+                'recipe' => $recipe,
+                )
+        );
+    }
+
     public function addAction(Request $request)
     {
         $form = $this->createForm(new RecipeType(), new Recipe());
@@ -74,6 +86,7 @@ class RecipeController extends Controller
                 }
             }
 
+            $recept->setPermalink(rawurlencode($recept->getTitle()));
             $recept->setUser($this->getUser());
 
             $em->persist($recept);

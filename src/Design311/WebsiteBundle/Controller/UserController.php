@@ -37,12 +37,10 @@ class UserController extends GeocodeController
         );
     }
 
-    public function registerAction()
+    public function registerAction(Request $request)
     {
     	$user = new User();
-        $form = $this->createForm(new UserType(), $user, array(
-            'action' => $this->generateUrl('design311website_register_create'),
-        ));
+        $form = $this->createForm(new UserType(), $user);
 
         $form->handleRequest($request);
 

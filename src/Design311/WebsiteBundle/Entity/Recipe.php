@@ -31,6 +31,13 @@ class Recipe
     /**
      * @var string
      *
+     * @ORM\Column(name="permalink", type="string", length=255)
+     */
+    private $permalink;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="recipe", type="text")
      */
     private $recipe;
@@ -438,5 +445,28 @@ class Recipe
     public function getAantalPersonen()
     {
         return $this->aantalPersonen;
+    }
+
+    /**
+     * Set permalink
+     *
+     * @param string $permalink
+     * @return Recipe
+     */
+    public function setPermalink($permalink)
+    {
+        $this->permalink = $permalink;
+
+        return $this;
+    }
+
+    /**
+     * Get permalink
+     *
+     * @return string 
+     */
+    public function getPermalink()
+    {
+        return $this->permalink;
     }
 }

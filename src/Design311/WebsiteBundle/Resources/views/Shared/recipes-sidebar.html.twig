@@ -1,6 +1,11 @@
 <div class="one-third sidebar">
 	<p><a href="{{ path('design311website_recepten_add') }}" class="button addrecipe"><i></i>Recept toevoegen</a></p>
 	<p><a href="{{ path('design311website_recepten_shoppinglist') }}" class="button shoppinglist"><i></i>Winkellijstje bekijken (<span class="shoppinglistcount">{% if app.user %}{{app.user.shoppinglist|length}}{% else %}0{% endif %}</span>)</a></p>
+	{% if detail is defined and detail == true %}
+	<p><a href="#" class="like ajax-button button{% if app.user in recipe.likedBy %} active{% endif %}" data-ajax="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" title="Recept lekker vinden"><i></i>Vind ik lekker</a></p>
+	<p><a href="#" class="save ajax-button button{% if app.user in recipe.savedBy %} active{% endif %}" data-ajax="{{path('design311website_recepten_save', {'recipeId': recipe.id})}}" title="Recept bewaren"><i></i>Bewaren voor later</a></p>
+	<p><a href="#" class="shop ajax-button button{% if app.user in recipe.shoppinglistFrom %} active{% endif %}" data-ajax="{{path('design311website_recepten_shop', {'recipeId': recipe.id})}}" title="Recept toevoegen aan winkellijstje"><i></i>Toevoegen aan winkellijstje</a></p>
+	{% endif %}
 	<p><h3>Recepten zoeken op ingredient</h3></p>
 	<p>FORM Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, quidem, omnis sapiente autem quaerat pariatur dolor fugit est assumenda in ipsam quis optio tenetur. Odit culpa soluta officiis odio provident!</p>
 </div>

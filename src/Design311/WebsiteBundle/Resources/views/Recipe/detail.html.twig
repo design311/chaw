@@ -1,0 +1,72 @@
+{% extends 'Design311WebsiteBundle::layout.html.twig' %}
+
+{% block bodyclass %}recipepage recipe-detail{% endblock %}
+
+{% block content %}
+	<div class="fixedfix"></div>
+	<div class="newestrecipes detailheader" style="background-image:url('{{ asset(recipe.photos.0.webPath)}}');">
+		<div class="title">
+			<div class="container">
+				<h1 class="averia">{{recipe.title}}</h1>
+				<ul class="recipemeta">
+					<li><i class="pot sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
+					<li><i class="bestek sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="recipecontent">	
+		<div class="container">
+			{% include 'Design311WebsiteBundle:Shared:recipes-sidebar.html.twig' with {'detail':true} %}
+			<div class="two-third main{% if recipe.photos|length < 4 %} recipephotos-{{recipe.photos|length}}{% else %} recipephotos-3{% endif %}">
+				<div class="recipephotos">
+					{% for key, photo in recipe.photos if key == 0 or key == 1 or key == 2 %}
+						<img src="{{ asset(photo.webPath)}}" alt="{{photo.title}}">
+					{% endfor %}
+				</div>
+				<div class="ingredients">
+					<h2>Ingredienten</h2>
+					<ul>
+					{% for ingredient in recipe.recipeingredients %}
+						<li>{{ingredient.amount}} {{ingredient.ingredient}}</li>
+					{% endfor %}
+					</ul>
+				</div>
+				<div class="clear"></div>
+				<h2>Bereidingswijze</h2>
+				{{recipe.recipe|markdown}}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block footer %}
+	<script>
+
+//TODO external script file
+
+		$(function(){
+			$('.ajax-button').click(function(){
+				var link = $(this);
+
+				//TODO use different attribute
+				//TODO add loader gif for slow json
+				$.getJSON( $(this).data('ajax'), function( data ) {
+					console.log(data);
+					if (data.status === 1) {
+						link.addClass('active');
+					}
+					else{
+						link.removeClass('active');
+					}
+
+					if (link.hasClass('shop')) {
+						$('.shoppinglistcount').text(data.shoppinglistcount);
+					};
+				});
+
+				return false;
+			})
+		})
+	</script>
+{% endblock %}

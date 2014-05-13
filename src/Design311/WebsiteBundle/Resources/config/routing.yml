@@ -59,3 +59,7 @@ design311website_recepten_shop:
 design311website_recepten_edit:
     path:     /recepten/{recipeId}/edit/
     defaults: { _controller: Design311WebsiteBundle:Recipe:edit }
+
+design311website_recepten_detail:
+    path:     /recepten/{category}/{permalink}/
+    defaults: { _controller: Design311WebsiteBundle:Recipe:detail }

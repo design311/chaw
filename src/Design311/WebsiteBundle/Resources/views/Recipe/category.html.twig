@@ -15,7 +15,7 @@
 			<div class="two-third main">
 				{% for recipe in recipes %}
 				    <div class="recipeblock recipe{% if loop.index is even %} even{% endif %}">
-			    		<a href="{{ path('design311website_recepten_category', {'category': category.plural|lower})}}">
+			    		<a href="{{ path('design311website_recepten_detail', {'category': recipe.category.plural|lower, 'permalink': recipe.permalink})}}">
 				    		<img src="{{ asset(recipe.photos[0].webPath) }}" alt="{{ recipe.photos[0].title }}" />
 							<p class="title">{{recipe.title}}</p>
 			    		</a>

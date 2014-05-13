@@ -35,6 +35,7 @@ security:
                 lifetime: 2592000
                 path: /
                 domain: ~
+                always_remember_me: true
             security: true
             anonymous: true
 

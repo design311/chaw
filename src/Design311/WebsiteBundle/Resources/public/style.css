@@ -441,7 +441,7 @@ table {
 body {
   overflow-y: scroll; }
 
-html, body {
+html, body, .contentwrapper {
   height: 100%; }
 
 body {
@@ -475,6 +475,10 @@ h6 {
 p {
   margin: 0 0 1em; }
 
+img {
+  width: 100%;
+  height: auto; }
+
 a {
   color: #ff5c23; }
   a:hover, a:focus, a:active {
@@ -483,6 +487,12 @@ a {
 .averia, .menu .logo, .home h1, .recepten h2 {
   font-family: 'Averia Libre', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: bold; }
+
+.sprite {
+  background-image: url("img/sprite.png");
+  display: inline-block;
+  width: 18px;
+  height: 18px; }
 
 .clear {
   clear: both; }
@@ -789,34 +799,54 @@ a {
     .newestrecipes .caption a:hover, .newestrecipes .caption a:focus, .newestrecipes .caption a:active {
       color: #666666; }
 
+.button {
+  border-radius: 7px;
+  display: block;
+  padding: 15px 20px;
+  text-decoration: none;
+  line-height: 18px;
+  color: #333333;
+  background: #ddd; }
+  .button i {
+    display: block;
+    float: left;
+    width: 18px;
+    height: 18px;
+    margin-right: 7px;
+    background-image: url("img/sprite.png");
+    background-repeat: no-repeat; }
+  .button:hover, .button:focus, .button:active {
+    box-shadow: 0 0 1px #333333; }
+
+.like, .like i {
+  background-position: 0 0; }
+  .like.active, .like i.active {
+    background-position: 0 -18px; }
+
+.save, .save i {
+  background-position: -18px 0; }
+  .save.active, .save i.active {
+    background-position: -18px -18px; }
+
+.shop, .shop i {
+  background-position: -36px 0; }
+  .shop.active, .shop i.active {
+    background-position: -36px -18px; }
+
 .recipecontent {
   background: #eee;
   border-bottom: 1px solid #ddd;
   border-top: 1px solid #ddd; }
-  .recipecontent .button {
-    border-radius: 7px;
-    display: block;
-    padding: 15px 20px;
-    text-decoration: none;
-    line-height: 18px; }
-    .recipecontent .button i {
-      display: block;
-      float: left;
-      width: 18px;
-      height: 18px;
-      margin-right: 7px;
-      background-image: url("img/sprite.png");
-      background-repeat: no-repeat; }
   .recipecontent .addrecipe {
     background: #ff5c23;
     color: #fff; }
     .recipecontent .addrecipe i {
       background-position: -54px 0; }
   .recipecontent .shoppinglist {
-    background: #ddd;
-    color: #333333; }
+    background: #333333;
+    color: #fff; }
     .recipecontent .shoppinglist i {
-      background-position: -36px 0; }
+      background-position: -54px -18px; }
   .recipecontent .recipeblock {
     width: 50%;
     float: left;
@@ -832,6 +862,10 @@ a {
     height: 200px; }
   .recipecontent .recipe {
     text-align: center; }
+    .recipecontent .recipe a {
+      text-decoration: none; }
+    .recipecontent .recipe .title {
+      font-size: 140%; }
     .recipecontent .recipe .actions {
       margin: 0;
       padding: 0;
@@ -852,18 +886,93 @@ a {
           width: 18px;
           height: 18px;
           margin-top: 6px;
-          background: url("img/sprite.png") no-repeat; }
-          .recipecontent .recipe .actions li a.like {
-            background-position: 0 0; }
-          .recipecontent .recipe .actions li a.save {
-            background-position: -18px 0; }
-          .recipecontent .recipe .actions li a.shop {
-            background-position: -36px 0; }
-          .recipecontent .recipe .actions li a.active.like {
-            background-position: 0 -18px; }
-          .recipecontent .recipe .actions li a.active.save {
-            background-position: -18px -18px; }
-          .recipecontent .recipe .actions li a.active.shop {
-            background-position: -36px -18px; }
+          background-image: url("img/sprite.png"); }
           .recipecontent .recipe .actions li a:hover, .recipecontent .recipe .actions li a:focus, .recipecontent .recipe .actions li a:active {
             opacity: 0.5; }
+
+.recipephotos-1 .recipephotos {
+  float: left;
+  width: 50%;
+  padding-right: 25px; }
+.recipephotos-1 .ingredients {
+  float: left;
+  width: 50%;
+  padding-left: 25px; }
+  .recipephotos-1 .ingredients h2 {
+    margin-top: 0; }
+
+.recipephotos-2 .recipephotos img {
+  float: left;
+  width: 50%; }
+
+.recipephotos-3 .recipephotos img {
+  float: left;
+  width: 33.33%; }
+
+.recipemeta {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 18px; }
+  .recipemeta li {
+    float: left;
+    position: relative;
+    padding-left: 22px; }
+    .recipemeta li:not(:last-child):after {
+      content: "-";
+      color: #aaa;
+      padding: 0 5px; }
+  .recipemeta i {
+    position: absolute;
+    left: 0; }
+
+.pot {
+  background-position: -72px -18px; }
+
+.bestek {
+  background-position: -72px 0; }
+
+.detailheader {
+  height: 100%;
+  background-size: cover;
+  position: relative; }
+  .detailheader.fixed {
+    position: fixed;
+    top: -100%;
+    left: 0;
+    margin-top: 126px;
+    width: 100%;
+    z-index: 600; }
+  .detailheader .title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    height: 126px;
+    cursor: pointer; }
+  .detailheader .container {
+    padding: 20px 50px 30px; }
+  .detailheader h1 {
+    margin-bottom: 10px;
+    line-height: 1; }
+
+.recipe-detail .header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 500; }
+.recipe-detail.fixed .fixedfix {
+  height: 100%;
+  margin-top: -126px; }
+.recipe-detail.fixed .detailheader {
+  position: fixed;
+  top: -100%;
+  left: 0;
+  margin-top: 126px;
+  width: 100%;
+  z-index: 600; }
+.recipe-detail.fixed .recipecontent {
+  margin-top: 126px; }

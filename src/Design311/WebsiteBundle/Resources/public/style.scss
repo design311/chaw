@@ -6,7 +6,7 @@ $black:#333;
 $orange:#ff5c23;
 
 
-html, body{
+html, body, .contentwrapper{
 	height:100%;
 }
 
@@ -50,11 +50,23 @@ p{
 	margin:0 0 1em;
 }
 
+img{
+	width:100%;
+	height:auto;
+}
+
 @include linkcolor($orange, 100);
 
 .averia{
 	font-family:'Averia Libre', Arial, 'Helvetica Neue', Helvetica, sans-serif;
 	font-weight:bold;
+}
+
+.sprite{
+	background-image:url('img/sprite.png');
+	display:inline-block;
+	width:18px;
+	height:18px;
 }
 
 .clear{
@@ -468,26 +480,51 @@ p{
 	}
 }
 
+.button{
+	border-radius:7px;
+	display:block;
+	padding:15px 20px;
+	text-decoration:none;
+	line-height:18px;
+	color:$black;
+	background:#ddd;
+	i{
+		display:block;
+		float:left;
+		width:18px;
+		height:18px;
+		margin-right:7px;
+		background-image:url('img/sprite.png');
+		background-repeat:no-repeat;
+	}
+	&:hover, &:focus, &:active{
+		box-shadow:0 0 1px $black;
+	}
+}
+
+.like, .like i{
+	background-position:0 0;
+	&.active{
+		background-position:0 -18px;
+	}
+}
+.save, .save i{
+	background-position:-18px 0;
+	&.active{
+		background-position:-18px -18px;
+	}
+}
+.shop, .shop i{
+	background-position:-36px 0;
+	&.active{
+		background-position:-36px -18px;
+	}
+}
+
 .recipecontent{
 	background:#eee;
 	border-bottom:1px solid #ddd;
 	border-top:1px solid #ddd;
-	.button{
-		border-radius:7px;
-		display:block;
-		padding:15px 20px;
-		text-decoration:none;
-		line-height:18px;
-		i{
-			display:block;
-			float:left;
-			width:18px;
-			height:18px;
-			margin-right:7px;
-			background-image:url('img/sprite.png');
-			background-repeat:no-repeat;
-		}
-	}
 	.addrecipe{
 		background:$orange;
 		color:#fff;
@@ -496,10 +533,10 @@ p{
 		}
 	}
 	.shoppinglist{
-		background:#ddd;
-		color:$black;
+		background:$black;
+		color:#fff;
 		i{
-			background-position:-36px 0;
+			background-position:-54px -18px;
 		}
 	}
 	.recipeblock{
@@ -522,6 +559,12 @@ p{
 
 	.recipe{
 		text-align:center;
+		a{
+			text-decoration:none;
+		}
+		.title{
+			font-size:140%;
+		}
 		.actions{
 			@include minireset;
 			width:100px;
@@ -540,32 +583,131 @@ p{
 					width:18px;
 					height:18px;
 					margin-top:6px;
-					background:url('img/sprite.png') no-repeat;
-					&.like{
-						background-position:0 0;
-					}
-					&.save{
-						background-position:-18px 0;
-					}
-					&.shop{
-						background-position:-36px 0;
-					}
-					&.active{
-						&.like{
-							background-position:0 -18px;
-						}
-						&.save{
-							background-position:-18px -18px;
-						}
-						&.shop{
-							background-position:-36px -18px;
-						}
-					}
+					background-image:url('img/sprite.png');
 					&:hover, &:focus, &:active{
 						opacity:0.5;
 					}
 				}
 			}
+		}
+	}
+}
+
+.recipephotos-1{
+	.recipephotos{
+		float:left;
+		width:50%;
+		padding-right:25px;
+	}
+	.ingredients{
+		float:left;
+		width:50%;
+		padding-left:25px;
+		h2{
+			margin-top:0;
+		}
+	}
+}
+
+.recipephotos-2{
+	.recipephotos{
+		img{
+			float:left;
+			width:50%;
+		}
+	}
+}
+
+.recipephotos-3{
+	.recipephotos{
+		img{
+			float:left;
+			width:33.33%;
+		}
+	}
+}
+
+.recipemeta{
+	@include minireset;
+	line-height:18px;
+	li{
+		float:left;
+		position:relative;
+		padding-left:22px;
+		&:not(:last-child):after{
+			content:"-";
+			color:#aaa;
+			padding:0 5px;
+		}
+	}
+	i{
+		position:absolute;
+		left:0;
+	}
+}
+
+.pot{
+	background-position:-72px -18px;
+}
+
+.bestek{
+	background-position:-72px 0;
+}
+
+.detailheader{
+	height:100%;
+	background-size:cover;
+	position:relative;
+	&.fixed{
+		position:fixed;
+		top:-100%;
+		left:0;
+		margin-top:126px;
+		width:100%;
+		z-index:600;
+	}
+	.title{
+		position:absolute;
+		bottom:0;
+		left:0;
+		width:100%;
+		background:rgba(#000,0.8);
+		color:#fff;
+		height:126px;
+		cursor:pointer;
+	}
+	.container{
+		padding:20px 50px 30px;
+	}
+	h1{
+		margin-bottom:10px;
+		line-height:1;
+	}
+}
+
+.recipe-detail{
+	.header{
+		position:absolute;
+		top:0;
+		left:0;
+		width:100%;
+		z-index:500;
+	}
+	&.fixed{
+		.fixedfix{
+			height:100%;
+			margin-top:-126px;
+		}
+		.detailheader{
+			position:fixed;
+			top:-100%;
+			left:0;
+			margin-top:126px;
+			width:100%;
+			z-index:600;
+		}
+		.recipecontent{
+			margin-top:126px;
 		}
 	}
 }

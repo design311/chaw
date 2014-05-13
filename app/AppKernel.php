@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
+            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Design311\WebsiteBundle\Design311WebsiteBundle(),
         );
 

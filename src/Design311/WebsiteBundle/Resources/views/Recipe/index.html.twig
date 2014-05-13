@@ -26,7 +26,7 @@
 		<div class="container">
 			{% include 'Design311WebsiteBundle:Shared:recipes-sidebar.html.twig' %}
 			<div class="two-third main">
-				{% for key, category in categories %}
+				{% for category in categories %}
 				    <div class="recipeblock{% if loop.index is even %} even{% endif %}">
 				    	{% set lastrecipe = category.recipe | last %}
 				    	<div class="orangehover inversed">
