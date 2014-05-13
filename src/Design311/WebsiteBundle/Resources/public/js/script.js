@@ -3,7 +3,9 @@ $(function(){
 
 //images loaded
 $(window).load(function() {
-	$('.flexslider').flexslider({
-		directionNav: false
-	});
+	if (typeof $.flexslider == 'function') { 
+		$('.flexslider').flexslider({
+			directionNav: false
+		});
+	}
 });

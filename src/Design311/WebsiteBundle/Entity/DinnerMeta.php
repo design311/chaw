@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DinnerMeta
  *
- * @ORM\Table()
+ * @ORM\Table(name="dinnermeta")
  * @ORM\Entity
  */
 class DinnerMeta

@@ -28,6 +28,21 @@ class RecipeController extends Controller
         );
     }
 
+    public function categoryAction($category)
+    {
+        //TODO pagination
+        $category = $this->getDoctrine()->getRepository('Design311WebsiteBundle:RecipeCategory')->findOneByPlural(ucfirst($category));
+        $recipes = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findBy(array('category' => $category->getId()), array('id' => 'DESC'));
+
+        return $this->render(
+            'Design311WebsiteBundle:Recipe:category.html.twig',
+            array(
+                'recipes' => $recipes,
+                'category' => $category,
+                )
+        );
+    }
+
     public function addAction(Request $request)
     {
         $form = $this->createForm(new RecipeType(), new Recipe());

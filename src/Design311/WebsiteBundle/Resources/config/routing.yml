@@ -32,6 +32,18 @@ design311website_recepten:
     path:     /recepten/
     defaults: { _controller: Design311WebsiteBundle:Recipe:index }
 
+design311website_recepten_add:
+    path:     /recepten/add/
+    defaults: { _controller: Design311WebsiteBundle:Recipe:add }
+
+design311website_recepten_shoppinglist:
+    path:     /recepten/shoppinglist/
+    defaults: { _controller: Design311WebsiteBundle:Recipe:shoppinglist }
+
+design311website_recepten_category:
+    path:     /recepten/{category}/
+    defaults: { _controller: Design311WebsiteBundle:Recipe:category }
+
 design311website_recepten_like:
     path:     /recepten/{recipeId}/like/
     defaults: { _controller: Design311WebsiteBundle:Ajax:likeRecipe }
@@ -47,11 +59,3 @@ design311website_recepten_shop:
 design311website_recepten_edit:
     path:     /recepten/{recipeId}/edit/
     defaults: { _controller: Design311WebsiteBundle:Recipe:edit }
-
-design311website_recepten_add:
-    path:     /recepten/add/
-    defaults: { _controller: Design311WebsiteBundle:Recipe:add }
-
-design311website_recepten_shoppinglist:
-    path:     /recepten/shoppinglist/
-    defaults: { _controller: Design311WebsiteBundle:Recipe:shoppinglist }

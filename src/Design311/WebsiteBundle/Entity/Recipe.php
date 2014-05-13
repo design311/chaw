@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Recipe
  *
- * @ORM\Table()
+ * @ORM\Table(name="recipe")
  * @ORM\Entity
  */
 class Recipe
@@ -78,19 +78,19 @@ class Recipe
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="likedrecipes")
-     * @ORM\JoinTable(name="RecipeLikes")
+     * @ORM\JoinTable(name="recipelikes")
      */
     protected $likedBy;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="savedrecipes")
-     * @ORM\JoinTable(name="RecipeSaves")
+     * @ORM\JoinTable(name="recipesaves")
      */
     protected $savedBy;
 
     /**
      * @ORM\ManyToMany(targetEntity="User", inversedBy="shoppinglist")
-     * @ORM\JoinTable(name="Shoppinglist")
+     * @ORM\JoinTable(name="shoppinglist")
      */
     protected $shoppinglistFrom;
 

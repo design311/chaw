@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * RecipeCategory
  *
- * @ORM\Table()
+ * @ORM\Table(name="recipecategory")
  * @ORM\Entity
  */
 class RecipeCategory
@@ -27,6 +27,13 @@ class RecipeCategory
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="plural", type="string", length=255)
+     */
+    private $plural;
 
     /**
      * @ORM\OneToMany(targetEntity="Recipe", mappedBy="category")
@@ -110,5 +117,28 @@ class RecipeCategory
     public function __tostring()
     {
         return $this->name;
+    }
+
+    /**
+     * Set plural
+     *
+     * @param string $plural
+     * @return RecipeCategory
+     */
+    public function setPlural($plural)
+    {
+        $this->plural = $plural;
+
+        return $this;
+    }
+
+    /**
+     * Get plural
+     *
+     * @return string 
+     */
+    public function getPlural()
+    {
+        return $this->plural;
     }
 }

@@ -1,0 +1,90 @@
+{% extends 'Design311WebsiteBundle::layout.html.twig' %}
+
+{% block bodyclass %}recipepage{% endblock %}
+
+{% block content %}
+	<div class="newestrecipes">
+		<div class="container">
+			<h1 class="averia">{{category.plural}}</h1>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, inventore, vel, sunt labore eius blanditiis ratione enim fuga dolorem id quam nisi dicta necessitatibus expedita neque corrupti adipisci quas quos.</p>
+		</div>
+	</div>
+	<div class="recipecontent">	
+		<div class="container">
+			{% include 'Design311WebsiteBundle:Shared:recipes-sidebar.html.twig' %}
+			<div class="two-third main">
+				{% for recipe in recipes %}
+				    <div class="recipeblock recipe{% if loop.index is even %} even{% endif %}">
+			    		<a href="{{ path('design311website_recepten_category', {'category': category.plural|lower})}}">
+				    		<img src="{{ asset(recipe.photos[0].webPath) }}" alt="{{ recipe.photos[0].title }}" />
+							<p class="title">{{recipe.title}}</p>
+			    		</a>
+						<ul class="actions">
+							<li><a href="#" class="like ajax-button{% if app.user in recipe.likedBy %} active{% endif %}" data-ajax="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" title="Recept lekker vinden">Recept lekker vinden</a></li>
+							<li><a href="#" class="save ajax-button{% if app.user in recipe.savedBy %} active{% endif %}" data-ajax="{{path('design311website_recepten_save', {'recipeId': recipe.id})}}" title="Recept bewaren">Recept bewaren</a></li>
+							<li><a href="#" class="shop ajax-button{% if app.user in recipe.shoppinglistFrom %} active{% endif %}" data-ajax="{{path('design311website_recepten_shop', {'recipeId': recipe.id})}}" title="Recept toevoegen aan winkellijstje">Recept toevoegen aan winkellijstje</a></li>
+						</ul>
+				    </div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block footer %}
+	<script>
+		$(function(){
+			$('.ajax-button').click(function(){
+				var link = $(this);
+
+				console.log(link);
+				//TODO use different attribute
+				//TODO add loader gif for slow json
+				$.getJSON( $(this).data('ajax'), function( data ) {
+					console.log(data);
+					if (data.status === 1) {
+						link.addClass('active');
+					}
+					else{
+						link.removeClass('active');
+					}
+
+					if (link.hasClass('shop')) {
+						$('.shoppinglistcount').text(data.shoppinglistcount);
+					};
+				});
+
+				return false;
+			})
+			/*$('.save-button').click(function(){
+				var link = $(this);
+				//TODO add loader gif for slow json
+				$.getJSON( $(this).attr('href'), function( data ) {
+					if (data.status === 1) {
+						link.text('remove this recipe from saves');
+					}
+					else{
+						link.text('save this recipe');
+					}
+				});
+
+				return false;
+			})
+			$('.shop-button').click(function(){
+				var link = $(this);
+				//TODO add loader gif for slow json
+				$.getJSON( $(this).attr('href'), function( data ) {
+					if (data.status === 1) {
+						link.text('remove this recipe from shoppinglist');
+					}
+					else{
+						link.text('add recipe to shoppinglist');
+					}
+					$('.shoppinglistcount').text(data.shoppinglistcount);
+				});
+
+				return false;
+			})*/
+		})
+	</script>
+{% endblock %}

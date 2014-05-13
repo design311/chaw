@@ -79,18 +79,64 @@ p{
 	margin:0 auto;
 }
 
-.column{
+.one-third{
 	float:left;
-}
-
-.one-fourth{
-	width:25%;
+	width:33.33%;
 	padding-right:25px;
 }
 
-.three-fourth{
-	width:75%;
+.two-third{
+	float:left;
+	width:66.66%;
 	padding-left:25px;
+}
+
+.orangehover{
+	position:relative;
+	overflow:hidden;
+	img{
+		position:absolute;	
+		top:0;
+		left:0;
+		min-height:100%;
+		height:auto;
+		width:100%;
+	}
+	.hover{
+		position:absolute;	
+		top:-100%;
+		left:0;
+		z-index:100;
+		background:$orange;
+		background:rgba($orange,0.9);
+		height:100%;
+		width:100%;
+		color:#fff;
+		-webkit-transition:top 1s ease;
+		transition:top 1s ease;
+		.text{
+			position:absolute;
+			bottom:0;
+			left:0;
+			padding:25px;
+			margin:0;
+		}
+	}
+	&:hover{
+		.hover{
+			top:0;
+		}
+	}
+	&.inversed{
+		.hover{
+			top:0;
+		}
+		&:hover{
+			.hover{
+				top:-100%;
+			}
+		}
+	}
 }
 
 .topbar{
@@ -292,64 +338,17 @@ p{
 
 	.recept{
 		height:400px;
-		position:relative;
-		overflow:hidden;
-		img{
-			position:absolute;	
-			top:0;
-			left:0;
-			min-height:400px;
-			height:auto;
-			width:100%;
-		}
-		.hover{
-			position:absolute;	
-			top:-100%;
-			left:0;
-			z-index:100;
-			background:$orange;
-			background:rgba($orange,0.9);
-			height:100%;
-			width:100%;
-			color:#fff;
-			-webkit-transition:top 1s ease;
-			transition:top 1s ease;
-			h2{
-				position:absolute;
-				bottom:0;
-				left:0;
-				padding:25px;
-				margin:0;
-			}
-		}
-		&:hover{
-			.hover{
-				top:0;
-			}
-		}
 	}
 
 	h2{
 		@extend .averia;
 	}
 
-	/* .ingredients{
-		@include minireset;
-		color:lighten($black, 30);
-		-webkit-column-count:2;
-		-moz-column-count:2;
-		column-count:2;
-		li{
-			&:before{
-				content:"- "
-			}
-		}
-	} */
-
 	.likes{
 		font-weight:400;
 		padding-left:20px;
 		color:lighten($black,20);
+		//TODO new icon
 		background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACyUlEQVQ4T6WTW0hUURSG/32cMzM2g40XtJCmsrSyeghCyx7s9hCl0UsJWdGLijcQS61M6QIqBomKYj5IBoFS9BT04oWuakWRWmgpMo46d3VmznHOzJxLe4wiwgpqPe611rf+vfa/Cf4zyPd+7+OubbJ5spgs8fsljXbIabO1J95sGfiZb66r2BkOXwJjTJiKOl0yHMqR/v5+1a6PT++zgu8UYcKgzDsgOCywj49AffBE4abqxtaJipw0PRFrlEV7un3wJVRR0YjJyi2Py6u4RRbvNh7Cp7c92g1JUPwCFKcV0oIFzokReGSNqE3e3WHQR+Rq9TosvB+E6cMoAm4vYtdEIbawqozM15Y2swJfxEbHQZybht80goDXCoFo4PUIUCkKVm9MBO+wQXA6IQVZWH2AymVFYk6ehThKsmZ0MbHxtA7ByWH45qfACzJkQqCS6aFCIAb9CNJtKcEwhPEynCKB3U4BGZkDxHU1b5CZ/Zyq0uohLZrBuV3wiwptFiEvSfALBETPAoyIoBeQg8Aihc3O2LAj+2wXme/uuCx31tVoDBEQfB5wPA8WEhi/DLeHICgBWi2dzlCFVLqVAuxEgWS1I728Mp9YXvQc8LfW9mls41BHRiAQECC6OaoAEPwE7gCgps8liYCDTp4jDJyzFiRvTeRS2zvXL/tgrKF+31Lvo2usY+JwpEaBepUOAS4Ahe6ApwrcdLKX7sIkSfB6ORhZBnsvXjm6tqDyyQ8jhUCvzp88QlymSwbzaHo4Gw6WZcHTfUz5GJgFAW6OQ5IxfiwpZU/uluau58tGWsnJz84cv6F+3VfFqOhdtQbYuCV84Tmk5JS0sW6xNK2hgWr6FisCQomhsvxi08N7TYRRwc57YDxXcDuzvuXCrwN/CwgV9pXlVb9punNdt93oKno3HbOS2j8CQg3d2cfadOs292bUNT74J8DffvtX+nREwxaJPtMAAAAASUVORK5CYII=') no-repeat left center;
 	}
 }
@@ -469,22 +468,104 @@ p{
 	}
 }
 
-.recipecategories{
+.recipecontent{
 	background:#eee;
 	border-bottom:1px solid #ddd;
 	border-top:1px solid #ddd;
 	.button{
 		border-radius:7px;
 		display:block;
-		padding:10px 20px;
+		padding:15px 20px;
 		text-decoration:none;
+		line-height:18px;
+		i{
+			display:block;
+			float:left;
+			width:18px;
+			height:18px;
+			margin-right:7px;
+			background-image:url('img/sprite.png');
+			background-repeat:no-repeat;
+		}
 	}
 	.addrecipe{
 		background:$orange;
 		color:#fff;
+		i{
+			background-position:-54px 0;
+		}
 	}
 	.shoppinglist{
 		background:#ddd;
 		color:$black;
+		i{
+			background-position:-36px 0;
+		}
+	}
+	.recipeblock{
+		width:50%;
+		float:left;
+		padding-right:5px;
+		margin-bottom:10px;
+		&.even{
+			padding-right:0;
+			padding-left:5px;
+		}
+		img{
+			max-width:100%;
+			height:auto;
+		}
+	}
+	.orangehover{
+		height:200px;
+	}
+
+	.recipe{
+		text-align:center;
+		.actions{
+			@include minireset;
+			width:100px;
+			height:30px;
+			margin:0 auto;
+			padding:0 5px;
+			background:#ddd;
+			border-radius:7px;
+			li{
+				float:left;
+				line-height:0;
+				width:30px;
+				a{
+					display:inline-block;
+					text-indent:-999em;
+					width:18px;
+					height:18px;
+					margin-top:6px;
+					background:url('img/sprite.png') no-repeat;
+					&.like{
+						background-position:0 0;
+					}
+					&.save{
+						background-position:-18px 0;
+					}
+					&.shop{
+						background-position:-36px 0;
+					}
+					&.active{
+						&.like{
+							background-position:0 -18px;
+						}
+						&.save{
+							background-position:-18px -18px;
+						}
+						&.shop{
+							background-position:-36px -18px;
+						}
+					}
+					&:hover, &:focus, &:active{
+						opacity:0.5;
+					}
+				}
+			}
+		}
 	}
 }

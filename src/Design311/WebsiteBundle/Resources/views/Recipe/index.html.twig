@@ -1,6 +1,6 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
-{% block bodyclass %}receptenindex{% endblock %}
+{% block bodyclass %}recipepage{% endblock %}
 
 {% block content %}
 	<div class="newestrecipes">
@@ -22,23 +22,20 @@
 			</div>
 		</div>
 	</div>
-	<div class="recipecategories">	
+	<div class="recipecontent">	
 		<div class="container">
-			<div class="one-third sidebar">
-				<p><a href="{{ path('design311website_recepten_add') }}" class="button addrecipe">Recept toevoegen</a></p>
-				<p><a href="{{ path('design311website_recepten_shoppinglist') }}" class="button shoppinglist">Winkellijstje bekijken (<span class="shoppinglistcount">{{app.user.shoppinglist|length}}</span>)</a></p>
-				<p><h3>Recepten zoeken op ingredient</h3></p>
-				<p>FORM Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, quidem, omnis sapiente autem quaerat pariatur dolor fugit est assumenda in ipsam quis optio tenetur. Odit culpa soluta officiis odio provident!</p>
-			</div>
+			{% include 'Design311WebsiteBundle:Shared:recipes-sidebar.html.twig' %}
 			<div class="two-third main">
 				{% for key, category in categories %}
-				    <div class="category{% if loop.index is even %} even{% endif %}">
+				    <div class="recipeblock{% if loop.index is even %} even{% endif %}">
 				    	{% set lastrecipe = category.recipe | last %}
 				    	<div class="orangehover inversed">
-				    		<img src="{{ asset(lastrecipe.photos[0].webPath) }}" alt="{{ lastrecipe.photos[0].title }}" />
-				    		<div class="hover">
-				    			<h2 class="text">{{category.name}}</h2>
-				    		</div>
+				    		<a href="{{ path('design311website_recepten_category', {'category': category.plural|lower})}}">
+					    		<img src="{{ asset(lastrecipe.photos[0].webPath) }}" alt="{{ lastrecipe.photos[0].title }}" />
+					    		<div class="hover">
+					    			<h2 class="text">{{category.plural}}</h2>
+					    		</div>
+				    		</a>
 				    	</div>
 				    </div>
 				{% endfor %}
