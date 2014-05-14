@@ -997,7 +997,7 @@ a {
     padding-right: 0;
     padding-left: 50px; }
 
-.container {
+.container, .newestrecipes .flex-control-nav {
   position: relative;
   overflow: auto;
   width: 1240px;
@@ -1075,7 +1075,7 @@ a {
   border-bottom: 3px solid #ff5c23;
   height: 95px;
   box-shadow: 0 0 3px #333333; }
-  .header .container {
+  .header .container, .header .newestrecipes .flex-control-nav, .newestrecipes .header .flex-control-nav {
     padding: 0 50px; }
 
 .menu {
@@ -1192,7 +1192,7 @@ a {
 .recepten {
   min-height: 100%;
   height: auto; }
-  .recepten .container {
+  .recepten .container, .recepten .newestrecipes .flex-control-nav, .newestrecipes .recepten .flex-control-nav {
     display: table;
     height: 100%; }
   .recepten .inner {
@@ -1245,51 +1245,73 @@ a {
   .flexslider .slides, .flexslider li {
     height: 100%;
     overflow: hidden; }
-  .flexslider img {
-    position: relative;
-    top: -50%; }
 
 .flex-control-nav {
   position: absolute;
   right: 0;
-  bottom: 15px;
+  bottom: 18px;
   z-index: 100;
   line-height: 0; }
   .flex-control-nav li {
     display: inline-block;
-    margin-left: 5px; }
+    margin-left: 6px; }
   .flex-control-nav a {
     display: block;
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
     text-indent: -999em;
-    border: 1px solid #333333;
+    border: 1px solid #fff;
     border-radius: 50px;
     cursor: pointer; }
     .flex-control-nav a.flex-active {
-      background: #333333; }
+      background: #fff; }
 
 .map {
   height: 400px; }
 
-.newestrecipes h1 {
-  margin-top: 0; }
-.newestrecipes .flexslider {
-  height: 345px; }
-.newestrecipes .imagecontainer {
-  height: 300px;
-  overflow: hidden; }
-.newestrecipes .caption {
-  line-height: 45px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  font-size: 140%; }
-  .newestrecipes .caption a {
-    text-decoration: none;
-    color: #333333; }
-    .newestrecipes .caption a:hover, .newestrecipes .caption a:focus, .newestrecipes .caption a:active {
-      color: #666666; }
+.newestrecipes {
+  height: 60%;
+  /* .title{
+  	line-height:45px;
+  	position:absolute;
+  	bottom:0;
+  	left:0;
+  	font-size:140%;
+  	a{
+  		text-decoration:none;
+  		color:$black;
+  		&:hover, &:focus, &:active{
+  			color:lighten($black,20);
+  		}
+  	}
+  } */ }
+  .newestrecipes h1 {
+    margin-top: 0; }
+  .newestrecipes .flexslider {
+    height: 100%; }
+  .newestrecipes .flex-control-nav {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -620px;
+    text-align: right;
+    z-index: 600; }
+    .newestrecipes .flex-control-nav a {
+      text-indent: 999em; }
+  .newestrecipes .title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    height: 126px;
+    cursor: pointer; }
+  .newestrecipes .container, .newestrecipes .flex-control-nav {
+    padding: 20px 50px 30px; }
+  .newestrecipes h1 {
+    margin-bottom: 10px;
+    line-height: 1; }
 
 .button {
   border-radius: 7px;
@@ -1382,25 +1404,6 @@ a {
           .recipecontent .recipe .actions li a:hover, .recipecontent .recipe .actions li a:focus, .recipecontent .recipe .actions li a:active {
             opacity: 0.5; }
 
-.recipephotos-1 .recipephotos {
-  float: left;
-  width: 50%;
-  padding-right: 25px; }
-.recipephotos-1 .ingredients {
-  float: left;
-  width: 50%;
-  padding-left: 25px; }
-  .recipephotos-1 .ingredients h2 {
-    margin-top: 0; }
-
-.recipephotos-2 .recipephotos img {
-  float: left;
-  width: 50%; }
-
-.recipephotos-3 .recipephotos img {
-  float: left;
-  width: 33.33%; }
-
 .recipemeta {
   margin: 0;
   padding: 0;
@@ -1444,7 +1447,7 @@ a {
     color: #fff;
     height: 126px;
     cursor: pointer; }
-  .detailheader .container {
+  .detailheader .container, .detailheader .newestrecipes .flex-control-nav, .newestrecipes .detailheader .flex-control-nav {
     padding: 20px 50px 30px; }
   .detailheader h1 {
     margin-bottom: 10px;
@@ -1468,6 +1471,10 @@ a {
   z-index: 600; }
 .recipe-detail.fixed .recipecontent {
   margin-top: 126px; }
+.recipe-detail .ingredients h2 {
+  margin-top: 0; }
+.recipe-detail .recipephotos img {
+  margin-top: 25px; }
 
 .select2-container {
   width: 100%; }

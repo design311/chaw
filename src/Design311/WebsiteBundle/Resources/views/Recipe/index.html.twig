@@ -4,22 +4,23 @@
 
 {% block content %}
 	<div class="newestrecipes">
-		<div class="container">
-			<h1 class="averia">Nieuwste recepten</h1>
-			<div class="flexslider">
-				<ul class="slides">
-				{% for recipe in newestrecipes %}
-					<li>
-					{% if recipe.photos[0] is defined %}
-						<div class="imagecontainer"><img src="{{ asset(recipe.photos[0].webPath) }}" alt="{{ recipe.photos[0].title }}" /></div>
-					{% endif %}
-						<div class="caption">
-							<a href="#">{{ recipe.title }}</a>
+		<div class="flexslider">
+			<ul class="slides">
+			{% for recipe in newestrecipes %}
+				<li>
+					<div class="imagecontainer"><img src="{{ asset(recipe.photos[0].webPath) }}" alt="{{ recipe.photos[0].title }}" /></div>
+					<div class="title">
+						<div class="container">
+							<h1 class="averia">{{recipe.title}}</h1>
+							<ul class="recipemeta">
+								<li><i class="pot sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
+								<li><i class="bestek sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
+							</ul>
 						</div>
-					</li>
-				{% endfor %}
-				</ul>
-			</div>
+					</div>
+				</li>
+			{% endfor %}
+			</ul>
 		</div>
 	</div>
 	<div class="recipecontent">	

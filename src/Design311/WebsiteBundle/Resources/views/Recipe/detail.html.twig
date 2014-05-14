@@ -18,12 +18,7 @@
 	<div class="recipecontent">	
 		<div class="container">
 			{% include 'Design311WebsiteBundle:Shared:recipes-sidebar.html.twig' with {'detail':true} %}
-			<div class="two-third main{% if recipe.photos|length < 4 %} recipephotos-{{recipe.photos|length}}{% else %} recipephotos-3{% endif %}">
-				<div class="recipephotos">
-					{% for key, photo in recipe.photos if key == 0 or key == 1 or key == 2 %}
-						<img src="{{ asset(photo.webPath)}}" alt="{{photo.title}}">
-					{% endfor %}
-				</div>
+			<div class="two-third main">
 				<div class="ingredients">
 					<h2>Ingredienten</h2>
 					<ul>
@@ -33,8 +28,15 @@
 					</ul>
 				</div>
 				<div class="clear"></div>
+
 				<h2>Bereidingswijze</h2>
 				{{recipe.recipe|markdown}}
+
+				<div class="recipephotos">
+					{% for key, photo in recipe.photos %}
+						<img src="{{ asset(photo.webPath)}}" alt="{{photo.title}}">
+					{% endfor %}
+				</div>
 			</div>
 		</div>
 	</div>
