@@ -40,6 +40,10 @@ design311website_recepten_shoppinglist:
     path:     /recepten/shoppinglist/
     defaults: { _controller: Design311WebsiteBundle:Recipe:shoppinglist }
 
+design311website_recepten_zoeken:
+    path:     /recepten/zoeken/
+    defaults: { _controller: Design311WebsiteBundle:Recipe:search }
+
 design311website_recepten_category:
     path:     /recepten/{category}/
     defaults: { _controller: Design311WebsiteBundle:Recipe:category }

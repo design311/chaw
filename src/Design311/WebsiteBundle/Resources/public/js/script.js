@@ -1,11 +1,13 @@
 $(function(){
 
 	var header = $('.detailheader');
+	var headerTitle = $('.detailheader').children('.title');
+	var headerHeight = header.outerHeight() - headerTitle.outerHeight();
 	var body = $('body');
-	var headerHeight = header.outerHeight() - header.children('.title').outerHeight();
 
 	$(document).scroll(function(){
 
+		headerHeight = header.outerHeight() - headerTitle.outerHeight();
 		var height = $(document).scrollTop();
 
 		if (height>headerHeight) {
@@ -15,12 +17,15 @@ $(function(){
 		};
 	});
 
-	$('.detailheader .title').one('click', function(){
-		$(this).addClass('clicked');
+	$('.detailheader .title').click(function(){
 		$('html,body').animate({
 			scrollTop: headerHeight
 		}, 1000);
 	})
+
+	if (typeof $('body').select2 == 'function') { 
+		$("#searchRecipe_ingredients").select2();
+	}
 
 })
 

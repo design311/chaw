@@ -1,0 +1,15 @@
+<div class="two-third main">
+{% for recipe in recipes %}
+    <div class="recipeblock recipe{% if loop.index is even %} even{% endif %}">
+		<a href="{{ path('design311website_recepten_detail', {'category': recipe.category.plural|lower, 'permalink': recipe.permalink})}}">
+    		<img src="{{ asset(recipe.photos[0].webPath) }}" alt="{{ recipe.photos[0].title }}" />
+			<p class="title">{{recipe.title}}</p>
+		</a>
+		<ul class="actions">
+			<li><a href="#" class="like ajax-button{% if app.user in recipe.likedBy %} active{% endif %}" data-ajax="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" title="Recept lekker vinden">Recept lekker vinden</a></li>
+			<li><a href="#" class="save ajax-button{% if app.user in recipe.savedBy %} active{% endif %}" data-ajax="{{path('design311website_recepten_save', {'recipeId': recipe.id})}}" title="Recept bewaren">Recept bewaren</a></li>
+			<li><a href="#" class="shop ajax-button{% if app.user in recipe.shoppinglistFrom %} active{% endif %}" data-ajax="{{path('design311website_recepten_shop', {'recipeId': recipe.id})}}" title="Recept toevoegen aan winkellijstje">Recept toevoegen aan winkellijstje</a></li>
+		</ul>
+    </div>
+{% endfor %}
+</div>

@@ -5,8 +5,7 @@
 {% block content %}
 	<div class="newestrecipes">
 		<div class="container">
-			<h1 class="averia">{{category.plural}}</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, inventore, vel, sunt labore eius blanditiis ratione enim fuga dolorem id quam nisi dicta necessitatibus expedita neque corrupti adipisci quas quos.</p>
+			<h1 class="averia">{{recipes|length}} {{ recipes|length == 1 ? 'recept' : 'recepten' }} gevonden</h1>
 		</div>
 	</div>
 	<div class="recipecontent">	

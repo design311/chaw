@@ -5,23 +5,36 @@ namespace Design311\WebsiteBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use Design311\WebsiteBundle\Form\Type\RecipeType;
+use Design311\WebsiteBundle\Form\Type\SearchRecipeType;
 use Design311\WebsiteBundle\Entity\Recipe;
 
 
 class RecipeController extends Controller
 {
+    private function searchRecipeForm(){
+        $form = $this->createForm(new SearchRecipeType(), array(), array(
+            'action' => $this->generateUrl('design311website_recepten_zoeken'),
+        ));
+
+        return $form;
+    }
+
     public function indexAction()
     {
         $recipes = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findAll();
         $newestrecipes = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findBy(array(), array('id' => 'DESC'), 5);
         $categories = $this->getDoctrine()->getRepository('Design311WebsiteBundle:RecipeCategory')->findAll();
 
+        $form = $this->searchRecipeForm();
+
         return $this->render(
             'Design311WebsiteBundle:Recipe:index.html.twig',
             array(
                 'recipes' => $recipes,
+                'form' => $form->createView(),
                 'newestrecipes' => $newestrecipes,
                 'categories' => $categories,
                 )
@@ -34,10 +47,13 @@ class RecipeController extends Controller
         $category = $this->getDoctrine()->getRepository('Design311WebsiteBundle:RecipeCategory')->findOneByPlural(ucfirst($category));
         $recipes = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findBy(array('category' => $category->getId()), array('id' => 'DESC'));
 
+        $form = $this->searchRecipeForm();
+
         return $this->render(
             'Design311WebsiteBundle:Recipe:category.html.twig',
             array(
                 'recipes' => $recipes,
+                'form' => $form->createView(),
                 'category' => $category,
                 )
         );
@@ -47,12 +63,60 @@ class RecipeController extends Controller
     {
         $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
 
+        $form = $this->searchRecipeForm();
+
         return $this->render(
             'Design311WebsiteBundle:Recipe:detail.html.twig',
             array(
                 'recipe' => $recipe,
+                'form' => $form->createView(),
                 )
         );
+    }
+
+    public function searchAction(Request $request)
+    {
+        $form = $this->searchRecipeForm();
+        $form->handleRequest($request);
+
+        //TODO form validation ?
+        //if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $searchData = $form->getData();
+
+            $ingredientIds = array();
+
+            foreach ($searchData['ingredients'] as $ingredient) {
+                $ingredientIds[] = $ingredient->getId();
+            }
+
+            $qb = $em->createQueryBuilder();
+            $query = $qb
+                ->from('Design311WebsiteBundle:Recipe', 'r')
+                ->select('r')
+                //->andWhere('ri.ingredient = 32')
+                ->where($qb->expr()->in('ri.ingredient', $ingredientIds))
+                ->leftJoin('Design311WebsiteBundle:RecipeIngredient', 'ri', 'WITH', 'r.id = ri.recipes')
+                ->groupBy('r.id')
+                ->having('count(r.id) = ' . count($ingredientIds))
+                //->setParameter('ingredient', $ing)
+                ->getQuery();
+
+            $recipes = $query->execute();
+
+            $form = $this->searchRecipeForm();
+
+            return $this->render(
+                'Design311WebsiteBundle:Recipe:search.html.twig',
+                array(
+                    'recipes' => $recipes,
+                    'form' => $form->createView(),
+                    )
+            );
+        //}
+
     }
 
     public function addAction(Request $request)
@@ -65,7 +129,6 @@ class RecipeController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $recept = $form->getData();
-            //print_r($recept);die;
 
             $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
 

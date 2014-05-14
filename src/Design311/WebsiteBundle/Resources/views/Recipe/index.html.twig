@@ -43,52 +43,6 @@
 		</div>
 	</div>
 
-	<!-- {% for recipe in recipes %}
-	<div>
-		{{recipe.title}}
-		{% for photo in recipe.photos %}
-			<img src="{{ asset(photo.webPath) }}" width="500">
-		{% endfor %}
-		<ul>
-		{% for recipeingredient in recipe.recipeingredients %}
-			<li>{{recipeingredient.amount}} {{recipeingredient.ingredient}}</li>
-		{% endfor %}
-		</ul>
-		{{recipe.category}}
-	
-		{% if app.user %}
-			<p><a href="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" class="like-button">
-				{% if app.user in recipe.likedBy %}
-				dislike this recipe
-				{% else %}
-				like this recipe
-				{% endif %}
-			</a></p>
-			<p><a href="{{path('design311website_recepten_save', {'recipeId': recipe.id})}}" class="save-button">
-				{% if app.user in recipe.likedBy %}
-				remove this recipe from saves
-				{% else %}
-				save this recipe
-				{% endif %}
-			</a></p>
-			<p><a href="{{path('design311website_recepten_shop', {'recipeId': recipe.id})}}" class="shop-button">
-				{% if app.user in recipe.shoppinglistFrom %}
-				remove this recipe from shoppinglist
-				{% else %}
-				add recipe to shoppinglist
-				{% endif %}
-			</a></p>
-		{% else %}
-		    <p><a href="{{ path('design311website_login') }}">Login om dit recept te liken</a></p>
-		{% endif %}
-	
-		{% if app.user == recipe.user %}
-		    <p><a href="{{ path('design311website_recepten_edit', {'recipeId': recipe.id}) }}">edit</a></p>
-		{% endif %}
-	</div>
-	<hr>
-	{% endfor %} -->
-
 {% endblock %}
 
 {% block head %}
@@ -97,52 +51,10 @@
 
 {% block footer %}
 	<script src="{{ asset('bundles/design311website/js/flexslider/jquery.flexslider-min.js') }}"></script>
+	<script src="{{ asset('bundles/design311website/js/select2/select2.min.js') }}"></script>
 	<script>
 		$(function(){
-			$('.like-button').click(function(){
-				var link = $(this);
-				//TODO use different attribute
-				//TODO add loader gif for slow json
-				$.getJSON( $(this).attr('href'), function( data ) {
-					if (data.status === 1) {
-						link.text('dislike this recipe');
-					}
-					else{
-						link.text('like this recipe');
-					}
-				});
 
-				return false;
-			})
-			$('.save-button').click(function(){
-				var link = $(this);
-				//TODO add loader gif for slow json
-				$.getJSON( $(this).attr('href'), function( data ) {
-					if (data.status === 1) {
-						link.text('remove this recipe from saves');
-					}
-					else{
-						link.text('save this recipe');
-					}
-				});
-
-				return false;
-			})
-			$('.shop-button').click(function(){
-				var link = $(this);
-				//TODO add loader gif for slow json
-				$.getJSON( $(this).attr('href'), function( data ) {
-					if (data.status === 1) {
-						link.text('remove this recipe from shoppinglist');
-					}
-					else{
-						link.text('add recipe to shoppinglist');
-					}
-					$('.shoppinglistcount').text(data.shoppinglistcount);
-				});
-
-				return false;
-			})
 		})
 	</script>
 {% endblock %}

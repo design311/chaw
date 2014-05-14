@@ -1,6 +1,7 @@
 @import "scss/normalize";
 @import "scss/mixins";
 @import "scss/default";
+@import "scss/select2";
 
 $black:#333;
 $orange:#ff5c23;
@@ -710,4 +711,9 @@ img{
 			margin-top:126px;
 		}
 	}
+}
+
+//TODO remove debug styling
+.select2-container{
+	width:100%;
 }

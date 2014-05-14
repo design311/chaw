@@ -41,6 +41,7 @@
 {% endblock %}
 
 {% block footer %}
+	<script src="{{ asset('bundles/design311website/js/select2/select2.min.js') }}"></script>
 	<script>
 
 //TODO external script file
@@ -49,15 +50,13 @@
 			$('.ajax-button').click(function(){
 				var link = $(this);
 
-				//TODO use different attribute
 				//TODO add loader gif for slow json
 				$.getJSON( $(this).data('ajax'), function( data ) {
-					console.log(data);
 					if (data.status === 1) {
-						link.addClass('active');
+						link.children('i').addClass('active');
 					}
 					else{
-						link.removeClass('active');
+						link.children('i').removeClass('active');
 					}
 
 					if (link.hasClass('shop')) {
