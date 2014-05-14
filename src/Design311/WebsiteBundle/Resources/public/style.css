@@ -1269,8 +1269,12 @@ a {
 .map {
   height: 400px; }
 
+.recipeindex .newestrecipes {
+  height: 60%; }
+.recipeindex .container, .recipeindex .newestrecipes .flex-control-nav, .newestrecipes .recipeindex .flex-control-nav {
+  padding: 20px 50px 30px; }
+
 .newestrecipes {
-  height: 60%;
   /* .title{
   	line-height:45px;
   	position:absolute;
@@ -1307,8 +1311,6 @@ a {
     color: #fff;
     height: 126px;
     cursor: pointer; }
-  .newestrecipes .container, .newestrecipes .flex-control-nav {
-    padding: 20px 50px 30px; }
   .newestrecipes h1 {
     margin-bottom: 10px;
     line-height: 1; }
