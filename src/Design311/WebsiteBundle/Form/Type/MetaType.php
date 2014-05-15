@@ -43,7 +43,7 @@ class MetaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Design311\WebsiteBundle\Entity\DinnerMeta'
+            'data_class' => null
         ));
     }
 

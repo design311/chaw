@@ -25,10 +25,12 @@ class DinnerType extends AbstractType
             'required' => false,
             'mapped' => false
             ));
-        $builder->add('address', new AddressType());
+        $builder->add('address', new AddressType(), array(
+            'disabled' => true
+            ));
         $builder->add('meta', new MetaType($this->metadata));
 
-        $builder->add('Register', 'submit');
+        $builder->add('Dinner organiseren', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

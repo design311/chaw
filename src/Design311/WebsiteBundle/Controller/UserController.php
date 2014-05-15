@@ -68,6 +68,9 @@ class UserController extends GeocodeController
             $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
             $user->setPassword($password);
 
+            //set aantal personen
+            $user->setAantalPersonen(4);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
