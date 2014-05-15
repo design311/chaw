@@ -13,7 +13,7 @@ use Design311\WebsiteBundle\Entity\User;
 
 class UserController extends GeocodeController
 {
-    public function loginAction(Request $request)
+    public function loginAction(Request $request, $auth = false)
     {
     	$session = $request->getSession();
 
@@ -32,7 +32,8 @@ class UserController extends GeocodeController
             array(
                 // last username entered by the user
                 'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                'error'         => $error,
+                'error' => $error,
+                'auth' => $auth
             )
         );
     }
@@ -76,7 +77,7 @@ class UserController extends GeocodeController
 
 	    return $this->render(
 	        'Design311WebsiteBundle:User:register.html.twig',
-	        array('form' => $form->createView())
+            array('form' => $form->createView())
 	    );
     }
 

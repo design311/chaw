@@ -7,7 +7,7 @@
 	{% block head %}{% endblock %}
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css') }}">
 </head>
-<body class="{% block bodyclass %}{% endblock %}">
+<body class="{% block bodyclass %}{% endblock %} {{ app.user ? 'loggedin' : 'loggedout'}}">
 	{% if not (app.request.attributes.get('_route') == 'design311website_homepage' and not app.user) %}
 	<div class="header">
 		<div class="topbar">

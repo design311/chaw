@@ -453,9 +453,9 @@ img{
 .recipeindex{
 	.newestrecipes{
 		height:60%;
-	}
-	.container{
-		padding:20px 50px 30px;
+		.container{
+			padding:20px 50px 30px;
+		}
 	}
 }
 
@@ -486,26 +486,11 @@ img{
 		background:rgba(#000,0.8);
 		color:#fff;
 		height:126px;
-		cursor:pointer;
 	}
 	h1{
 		margin-bottom:10px;
 		line-height:1;
 	}
-	/* .title{
-		line-height:45px;
-		position:absolute;
-		bottom:0;
-		left:0;
-		font-size:140%;
-		a{
-			text-decoration:none;
-			color:$black;
-			&:hover, &:focus, &:active{
-				color:lighten($black,20);
-			}
-		}
-	} */
 }
 
 .button{
@@ -661,13 +646,6 @@ img{
 		z-index:600;
 	}
 	.title{
-		position:absolute;
-		bottom:0;
-		left:0;
-		width:100%;
-		background:rgba(#000,0.8);
-		color:#fff;
-		height:126px;
 		cursor:pointer;
 	}
 	.container{

@@ -6,6 +6,10 @@ design311website_login:
     pattern: /login/
     defaults: { _controller: Design311WebsiteBundle:User:login }
 
+design311website_login_required:
+    pattern: /login/{auth}/
+    defaults: { _controller: Design311WebsiteBundle:User:login }
+
 design311website_login_check:
     pattern: /login_check
 

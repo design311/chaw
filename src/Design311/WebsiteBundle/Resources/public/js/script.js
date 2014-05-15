@@ -23,6 +23,32 @@ $(function(){
 		}, 1000);
 	})
 
+	$('.ajax-button').click(function(){
+		if (body.hasClass('loggedin')) {
+
+			var link = $(this);
+
+			//TODO add loader gif for slow json
+			$.getJSON( $(this).data('ajax'), function( data ) {
+				if (data.status === 1) {
+					link.children('i').addClass('active');
+				}
+				else{
+					link.children('i').removeClass('active');
+				}
+
+				if (link.hasClass('shop')) {
+					$('.shoppinglistcount').text(data.shoppinglistcount);
+				};
+			});
+		}
+		else{
+			window.location = '/login/auth/';
+		}
+		
+		return false;
+	})
+
 	if (typeof $('body').select2 == 'function') { 
 		$("#searchRecipe_ingredients").select2();
 	}

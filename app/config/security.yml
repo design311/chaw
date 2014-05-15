@@ -24,7 +24,7 @@ security:
             provider: user_db
             form_login:
                 use_referer: true
-                login_path: /login/
+                login_path: /login/auth/
                 check_path: /login_check
                 remember_me: true
             logout:
@@ -44,5 +44,7 @@ security:
         - { path: /user, roles: ROLE_USER }
         - { path: /.*/add/, roles: ROLE_USER }
         - { path: /recepten/.*/like/, roles: ROLE_USER }
+        - { path: /recepten/.*/save/, roles: ROLE_USER }
+        - { path: /recepten/.*/shop/, roles: ROLE_USER }
         - { path: /admin, roles: ROLE_ADMIN }
         - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }

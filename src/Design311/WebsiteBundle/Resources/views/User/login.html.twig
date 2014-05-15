@@ -1,18 +1,26 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
 {% block content %}
+<div class="container">
+
+	<h1>Aanmelden</h1>
+	{% if auth != false %}
+		<p>Voor deze actie moet je eerst aanmelden</p>
+	{% endif %}
 
 	{% if error %}
 	<div>{{ error.message }}</div>
 	{% endif %}
 	
 	<form action="{{ path('design311website_login_check') }}" method="post">
-		<label for="username">User:</label>
-		<input id="username" type="text" name="_username" value="{{ last_username }}" />
-		<label for="password">Password:</label>
-		<input id="password" type="password" name="_password" />
+		<p><label for="username">Gebruikersnaam</label><br>
+		<input id="username" type="text" name="_username" value="{{ last_username }}" /></p>
+		<p><label for="password">Wachtwoord</label><br>
+		<input id="password" type="password" name="_password" /></p>
         <input type="hidden" name="_target_path" value="{{app.request.headers.get('referer')}}" />
-		<input type="submit" name="login" />
+		<p><input type="submit" name="login" /></p>
 	</form>
+
+</div>
 
 {% endblock %}

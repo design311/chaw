@@ -44,30 +44,4 @@
 
 {% block footer %}
 	<script src="{{ asset('bundles/design311website/js/select2/select2.min.js') }}"></script>
-	<script>
-
-//TODO external script file
-
-		$(function(){
-			$('.ajax-button').click(function(){
-				var link = $(this);
-
-				//TODO add loader gif for slow json
-				$.getJSON( $(this).data('ajax'), function( data ) {
-					if (data.status === 1) {
-						link.children('i').addClass('active');
-					}
-					else{
-						link.children('i').removeClass('active');
-					}
-
-					if (link.hasClass('shop')) {
-						$('.shoppinglistcount').text(data.shoppinglistcount);
-					};
-				});
-
-				return false;
-			})
-		})
-	</script>
 {% endblock %}
