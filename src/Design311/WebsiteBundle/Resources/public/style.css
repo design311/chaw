@@ -1361,7 +1361,8 @@ a {
   .recipecontent .orangehover {
     height: 200px; }
   .recipecontent .recipe {
-    text-align: center; }
+    text-align: center;
+    margin-bottom: 25px; }
     .recipecontent .recipe a {
       text-decoration: none; }
     .recipecontent .recipe .title {

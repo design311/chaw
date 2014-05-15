@@ -50,7 +50,6 @@ class Photo
 
     /**
      * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="photos")
-     * @ORM\JoinColumn(onDelete="CASCADE")
      **/
     private $recipe;
 
@@ -152,7 +151,15 @@ class Photo
         $filename = iconv("UTF-8", "ISO-8859-1//IGNORE", $this->getFile()->getClientOriginalName());
         $filepieces = explode( '.', $filename);
         $extension = array_pop($filepieces);
-        $filename = implode('.', $filepieces);
+        $filename = implode('-', $filepieces);
+
+        $filename = preg_replace("/[^a-z0-9\s\-]/i", "", $filename); // Remove special characters
+        $filename = preg_replace("/\s\s+/", " ", $filename); // Replace multiple spaces with one space
+        $filename = trim($filename); // Remove trailing spaces
+        $filename = preg_replace("/\s/", "-", $filename); // Replace all spaces with hyphens
+        $filename = preg_replace("/\-\-+/", "-", $filename); // Replace multiple hyphens with one hyphen
+        $filename = preg_replace("/^\-|\-$/", "", $filename); // Remove leading and trailing hyphens
+        $filename = strtolower($filename);
 
         return array($filename, $extension);
     }

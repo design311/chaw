@@ -67,3 +67,13 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+#avalanche_imagine Configuration
+avalanche_imagine:
+    filters:
+        recipe_thumb:
+            type:    thumbnail
+            options: { size: [362, 242], mode: outbound, cache_type: public, cache_expires: 2 weeks }
+        recipe_category:
+            type:    thumbnail
+            options: { size: [362, 200], mode: outbound, cache_type: public, cache_expires: 2 weeks }

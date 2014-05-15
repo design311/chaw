@@ -32,7 +32,7 @@
 				    	{% set lastrecipe = category.recipe | last %}
 				    	<div class="orangehover inversed">
 				    		<a href="{{ path('design311website_recepten_category', {'category': category.plural|lower})}}">
-					    		<img src="{{ asset(lastrecipe.photos[0].webPath) }}" alt="{{ lastrecipe.photos[0].title }}" />
+					    		<img src="{{ lastrecipe.photos[0].webPath | apply_filter('recipe_category') }}" alt="{{ lastrecipe.photos[0].title }}" />
 					    		<div class="hover">
 					    			<h2 class="text">{{category.plural}}</h2>
 					    		</div>

@@ -22,7 +22,8 @@
         "ircmaxell/password-compat": "1.*",
         "jms/serializer-bundle": "0.*",
         "raulfraile/ladybug-bundle": "~1.0",
-        "knplabs/knp-markdown-bundle": "1.2.*@dev"
+        "knplabs/knp-markdown-bundle": "1.2.*@dev",
+        "avalanche123/imagine-bundle": "v2.1"
     },
     "scripts": {
         "post-install-cmd": [
