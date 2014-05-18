@@ -20,7 +20,7 @@ class MetaType extends AbstractType
         foreach ($this->metadata as $meta) {
             $choices = [];
             foreach ($meta->getChildren() as $child) {
-                $choices[] = $child->getValue();
+                $choices[$child->getId()] = $child->getValue();
             }
 
             if (strtolower($meta->getName()) == 'leeftijd') {

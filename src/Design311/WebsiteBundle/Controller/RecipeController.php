@@ -132,17 +132,12 @@ class RecipeController extends Controller
 
             $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
 
-            $serializer = $this->container->get('jms_serializer');
-            //$currentIngredients = json_decode($serializer->serialize($currentIngredients, 'json'));
-            //print_r($currentIngredients);die;
-
             if ($recept->getRecipeIngredients()) {
                 foreach ($recept->getRecipeIngredients() as $key => $recipeIngredient) {
                     foreach ($currentIngredients as $currentIngredient) {
                         if ($recipeIngredient->getIngredient()->getName() == $currentIngredient->getName()) {
                             $ingredient = $recipeIngredient->getIngredient();
                             $ingredient = $currentIngredient;
-                            //print_r(json_decode($serializer->serialize($ingredient, 'json')));die;
                             $recipeIngredient->setIngredient($ingredient);
                         }
                     }

@@ -17,6 +17,7 @@ class DinnerType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('title', 'text');
         $builder->add('date', 'datetime');
         $builder->add('menu', 'textarea');
         $builder->add('maxinvitees', 'integer');
@@ -28,7 +29,9 @@ class DinnerType extends AbstractType
         $builder->add('address', new AddressType(), array(
             'disabled' => true
             ));
-        $builder->add('meta', new MetaType($this->metadata));
+        $builder->add('metafields', new MetaType($this->metadata), array(
+            'mapped' => false
+            ));
 
         $builder->add('Dinner organiseren', 'submit');
     }

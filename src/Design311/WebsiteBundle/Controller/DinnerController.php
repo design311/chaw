@@ -37,14 +37,41 @@ class DinnerController extends GeocodeController
         $dinner = new Dinner();
         $dinner->setAddress($this->getUser()->getAddress());
 
-        $metadata = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsCalculated(0);
-        $form = $this->createForm(new DinnerType($metadata), $dinner);
+        $metacategories = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsCalculated(0);
+        $form = $this->createForm(new DinnerType($metacategories), $dinner);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
 
+            $em = $this->getDoctrine()->getManager();
+
             $dinner = $form->getData();
+
+            $metafields = $form->get('metafields')->getData();
+            foreach ($metafields as $category => $meta) {
+                
+                foreach ($metacategories as $metacat) {
+                    if ($metacat->getName() == $category) {
+
+                        $qb = $em->createQueryBuilder();
+                        $query = $qb
+                            ->from('Design311WebsiteBundle:DinnerMeta', 'dm')
+                            ->select('dm')
+                            ->where($qb->expr()->eq('dm.category', $metacat->getId()))
+                            ->andWhere($qb->expr()->in('dm.id', $meta))
+                            ->getQuery();
+
+                        $dinnerMetas = $query->execute();
+
+                        foreach ($dinnerMetas as $dinnerMeta) {
+                            $dinner->addMetum($dinnerMeta);
+                        }
+
+                        break; //category found, break for each loop
+                    }
+                }
+            }
 
             $latLng = $this->geocode($dinner->getAddress());
             if (is_object($latLng)) {
@@ -57,7 +84,6 @@ class DinnerController extends GeocodeController
                 $dinner->getAddress()->setLng(0);
             }
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($dinner);
             $em->flush();
 
