@@ -6,7 +6,7 @@
 
 <div class="content">
 	<div class="container">
-		<div class="filters">
+		<div class="one-third filters">
 		<p><a href="{{ path('design311website_dinners_add') }}">Dinner toevoegen</a></p>
 			<p><strong>Filter de zoekresultaten</strong></p>
 			<p><label for="locatie"><strong>Locatie</strong></label></p>
@@ -19,22 +19,24 @@
 					{% endfor %}
 			{% endfor %}
 		</div>
-		<table id="dinners">
+		<table id="dinners" class="two-third">
 			<thead>
 				<tr>
 					<th>Datum</th>
 					<th>Titel</th>
 					<th>Plaats</th>
 					<th>Prijs</th>
+					<th>&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for dinner in dinners %}
 				<tr>
 					<td>{{dinner.date|date('d-m-Y')}}</td>
-					<td>{{dinner.title}}</td>
+					<td><a href="{{ path('design311website_dinners_detail', {'permalink': dinner.permalink}) }}">{{dinner.title}}</a></td>
 					<td>{{dinner.address.city}}</td>
 					<td>{{dinner.price}}</td>
+					<td><a href="{{ path('design311website_dinners_participate', {'permalink': dinner.permalink}) }}">Deelnemen</a></td>
 				</tr>
 				{% endfor %}
 			</tbody>
@@ -78,23 +80,15 @@
 				
 			})
 
+			var markerCluster = new MarkerClusterer(map, markers);
+			map.setCenter(latlngbounds.getCenter());
+			map.fitBounds(latlngbounds);
+
 			if(navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 					centerLocation(currentPosition);
-				}, function() {
-					// if failed
-					showAllMarkers();
 				});
-			} else {
-				// if no browser support
-				showAllMarkers();
-			}
-
-			function showAllMarkers() {
-				var markerCluster = new MarkerClusterer(map, markers);
-				map.setCenter(latlngbounds.getCenter());
-				map.fitBounds(latlngbounds);
 			}
 
 			function centerLocation(coords){
@@ -124,6 +118,8 @@
 				//TODO error message if no markers
 				if (visibleDinners.length !== 0) {
 					var dinners = {{dinners|serialize|raw}};
+					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}'
+					var deelnemen = '{{ path('design311website_dinners_participate', {'permalink': 'permalink_holder'}) }}';
 					$.each(dinners, function(i, dinner){
 						if ($.inArray('' + dinner.id, visibleDinners) > -1) {
 							var formattedDate = new Date(dinner.date);
@@ -131,12 +127,15 @@
 							var m =  formattedDate.getMonth();
 							m += 1;  // JavaScript months are 0-11
 							var y = formattedDate.getFullYear();
+							detailLink = detail.replace('permalink_holder', dinner.permalink);
+							deelnemenLink = deelnemen.replace('permalink_holder', dinner.permalink);
 							tbody.append(' \
 								<tr> \
 									<td>'+d+'-'+m+'-'+y+'</td> \
-									<td>'+dinner.title+'</td> \
+									<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
 									<td>'+dinner.address.city+'</td> \
 									<td>'+dinner.price+'</td> \
+									<td><a href="'+deelnemenLink+'">Deelnemen</a></td> \
 								</tr>')
 						};
 					})

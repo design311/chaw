@@ -29,6 +29,13 @@ class Dinner
     protected $title;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="permalink", type="string", length=255)
+     */
+    protected $permalink;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
@@ -68,6 +75,16 @@ class Dinner
      */
     private $meta;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="dinners")
+    **/
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DinnerParticipants", mappedBy="dinner" ,cascade={"persist"})
+    **/
+    private $participants;
+
 
     /**
      * Get id
@@ -95,6 +112,17 @@ class Dinner
     public function setTitle($title)
     {
         $this->title = $title;
+
+        $permalink = $title;
+        $permalink = preg_replace("/[^a-z0-9\s\-]/i", "", $permalink); // Remove special characters
+        $permalink = preg_replace("/\s\s+/", " ", $permalink); // Replace multiple spaces with one space
+        $permalink = trim($permalink); // Remove trailing spaces
+        $permalink = preg_replace("/\s/", "-", $permalink); // Replace all spaces with hyphens
+        $permalink = preg_replace("/\-\-+/", "-", $permalink); // Replace multiple hyphens with one hyphen
+        $permalink = preg_replace("/^\-|\-$/", "", $permalink); // Remove leading and trailing hyphens
+        $permalink = strtolower($permalink);
+
+        $this->setPermalink($permalink);
 
         return $this;
     }
@@ -255,5 +283,84 @@ class Dinner
     public function getMeta()
     {
         return $this->meta;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Design311\WebsiteBundle\Entity\User $user
+     * @return Dinner
+     */
+    public function setUser(\Design311\WebsiteBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Design311\WebsiteBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Add participants
+     *
+     * @param \Design311\WebsiteBundle\Entity\User $participants
+     * @return Dinner
+     */
+    public function addParticipant(\Design311\WebsiteBundle\Entity\User $participants)
+    {
+        $this->participants[] = $participants;
+
+        return $this;
+    }
+
+    /**
+     * Remove participants
+     *
+     * @param \Design311\WebsiteBundle\Entity\User $participants
+     */
+    public function removeParticipant(\Design311\WebsiteBundle\Entity\User $participants)
+    {
+        $this->participants->removeElement($participants);
+    }
+
+    /**
+     * Get participants
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
+    }
+
+    /**
+     * Set permalink
+     *
+     * @param string $permalink
+     * @return Dinner
+     */
+    public function setPermalink($permalink)
+    {
+        $this->permalink = $permalink;
+
+        return $this;
+    }
+
+    /**
+     * Get permalink
+     *
+     * @return string 
+     */
+    public function getPermalink()
+    {
+        return $this->permalink;
     }
 }

@@ -28,7 +28,7 @@ class MetaType extends AbstractType
                     'choices' => $choices,
                     'multiple' => true,
                     'expanded' => true,
-                    'data' => range(0, count($choices)-1)
+                    'data' => range(0, count($choices))
                ));
             }
             else{

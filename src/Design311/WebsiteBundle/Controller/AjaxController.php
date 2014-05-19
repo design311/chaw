@@ -81,49 +81,42 @@ class AjaxController extends Controller
             'shoppinglistcount' => count($this->getUser()->getShoppinglist())
         ));
     }
-/*
-    public function addAction(Request $request)
-    {
-        $form = $this->createForm(new RecipeType(), new Recipe());
-        $form->handleRequest($request);
 
-        if ($form->isValid()) {
+    public function declineDinnerParticipantAction($participantId)
+    {
+        $dinnerParticipant = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerParticipants')->find($participantId);
+        
+        if ($this->getUser() == $dinnerParticipant->getDinner()->getUser()) {
+
+            $dinner = $dinnerParticipant->getDinner();
 
             $em = $this->getDoctrine()->getManager();
-
-            $recept = $form->getData();
-            //print_r($recept);die;
-
-            $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
-
-            $serializer = $this->container->get('jms_serializer');
-            //$currentIngredients = json_decode($serializer->serialize($currentIngredients, 'json'));
-            //print_r($currentIngredients);die;
-
-            if ($recept->getRecipeIngredients()) {
-                foreach ($recept->getRecipeIngredients() as $key => $recipeingredient) {
-                    foreach ($currentIngredients as $currentIngredient) {
-                        if ($recipeingredient->getIngredient()->getName() == $currentIngredient->getName()) {
-                            $ingredient = $recipeingredient->getIngredient();
-                            $ingredient = $currentIngredient;
-                            //print_r(json_decode($serializer->serialize($ingredient, 'json')));die;
-                            $recipeingredient->setIngredient($ingredient);
-                        }
-                    }
-                }
-            }
-
-            $recept->setUser($this->getUser());
-
-            $em->persist($recept);
+            $em->remove($dinnerParticipant);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('design311website_recepten'));
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
         }
+        else{
+            throw $this->createAccessDeniedException('Je hebt geen toegang tot deze pagina');
+        }
+    }
 
-        return $this->render(
-            'Design311WebsiteBundle:Recipe:add.html.twig',
-            array('form' => $form->createView())
-        );
-    }*/
+    public function acceptDinnerParticipantAction($participantId)
+    {
+        $dinnerParticipant = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerParticipants')->find($participantId);
+        
+        if ($this->getUser() == $dinnerParticipant->getDinner()->getUser()) {
+
+            $dinnerParticipant->setAccepted(true);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($dinnerParticipant);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinnerParticipant->getDinner()->getPermalink()) ));
+        }
+        else{
+            throw $this->createAccessDeniedException('Je hebt geen toegang tot deze pagina');
+        }
+    }
 }

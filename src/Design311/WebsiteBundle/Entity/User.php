@@ -83,6 +83,16 @@ class User implements UserInterface
     protected $shoppinglist;
 
     /**
+     * @ORM\OneToMany(targetEntity="Dinner", mappedBy="user")
+     */
+    protected $dinners;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DinnerParticipants", mappedBy="user" ,cascade={"persist"})
+    **/
+    private $dinnersParticipated;
+
+    /**
      * @inheritDoc
      */
     public function getUsername()
@@ -508,5 +518,71 @@ class User implements UserInterface
     public function getAantalPersonen()
     {
         return $this->aantalPersonen;
+    }
+
+    /**
+     * Add dinners
+     *
+     * @param \Design311\WebsiteBundle\Entity\Dinner $dinners
+     * @return User
+     */
+    public function addDinner(\Design311\WebsiteBundle\Entity\Dinner $dinners)
+    {
+        $this->dinners[] = $dinners;
+
+        return $this;
+    }
+
+    /**
+     * Remove dinners
+     *
+     * @param \Design311\WebsiteBundle\Entity\Dinner $dinners
+     */
+    public function removeDinner(\Design311\WebsiteBundle\Entity\Dinner $dinners)
+    {
+        $this->dinners->removeElement($dinners);
+    }
+
+    /**
+     * Get dinners
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDinners()
+    {
+        return $this->dinners;
+    }
+
+    /**
+     * Add dinnersParticipated
+     *
+     * @param \Design311\WebsiteBundle\Entity\Dinner $dinnersParticipated
+     * @return User
+     */
+    public function addDinnersParticipated(\Design311\WebsiteBundle\Entity\Dinner $dinnersParticipated)
+    {
+        $this->dinnersParticipated[] = $dinnersParticipated;
+
+        return $this;
+    }
+
+    /**
+     * Remove dinnersParticipated
+     *
+     * @param \Design311\WebsiteBundle\Entity\Dinner $dinnersParticipated
+     */
+    public function removeDinnersParticipated(\Design311\WebsiteBundle\Entity\Dinner $dinnersParticipated)
+    {
+        $this->dinnersParticipated->removeElement($dinnersParticipated);
+    }
+
+    /**
+     * Get dinnersParticipated
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDinnersParticipated()
+    {
+        return $this->dinnersParticipated;
     }
 }

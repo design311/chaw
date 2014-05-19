@@ -18,7 +18,10 @@ class DinnerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text');
-        $builder->add('date', 'datetime');
+        $builder->add('date', 'datetime', array(
+            'date_widget' => 'single_text',
+            'time_widget' => 'single_text'
+            ));
         $builder->add('menu', 'textarea');
         $builder->add('maxinvitees', 'integer');
         $builder->add('price', 'money');

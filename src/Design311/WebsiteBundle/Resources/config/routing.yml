@@ -32,6 +32,22 @@ design311website_dinners_add:
     path:     /dinners/add/
     defaults: { _controller: Design311WebsiteBundle:Dinner:add }
 
+design311website_dinners_detail:
+    path:     /dinners/{permalink}/
+    defaults: { _controller: Design311WebsiteBundle:Dinner:detail }
+
+design311website_dinners_participate:
+    path:     /dinners/{permalink}/deelnemen/
+    defaults: { _controller: Design311WebsiteBundle:Dinner:participate }
+
+design311website_dinners_participant_decline:
+    path:     /dinners/{permalink}/participant/{participantId}/decline
+    defaults: { _controller: Design311WebsiteBundle:Ajax:declineDinnerParticipant }
+
+design311website_dinners_participant_accept:
+    path:     /dinners/{permalink}/participant/{participantId}/accept
+    defaults: { _controller: Design311WebsiteBundle:Ajax:acceptDinnerParticipant }
+
 design311website_recepten:
     path:     /recepten/
     defaults: { _controller: Design311WebsiteBundle:Recipe:index }

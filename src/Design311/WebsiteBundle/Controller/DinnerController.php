@@ -5,8 +5,10 @@ namespace Design311\WebsiteBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use Design311\WebsiteBundle\Form\Type\MessageType;
 use Design311\WebsiteBundle\Form\Type\DinnerType;
 use Design311\WebsiteBundle\Entity\Dinner;
+use Design311\WebsiteBundle\Entity\DinnerParticipants;
 
 
 class DinnerController extends GeocodeController
@@ -29,6 +31,67 @@ class DinnerController extends GeocodeController
                 'locations' => $locations,
                 'filters' => $filters
                 )
+        );
+    }
+
+    public function detailAction($permalink)
+    {
+        $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
+
+        return $this->render(
+            'Design311WebsiteBundle:Dinner:detail.html.twig',
+            array('dinner' => $dinner)
+        );
+    }
+
+    public function participateAction(Request $request, $permalink)
+    {
+        $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
+
+        $data = array();
+        $form = $this->createForm(new MessageType(), $data);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $data = $form->getData();
+
+            $dinnerParticipant = new DinnerParticipants();
+
+            $dinnerParticipant->setUser($this->getUser());
+            $dinnerParticipant->setDinner($dinner);
+
+            $em->persist($dinnerParticipant);
+            $em->flush();
+
+            $mail = \Swift_Message::newInstance()
+                ->setSubject($this->getUser()->getDisplayName() . ' wil graag deelnemen aan je dinner.')
+                ->setFrom($this->getUser()->getEmail())
+                ->setTo($dinner->getUser()->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'Design311WebsiteBundle:Mail:participate.html.twig',
+                        array(
+                            'message' => $data['message'],
+                            'name' => $this->getUser()->getDisplayName(),
+                            'dinner' => $dinner,
+                            'participant' => $dinnerParticipant
+                            )
+                    ),
+                    'text/html'
+                )
+            ;
+            $this->get('mailer')->send($mail);
+
+            return $this->redirect($this->generateUrl('design311website_dinners'));
+        }
+
+        return $this->render(
+            'Design311WebsiteBundle:Dinner:participate.html.twig',
+            array('form' => $form->createView())
         );
     }
 
@@ -83,6 +146,8 @@ class DinnerController extends GeocodeController
                 $dinner->getAddress()->setLat(0);
                 $dinner->getAddress()->setLng(0);
             }
+
+            $dinner->setUser($this->getUser());
 
             $em->persist($dinner);
             $em->flush();

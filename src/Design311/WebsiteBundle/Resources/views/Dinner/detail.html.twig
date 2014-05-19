@@ -1,0 +1,7 @@
+<h1>{{dinner.title}}</h1>
+
+<ul>
+{% for participant in dinner.participants %}
+    <li>{{participant.user.displayName}} - {{participant.accepted ? 'accepted' : 'not accepted'}}</li>
+{% endfor %}
+</ul>
