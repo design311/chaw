@@ -52,7 +52,7 @@ p{
 }
 
 img{
-	width:100%;
+	max-width:100%;
 	height:auto;
 }
 
@@ -448,6 +448,9 @@ img{
 
 .map{
 	height:400px;
+	img{
+		max-width:initial;
+	}
 }
 
 .recipeindex{
@@ -693,6 +696,20 @@ img{
 		img{
 			margin-top:25px;
 		}
+	}
+}
+
+table.dinners{
+	width:100%;
+	th{
+		text-align:left;
+		background:#eee;
+	}
+	tr{
+		border:1px solid #eee;
+	}
+	td,th{
+		padding:5px;
 	}
 }
 

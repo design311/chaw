@@ -53,6 +53,19 @@ $(function(){
 		$("#searchRecipe_ingredients").select2();
 	}
 
+	$( "#slider-range" ).slider({
+      range: "min",
+      min: 0,
+      max: 50,
+      value: 50,
+      slide: function( event, ui ) {
+        $( ".amount" ).val( ui.value );
+        $( ".amount" ).text( ui.value );
+      }
+    });
+    $( ".amount" ).val( $( "#slider-range" ).slider( "value" ) );
+    $( ".amount" ).text( $( "#slider-range" ).slider( "value" ) );
+
 })
 
 //images loaded

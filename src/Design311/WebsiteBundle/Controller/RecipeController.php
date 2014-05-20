@@ -96,12 +96,10 @@ class RecipeController extends Controller
             $query = $qb
                 ->from('Design311WebsiteBundle:Recipe', 'r')
                 ->select('r')
-                //->andWhere('ri.ingredient = 32')
                 ->where($qb->expr()->in('ri.ingredient', $ingredientIds))
                 ->leftJoin('Design311WebsiteBundle:RecipeIngredient', 'ri', 'WITH', 'r.id = ri.recipes')
                 ->groupBy('r.id')
                 ->having('count(r.id) = ' . count($ingredientIds))
-                //->setParameter('ingredient', $ing)
                 ->getQuery();
 
             $recipes = $query->execute();

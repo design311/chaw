@@ -12,14 +12,22 @@
 			<p><label for="locatie"><strong>Locatie</strong></label></p>
 			<p><input type="text" id="locatie"></p>
 			<p>TIP: Versleep de kaart om te filteren</p>
+			<div id="filters">
+			<p>
+				<label for="amount">Maximumprijs:</label> €<span class="amount"></span>
+				<input type="hidden" class="amount" id="maxprice">
+			</p>
+			<div id="slider-range"></div>
 			{% for filter in filters %}
-					<p><strong>{{filter.name}}</strong></p>
-					{% for child in filter.children %}
-							<p><input type="checkbox" name="{{filter.name|lower}}" value="{{child.value|lower}}" id="{{child.value|lower}}"> <label for="{{child.value|lower}}">{{child.value}}</label></p>
-					{% endfor %}
+				<p><strong>{{filter.name}}</strong></p>
+				{% for child in filter.children %}
+						<p><input type="checkbox" name="{{filter.name|lower}}" value="{{child.value|lower}}" id="{{child.value|lower}}"> <label for="{{child.value|lower}}">{{child.value}}</label></p>
+				{% endfor %}
 			{% endfor %}
+			</div>
 		</div>
-		<table id="dinners" class="two-third">
+		<div class="two-third">
+		<table id="dinners" class="dinners">
 			<thead>
 				<tr>
 					<th>Datum</th>
@@ -30,27 +38,30 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for dinner in dinners %}
 				<tr>
-					<td>{{dinner.date|date('d-m-Y')}}</td>
-					<td><a href="{{ path('design311website_dinners_detail', {'permalink': dinner.permalink}) }}">{{dinner.title}}</a></td>
-					<td>{{dinner.address.city}}</td>
-					<td>{{dinner.price}}</td>
-					<td><a href="{{ path('design311website_dinners_participate', {'permalink': dinner.permalink}) }}">Deelnemen</a></td>
+					<td colspan="30"><img src="{{ asset('bundles/design311website/img/loader.gif') }}" alt="Loading..." width="16" height="16"></td>
 				</tr>
-				{% endfor %}
 			</tbody>
 		</table>
+		<p id="nonefound">Sorry! Geen dinners gevonden in deze regio.</p>
+		</div>
 	</div>
 </div>
 {% endblock %}
 
 {% block footer %}
-		<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script src="{{ asset('bundles/design311website/js/maps.markerclusterer.js') }}"></script>
+	<script src="{{ asset('bundles/design311website/js/jquery-ui/jquery-ui-1.10.4.slider.min.js') }}"></script>
+	<link rel="stylesheet" href="{{ asset('bundles/design311website/js/jquery-ui/jquery-ui-1.10.4.slider.min.css') }}">
 	<script type="text/javascript">
 
 		$(function(){
+			var dinnersTable = $('#dinners');
+			var nonefound = $('#nonefound').hide();
+			var tbody = $('#dinners tbody');
+			var dinners = {{dinners|serialize|raw}};
+
 			var map;
 			var markers = [];
 			var geocoder = new google.maps.Geocoder();
@@ -80,7 +91,9 @@
 				
 			})
 
-			var markerCluster = new MarkerClusterer(map, markers);
+			var markerCluster = new MarkerClusterer(map, markers, {
+				gridSize: 40
+			});
 			map.setCenter(latlngbounds.getCenter());
 			map.fitBounds(latlngbounds);
 
@@ -102,8 +115,14 @@
 				map.setCenter(coords);
 			}
 
+			//idle fires once instead of bounds_changed firing all the time
+			google.maps.event.addListener(map, 'idle', function() {
+					displayDinners(dinners);
+			});
 
-			google.maps.event.addListener(map, 'bounds_changed', function() {
+			function displayDinners(dinners){
+				tbody.empty();
+
 				var bounds = map.getBounds();
 				var visibleDinners = [];
 				for (var i=0; i<markers.length; i++){
@@ -112,16 +131,11 @@
 					}
 				}
 
-				var tbody = $('#dinners tbody');
-				tbody.empty();
-
-				//TODO error message if no markers
 				if (visibleDinners.length !== 0) {
-					var dinners = {{dinners|serialize|raw}};
 					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}'
 					var deelnemen = '{{ path('design311website_dinners_participate', {'permalink': 'permalink_holder'}) }}';
 					$.each(dinners, function(i, dinner){
-						if ($.inArray('' + dinner.id, visibleDinners) > -1) {
+						if( bounds.contains(markers[i].getPosition()) ){
 							var formattedDate = new Date(dinner.date);
 							var d = formattedDate.getDate();
 							var m =  formattedDate.getMonth();
@@ -137,10 +151,14 @@
 									<td>'+dinner.price+'</td> \
 									<td><a href="'+deelnemenLink+'">Deelnemen</a></td> \
 								</tr>')
-						};
+						}
 					})
-				};
-			});
+				}
+				else{
+					dinnersTable.hide();
+					nonefound.show();
+				}
+			}
 
 			$('#locatie').blur(function(){
 				if ($(this).val()) {};
@@ -158,9 +176,39 @@
 					}
 				});
 			})
+
+			$('#filters input').change(function(){
+
+				var filters = {};
+				$.each($('#filters input'), function(index, input) {
+					if ($(input).is(':checkbox')) {
+						if (input.checked) {
+							if (typeof filters[input.name] == 'undefined') {
+								filters[input.name] = [];
+							}
+							filters[input.name].push(input.value);
+						};
+					}
+					else{
+						filters[input.id] = input.value;
+					}
+				});
+
+				console.log(filters);
+
+				$.ajax({
+					url: "{{path('design311website_dinners_filter')}}",
+					type: "POST",
+					data: filters,
+					dataType: "JSON",
+					success: function (data) {
+						console.log(data);
+						displayDinners(data);
+					}
+				});
+
+				
+			})
 		});
-
-
-
 	</script>
 {% endblock %}

@@ -968,7 +968,7 @@ p {
   margin: 0 0 1em; }
 
 img {
-  width: 100%;
+  max-width: 100%;
   height: auto; }
 
 a {
@@ -1268,6 +1268,8 @@ a {
 
 .map {
   height: 400px; }
+  .map img {
+    max-width: initial; }
 
 .recipeindex .newestrecipes {
   height: 60%; }
@@ -1455,6 +1457,16 @@ a {
   margin-top: 0; }
 .recipe-detail .recipephotos img {
   margin-top: 25px; }
+
+table.dinners {
+  width: 100%; }
+  table.dinners th {
+    text-align: left;
+    background: #eee; }
+  table.dinners tr {
+    border: 1px solid #eee; }
+  table.dinners td, table.dinners th {
+    padding: 5px; }
 
 .select2-container {
   width: 100%; }
