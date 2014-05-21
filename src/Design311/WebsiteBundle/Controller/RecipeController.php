@@ -86,6 +86,8 @@ class RecipeController extends Controller
 
             $searchData = $form->getData();
 
+            //ladybug_dump($searchData);die;
+
             $ingredientIds = array();
 
             foreach ($searchData['ingredients'] as $ingredient) {
@@ -93,16 +95,20 @@ class RecipeController extends Controller
             }
 
             $qb = $em->createQueryBuilder();
-            $query = $qb
+            $qb = $qb
                 ->from('Design311WebsiteBundle:Recipe', 'r')
                 ->select('r')
                 ->where($qb->expr()->in('ri.ingredient', $ingredientIds))
                 ->leftJoin('Design311WebsiteBundle:RecipeIngredient', 'ri', 'WITH', 'r.id = ri.recipes')
                 ->groupBy('r.id')
-                ->having('count(r.id) = ' . count($ingredientIds))
-                ->getQuery();
+                ->having('count(r.id) = ' . count($ingredientIds));
 
-            $recipes = $query->execute();
+            if ($searchData['category'] != null ) {
+               $qb->andWhere($qb->expr()->eq('r.category', $searchData['category']->getId()));
+            }
+
+
+            $recipes = $qb->getQuery()->execute();
 
             $form = $this->searchRecipeForm();
 

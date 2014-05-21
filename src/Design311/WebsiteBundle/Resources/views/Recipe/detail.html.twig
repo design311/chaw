@@ -5,22 +5,14 @@
 {% block content %}
 	<div class="fixedfix"></div>
 	<div class="newestrecipes detailheader" style="background-image:url('{{ asset(recipe.photos.0.webPath)}}');">
-		<div class="title">
-			<div class="container">
-				<h1 class="averia">{{recipe.title}}</h1>
-				<ul class="recipemeta">
-					<li><i class="pot sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
-					<li><i class="bestek sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
-				</ul>
-			</div>
-		</div>
+		{% include 'Design311WebsiteBundle:Shared:recipe-title.html.twig' with {'detail':true} %}
 	</div>
 	<div class="recipecontent">	
 		<div class="container">
 			{% include 'Design311WebsiteBundle:Shared:recipes-sidebar.html.twig' with {'detail':true} %}
 			<div class="two-third main">
 				<div class="ingredients">
-					<h2>Ingredienten</h2>
+					<h2>Ingredi&euml;nten</h2>
 					<ul>
 					{% for ingredient in recipe.recipeingredients %}
 						<li>{{ingredient.amount}} {{ingredient.ingredient}}</li>

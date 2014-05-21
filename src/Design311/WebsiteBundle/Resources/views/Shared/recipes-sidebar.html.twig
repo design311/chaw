@@ -1,10 +1,10 @@
 <div class="one-third sidebar">
-	<p><a href="{{ path('design311website_recepten_add') }}" class="button addrecipe"><i></i>Recept toevoegen</a></p>
-	<p><a href="{{ path('design311website_recepten_shoppinglist') }}" class="button shoppinglist"><i></i>Winkellijstje bekijken (<span class="shoppinglistcount">{% if app.user %}{{app.user.shoppinglist|length}}{% else %}0{% endif %}</span>)</a></p>
+	<p><a href="{{ path('design311website_recepten_add') }}" class="button button-orange addrecipe"><i class="sprite plus white"></i>Recept toevoegen</a></p>
+	<p><a href="{{ path('design311website_recepten_shoppinglist') }}" class="button shoppinglist"><i class="sprite cart white"></i>Winkellijstje bekijken (<span class="shoppinglistcount">{% if app.user %}{{app.user.shoppinglist|length}}{% else %}0{% endif %}</span>)</a></p>
 	{% if detail is defined and detail == true %}
-	<p><a href="#" class="like ajax-button button{% if app.user in recipe.likedBy %} active{% endif %}" data-ajax="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" title="Recept lekker vinden"><i></i>Vind ik lekker</a></p>
-	<p><a href="#" class="save ajax-button button{% if app.user in recipe.savedBy %} active{% endif %}" data-ajax="{{path('design311website_recepten_save', {'recipeId': recipe.id})}}" title="Recept bewaren"><i></i>Bewaren voor later</a></p>
-	<p><a href="#" class="shop ajax-button button{% if app.user in recipe.shoppinglistFrom %} active{% endif %}" data-ajax="{{path('design311website_recepten_shop', {'recipeId': recipe.id})}}" title="Recept toevoegen aan winkellijstje"><i></i>Toevoegen aan winkellijstje</a></p>
+	<p><a href="#" class="like ajax-button button" data-ajax="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" title="Recept lekker vinden"><i class="sprite heart{% if app.user in recipe.likedBy %} orange{% endif %}"></i>Vind ik lekker</a></p>
+	<p><a href="#" class="save ajax-button button" data-ajax="{{path('design311website_recepten_save', {'recipeId': recipe.id})}}" title="Recept bewaren"><i class="sprite save{% if app.user in recipe.savedBy %} orange{% endif %}"></i>Bewaren voor later</a></p>
+	<p><a href="#" class="shop ajax-button button" data-ajax="{{path('design311website_recepten_shop', {'recipeId': recipe.id})}}" title="Recept toevoegen aan winkellijstje"><i class="sprite cart{% if app.user in recipe.shoppinglistFrom %} orange{% endif %}"></i>Toevoegen aan winkellijstje</a></p>
 	{% endif %}
 	<p><h3>Recepten zoeken op ingredient</h3></p>
 	{{ form(form) }}

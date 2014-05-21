@@ -933,6 +933,54 @@ html[dir="rtl"] .select2-search-choice-close {
 
   .select2-search input {
     background-position: 100% -21px !important; } }
+.sprite {
+  background-image: url("img/sprite.png");
+  display: inline-block;
+  width: 18px;
+  height: 18px; }
+
+.heart {
+  background-position: 0 0; }
+  .heart.orange {
+    background-position: 0 -18px; }
+  .heart.white {
+    background-position: 0 -36px; }
+
+.save {
+  background-position: -18px 0; }
+  .save.orange {
+    background-position: -18px -18px; }
+  .save.white {
+    background-position: -18px -36px; }
+
+.cart {
+  background-position: -36px 0; }
+  .cart.orange {
+    background-position: -36px -18px; }
+  .cart.white {
+    background-position: -36px -36px; }
+
+.plus {
+  background-position: -54px 0; }
+  .plus.orange {
+    background-position: -54px -18px; }
+  .plus.white {
+    background-position: -54px -36px; }
+
+.pot {
+  background-position: -72px 0; }
+  .pot.orange {
+    background-position: -72px -18px; }
+  .pot.white {
+    background-position: -72px -36px; }
+
+.bestek {
+  background-position: -90px 0; }
+  .bestek.orange {
+    background-position: -90px -18px; }
+  .bestek.white {
+    background-position: -90px -36px; }
+
 html, body, .contentwrapper {
   height: 100%; }
 
@@ -980,11 +1028,11 @@ a {
   font-family: 'Averia Libre', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: bold; }
 
-.sprite {
-  background-image: url("img/sprite.png");
-  display: inline-block;
-  width: 18px;
-  height: 18px; }
+.fl {
+  float: left; }
+
+.fr {
+  float: right; }
 
 .clear {
   clear: both; }
@@ -1273,8 +1321,6 @@ a {
 
 .recipeindex .newestrecipes {
   height: 60%; }
-  .recipeindex .newestrecipes .container, .recipeindex .newestrecipes .flex-control-nav {
-    padding: 20px 50px 30px; }
 
 .newestrecipes h1 {
   margin-top: 0; }
@@ -1297,6 +1343,8 @@ a {
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   height: 126px; }
+.newestrecipes .container, .newestrecipes .flex-control-nav {
+  padding: 20px 50px 30px; }
 .newestrecipes h1 {
   margin-bottom: 10px;
   line-height: 1; }
@@ -1312,43 +1360,21 @@ a {
   .button i {
     display: block;
     float: left;
-    width: 18px;
-    height: 18px;
-    margin-right: 7px;
-    background-image: url("img/sprite.png");
-    background-repeat: no-repeat; }
+    margin-right: 7px; }
   .button:hover, .button:focus, .button:active {
     box-shadow: 0 0 1px #333333; }
 
-.like, .like i {
-  background-position: 0 0; }
-  .like.active, .like i.active {
-    background-position: 0 -18px; }
-
-.save, .save i {
-  background-position: -18px 0; }
-  .save.active, .save i.active {
-    background-position: -18px -18px; }
-
-.shop, .shop i {
-  background-position: -36px 0; }
-  .shop.active, .shop i.active {
-    background-position: -36px -18px; }
+.button-orange {
+  background: #ff5c23;
+  color: #fff; }
 
 .recipecontent {
   background: #eee;
   border-bottom: 1px solid #ddd;
   border-top: 1px solid #ddd; }
-  .recipecontent .addrecipe {
-    background: #ff5c23;
-    color: #fff; }
-    .recipecontent .addrecipe i {
-      background-position: -54px 0; }
   .recipecontent .shoppinglist {
     background: #333333;
     color: #fff; }
-    .recipecontent .shoppinglist i {
-      background-position: -54px -18px; }
   .recipecontent .recipeblock {
     width: 50%;
     float: left;
@@ -1383,14 +1409,9 @@ a {
         float: left;
         line-height: 0;
         width: 30px; }
-        .recipecontent .recipe .actions li a {
-          display: inline-block;
-          text-indent: -999em;
-          width: 18px;
-          height: 18px;
-          margin-top: 6px;
-          background-image: url("img/sprite.png"); }
-          .recipecontent .recipe .actions li a:hover, .recipecontent .recipe .actions li a:focus, .recipecontent .recipe .actions li a:active {
+        .recipecontent .recipe .actions li i {
+          margin-top: 6px; }
+          .recipecontent .recipe .actions li i:hover, .recipecontent .recipe .actions li i:focus, .recipecontent .recipe .actions li i:active {
             opacity: 0.5; }
 
 .recipemeta {
@@ -1410,12 +1431,6 @@ a {
     position: absolute;
     left: 0; }
 
-.pot {
-  background-position: -72px -18px; }
-
-.bestek {
-  background-position: -72px 0; }
-
 .detailheader {
   height: 100%;
   background-size: cover;
@@ -1429,11 +1444,11 @@ a {
     z-index: 600; }
   .detailheader .title {
     cursor: pointer; }
-  .detailheader .container, .detailheader .newestrecipes .flex-control-nav, .newestrecipes .detailheader .flex-control-nav {
-    padding: 20px 50px 30px; }
   .detailheader h1 {
     margin-bottom: 10px;
     line-height: 1; }
+  .detailheader .container, .detailheader .newestrecipes .flex-control-nav, .newestrecipes .detailheader .flex-control-nav {
+    display: table; }
 
 .recipe-detail .header {
   position: absolute;
@@ -1467,6 +1482,11 @@ table.dinners {
     border: 1px solid #eee; }
   table.dinners td, table.dinners th {
     padding: 5px; }
+
+.editrecipe {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center; }
 
 .select2-container {
   width: 100%; }

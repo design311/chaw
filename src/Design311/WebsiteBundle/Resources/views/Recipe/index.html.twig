@@ -9,15 +9,7 @@
 			{% for recipe in newestrecipes %}
 				<li>
 					<div class="imagecontainer"><img src="{{ asset(recipe.photos[0].webPath) }}" alt="{{ recipe.photos[0].title }}" /></div>
-					<div class="title">
-						<div class="container">
-							<h1 class="averia">{{recipe.title}}</h1>
-							<ul class="recipemeta">
-								<li><i class="pot sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
-								<li><i class="bestek sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
-							</ul>
-						</div>
-					</div>
+					{% include 'Design311WebsiteBundle:Shared:recipe-title.html.twig' %}
 				</li>
 			{% endfor %}
 			</ul>

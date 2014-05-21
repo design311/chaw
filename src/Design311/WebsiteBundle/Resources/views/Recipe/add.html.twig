@@ -1,7 +1,18 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
 {% block content %}
+	{% for emailField in form.photos %}
+        <li>
+            {{ form_errors(emailField) }}
+            {{ form_widget(emailField) }}
+            {{ladybug_dump(emailField.file)}}
+            {% if emailField is not null %}
+				<img src="" alt="">
+            {% endif %}
+        </li>
+    {% endfor %}
 	{{ form(form) }}
+	<hr>
 {% endblock %}
 
 {% block footer %}
@@ -28,14 +39,23 @@
 		    ingredientHolder.data('index', ingredientHolder.children('div').length);
 
 		    photoHolder.children('div').each(function(i, el) {
-		    	$(el).append(deleteLink);
+		    	if (i != 0) {
+		    		$(el).append(deleteLink);
+		    	};
 		    });
 		    ingredientHolder.children('div').each(function(i, el) {
-		    	$(el).append(deleteLink);
+		    	if (i != 0) {
+		    		$(el).append(deleteLink);
+		    	};
 		    });
 
-	        addInput(ingredientHolder, addIngredientLink, false);
-	        addInput(photoHolder, addPhotoLink, false);
+		    if (photoHolder.data('index') == 0) {
+	        	addInput(photoHolder, addPhotoLink, false);
+		    };
+
+		    if (ingredientHolder.data('index') == 0) {
+	        	addInput(ingredientHolder, addIngredientLink, false);
+			};
 
 		    addPhotoLink.on('click', function(e) {
 		        // prevent the link from creating a "#" on the URL

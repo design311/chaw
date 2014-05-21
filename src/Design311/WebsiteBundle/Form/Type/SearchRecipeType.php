@@ -14,8 +14,15 @@ class SearchRecipeType extends AbstractType
             'class' => 'Design311WebsiteBundle:Ingredient',
             'property' => 'name',
             'multiple'  => true,
+            'label' => false
         ));
-        $builder->add('Zoeken', 'submit');
+        $builder->add('category', 'entity', array(
+            'class' => 'Design311WebsiteBundle:RecipeCategory',
+            'required' => false,
+            'empty_value' => 'Geen voorkeur',
+            'label' => 'Categorie'
+            ));
+        $builder->add('Recepten zoeken', 'submit');
     }
 
     public function getName()

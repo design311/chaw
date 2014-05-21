@@ -1,0 +1,22 @@
+<div class="title">
+	<div class="container">
+		<div class="fl">
+			<h1 class="averia">{{recipe.title}}</h1>
+			<ul class="recipemeta">
+				<li><i class="pot white sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
+				<li><i class="bestek white sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
+				<li><i class="heart white sprite"></i>
+				{% if recipe.likedBy|length == 0 %}
+				Nog niemand heeft dit geproefd.
+				{% else %}
+				{{recipe.likedBy|length}} {{recipe.likedBy|length == 1 ? 'iemand vindt' : 'mensen vinden'}} dit lekker</li>
+				{% endif %}
+			</ul>
+		</div>
+		{% if detail is defined and recipe.user == app.user %}
+		<div class="editrecipe">
+			<a href="{{ path('design311website_recepten_edit', {'recipeId': recipe.id }) }}" class="button button-orange">Recept bewerken</a>
+		</div>
+		{% endif %}
+	</div>
+</div>

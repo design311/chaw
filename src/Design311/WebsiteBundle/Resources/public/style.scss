@@ -2,6 +2,7 @@
 @import "scss/mixins";
 @import "scss/default";
 @import "scss/select2";
+@import "scss/sprite";
 
 $black:#333;
 $orange:#ff5c23;
@@ -63,11 +64,12 @@ img{
 	font-weight:bold;
 }
 
-.sprite{
-	background-image:url('img/sprite.png');
-	display:inline-block;
-	width:18px;
-	height:18px;
+.fl{
+	float:left;
+}
+
+.fr{
+	float:right;
 }
 
 .clear{
@@ -456,9 +458,6 @@ img{
 .recipeindex{
 	.newestrecipes{
 		height:60%;
-		.container{
-			padding:20px 50px 30px;
-		}
 	}
 }
 
@@ -490,6 +489,9 @@ img{
 		color:#fff;
 		height:126px;
 	}
+	.container{
+		padding:20px 50px 30px;
+	}
 	h1{
 		margin-bottom:10px;
 		line-height:1;
@@ -507,53 +509,25 @@ img{
 	i{
 		display:block;
 		float:left;
-		width:18px;
-		height:18px;
 		margin-right:7px;
-		background-image:url('img/sprite.png');
-		background-repeat:no-repeat;
 	}
 	&:hover, &:focus, &:active{
 		box-shadow:0 0 1px $black;
 	}
 }
 
-.like, .like i{
-	background-position:0 0;
-	&.active{
-		background-position:0 -18px;
-	}
-}
-.save, .save i{
-	background-position:-18px 0;
-	&.active{
-		background-position:-18px -18px;
-	}
-}
-.shop, .shop i{
-	background-position:-36px 0;
-	&.active{
-		background-position:-36px -18px;
-	}
+.button-orange{
+	background:$orange;
+	color:#fff;
 }
 
 .recipecontent{
 	background:#eee;
 	border-bottom:1px solid #ddd;
 	border-top:1px solid #ddd;
-	.addrecipe{
-		background:$orange;
-		color:#fff;
-		i{
-			background-position:-54px 0;
-		}
-	}
 	.shoppinglist{
 		background:$black;
 		color:#fff;
-		i{
-			background-position:-54px -18px;
-		}
 	}
 	.recipeblock{
 		width:50%;
@@ -594,13 +568,8 @@ img{
 				float:left;
 				line-height:0;
 				width:30px;
-				a{
-					display:inline-block;
-					text-indent:-999em;
-					width:18px;
-					height:18px;
+				i{
 					margin-top:6px;
-					background-image:url('img/sprite.png');
 					&:hover, &:focus, &:active{
 						opacity:0.5;
 					}
@@ -629,14 +598,6 @@ img{
 	}
 }
 
-.pot{
-	background-position:-72px -18px;
-}
-
-.bestek{
-	background-position:-72px 0;
-}
-
 .detailheader{
 	height:100%;
 	background-size:cover;
@@ -652,12 +613,12 @@ img{
 	.title{
 		cursor:pointer;
 	}
-	.container{
-		padding:20px 50px 30px;
-	}
 	h1{
 		margin-bottom:10px;
 		line-height:1;
+	}
+	.container{
+		display:table;
 	}
 }
 
@@ -711,6 +672,12 @@ table.dinners{
 	td,th{
 		padding:5px;
 	}
+}
+
+.editrecipe{
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
 }
 
 //TODO remove debug styling

@@ -17,10 +17,12 @@ $(function(){
 		};
 	});
 
-	$('.detailheader .title').click(function(){
-		$('html,body').animate({
-			scrollTop: headerHeight
-		}, 1000);
+	$('.detailheader .title').click(function(e){
+		if (e.target.tagName != 'A') {		
+			$('html,body').animate({
+				scrollTop: headerHeight
+			}, 1000);
+		};
 	})
 
 	$('.ajax-button').click(function(){
@@ -28,13 +30,15 @@ $(function(){
 
 			var link = $(this);
 
+			console.log(link.find('.sprite'));
+
 			//TODO add loader gif for slow json
 			$.getJSON( $(this).data('ajax'), function( data ) {
 				if (data.status === 1) {
-					link.children('i').addClass('active');
+					link.find('.sprite').addClass('orange');
 				}
 				else{
-					link.children('i').removeClass('active');
+					link.find('.sprite').removeClass('orange');
 				}
 
 				if (link.hasClass('shop')) {
@@ -53,18 +57,20 @@ $(function(){
 		$("#searchRecipe_ingredients").select2();
 	}
 
-	$( "#slider-range" ).slider({
-      range: "min",
-      min: 0,
-      max: 50,
-      value: 50,
-      slide: function( event, ui ) {
-        $( ".amount" ).val( ui.value );
-        $( ".amount" ).text( ui.value );
-      }
-    });
-    $( ".amount" ).val( $( "#slider-range" ).slider( "value" ) );
-    $( ".amount" ).text( $( "#slider-range" ).slider( "value" ) );
+	if (typeof $('body').slider == 'function') {
+		$( "#slider-range" ).slider({
+	      range: "min",
+	      min: 0,
+	      max: 50,
+	      value: 50,
+	      slide: function( event, ui ) {
+	        $( ".amount" ).val( ui.value );
+	        $( ".amount" ).text( ui.value );
+	      }
+	    });
+	    $( ".amount" ).val( $( "#slider-range" ).slider( "value" ) );
+	    $( ".amount" ).text( $( "#slider-range" ).slider( "value" ) );
+	}
 
 })
 
