@@ -132,6 +132,11 @@ class AjaxController extends Controller
     {
         //TODO DOUBLE DELETE ERROR
         $invite = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerInvite')->find($inviteId);
+
+        if ($invite == null) {
+            $this->get('session')->getFlashBag()->add('error','Uitnodiging niet gevonden');
+            return $this->redirect($this->generateUrl('design311website_dinners'));
+        }
         
         if ($this->getUser()->getEmail() == $invite->getEmail()) {
 

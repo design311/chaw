@@ -22,7 +22,7 @@ class SearchRecipeType extends AbstractType
             'empty_value' => 'Geen voorkeur',
             'label' => 'Categorie'
             ));
-        $builder->add('Recepten zoeken', 'submit');
+        $builder->add('submit', 'submit', array('label' => 'Recepten zoeken'));
     }
 
     public function getName()

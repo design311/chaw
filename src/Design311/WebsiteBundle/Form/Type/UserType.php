@@ -17,7 +17,7 @@ class UserType extends AbstractType
            'second_name' => 'confirm',
            'type'        => 'password',
         ));
-        $builder->add('address', new AddressType());
+        //$builder->add('address', new AddressType());
         $builder->add('Registreer', 'submit');
     }
 

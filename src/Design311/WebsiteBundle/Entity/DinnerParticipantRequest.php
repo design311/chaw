@@ -23,12 +23,12 @@ class DinnerParticipantRequest
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dinner", inversedBy="participants")
+     * @ORM\ManyToOne(targetEntity="Dinner", inversedBy="participantRequests")
      **/
     private $dinner;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="dinnersParticipated", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="dinnersRequested", cascade={"persist"})
      **/
     private $user;
 

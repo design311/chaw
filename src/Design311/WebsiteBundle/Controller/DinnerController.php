@@ -18,7 +18,17 @@ class DinnerController extends GeocodeController
     public function indexAction()
     {
         //TODO only get dinners in the future & not fully booked
-        $dinners = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        $query = $qb
+            ->from('Design311WebsiteBundle:Dinner', 'd')
+            ->select('d')
+            ->where($qb->expr()->gte('d.date', ':today'))
+            ->setParameter('today', new \DateTime())
+            ->getQuery();
+
+        $dinners = $query->execute();
+
         $filters = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsFilter(1);
 
         foreach ($dinners as $dinner) {

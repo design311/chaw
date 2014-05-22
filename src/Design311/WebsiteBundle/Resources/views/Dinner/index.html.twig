@@ -132,6 +132,8 @@
 				}
 
 				if (visibleDinners.length !== 0) {
+					dinnersTable.show();
+					nonefound.hide();
 					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}'
 					var deelnemen = '{{ path('design311website_dinners_participate', {'permalink': 'permalink_holder'}) }}';
 					$.each(dinners, function(i, dinner){

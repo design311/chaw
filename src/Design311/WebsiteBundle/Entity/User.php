@@ -49,6 +49,41 @@ class User implements UserInterface
      * @ORM\Column(name="email", type="string", length=255)
      */
     protected $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="website", type="string", length=255, nullable=true)
+     */
+    protected $website;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook", type="string", length=255, nullable=true)
+     */
+    protected $facebook;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
+     */
+    protected $twitter;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="googleplus", type="string", length=255, nullable=true)
+     */
+    protected $googleplus;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=512, nullable=true)
+     */
+    protected $description;
     
     /**
      * @var smallint
@@ -622,5 +657,120 @@ class User implements UserInterface
     public function getDinnersRequested()
     {
         return $this->dinnersRequested;
+    }
+
+    /**
+     * Set website
+     *
+     * @param string $website
+     * @return User
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * Get website
+     *
+     * @return string 
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set facebook
+     *
+     * @param string $facebook
+     * @return User
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
+
+        return $this;
+    }
+
+    /**
+     * Get facebook
+     *
+     * @return string 
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * Set twitter
+     *
+     * @param string $twitter
+     * @return User
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+
+        return $this;
+    }
+
+    /**
+     * Get twitter
+     *
+     * @return string 
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+
+    /**
+     * Set googleplus
+     *
+     * @param string $googleplus
+     * @return User
+     */
+    public function setGoogleplus($googleplus)
+    {
+        $this->googleplus = $googleplus;
+
+        return $this;
+    }
+
+    /**
+     * Get googleplus
+     *
+     * @return string 
+     */
+    public function getGoogleplus()
+    {
+        return $this->googleplus;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return User
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

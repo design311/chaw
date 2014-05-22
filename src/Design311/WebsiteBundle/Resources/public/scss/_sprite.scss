@@ -5,6 +5,11 @@
 	height:18px;
 }
 
+.medium{
+	width:27px;
+	height:27px;
+}
+
 .heart{
 	background-position:0 0;
 	&.orange{
@@ -63,4 +68,20 @@
 	&.white{
 		background-position:-90px -36px;
 	}
+}
+
+.website{
+	background-position:0 -54px;
+}
+
+.facebook{
+	background-position:-27px -54px;
+}
+
+.googleplus{
+	background-position:-27px*2 -54px;
+}
+
+.twitter{
+	background-position:-27px*3 -54px;
 }

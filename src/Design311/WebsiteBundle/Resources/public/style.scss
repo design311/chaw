@@ -57,6 +57,12 @@ img{
 	height:auto;
 }
 
+button{
+	@extend .button;
+	@extend .button-orange;
+	border:0;
+}
+
 @include linkcolor($orange, 100);
 
 .averia{
@@ -678,6 +684,51 @@ table.dinners{
 	display:table-cell;
 	vertical-align:middle;
 	text-align:center;
+}
+
+.widget{
+	background:#ddd;
+	padding:20px;
+	border-radius:7px;
+	margin:1em 0;
+	h3{
+		margin-top:0;
+	}
+}
+
+.search-recipe{
+	border-bottom:1px dashed #ddd;
+	form>div{
+		margin-top:1em;
+		position:relative; //for select2 validation message
+	}
+	label{
+		margin-right:7px;
+	}
+	select{
+		padding:5px;
+	}
+	button{
+		margin-top:2em;
+	}
+}
+
+.recipe-user{
+	h3{
+		margin-top:0;
+	}
+}
+
+.user-social{
+	padding:0;
+	li{
+		display:inline-block;
+		margin-right:7px;
+		@extend .medium;
+	}
+	i{
+		border-radius:7px;
+	}
 }
 
 //TODO remove debug styling
