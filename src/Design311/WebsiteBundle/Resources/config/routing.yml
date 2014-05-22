@@ -53,12 +53,20 @@ design311website_dinners_invite:
     defaults: { _controller: Design311WebsiteBundle:Dinner:invite }
 
 design311website_dinners_participant_decline:
-    path:     /dinners/{permalink}/participant/{participantId}/decline
+    path:     /dinners/{permalink}/participant/{participantId}/decline/
     defaults: { _controller: Design311WebsiteBundle:Ajax:declineDinnerParticipant }
 
 design311website_dinners_participant_accept:
-    path:     /dinners/{permalink}/participant/{participantId}/accept
+    path:     /dinners/{permalink}/participant/{participantId}/accept/
     defaults: { _controller: Design311WebsiteBundle:Ajax:acceptDinnerParticipant }
+
+design311website_dinners_invite_decline:
+    path:     /dinners/{permalink}/invite/{inviteId}/decline/
+    defaults: { _controller: Design311WebsiteBundle:Ajax:declineDinnerInvite }
+
+design311website_dinners_invite_accept:
+    path:     /dinners/{permalink}/invite/{inviteId}/accept/
+    defaults: { _controller: Design311WebsiteBundle:Ajax:acceptDinnerInvite }
 
 design311website_recepten:
     path:     /recepten/

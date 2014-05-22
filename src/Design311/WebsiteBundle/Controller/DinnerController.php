@@ -10,6 +10,7 @@ use Design311\WebsiteBundle\Form\Type\MailType;
 use Design311\WebsiteBundle\Form\Type\DinnerType;
 use Design311\WebsiteBundle\Entity\Dinner;
 use Design311\WebsiteBundle\Entity\DinnerParticipantRequest;
+use Design311\WebsiteBundle\Entity\DinnerInvite;
 
 
 class DinnerController extends GeocodeController
@@ -56,8 +57,6 @@ class DinnerController extends GeocodeController
 
         if ($form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
-
             $data = $form->getData();
 
             $participantRequest = new DinnerParticipantRequest();
@@ -65,6 +64,7 @@ class DinnerController extends GeocodeController
             $participantRequest->setUser($this->getUser());
             $participantRequest->setDinner($dinner);
 
+            $em = $this->getDoctrine()->getManager();
             $em->persist($participantRequest);
             $em->flush();
 
@@ -124,24 +124,36 @@ class DinnerController extends GeocodeController
 
             if (count($invalidMails) == 0) {
 
-                $mail = \Swift_Message::newInstance()
-                    ->setSubject('Persoonlijke uitnodiging voor het dinner van ' . $this->getUser()->getDisplayName())
-                    ->setFrom($this->getUser()->getEmail())
-                    ->setReplyTo($this->getUser()->getEmail())
-                    ->setBcc($emails)
-                    ->setBody(
-                        $this->renderView(
-                            'Design311WebsiteBundle:Mail:invite.html.twig',
-                            array(
-                                'message' => $data['message'],
-                                'name' => $this->getUser()->getDisplayName(),
-                                'dinner' => $dinner
-                                )
-                        ),
-                        'text/html'
-                    )
-                ;
-                $this->get('mailer')->send($mail);
+                foreach ($emails as $email) {
+
+                    $invite = new DinnerInvite();
+                    $invite->setDinner($dinner);
+                    $invite->setEmail($email);
+
+                    $em->persist($invite);
+                    $em->flush();
+
+                    $mail = \Swift_Message::newInstance()
+                        ->setSubject('Persoonlijke uitnodiging voor het dinner van ' . $this->getUser()->getDisplayName())
+                        ->setFrom($this->getUser()->getEmail())
+                        ->setReplyTo($this->getUser()->getEmail())
+                        ->setTo($email)
+                        ->setBody(
+                            $this->renderView(
+                                'Design311WebsiteBundle:Mail:invite.html.twig',
+                                array(
+                                    'message' => $data['message'],
+                                    'name' => $this->getUser()->getDisplayName(),
+                                    'dinner' => $dinner,
+                                    'invite' => $invite
+                                    )
+                            ),
+                            'text/html'
+                        )
+                    ;
+                    $this->get('mailer')->send($mail);
+
+                }
 
                 return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink())));
             }

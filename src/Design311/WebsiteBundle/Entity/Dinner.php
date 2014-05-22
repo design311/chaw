@@ -90,6 +90,11 @@ class Dinner
     **/
     private $participantRequests;
 
+    /**
+     * @ORM\OneToMany(targetEntity="DinnerInvite", mappedBy="dinner" ,cascade={"persist"})
+    **/
+    private $invitees;
+
 
     /**
      * Get id
@@ -400,5 +405,38 @@ class Dinner
     public function getParticipantRequests()
     {
         return $this->participantRequests;
+    }
+
+    /**
+     * Add invitees
+     *
+     * @param \Design311\WebsiteBundle\Entity\DinnerInvite $invitees
+     * @return Dinner
+     */
+    public function addInvitee(\Design311\WebsiteBundle\Entity\DinnerInvite $invitees)
+    {
+        $this->invitees[] = $invitees;
+
+        return $this;
+    }
+
+    /**
+     * Remove invitees
+     *
+     * @param \Design311\WebsiteBundle\Entity\DinnerInvite $invitees
+     */
+    public function removeInvitee(\Design311\WebsiteBundle\Entity\DinnerInvite $invitees)
+    {
+        $this->invitees->removeElement($invitees);
+    }
+
+    /**
+     * Get invitees
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInvitees()
+    {
+        return $this->invitees;
     }
 }

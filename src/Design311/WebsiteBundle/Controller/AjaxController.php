@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Design311\WebsiteBundle\Form\Type\RecipeType;
 use Design311\WebsiteBundle\Entity\Recipe;
@@ -101,7 +102,7 @@ class AjaxController extends Controller
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
         }
         else{
-            throw $this->createAccessDeniedException('Je hebt geen toegang tot deze pagina');
+            throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
         }
     }
 
@@ -123,7 +124,53 @@ class AjaxController extends Controller
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participantRequest->getDinner()->getPermalink()) ));
         }
         else{
-            throw $this->createAccessDeniedException('Je hebt geen toegang tot deze pagina');
+            throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
+        }
+    }
+
+    public function declineDinnerInviteAction($inviteId)
+    {
+        //TODO DOUBLE DELETE ERROR
+        $invite = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerInvite')->find($inviteId);
+        
+        if ($this->getUser()->getEmail() == $invite->getEmail()) {
+
+            $dinner = $invite->getDinner(); //needed for redirect
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($invite);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success','Je hebt de uitnodiging geweigerd');
+
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
+        }
+        else{
+            throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
+        }
+    }
+
+    public function acceptDinnerInviteAction($inviteId)
+    {
+        $invite = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerInvite')->find($inviteId);
+        
+        if ($this->getUser()->getEmail() == $invite->getEmail()) {
+
+            $participant = new DinnerParticipants();
+            $participant->setUser($this->getUser());
+            $participant->setDinner($invite->getDinner());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($participant);
+            $em->remove($invite);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success','Je hebt de uitnodiging geaccepteerd');
+
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $invite->getDinner()->getPermalink()) ));
+        }
+        else{
+            throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
         }
     }
 
