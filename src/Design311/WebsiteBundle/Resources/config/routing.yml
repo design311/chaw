@@ -24,6 +24,10 @@ design311website_register:
     path:      /registreren/
     defaults:  { _controller: Design311WebsiteBundle:User:register }
 
+design311website_profile_edit:
+    path:      /profiel/edit/
+    defaults:  { _controller: Design311WebsiteBundle:User:edit }
+
 design311website_user_aantal_personen:
     path:     /recepten/aantal/
     defaults: { _controller: Design311WebsiteBundle:User:changeAantal }

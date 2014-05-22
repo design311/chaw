@@ -87,10 +87,13 @@ class AjaxController extends Controller
 
     public function declineDinnerParticipantAction($participantId)
     {
-
-        //TODO DOUBLE DELETE ERROR
         $participantRequest = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerParticipantRequest')->find($participantId);
-        
+                
+        if ($participantRequest == null) {
+            $this->get('session')->getFlashBag()->add('error','Deelnameverzoek niet gevonden');
+            return $this->redirect($this->generateUrl('design311website_dinners'));
+        }
+
         if ($this->getUser() == $participantRequest->getDinner()->getUser()) {
 
             $dinner = $participantRequest->getDinner(); //needed for redirect
@@ -110,6 +113,11 @@ class AjaxController extends Controller
     {
         $participantRequest = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerParticipantRequest')->find($participantId);
         
+        if ($participantRequest == null) {
+            $this->get('session')->getFlashBag()->add('error','Deelnameverzoek niet gevonden');
+            return $this->redirect($this->generateUrl('design311website_dinners'));
+        }
+
         if ($this->getUser() == $participantRequest->getDinner()->getUser()) {
 
             $participant = new DinnerParticipants();
@@ -130,7 +138,6 @@ class AjaxController extends Controller
 
     public function declineDinnerInviteAction($inviteId)
     {
-        //TODO DOUBLE DELETE ERROR
         $invite = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerInvite')->find($inviteId);
 
         if ($invite == null) {
@@ -158,6 +165,11 @@ class AjaxController extends Controller
     public function acceptDinnerInviteAction($inviteId)
     {
         $invite = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerInvite')->find($inviteId);
+
+        if ($invite == null) {
+            $this->get('session')->getFlashBag()->add('error','Uitnodiging niet gevonden');
+            return $this->redirect($this->generateUrl('design311website_dinners'));
+        }
         
         if ($this->getUser()->getEmail() == $invite->getEmail()) {
 

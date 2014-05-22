@@ -4,15 +4,20 @@ namespace Design311\WebsiteBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class User implements UserInterface
 {
+    private $temp;
+
     /**
      * @var integer
      *
@@ -131,6 +136,149 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="DinnerParticipantRequest", mappedBy="user" ,cascade={"persist"})
     **/
     private $dinnersRequested;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="avatar", type="string", length=255)
+     */
+    private $avatar = 'default.png';
+
+    /**
+     * @Assert\File(maxSize="1M")
+     */
+    private $file;
+
+    public function __sleep(){
+        return array('id', 'username', 'displayName', 'password', 'email');
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image filename
+        if (isset($this->avatar)) {
+            // store the old name to delete after the update
+            $this->temp = $this->avatar;
+            $this->avatar = null;
+        } else {
+            $this->avatar = 'initial';
+        }
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    private function getPath(){
+        return $this->getAvatar();
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->avatar
+            ? null
+            : $this->getUploadRootDir().'/'.$this->getPath();
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->avatar ? null : $this->getUploadDir().'/'.$this->getPath();
+    }
+
+    private function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    private function getUploadDir()
+    {
+        return 'uploads/avatars';
+    }
+
+    private function getFileParts(){
+        $filename = iconv("UTF-8", "ISO-8859-1//IGNORE", $this->getFile()->getClientOriginalName());
+        $filepieces = explode( '.', $filename);
+        $extension = array_pop($filepieces);
+        $filename = implode('-', $filepieces);
+
+        $filename = preg_replace("/[^a-z0-9\s\-]/i", "", $filename); // Remove special characters
+        $filename = preg_replace("/\s\s+/", " ", $filename); // Replace multiple spaces with one space
+        $filename = trim($filename); // Remove trailing spaces
+        $filename = preg_replace("/\s/", "-", $filename); // Replace all spaces with hyphens
+        $filename = preg_replace("/\-\-+/", "-", $filename); // Replace multiple hyphens with one hyphen
+        $filename = preg_replace("/^\-|\-$/", "", $filename); // Remove leading and trailing hyphens
+        $filename = strtolower($filename);
+
+        return array($filename, $extension);
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            $this->avatar = $this->getUsername() .'.'. $this->getFileParts()[1];
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        if (isset($this->temp) && $this->temp != 'default.png') {
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            $this->temp = null;
+        }
+
+        $this->getFile()->move($this->getUploadRootDir(), $this->getPath());
+        $this->file = null;
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function storeFilenameForRemove()
+    {
+        $this->temp = $this->getAbsolutePath();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if (isset($this->temp)) {
+            unlink($this->temp);
+        }
+    }
 
     /**
      * @inheritDoc
@@ -391,18 +539,6 @@ class User implements UserInterface
     public function getAddress()
     {
         return $this->address;
-    }
-
-    public function __sleep(){
-        return array('id', 'username', 'displayName', 'password', 'email');
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -772,5 +908,28 @@ class User implements UserInterface
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set avatar
+     *
+     * @param string $avatar
+     * @return User
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string 
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
     }
 }
