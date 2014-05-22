@@ -80,13 +80,11 @@ class RecipeController extends Controller
         $form->handleRequest($request);
 
         //TODO form validation ?
-        //if ($form->isValid()) {
+        if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
             $searchData = $form->getData();
-
-            //ladybug_dump($searchData);die;
 
             $ingredientIds = array();
 
@@ -119,8 +117,32 @@ class RecipeController extends Controller
                     'form' => $form->createView(),
                     )
             );
-        //}
+        }
 
+    }
+
+    public function userAction($username)
+    {
+        $form = $this->searchRecipeForm();
+        $user = $this->getDoctrine()->getRepository('Design311WebsiteBundle:User')->findOneByUsername($username);
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        $qb = $qb
+            ->from('Design311WebsiteBundle:Recipe', 'r')
+            ->select('r')
+            ->where($qb->expr()->eq('r.user', $user->getId()));
+
+        $recipes = $qb->getQuery()->execute();
+
+        return $this->render(
+            'Design311WebsiteBundle:Recipe:user.html.twig',
+            array(
+                'recipes' => $recipes,
+                'user' => $user,
+                'form' => $form->createView(),
+                )
+        );
     }
 
     public function addAction(Request $request)

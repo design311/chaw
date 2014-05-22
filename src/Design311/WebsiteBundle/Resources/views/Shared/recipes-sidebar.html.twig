@@ -33,6 +33,7 @@
 			<li><a href="{{recipe.user.googleplus}}" target="_blank"><i class="sprite medium googleplus"></i></a></li>
 			{% endif %}
 		</ul>
+		<p><a href="{{path('design311website_recepten_user', {'username': recipe.user.username})}}">Bekijk alle recepten van {{recipe.user.displayName}}</a></p>
 	</div>
 	{% endif %}
 </div>

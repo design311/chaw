@@ -88,6 +88,10 @@ design311website_recepten_category:
     path:     /recepten/{category}/
     defaults: { _controller: Design311WebsiteBundle:Recipe:category }
 
+design311website_recepten_user:
+    path:     /recepten/user/{username}/
+    defaults: { _controller: Design311WebsiteBundle:Recipe:user }
+
 design311website_recepten_like:
     path:     /recepten/{recipeId}/like/
     defaults: { _controller: Design311WebsiteBundle:Ajax:likeRecipe }

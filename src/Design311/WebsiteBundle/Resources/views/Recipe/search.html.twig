@@ -3,10 +3,8 @@
 {% block bodyclass %}recipepage{% endblock %}
 
 {% block content %}
-	<div class="newestrecipes">
-		<div class="container">
-			<h1 class="averia">{{recipes|length}} {{ recipes|length == 1 ? 'recept' : 'recepten' }} gevonden</h1>
-		</div>
+	<div class="container">
+		<h1 class="averia">{{recipes|length}} {{ recipes|length == 1 ? 'recept' : 'recepten' }} gevonden</h1>
 	</div>
 	<div class="recipecontent">	
 		<div class="container">
@@ -18,27 +16,4 @@
 
 {% block footer %}
 	<script src="{{ asset('bundles/design311website/js/select2/select2.min.js') }}"></script>
-	<script>
-		$(function(){
-			$('.ajax-button').click(function(){
-				var link = $(this);
-
-				//TODO add loader gif for slow json
-				$.getJSON( $(this).data('ajax'), function( data ) {
-					if (data.status === 1) {
-						link.addClass('active');
-					}
-					else{
-						link.removeClass('active');
-					}
-
-					if (link.hasClass('shop')) {
-						$('.shoppinglistcount').text(data.shoppinglistcount);
-					};
-				});
-
-				return false;
-			})
-		})
-	</script>
 {% endblock %}

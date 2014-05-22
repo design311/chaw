@@ -41,7 +41,6 @@ security:
 
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: /user, roles: ROLE_USER }
         - { path: /.*/add/, roles: ROLE_USER }
         - { path: /recepten/.*/like/, roles: ROLE_USER }
         - { path: /recepten/.*/save/, roles: ROLE_USER }
