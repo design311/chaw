@@ -6,6 +6,10 @@ design311website_login:
     pattern: /login/
     defaults: { _controller: Design311WebsiteBundle:User:login }
 
+design311website_testing:
+    pattern: /testing/
+    defaults: { _controller: Design311WebsiteBundle:User:testing }
+
 design311website_login_required:
     pattern: /login/{auth}/
     defaults: { _controller: Design311WebsiteBundle:User:login }
@@ -43,6 +47,10 @@ design311website_dinners_detail:
 design311website_dinners_participate:
     path:     /dinners/{permalink}/deelnemen/
     defaults: { _controller: Design311WebsiteBundle:Dinner:participate }
+
+design311website_dinners_invite:
+    path:     /dinners/{permalink}/uitnodigen/
+    defaults: { _controller: Design311WebsiteBundle:Dinner:invite }
 
 design311website_dinners_participant_decline:
     path:     /dinners/{permalink}/participant/{participantId}/decline

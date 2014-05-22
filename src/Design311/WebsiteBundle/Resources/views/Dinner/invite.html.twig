@@ -1,0 +1,19 @@
+{% extends 'Design311WebsiteBundle::layout.html.twig' %}
+
+{% block content %}
+
+<div class="container">
+	{% if invalidMails|length > 0 %}
+		<div class="error">
+			<p>De volgende e-mails zijn niet geldig:</p>
+			<ul>
+			{% for email in invalidMails %}
+				<li>{{email}}</li>
+			{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+	{{ form(form) }}
+</div>
+
+{% endblock %}

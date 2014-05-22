@@ -93,6 +93,11 @@ class User implements UserInterface
     private $dinnersParticipated;
 
     /**
+     * @ORM\OneToMany(targetEntity="DinnerParticipantRequest", mappedBy="user" ,cascade={"persist"})
+    **/
+    private $dinnersRequested;
+
+    /**
      * @inheritDoc
      */
     public function getUsername()
@@ -584,5 +589,38 @@ class User implements UserInterface
     public function getDinnersParticipated()
     {
         return $this->dinnersParticipated;
+    }
+
+    /**
+     * Add dinnersRequested
+     *
+     * @param \Design311\WebsiteBundle\Entity\DinnerParticipantRequest $dinnersRequested
+     * @return User
+     */
+    public function addDinnersRequested(\Design311\WebsiteBundle\Entity\DinnerParticipantRequest $dinnersRequested)
+    {
+        $this->dinnersRequested[] = $dinnersRequested;
+
+        return $this;
+    }
+
+    /**
+     * Remove dinnersRequested
+     *
+     * @param \Design311\WebsiteBundle\Entity\DinnerParticipantRequest $dinnersRequested
+     */
+    public function removeDinnersRequested(\Design311\WebsiteBundle\Entity\DinnerParticipantRequest $dinnersRequested)
+    {
+        $this->dinnersRequested->removeElement($dinnersRequested);
+    }
+
+    /**
+     * Get dinnersRequested
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDinnersRequested()
+    {
+        return $this->dinnersRequested;
     }
 }

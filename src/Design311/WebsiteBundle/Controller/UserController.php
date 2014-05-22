@@ -106,4 +106,41 @@ class UserController extends GeocodeController
         }
         return new RedirectResponse($this->generateUrl('design311website_homepage'));
     }
+
+    public function testingAction(Request $request)
+    {
+        echo 'testing';
+
+        $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink('eenvoudige-soep');
+
+        ladybug_dump($dinner); die;
+
+        $r = \Swift_Validate::email('asfsafdksja@asdfkj.com');
+
+        var_dump($r);
+
+        /*$mail = \Swift_Message::newInstance()
+                ->setSubject($this->getUser()->getDisplayName() . ' wil graag deelnemen aan je dinner.')
+                ->setFrom($this->getUser()->getEmail())
+                ->setReplyTo($this->getUser()->getEmail())
+                ->setTo($dinner->getUser()->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'Design311WebsiteBundle:Mail:participate.html.twig',
+                        array(
+                            'message' => $data['message'],
+                            'name' => $this->getUser()->getDisplayName(),
+                            'dinner' => $dinner,
+                            'participant' => $participantRequest
+                            )
+                    ),
+                    'text/html'
+                )
+            ;
+        $this->get('mailer')->send($mail);*/
+
+        die;
+
+        return new RedirectResponse($this->generateUrl('design311website_homepage'));
+    }
 }

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Design311\WebsiteBundle\Form\Type\RecipeType;
 use Design311\WebsiteBundle\Entity\Recipe;
+use Design311\WebsiteBundle\Entity\DinnerParticipants;
 
 
 class AjaxController extends Controller
@@ -87,14 +88,14 @@ class AjaxController extends Controller
     {
 
         //TODO DOUBLE DELETE ERROR
-        $dinnerParticipant = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerParticipants')->find($participantId);
+        $participantRequest = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerParticipantRequest')->find($participantId);
         
-        if ($this->getUser() == $dinnerParticipant->getDinner()->getUser()) {
+        if ($this->getUser() == $participantRequest->getDinner()->getUser()) {
 
-            $dinner = $dinnerParticipant->getDinner();
+            $dinner = $participantRequest->getDinner(); //needed for redirect
 
             $em = $this->getDoctrine()->getManager();
-            $em->remove($dinnerParticipant);
+            $em->remove($participantRequest);
             $em->flush();
 
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
@@ -106,17 +107,20 @@ class AjaxController extends Controller
 
     public function acceptDinnerParticipantAction($participantId)
     {
-        $dinnerParticipant = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerParticipants')->find($participantId);
+        $participantRequest = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerParticipantRequest')->find($participantId);
         
-        if ($this->getUser() == $dinnerParticipant->getDinner()->getUser()) {
+        if ($this->getUser() == $participantRequest->getDinner()->getUser()) {
 
-            $dinnerParticipant->setAccepted(true);
+            $participant = new DinnerParticipants();
+            $participant->setUser($participantRequest->getUser());
+            $participant->setDinner($participantRequest->getDinner());
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($dinnerParticipant);
+            $em->persist($participant);
+            $em->remove($participantRequest);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinnerParticipant->getDinner()->getPermalink()) ));
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participantRequest->getDinner()->getPermalink()) ));
         }
         else{
             throw $this->createAccessDeniedException('Je hebt geen toegang tot deze pagina');

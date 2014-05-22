@@ -1,7 +1,22 @@
+{% extends 'Design311WebsiteBundle::layout.html.twig' %}
+
+{% block content %}
+
 <h1>{{dinner.title}}</h1>
 
+<h2>Participants</h2>
 <ul>
 {% for participant in dinner.participants %}
-    <li>{{participant.user.displayName}} - {{participant.accepted ? 'accepted' : 'not accepted'}}</li>
+    <li>{{participant.user.displayName}}</li>
 {% endfor %}
 </ul>
+<h2>Requests</h2>
+<ul>
+{% for request in dinner.participantRequests %}
+    <li>{{request.user.displayName}}</li>
+{% endfor %}
+</ul>
+
+<a href="{{ path('design311website_dinners_invite', {'permalink': dinner.permalink}) }}">Uitnodigen</a>
+
+{% endblock %}

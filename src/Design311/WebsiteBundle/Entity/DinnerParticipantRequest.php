@@ -5,12 +5,12 @@ namespace Design311\WebsiteBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DinnerParticipants
+ * DinnerParticipantRequest
  *
- * @ORM\Table(name="dinnerparticipants")
+ * @ORM\Table(name="dinnerparticipantrequest")
  * @ORM\Entity
  */
-class DinnerParticipants
+class DinnerParticipantRequest
 {
 
     /**
