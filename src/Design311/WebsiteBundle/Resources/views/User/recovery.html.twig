@@ -1,0 +1,16 @@
+{% extends 'Design311WebsiteBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="container">
+
+	<h1>Wachtwoord vergeten</h1>
+		
+	{% if error is defined %}
+		<p class="error">{{error}}</p>
+	{% endif %}
+	
+	{{ form(form) }}
+	
+</div>
+
+{% endblock %}

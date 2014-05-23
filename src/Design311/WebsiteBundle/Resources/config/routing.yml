@@ -28,6 +28,14 @@ design311website_profile_edit:
     path:      /profiel/edit/
     defaults:  { _controller: Design311WebsiteBundle:User:edit }
 
+design311website_profile_password:
+    path:      /profiel/wachtwoord/
+    defaults:  { _controller: Design311WebsiteBundle:User:password }
+
+design311website_password_recovery:
+    path:      /password-recovery/
+    defaults:  { _controller: Design311WebsiteBundle:User:recovery }
+
 design311website_user_aantal_personen:
     path:     /recepten/aantal/
     defaults: { _controller: Design311WebsiteBundle:User:changeAantal }

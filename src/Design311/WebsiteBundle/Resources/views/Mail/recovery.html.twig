@@ -1,0 +1,9 @@
+<h1>Chaw.be</h1>
+<p>Er is een wachtwoord reset aangevraagd op <a href="http://chaw.be/">chaw.be</a>, als jij dit niet was mag je deze mail gewoon negegeren</p>
+
+<ul>
+	<li>Gebruikernaam: {{user.username}}</li>
+	<li><a href="{{ url('design311website_password_recovery') }}?email={{user.email}}&amp;key={{key}}">Wachtwoord wijzigen</a></li>
+</ul>
+
+<p>Als de bovenstaande link niet werkt, gebruik dan de volgende URL: {{ url('design311website_password_recovery') }}?email={{user.email}}&amp;key={{key}}</p>

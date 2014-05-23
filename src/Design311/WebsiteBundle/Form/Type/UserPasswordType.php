@@ -28,6 +28,6 @@ class UserPasswordType extends AbstractType
 
     public function getName()
     {
-        return 'user';
+        return 'userpassword';
     }
 }

@@ -3,11 +3,9 @@
 {% block content %}
 <div class="container">
 
-	<h1>Profiel bewerken: {{app.user.displayname}}</h1>
-	
-	{% if app.user.webPath %}
-		<img src="{{ asset(app.user.webPath) | apply_filter('avatar') }}" alt="Avatar {{app.user.displayname}}">
-	{% endif %}
+	<h1>Profiel bewerken</h1>
+	<img src="{{ asset(app.user.avatar) | apply_filter('avatar') }}" alt="Avatar {{app.user.displayname}}">
+
 	{{ form_start(form) }}
 		{{ form_row(form.file) }}
 		{{ form_row(form.displayName) }}
@@ -19,6 +17,8 @@
 		{{ form_row(form.googleplus) }}
 		{{ form_row(form.submit) }}
 	{{ form_end(form) }}
+
+	<a href="{{ path('design311website_profile_password') }}">Wachtwoord wijzigen?</a>
 
 
 </div>

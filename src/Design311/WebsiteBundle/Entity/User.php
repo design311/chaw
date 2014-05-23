@@ -142,7 +142,7 @@ class User implements UserInterface
      *
      * @ORM\Column(name="avatar", type="string", length=255)
      */
-    private $avatar = 'uploads/avatars/default.png';
+    private $avatar = 'default.png';
 
     /**
      * @Assert\File(maxSize="1M")
@@ -190,7 +190,7 @@ class User implements UserInterface
     }
 
     private function getPath(){
-        return $this->getAvatar();
+        return $this->avatar;
     }
 
     public function getAbsolutePath()
@@ -930,6 +930,6 @@ class User implements UserInterface
      */
     public function getAvatar()
     {
-        return $this->avatar;
+        return $this->getWebPath();
     }
 }
