@@ -16,6 +16,9 @@
 	</div>
 	{% if detail is defined and detail == true %}
 	<div class="widget recipe-user">
+		{% if recipe.user.avatar %}
+			<img src="{{ asset(recipe.user.avatar) | apply_filter('avatar') }}" alt="Avatar {{recipe.user.displayname}}">
+		{% endif %}
 		{{recipe.title}}, een recept van:
 		<h3>{{recipe.user.displayName}}</h3>
 		<p>{{recipe.user.description}}</p>

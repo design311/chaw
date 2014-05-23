@@ -142,7 +142,7 @@ class User implements UserInterface
      *
      * @ORM\Column(name="avatar", type="string", length=255)
      */
-    private $avatar = 'default.png';
+    private $avatar = 'uploads/avatars/default.png';
 
     /**
      * @Assert\File(maxSize="1M")
@@ -150,7 +150,7 @@ class User implements UserInterface
     private $file;
 
     public function __sleep(){
-        return array('id', 'username', 'displayName', 'password', 'email');
+        return array('id', 'username', 'displayName', 'email', 'avatar');
     }
 
     /**

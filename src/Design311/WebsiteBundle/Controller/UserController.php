@@ -7,7 +7,8 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-use Design311\WebsiteBundle\Form\Type\UserType;
+use Design311\WebsiteBundle\Form\Type\UserRegisterType;
+use Design311\WebsiteBundle\Form\Type\UserEditType;
 use Design311\WebsiteBundle\Entity\User;
 
 
@@ -41,14 +42,14 @@ class UserController extends GeocodeController
     public function registerAction(Request $request)
     {
         $user = new User();
-        $form = $this->createForm(new UserType(), $user);
+        $form = $this->createForm(new UserRegisterType(), $user);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $user = $form->getData();
 
-            $latLng = $this->geocode($user->getAddress());
+            /*$latLng = $this->geocode($user->getAddress());
             if (is_object($latLng)) {
                 $user->getAddress()->setLat($latLng->lat);
                 $user->getAddress()->setLng($latLng->lng);
@@ -57,7 +58,7 @@ class UserController extends GeocodeController
                 //coords could not be found
                 $user->getAddress()->setLat(0);
                 $user->getAddress()->setLng(0);
-            }
+            }*/
 
             //set default display name
             $user->setDisplayName($user->getUsername());
@@ -86,32 +87,18 @@ class UserController extends GeocodeController
 
     public function editAction(Request $request)
     {
-        $form = $this->createForm(new UserType(), $this->getUser());
+        $form = $this->createForm(new UserEditType(), $this->getUser());
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $user = $form->getData();
 
-            if ($user->getAddress() != null) {
-                $latLng = $this->geocode($user->getAddress());
-                if (is_object($latLng)) {
-                    $user->getAddress()->setLat($latLng->lat);
-                    $user->getAddress()->setLng($latLng->lng);
-                }
-                else{
-                    //coords could not be found
-                    $user->getAddress()->setLat(0);
-                    $user->getAddress()->setLng(0);
-                }
-            }
-
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('design311website_homepage'));
+            return $this->redirect($this->generateUrl('design311website_profile_edit'));
         }
 
         return $this->render('Design311WebsiteBundle:User:edit.html.twig',array(

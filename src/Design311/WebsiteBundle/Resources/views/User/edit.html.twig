@@ -4,7 +4,22 @@
 <div class="container">
 
 	<h1>Profiel bewerken: {{app.user.displayname}}</h1>
-	{{ form(form) }}
+	
+	{% if app.user.webPath %}
+		<img src="{{ asset(app.user.webPath) | apply_filter('avatar') }}" alt="Avatar {{app.user.displayname}}">
+	{% endif %}
+	{{ form_start(form) }}
+		{{ form_row(form.file) }}
+		{{ form_row(form.displayName) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.description) }}
+		{{ form_row(form.website) }}
+		{{ form_row(form.facebook) }}
+		{{ form_row(form.twitter) }}
+		{{ form_row(form.googleplus) }}
+		{{ form_row(form.submit) }}
+	{{ form_end(form) }}
+
 
 </div>
 

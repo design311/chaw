@@ -78,3 +78,6 @@ avalanche_imagine:
         recipe_category:
             type:    thumbnail
             options: { size: [362, 200], mode: outbound, cache_type: public, cache_expires: 2 weeks }
+        avatar:
+            type:    thumbnail
+            options: { size: [315, 315], mode: outbound, cache_type: public, cache_expires: 2 weeks }
