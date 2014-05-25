@@ -4,20 +4,55 @@
 
 <div id="map" class="map"></div>
 
-<h1>{{dinner.title}}</h1>
-
-<h2>Participants</h2>
-<ul>
-{% for participant in dinner.participants %}
-    <li>{{participant.user.displayName}}</li>
-{% endfor %}
-</ul>
-<h2>Requests</h2>
-<ul>
-{% for request in dinner.participantRequests %}
-    <li>{{request.user.displayName}}</li>
-{% endfor %}
-</ul>
+<div class="container">
+	<div class="one-third">
+		<div class="widget">
+			<h3>Algemene informatie</h3>
+			<ul>
+				<li>Organisator: {{dinner.user.displayName}}</li>
+				<li>Maximum aantal personen: {{dinner.maxInvitees}}</li>
+				<li>Prijs: €{{dinner.price}}</li>
+				<li>Datum: {{dinner.date | date("m/d/Y") }}</li>
+				<li>Tijdstip: {{dinner.date | date("G:i") }}</li>
+			</ul>
+		</div>
+		<div class="widget">
+			<h3>Deelnemers</h3>
+			{% if dinner.participants|length > 0 %}
+			<ul>
+			{% for participant in dinner.participants %}
+			    <li>{{participant.user.displayName}}</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			    <p>Momenteel zijn er nog geen deelnemers.</p>
+			{% endif %}
+		</div>
+		{% if app.user == dinner.user %}
+		<div class="widget">
+			<h3>Verzoeken</h3>
+			{% if dinner.participantRequests|length > 0 %}
+			<ul>
+			{% for request in dinner.participantRequests %}
+			    <li>{{request.user.displayName}}</li>
+			{% endfor %}
+			</ul>
+			{% else %}
+			    <p>Momenteel zijn er geen deelname-verzoeken.</p>
+			{% endif %}
+		</div>
+		{% endif %}
+	</div>
+	<div class="two-third main">
+		<h1>{{dinner.title}}</h1>
+		{{dinner.menu|markdown}}
+		{% if app.user != dinner.user and app.user not in dinner.participants and app.user not in dinner.participantRequests %}
+		<h2>Deelnemen</h2>
+		<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
+		{{ form(form) }}
+		{% endif %}
+	</div>
+</div>
 
 <a href="{{ path('design311website_dinners_invite', {'permalink': dinner.permalink}) }}">Uitnodigen</a>
 

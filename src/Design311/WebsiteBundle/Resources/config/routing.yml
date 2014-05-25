@@ -56,10 +56,6 @@ design311website_dinners_detail:
     path:     /dinners/{permalink}/
     defaults: { _controller: Design311WebsiteBundle:Dinner:detail }
 
-design311website_dinners_participate:
-    path:     /dinners/{permalink}/deelnemen/
-    defaults: { _controller: Design311WebsiteBundle:Dinner:participate }
-
 design311website_dinners_invite:
     path:     /dinners/{permalink}/uitnodigen/
     defaults: { _controller: Design311WebsiteBundle:Dinner:invite }

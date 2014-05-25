@@ -34,7 +34,6 @@
 					<th>Titel</th>
 					<th>Plaats</th>
 					<th>Prijs</th>
-					<th>&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -134,8 +133,7 @@
 				if (visibleDinners.length !== 0) {
 					dinnersTable.show();
 					nonefound.hide();
-					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}'
-					var deelnemen = '{{ path('design311website_dinners_participate', {'permalink': 'permalink_holder'}) }}';
+					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}';
 					$.each(dinners, function(i, dinner){
 						if( bounds.contains(markers[i].getPosition()) ){
 							var formattedDate = new Date(dinner.date);
@@ -144,14 +142,12 @@
 							m += 1;  // JavaScript months are 0-11
 							var y = formattedDate.getFullYear();
 							detailLink = detail.replace('permalink_holder', dinner.permalink);
-							deelnemenLink = deelnemen.replace('permalink_holder', dinner.permalink);
 							tbody.append(' \
 								<tr> \
 									<td>'+d+'-'+m+'-'+y+'</td> \
 									<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
 									<td>'+dinner.address.city+'</td> \
 									<td>'+dinner.price+'</td> \
-									<td><a href="'+deelnemenLink+'">Deelnemen</a></td> \
 								</tr>')
 						}
 					})

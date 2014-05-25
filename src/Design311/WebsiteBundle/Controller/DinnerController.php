@@ -46,17 +46,7 @@ class DinnerController extends GeocodeController
         );
     }
 
-    public function detailAction($permalink)
-    {
-        $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
-
-        return $this->render(
-            'Design311WebsiteBundle:Dinner:detail.html.twig',
-            array('dinner' => $dinner)
-        );
-    }
-
-    public function participateAction(Request $request, $permalink)
+    public function detailAction(Request $request, $permalink)
     {
         $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
 
@@ -102,9 +92,10 @@ class DinnerController extends GeocodeController
         }
 
         return $this->render(
-            'Design311WebsiteBundle:Dinner:participate.html.twig',
-            array('form' => $form->createView())
-        );
+            'Design311WebsiteBundle:Dinner:detail.html.twig', array(
+                'dinner' => $dinner,
+                'form' => $form->createView()
+            ));
     }
 
     public function inviteAction(Request $request, $permalink)
