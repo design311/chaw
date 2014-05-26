@@ -731,6 +731,20 @@ table.dinners{
 	}
 }
 
+.profile-view{
+	.avatar{
+		float:left;
+		margin-right:50px;
+	}
+	.content{
+		margin-top:-207.5px;
+		background:#fff;
+	}
+	h1{
+		margin-top:0;
+	}
+}
+
 //TODO remove debug styling
 .select2-container{
 	width:100%;

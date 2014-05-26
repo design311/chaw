@@ -108,6 +108,29 @@ class UserController extends GeocodeController
         ));
     }
 
+    public function viewAction(Request $request, $username)
+    {
+        $user = $this->getDoctrine()->getRepository('Design311WebsiteBundle:User')->findOneByUsername($username);
+
+        if ($user->getAddress() == null) {
+            $location = array(
+                'lat' => 51.216667,
+                'lng' => 4.4
+            );
+        }
+        else{
+            $location = array(
+                'lat' => $user->getAddress()->getLat(),
+                'lng' => $user->getAddress()->getLng()
+            );
+        }
+
+        return $this->render('Design311WebsiteBundle:User:view.html.twig',array(
+            'user' => $user,
+            'location' => $location
+        ));
+    }
+
     public function passwordAction(Request $request)
     {
         $form = $this->createForm(new UserPasswordType(), $this->getUser());

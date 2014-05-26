@@ -193,23 +193,22 @@ class AjaxController extends Controller
 
     public function filterDinnersAction(Request $request)
     {
-
+        //todo only select what's needed
         $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder();
         $qb = $qb
             ->from('Design311WebsiteBundle:Dinner', 'd')
             ->select('d')
-            ->where($qb->expr()->lte('d.price', $request->get('maxprice')))
-            ->leftJoin('Design311WebsiteBundle:Address', 'a', 'WITH', 'a.id = d.address');
+            ->where($qb->expr()->lte('d.price', 12))
+            ->andWhere($qb->expr()->gte('d.date', ':today'))
+            ->setParameter('today', new \DateTime());
 
         $query = $qb->getQuery();
         $dinners = $query->execute();
 
-        //ladybug_dump($dinners);
-
         $serializer = $this->container->get('serializer');
         $dinners = $serializer->serialize($dinners, 'json');
+        print_r($dinners);die;
         return new Response($dinners);
-
     }
 }

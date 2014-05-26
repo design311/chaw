@@ -27,22 +27,20 @@
 			</div>
 		</div>
 		<div class="two-third">
-		<table id="dinners" class="dinners">
-			<thead>
-				<tr>
-					<th>Datum</th>
-					<th>Titel</th>
-					<th>Plaats</th>
-					<th>Prijs</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td colspan="30"><img src="{{ asset('bundles/design311website/img/loader.gif') }}" alt="Loading..." width="16" height="16"></td>
-				</tr>
-			</tbody>
-		</table>
-		<p id="nonefound">Sorry! Geen dinners gevonden in deze regio.</p>
+			<img src="{{ asset('bundles/design311website/img/loader.gif') }}" alt="Loading..." width="16" height="16" id="loading">
+			<table id="dinners" class="dinners">
+				<thead>
+					<tr>
+						<th>Datum</th>
+						<th>Titel</th>
+						<th>Plaats</th>
+						<th>Prijs</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<p id="nonefound">Sorry! Geen dinners gevonden in deze regio.</p>
 		</div>
 	</div>
 </div>
@@ -56,7 +54,7 @@
 	<script type="text/javascript">
 
 		$(function(){
-			var dinnersTable = $('#dinners');
+			var dinnersTable = $('#dinners').hide();
 			var nonefound = $('#nonefound').hide();
 			var tbody = $('#dinners tbody');
 			var dinners = {{dinners|serialize|raw}};
@@ -156,6 +154,7 @@
 					dinnersTable.hide();
 					nonefound.show();
 				}
+				$('#loading').hide();
 			}
 
 			$('#locatie').blur(function(){
@@ -174,6 +173,8 @@
 					}
 				});
 			})
+
+			console.log($('#filters input'));
 
 			$('#filters input').change(function(){
 

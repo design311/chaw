@@ -6,6 +6,7 @@ design311website_login:
     pattern: /login/
     defaults: { _controller: Design311WebsiteBundle:User:login }
 
+#TODO remove testing routing
 design311website_testing:
     pattern: /testing/
     defaults: { _controller: Design311WebsiteBundle:User:testing }
@@ -27,6 +28,10 @@ design311website_register:
 design311website_profile_edit:
     path:      /profiel/edit/
     defaults:  { _controller: Design311WebsiteBundle:User:edit }
+
+design311website_profile_view:
+    path:      /profiel/{username}
+    defaults:  { _controller: Design311WebsiteBundle:User:view }
 
 design311website_profile_password:
     path:      /profiel/wachtwoord/

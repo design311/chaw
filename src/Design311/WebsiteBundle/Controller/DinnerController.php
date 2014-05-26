@@ -17,7 +17,7 @@ class DinnerController extends GeocodeController
 {
     public function indexAction()
     {
-        //TODO only get dinners in the future & not fully booked
+        //TODO only get dinners not fully booked
         $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder();
         $query = $qb

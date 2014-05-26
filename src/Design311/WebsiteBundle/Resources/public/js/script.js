@@ -64,8 +64,10 @@ $(function(){
 	      max: 50,
 	      value: 50,
 	      slide: function( event, ui ) {
-	        $( ".amount" ).val( ui.value );
 	        $( ".amount" ).text( ui.value );
+	      },
+	      stop: function( event, ui ) {
+	        $( ".amount" ).val( ui.value ).change(); //call change event for input
 	      }
 	    });
 	    $( ".amount" ).val( $( "#slider-range" ).slider( "value" ) );
