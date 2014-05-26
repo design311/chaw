@@ -27,6 +27,24 @@
 		{% endif %}
 	</ul>
 
+	<div class="clear"></div>
+
+	<div class="one-third">
+		<div class="widget">
+			<ul>
+				<li>Vindt <strong>{{user.likedrecipes|length}}</strong> {{user.likedrecipes|length == 1 ? 'recept' : 'recepten'}} lekker</li>
+				<li>Heeft <strong>{{user.dinners|length}}</strong> {{user.dinners|length == 1 ? 'dinner' : 'dinners'}} georganiseerd</li>
+				<li>Nam deel aan <strong>{{user.dinnersParticipated|length}}</strong>  {{user.dinnersParticipated|length == 1 ? 'dinner' : 'dinners'}}</li>
+			</ul>
+		</div>
+		<div class="widget">
+			//feedback?
+		</div>
+	</div>
+	<div class="recipes">
+		{% include 'Design311WebsiteBundle:Shared:recipes-list.html.twig' with {'recipes':user.recipes, 'userprofile': user} %}
+	</div>
+		
 </div>
 
 {% endblock %}

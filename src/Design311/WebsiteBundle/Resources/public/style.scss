@@ -535,50 +535,52 @@ button{
 		background:$black;
 		color:#fff;
 	}
-	.recipeblock{
-		width:50%;
-		float:left;
-		padding-right:5px;
-		margin-bottom:10px;
-		&.even{
-			padding-right:0;
-			padding-left:5px;
-		}
-		img{
-			max-width:100%;
-			height:auto;
-		}
-	}
+	
 	.orangehover{
 		height:200px;
 	}
+}
 
-	.recipe{
-		text-align:center;
-		margin-bottom:25px;
-		a{
-			text-decoration:none;
-		}
-		.title{
-			font-size:140%;
-		}
-		.actions{
-			@include minireset;
-			width:100px;
-			height:30px;
-			margin:0 auto;
-			padding:0 5px;
-			background:#ddd;
-			border-radius:7px;
-			li{
-				float:left;
-				line-height:0;
-				width:30px;
-				i{
-					margin-top:6px;
-					&:hover, &:focus, &:active{
-						opacity:0.5;
-					}
+.recipeblock{
+	width:50%;
+	float:left;
+	padding-right:5px;
+	margin-bottom:10px;
+	&.even{
+		padding-right:0;
+		padding-left:5px;
+	}
+	img{
+		max-width:100%;
+		height:auto;
+	}
+}
+
+.recipe{
+	text-align:center;
+	margin-bottom:25px;
+	a{
+		text-decoration:none;
+	}
+	.title{
+		font-size:140%;
+	}
+	.actions{
+		@include minireset;
+		width:100px;
+		height:30px;
+		margin:0 auto;
+		padding:0 5px;
+		background:#ddd;
+		border-radius:7px;
+		li{
+			float:left;
+			line-height:0;
+			width:30px;
+			i{
+				margin-top:6px;
+				&:hover, &:focus, &:active{
+					opacity:0.5;
 				}
 			}
 		}
@@ -735,6 +737,7 @@ table.dinners{
 	.avatar{
 		float:left;
 		margin-right:50px;
+		margin-bottom:50px;
 	}
 	.content{
 		margin-top:-207.5px;
@@ -742,6 +745,9 @@ table.dinners{
 	}
 	h1{
 		margin-top:0;
+	}
+	.recipes{
+		margin-top:1em;
 	}
 }
 

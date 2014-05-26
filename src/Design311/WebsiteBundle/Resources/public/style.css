@@ -1394,44 +1394,46 @@ a {
   .recipecontent .shoppinglist {
     background: #333333;
     color: #fff; }
-  .recipecontent .recipeblock {
-    width: 50%;
-    float: left;
-    padding-right: 5px;
-    margin-bottom: 10px; }
-    .recipecontent .recipeblock.even {
-      padding-right: 0;
-      padding-left: 5px; }
-    .recipecontent .recipeblock img {
-      max-width: 100%;
-      height: auto; }
   .recipecontent .orangehover {
     height: 200px; }
-  .recipecontent .recipe {
-    text-align: center;
-    margin-bottom: 25px; }
-    .recipecontent .recipe a {
-      text-decoration: none; }
-    .recipecontent .recipe .title {
-      font-size: 140%; }
-    .recipecontent .recipe .actions {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      width: 100px;
-      height: 30px;
-      margin: 0 auto;
-      padding: 0 5px;
-      background: #ddd;
-      border-radius: 7px; }
-      .recipecontent .recipe .actions li {
-        float: left;
-        line-height: 0;
-        width: 30px; }
-        .recipecontent .recipe .actions li i {
-          margin-top: 6px; }
-          .recipecontent .recipe .actions li i:hover, .recipecontent .recipe .actions li i:focus, .recipecontent .recipe .actions li i:active {
-            opacity: 0.5; }
+
+.recipeblock {
+  width: 50%;
+  float: left;
+  padding-right: 5px;
+  margin-bottom: 10px; }
+  .recipeblock.even {
+    padding-right: 0;
+    padding-left: 5px; }
+  .recipeblock img {
+    max-width: 100%;
+    height: auto; }
+
+.recipe {
+  text-align: center;
+  margin-bottom: 25px; }
+  .recipe a {
+    text-decoration: none; }
+  .recipe .title {
+    font-size: 140%; }
+  .recipe .actions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100px;
+    height: 30px;
+    margin: 0 auto;
+    padding: 0 5px;
+    background: #ddd;
+    border-radius: 7px; }
+    .recipe .actions li {
+      float: left;
+      line-height: 0;
+      width: 30px; }
+      .recipe .actions li i {
+        margin-top: 6px; }
+        .recipe .actions li i:hover, .recipe .actions li i:focus, .recipe .actions li i:active {
+          opacity: 0.5; }
 
 .recipemeta {
   margin: 0;
@@ -1540,12 +1542,15 @@ table.dinners {
 
 .profile-view .avatar {
   float: left;
-  margin-right: 50px; }
+  margin-right: 50px;
+  margin-bottom: 50px; }
 .profile-view .content {
   margin-top: -207.5px;
   background: #fff; }
 .profile-view h1 {
   margin-top: 0; }
+.profile-view .recipes {
+  margin-top: 1em; }
 
 .select2-container {
   width: 100%; }

@@ -1,15 +1,22 @@
 <div class="two-third main">
-{% for recipe in recipes %}
-    <div class="recipeblock recipe{% if loop.index is even %} even{% endif %}">
-		<a href="{{ path('design311website_recepten_detail', {'category': recipe.category.plural|lower, 'permalink': recipe.permalink})}}">
-    		<img src="{{ asset(recipe.photos[0].webPath) | apply_filter('recipe_thumb') }}" alt="{{ recipe.photos[0].title }}" />
-			<p class="title">{{recipe.title}}</p>
-		</a>
-		<ul class="actions">
-			<li><a href="#" class="like ajax-button" data-ajax="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" title="Recept lekker vinden"><i class="sprite heart{% if app.user in recipe.likedBy %} orange{% endif %}"></i></a></li>
-			<li><a href="#" class="save ajax-button" data-ajax="{{path('design311website_recepten_save', {'recipeId': recipe.id})}}" title="Recept bewaren"><i class="sprite save{% if app.user in recipe.savedBy %} orange{% endif %}"></i></a></li>
-			<li><a href="#" class="shop ajax-button" data-ajax="{{path('design311website_recepten_shop', {'recipeId': recipe.id})}}" title="Recept toevoegen aan winkellijstje"><i class="sprite cart{% if app.user in recipe.shoppinglistFrom %} orange{% endif %}"></i></a></li>
-		</ul>
-    </div>
-{% endfor %}
+	{% if profileuser is defined %}
+		<h2>Alle recepten van {{profileuser.displayName}}</h2>
+	{% endif %}
+	{% if recipes|length > 0 %}
+		{% for recipe in recipes %}
+		    <div class="recipeblock recipe{% if loop.index is even %} even{% endif %}">
+				<a href="{{ path('design311website_recepten_detail', {'category': recipe.category.plural|lower, 'permalink': recipe.permalink})}}">
+		    		<img src="{{ asset(recipe.photos[0].webPath) | apply_filter('recipe_thumb') }}" alt="{{ recipe.photos[0].title }}" />
+					<p class="title">{{recipe.title}}</p>
+				</a>
+				<ul class="actions">
+					<li><a href="#" class="like ajax-button" data-ajax="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" title="Recept lekker vinden"><i class="sprite heart{% if app.user in recipe.likedBy %} orange{% endif %}"></i></a></li>
+					<li><a href="#" class="save ajax-button" data-ajax="{{path('design311website_recepten_save', {'recipeId': recipe.id})}}" title="Recept bewaren"><i class="sprite save{% if app.user in recipe.savedBy %} orange{% endif %}"></i></a></li>
+					<li><a href="#" class="shop ajax-button" data-ajax="{{path('design311website_recepten_shop', {'recipeId': recipe.id})}}" title="Recept toevoegen aan winkellijstje"><i class="sprite cart{% if app.user in recipe.shoppinglistFrom %} orange{% endif %}"></i></a></li>
+				</ul>
+		    </div>
+		{% endfor %}
+	{% else %}
+		<p>Geen recepten gevonden</p>
+	{% endif %}
 </div>
