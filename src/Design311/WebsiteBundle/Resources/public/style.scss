@@ -737,7 +737,8 @@ table.dinners{
 	.avatar{
 		float:left;
 		margin-right:50px;
-		margin-bottom:50px;
+		margin-bottom:1em;
+		border-radius:7px;
 	}
 	.content{
 		margin-top:-207.5px;
@@ -746,8 +747,11 @@ table.dinners{
 	h1{
 		margin-top:0;
 	}
-	.recipes{
-		margin-top:1em;
+	.main{
+		h2{
+			margin-top:0;
+			line-height:1;
+		}
 	}
 }
 

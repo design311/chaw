@@ -8,7 +8,7 @@
 
 <div class="container content">
 
-	<img src="{{ asset(user.avatar) | apply_filter('avatar') }}" alt="Avatar {{user.displayname}}" class="avatar">
+	<img src="{{ asset(user.avatar) | apply_filter('avatar_355') }}" alt="Avatar {{user.displayname}}" class="avatar">
 	<h1>{{user.displayName}}</h1>
 	<p>{{user.description}}</p>
 
@@ -30,6 +30,11 @@
 	<div class="clear"></div>
 
 	<div class="one-third">
+
+		{% if app.user == user %}
+			<p><a href="{{ path('design311website_profile_edit') }}" class="button button-orange">Profiel bewerken</a></p>
+		{% endif %}
+
 		<div class="widget">
 			<ul>
 				<li>Vindt <strong>{{user.likedrecipes|length}}</strong> {{user.likedrecipes|length == 1 ? 'recept' : 'recepten'}} lekker</li>
@@ -37,13 +42,17 @@
 				<li>Nam deel aan <strong>{{user.dinnersParticipated|length}}</strong>  {{user.dinnersParticipated|length == 1 ? 'dinner' : 'dinners'}}</li>
 			</ul>
 		</div>
+		{% if app.user != user %}
 		<div class="widget">
-			//feedback?
+			//feedback form
+		</div>
+		{% endif %}
+		<div class="widget">
+			//feedback
 		</div>
 	</div>
-	<div class="recipes">
-		{% include 'Design311WebsiteBundle:Shared:recipes-list.html.twig' with {'recipes':user.recipes, 'userprofile': user} %}
-	</div>
+	{% include 'Design311WebsiteBundle:Shared:recipes-list.html.twig' with {'recipes':user.recipes, 'userprofile': user} %}
+
 		
 </div>
 

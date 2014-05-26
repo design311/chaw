@@ -3,7 +3,6 @@
 namespace Design311\WebsiteBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -189,26 +188,5 @@ class AjaxController extends Controller
         else{
             throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
         }
-    }
-
-    public function filterDinnersAction(Request $request)
-    {
-        //todo only select what's needed
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-        $qb = $qb
-            ->from('Design311WebsiteBundle:Dinner', 'd')
-            ->select('d')
-            ->where($qb->expr()->lte('d.price', 12))
-            ->andWhere($qb->expr()->gte('d.date', ':today'))
-            ->setParameter('today', new \DateTime());
-
-        $query = $qb->getQuery();
-        $dinners = $query->execute();
-
-        $serializer = $this->container->get('serializer');
-        $dinners = $serializer->serialize($dinners, 'json');
-        print_r($dinners);die;
-        return new Response($dinners);
     }
 }

@@ -22,6 +22,12 @@ class SearchRecipeType extends AbstractType
             'empty_value' => 'Geen voorkeur',
             'label' => 'Categorie'
             ));
+        $builder->add('diet', 'entity', array(
+            'class' => 'Design311WebsiteBundle:Diet',
+            'required' => false,
+            'empty_value' => 'Geen voorkeur',
+            'label'=> 'Eetgewoonte'
+            ));
         $builder->add('submit', 'submit', array('label' => 'Recepten zoeken'));
     }
 

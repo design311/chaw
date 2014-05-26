@@ -64,6 +64,11 @@ class Recipe
     private $aantalPersonen;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Diet")
+     */
+    private $diet;
+
+    /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="recipe", cascade={"persist"})
     **/
     private $photos;
@@ -479,5 +484,28 @@ class Recipe
     public function getPermalink()
     {
         return $this->permalink;
+    }
+
+    /**
+     * Set diet
+     *
+     * @param \Design311\WebsiteBundle\Entity\Diet $diet
+     * @return Recipe
+     */
+    public function setDiet(\Design311\WebsiteBundle\Entity\Diet $diet = null)
+    {
+        $this->diet = $diet;
+
+        return $this;
+    }
+
+    /**
+     * Get diet
+     *
+     * @return \Design311\WebsiteBundle\Entity\Diet 
+     */
+    public function getDiet()
+    {
+        return $this->diet;
     }
 }

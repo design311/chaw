@@ -1543,14 +1543,16 @@ table.dinners {
 .profile-view .avatar {
   float: left;
   margin-right: 50px;
-  margin-bottom: 50px; }
+  margin-bottom: 1em;
+  border-radius: 7px; }
 .profile-view .content {
   margin-top: -207.5px;
   background: #fff; }
 .profile-view h1 {
   margin-top: 0; }
-.profile-view .recipes {
-  margin-top: 1em; }
+.profile-view .main h2 {
+  margin-top: 0;
+  line-height: 1; }
 
 .select2-container {
   width: 100%; }

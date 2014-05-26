@@ -13,17 +13,23 @@
 			<p><input type="text" id="locatie"></p>
 			<p>TIP: Versleep de kaart om te filteren</p>
 			<div id="filters">
-			<p>
-				<label for="amount">Maximumprijs:</label> €<span class="amount"></span>
-				<input type="hidden" class="amount" id="maxprice">
-			</p>
-			<div id="slider-range"></div>
-			{% for filter in filters %}
-				<p><strong>{{filter.name}}</strong></p>
-				{% for child in filter.children %}
-						<p><input type="checkbox" name="{{filter.name|lower}}" value="{{child.value|lower}}" id="{{child.value|lower}}"> <label for="{{child.value|lower}}">{{child.value}}</label></p>
+				<p>
+					<label for="amount">Maximumprijs:</label> €<span class="amount"></span>
+					<input type="hidden" class="amount" id="maxprice">
+				</p>
+				<div id="slider-range"></div>
+				
+				<p><strong>Eetgewoonte</strong></p>
+				{% for diet in diets %}
+					<p><input type="checkbox" name="diet" value="{{diet.id}}" id="{{diet.value|lower}}"> <label for="{{diet.value|lower}}">{{diet.value}}</label></p>
 				{% endfor %}
-			{% endfor %}
+				
+				{% for filter in filters %}
+					<p><strong>{{filter.name}}</strong></p>
+					{% for child in filter.children %}
+							<p><input type="checkbox" name="{{filter.name|lower}}" value="{{child.value|lower}}" id="{{child.value|lower}}"> <label for="{{child.value|lower}}">{{child.value}}</label></p>
+					{% endfor %}
+				{% endfor %}
 			</div>
 		</div>
 		<div class="two-third">
@@ -40,7 +46,7 @@
 				<tbody>
 				</tbody>
 			</table>
-			<p id="nonefound">Sorry! Geen dinners gevonden in deze regio.</p>
+			<p id="nonefound">Sorry! Geen dinners gevonden.</p>
 		</div>
 	</div>
 </div>
@@ -57,12 +63,12 @@
 			var dinnersTable = $('#dinners').hide();
 			var nonefound = $('#nonefound').hide();
 			var tbody = $('#dinners tbody');
-			var dinners = {{dinners|serialize|raw}};
+			var dinners = {{dinners|raw}};
 
 			var map;
 			var markers = [];
+			var markerCluster;
 			var geocoder = new google.maps.Geocoder();
-			var locations = {{ locations|json_encode|raw }};
 
 			map = new google.maps.Map(document.getElementById('map'), {
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -73,24 +79,8 @@
 			
 			var latlngbounds = new google.maps.LatLngBounds();
 
-			$.each(locations, function(i, item){
+			updateMarkers(dinners);
 
-				var coords = new google.maps.LatLng(item[0], item[1]);
-				
-				var marker = new google.maps.Marker({
-					map: map,
-					position: coords,
-					icon: "{{ asset('bundles/design311website/img/marker.png')}}",
-					dinnerId: i
-				});
-				markers.push(marker);
-				latlngbounds.extend(coords);
-				
-			})
-
-			var markerCluster = new MarkerClusterer(map, markers, {
-				gridSize: 40
-			});
 			map.setCenter(latlngbounds.getCenter());
 			map.fitBounds(latlngbounds);
 
@@ -117,6 +107,32 @@
 					displayDinners(dinners);
 			});
 
+			function updateMarkers(dinners){
+
+				if (typeof markerCluster == 'object') {
+					markerCluster.clearMarkers();
+				};
+				markers = [];
+
+				$.each(dinners, function(i, item){
+
+					var coords = new google.maps.LatLng(item.lat, item.lng);
+					
+					var marker = new google.maps.Marker({
+						map: map,
+						position: coords,
+						icon: "{{ asset('bundles/design311website/img/marker.png')}}",
+						dinnerId: i
+					});
+					markers.push(marker);
+					latlngbounds.extend(coords);
+				})
+
+				markerCluster = new MarkerClusterer(map, markers, {
+					gridSize: 40
+				});
+			}
+
 			function displayDinners(dinners){
 				tbody.empty();
 
@@ -124,7 +140,7 @@
 				var visibleDinners = [];
 				for (var i=0; i<markers.length; i++){
 					if( bounds.contains(markers[i].getPosition()) ){
-						visibleDinners.push(markers[i].dinnerId);
+						visibleDinners.push(dinners[markers[i].dinnerId]);
 					}
 				}
 
@@ -132,22 +148,20 @@
 					dinnersTable.show();
 					nonefound.hide();
 					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}';
-					$.each(dinners, function(i, dinner){
-						if( bounds.contains(markers[i].getPosition()) ){
-							var formattedDate = new Date(dinner.date);
-							var d = formattedDate.getDate();
-							var m =  formattedDate.getMonth();
-							m += 1;  // JavaScript months are 0-11
-							var y = formattedDate.getFullYear();
-							detailLink = detail.replace('permalink_holder', dinner.permalink);
-							tbody.append(' \
-								<tr> \
-									<td>'+d+'-'+m+'-'+y+'</td> \
-									<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
-									<td>'+dinner.address.city+'</td> \
-									<td>'+dinner.price+'</td> \
-								</tr>')
-						}
+					$.each(visibleDinners, function(i, dinner){
+						var formattedDate = new Date(dinner.date);
+						var d = formattedDate.getDate();
+						var m =  formattedDate.getMonth();
+						m += 1;  // JavaScript months are 0-11
+						var y = formattedDate.getFullYear();
+						detailLink = detail.replace('permalink_holder', dinner.permalink);
+						tbody.append(' \
+							<tr> \
+								<td>'+d+'-'+m+'-'+y+'</td> \
+								<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
+								<td>'+dinner.city+'</td> \
+								<td>'+dinner.price+'</td> \
+							</tr>')
 					})
 				}
 				else{
@@ -174,9 +188,8 @@
 				});
 			})
 
-			console.log($('#filters input'));
-
 			$('#filters input').change(function(){
+
 
 				var filters = {};
 				$.each($('#filters input'), function(index, input) {
@@ -202,6 +215,7 @@
 					dataType: "JSON",
 					success: function (data) {
 						console.log(data);
+						updateMarkers(data);
 						displayDinners(data);
 					}
 				});

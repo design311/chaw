@@ -1,6 +1,6 @@
 <div class="two-third main">
-	{% if profileuser is defined %}
-		<h2>Alle recepten van {{profileuser.displayName}}</h2>
+	{% if userprofile is defined %}
+		<h2>Alle recepten van {{userprofile.displayName}}</h2>
 	{% endif %}
 	{% if recipes|length > 0 %}
 		{% for recipe in recipes %}

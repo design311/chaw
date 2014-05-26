@@ -55,7 +55,7 @@ design311website_dinners_add:
 
 design311website_dinners_filter:
     path:     /dinners/filter/
-    defaults: { _controller: Design311WebsiteBundle:Ajax:filterDinners }
+    defaults: { _controller: Design311WebsiteBundle:Dinner:filterDinners }
 
 design311website_dinners_detail:
     path:     /dinners/{permalink}/

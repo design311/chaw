@@ -102,9 +102,12 @@ class RecipeController extends Controller
                 ->having('count(r.id) = ' . count($ingredientIds));
 
             if ($searchData['category'] != null ) {
-               $qb->andWhere($qb->expr()->eq('r.category', $searchData['category']->getId()));
+                $qb->andWhere($qb->expr()->eq('r.category', $searchData['category']->getId()));
             }
 
+            if ($searchData['diet'] != null ) {
+                $qb->andWhere($qb->expr()->eq('r.diet', $searchData['diet']->getId()));
+            }
 
             $recipes = $qb->getQuery()->execute();
 

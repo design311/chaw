@@ -4,6 +4,7 @@ namespace Design311\WebsiteBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use Design311\WebsiteBundle\Form\Type\MessageType;
 use Design311\WebsiteBundle\Form\Type\MailType;
@@ -15,6 +16,25 @@ use Design311\WebsiteBundle\Entity\DinnerInvite;
 
 class DinnerController extends GeocodeController
 {
+    private function getDinnersJson($dinners){
+        if (count($dinners) == 0) {
+            return '{}';
+        }
+        foreach ($dinners as $dinner) {
+            $dinnersSimple[$dinner->getId()]['date'] = $dinner->getDate();
+            $dinnersSimple[$dinner->getId()]['title'] = $dinner->getTitle();
+            $dinnersSimple[$dinner->getId()]['city'] = $dinner->getAddress()->getCity();
+            $dinnersSimple[$dinner->getId()]['price'] = $dinner->getPrice();
+            $dinnersSimple[$dinner->getId()]['lat'] = $dinner->getAddress()->getLat();
+            $dinnersSimple[$dinner->getId()]['lng'] = $dinner->getAddress()->getLng();
+        }
+
+        $serializer = $this->container->get('serializer');
+        $dinnersSimple = $serializer->serialize($dinnersSimple, 'json');
+
+        return $dinnersSimple;
+    }
+
     public function indexAction()
     {
         //TODO only get dinners not fully booked
@@ -28,22 +48,44 @@ class DinnerController extends GeocodeController
             ->getQuery();
 
         $dinners = $query->execute();
+        $dinnersJSON = $this->getDinnersJson($dinners);
 
         $filters = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsFilter(1);
-
-        foreach ($dinners as $dinner) {
-            $locations[$dinner->getId()][0] = $dinner->getAddress()->getLat();
-            $locations[$dinner->getId()][1] = $dinner->getAddress()->getLng();
-        }
+        $diets = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Diet')->findAll();
 
         return $this->render(
             'Design311WebsiteBundle:Dinner:index.html.twig',
             array(
-                'dinners' => $dinners,
-                'locations' => $locations,
-                'filters' => $filters
+                'dinners' => $dinnersJSON,
+                'filters' => $filters,
+                'diets' => $diets
                 )
         );
+    }
+
+    public function filterDinnersAction(Request $request)
+    {
+
+        //todo only select what's needed
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        $qb = $qb
+            ->from('Design311WebsiteBundle:Dinner', 'd')
+            ->select('d')
+            ->andWhere($qb->expr()->gte('d.date', ':today'))
+            ->andWhere($qb->expr()->lte('d.price', $request->get('maxprice')))
+            ->setParameter('today', new \DateTime());
+
+        if ($request->get('diet') != null) {
+            $qb = $qb->andWhere($qb->expr()->in('d.diet', $request->get('diet')));
+        }
+
+        $query = $qb->getQuery();
+        $dinners = $query->execute();
+
+        $dinnersJSON = $this->getDinnersJson($dinners);
+
+        return new Response($dinnersJSON);
     }
 
     public function detailAction(Request $request, $permalink)
@@ -219,8 +261,10 @@ class DinnerController extends GeocodeController
             }
 
             $dinner->setUser($this->getUser());
+            $user = $this->getUser()->setAddress($dinner->getAddress());
 
             $em->persist($dinner);
+            $em->persist($user);
             $em->flush();
 
             return $this->redirect($this->generateUrl('design311website_dinners'));

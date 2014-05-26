@@ -76,6 +76,11 @@ class Dinner
     private $meta;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Diet")
+     */
+    private $diet;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="dinners")
     **/
     private $user;
@@ -438,5 +443,28 @@ class Dinner
     public function getInvitees()
     {
         return $this->invitees;
+    }
+
+    /**
+     * Set diet
+     *
+     * @param \Design311\WebsiteBundle\Entity\Diet $diet
+     * @return Dinner
+     */
+    public function setDiet(\Design311\WebsiteBundle\Entity\Diet $diet = null)
+    {
+        $this->diet = $diet;
+
+        return $this;
+    }
+
+    /**
+     * Get diet
+     *
+     * @return \Design311\WebsiteBundle\Entity\Diet 
+     */
+    public function getDiet()
+    {
+        return $this->diet;
     }
 }
