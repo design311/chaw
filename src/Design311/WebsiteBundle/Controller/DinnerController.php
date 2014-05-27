@@ -10,11 +10,12 @@ use Design311\WebsiteBundle\Form\Type\MessageType;
 use Design311\WebsiteBundle\Form\Type\MailType;
 use Design311\WebsiteBundle\Form\Type\DinnerType;
 use Design311\WebsiteBundle\Entity\Dinner;
+use Design311\WebsiteBundle\Entity\Address;
 use Design311\WebsiteBundle\Entity\DinnerParticipantRequest;
 use Design311\WebsiteBundle\Entity\DinnerInvite;
 
 
-class DinnerController extends GeocodeController
+class DinnerController extends BaseController
 {
     private function getDinnersJson($dinners){
         if (count($dinners) == 0) {
@@ -211,8 +212,6 @@ class DinnerController extends GeocodeController
     public function addAction(Request $request)
     {
         $dinner = new Dinner();
-        $dinner->setAddress($this->getUser()->getAddress());
-
         $metacategories = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsCalculated(0);
         $form = $this->createForm(new DinnerType($metacategories), $dinner);
 
@@ -249,22 +248,30 @@ class DinnerController extends GeocodeController
                 }
             }
 
-            $latLng = $this->geocode($dinner->getAddress());
-            if (is_object($latLng)) {
-                $dinner->getAddress()->setLat($latLng->lat);
-                $dinner->getAddress()->setLng($latLng->lng);
+            if ($form->get('change_address')->getData() == 1) {
+                //only geocode if new address
+                $latLng = $this->geocode($dinner->getAddress());
+                if (is_object($latLng)) {
+                    $dinner->getAddress()->setLat($latLng->lat);
+                    $dinner->getAddress()->setLng($latLng->lng);
+                }
+                else{
+                    //coords could not be found
+                    $dinner->getAddress()->setLat(0);
+                    $dinner->getAddress()->setLng(0);
+                }
+
+                $user = $this->getUser()->setAddress($dinner->getAddress());
+                $em->persist($user);
             }
             else{
-                //coords could not be found
-                $dinner->getAddress()->setLat(0);
-                $dinner->getAddress()->setLng(0);
+                $dinner->setAddress($this->getUser()->getAddress());
             }
 
             $dinner->setUser($this->getUser());
-            $user = $this->getUser()->setAddress($dinner->getAddress());
+            $dinner->setPermalink($this->getPermalink($dinner->getTitle(), 'Dinner'));
 
             $em->persist($dinner);
-            $em->persist($user);
             $em->flush();
 
             return $this->redirect($this->generateUrl('design311website_dinners'));

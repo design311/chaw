@@ -134,17 +134,6 @@ class Recipe
     {
         $this->title = $title;
 
-        $permalink = $title;
-        $permalink = preg_replace("/[^a-z0-9\s\-]/i", "", $permalink); // Remove special characters
-        $permalink = preg_replace("/\s\s+/", " ", $permalink); // Replace multiple spaces with one space
-        $permalink = trim($permalink); // Remove trailing spaces
-        $permalink = preg_replace("/\s/", "-", $permalink); // Replace all spaces with hyphens
-        $permalink = preg_replace("/\-\-+/", "-", $permalink); // Replace multiple hyphens with one hyphen
-        $permalink = preg_replace("/^\-|\-$/", "", $permalink); // Remove leading and trailing hyphens
-        $permalink = strtolower($permalink);
-
-        $this->setPermalink($permalink);
-
         return $this;
     }
 

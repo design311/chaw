@@ -12,7 +12,7 @@ use Design311\WebsiteBundle\Form\Type\SearchRecipeType;
 use Design311\WebsiteBundle\Entity\Recipe;
 
 
-class RecipeController extends Controller
+class RecipeController extends BaseController
 {
     private function searchRecipeForm(){
         $form = $this->createForm(new SearchRecipeType(), array(), array(
@@ -174,6 +174,7 @@ class RecipeController extends Controller
             }
             
             $recept->setUser($this->getUser());
+            $recept->setPermalink($this->getPermalink($recept->getTitle(), 'Recipe'));
 
             $em->persist($recept);
             $em->flush();

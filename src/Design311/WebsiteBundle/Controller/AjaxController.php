@@ -12,7 +12,7 @@ use Design311\WebsiteBundle\Entity\Recipe;
 use Design311\WebsiteBundle\Entity\DinnerParticipants;
 
 
-class AjaxController extends Controller
+class AjaxController extends BaseController
 {
     public function likeRecipeAction($recipeId)
     {

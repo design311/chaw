@@ -25,14 +25,16 @@ class DinnerType extends AbstractType
         $builder->add('menu', 'textarea');
         $builder->add('maxinvitees', 'integer');
         $builder->add('price', 'money');
+        $builder->add('change_address', 'hidden', array(
+            'mapped' => false,
+            'data' => true
+            ));
         $builder->add('address', new AddressType());
         $builder->add('metafields', new MetaType($this->metadata), array(
             'mapped' => false
             ));
         $builder->add('diet', 'entity', array(
             'class' => 'Design311WebsiteBundle:Diet',
-            'required' => false,
-            'empty_value' => 'Geen voorkeur',
             'label'=> 'Eetgewoonte'
             ));
 

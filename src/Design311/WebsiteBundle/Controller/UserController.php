@@ -14,7 +14,7 @@ use Design311\WebsiteBundle\Form\Type\PasswordRecoveryType;
 use Design311\WebsiteBundle\Entity\User;
 
 
-class UserController extends GeocodeController
+class UserController extends BaseController
 {
     public function loginAction(Request $request, $auth = false)
     {
@@ -100,7 +100,7 @@ class UserController extends GeocodeController
             $em->persist($user);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('design311website_profile_edit'));
+            return $this->redirect($this->generateUrl('design311website_profile_view', array('username' => $this->getUser()->getUsername())));
         }
 
         return $this->render('Design311WebsiteBundle:User:edit.html.twig',array(

@@ -3,5 +3,24 @@
 {% block content %}
 <div class="container">
 	{{ form(form) }}
+	<!-- 
+		if app user address not null then
+			display address
+			allow changing of address link
+		else
+			display address fields
+	 -->
 </div>
+{% endblock %}
+
+{% block footer %}
+    <script type="text/javascript">
+		$(function(){
+			/*
+				changing of address click link then
+					display address fields
+					allow cancel ?
+			*/
+		});
+	</script>
 {% endblock %}

@@ -57,9 +57,9 @@ class Dinner
     private $maxInvitees;
 
     /**
-     * @var integer
+     * @var decimal
      *
-     * @ORM\Column(name="price", type="smallint")
+     * @ORM\Column(name="price", type="decimal", precision=5, scale=2)
      */
     private $price;
 
@@ -127,17 +127,6 @@ class Dinner
     public function setTitle($title)
     {
         $this->title = $title;
-
-        $permalink = $title;
-        $permalink = preg_replace("/[^a-z0-9\s\-]/i", "", $permalink); // Remove special characters
-        $permalink = preg_replace("/\s\s+/", " ", $permalink); // Replace multiple spaces with one space
-        $permalink = trim($permalink); // Remove trailing spaces
-        $permalink = preg_replace("/\s/", "-", $permalink); // Replace all spaces with hyphens
-        $permalink = preg_replace("/\-\-+/", "-", $permalink); // Replace multiple hyphens with one hyphen
-        $permalink = preg_replace("/^\-|\-$/", "", $permalink); // Remove leading and trailing hyphens
-        $permalink = strtolower($permalink);
-
-        $this->setPermalink($permalink);
 
         return $this;
     }
@@ -219,29 +208,6 @@ class Dinner
     public function getMaxInvitees()
     {
         return $this->maxInvitees;
-    }
-
-    /**
-     * Set price
-     *
-     * @param integer $price
-     * @return Dinner
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return integer 
-     */
-    public function getPrice()
-    {
-        return $this->price;
     }
 
     /**
@@ -466,5 +432,28 @@ class Dinner
     public function getDiet()
     {
         return $this->diet;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     * @return Dinner
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string 
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

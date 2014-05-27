@@ -25,8 +25,6 @@ class RecipeType extends AbstractType
         $builder->add('category', 'entity', array('class' => 'Design311WebsiteBundle:RecipeCategory'));
         $builder->add('diet', 'entity', array(
             'class' => 'Design311WebsiteBundle:Diet',
-            'required' => false,
-            'empty_value' => 'Geen voorkeur',
             'label'=> 'Eetgewoonte'
             ));
         $builder->add('photos', 'collection', array(
