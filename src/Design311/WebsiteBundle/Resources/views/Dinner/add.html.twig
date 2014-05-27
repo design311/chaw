@@ -1,21 +1,54 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
 {% block content %}
+<script>
+	var addressField = '{{ form_row(form.address) }}';
+</script>
 <div class="container">
-	{{ form(form) }}
-	<!-- 
-		if app user address not null then
-			display address
-			allow changing of address link
-		else
-			display address fields
-	 -->
+	{{ form_start(form) }}
+		{{ form_row(form.title) }}
+		{{ form_row(form.date) }}
+		{{ form_row(form.menu) }}
+		{{ form_row(form.maxinvitees) }}
+		{{ form_row(form.price) }}
+		{% if app.user.address is null %}
+			{{ form_row(form.change_address) }}
+			<div id="edit_address"></div>
+		{% else %}
+			{{ form_row(form.change_address, {'value': '0'}) }}
+			<div id="current_address"><strong>Adres</strong> <a href="#" id="change_address">(wijzigen)</a><br>
+			{{app.user.address.street}} {{app.user.address.number}}<br>
+			{{app.user.address.zipcode}} {{app.user.address.city}}<br>
+			{{app.user.address.country}}
+			</div>
+		{% endif %}
+		{{ form_row(form.metafields) }}
+		{{ form_row(form.diet) }}
+		{{ form_row(form.submit) }}
+	{{ form_end(form) }}
 </div>
 {% endblock %}
 
 {% block footer %}
     <script type="text/javascript">
 		$(function(){
+
+			$('#address').append(addressField);
+
+			$('#change_address').click(function(){
+				$(this).parent().hide().after('<div id="edit_address">'+addressField+'<a href="#" id="cancel_change">Annuleren</a></div>');
+				$('#dinner_change_address').val(1);
+				return false;
+			})
+
+			$('form').on('click', '#cancel_change', function(){
+				$(this).parent().remove();
+				$('#current_address').show();
+				$('#dinner_change_address').val(0);
+				return false;
+			})
+
+
 			/*
 				changing of address click link then
 					display address fields

@@ -38,7 +38,7 @@ class DinnerType extends AbstractType
             'label'=> 'Eetgewoonte'
             ));
 
-        $builder->add('Dinner organiseren', 'submit');
+        $builder->add('submit', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
