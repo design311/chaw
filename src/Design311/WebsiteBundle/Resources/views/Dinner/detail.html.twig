@@ -46,11 +46,18 @@
 	<div class="two-third main">
 		<h1>{{dinner.title}}</h1>
 		{{dinner.menu|markdown}}
+
 		{% if app.user != dinner.user and app.user not in dinner.participants and app.user not in dinner.participantRequests %}
 		<h2>Deelnemen</h2>
 		<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
 		{{ form(form) }}
 		{% endif %}
+
+		<div class="dinnerphotos">
+			{% for photo in dinner.photos %}
+				<img src="{{ asset(photo.webPath)}}" alt="{{photo.title}}">
+			{% endfor %}
+		</div>
 	</div>
 </div>
 

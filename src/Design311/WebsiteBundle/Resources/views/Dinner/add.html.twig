@@ -24,6 +24,7 @@
 		{% endif %}
 		{{ form_row(form.metafields) }}
 		{{ form_row(form.diet) }}
+		{{ form_row(form.photos) }}
 		{{ form_row(form.submit) }}
 	{{ form_end(form) }}
 </div>
@@ -33,6 +34,7 @@
     <script type="text/javascript">
 		$(function(){
 
+			// address changing
 			$('#address').append(addressField);
 
 			$('#change_address').click(function(){
@@ -48,12 +50,63 @@
 				return false;
 			})
 
+			// adding photos
+			var photoHolder;
 
-			/*
-				changing of address click link then
-					display address fields
-					allow cancel ?
-			*/
+			// setup an "add a photo" link
+			var addPhotoLink = $('<p><a href="#" class="add_photo_link">Add a photo</a></p>');
+			var deleteLink = '<a href="#" class="deleterow">delete</a>';
+
+		    // Get the ul that holds the collection of photos
+		    photoHolder = $('div#dinner_photos');
+
+		    // add the "add a photo" anchor and li to the photos ul
+		    photoHolder.append(addPhotoLink);
+
+		    // count the current form inputs we have (e.g. 2), use that as the new
+		    // index when inserting a new item (e.g. 2)
+		    photoHolder.data('index', photoHolder.children('div').length);
+
+		    photoHolder.children('div').each(function(i, el) {
+		    	$(el).append(deleteLink);
+		    });
+
+		    addPhotoLink.on('click', function(e) {
+		        // prevent the link from creating a "#" on the URL
+		        e.preventDefault();
+
+		        // add a new photo form (see next code block)
+		        addInput(photoHolder, addPhotoLink, true);
+		    });
+
+		    $('form').on('click','.deleterow', function(e) {
+		    	e.preventDefault();
+		    	$(this).parent().remove();
+		    });
+
+			function addInput(holder, link, allowDelete) {
+			    // Get the data-prototype explained earlier
+			    var prototype = holder.data('prototype');
+
+			    // get the new index
+			    var index = holder.data('index');
+
+			    // Replace '__name__' in the prototype's HTML to
+			    // instead be a number based on how many items we have
+			    var newForm = prototype.replace(/__name__/g, index);
+
+			    // increase the index with one for the next item
+			    holder.data('index', index + 1);
+
+			    // Display the form in the page in an li, before the "Add a photo" link li
+			    if (allowDelete) {
+			    	var newFormContainer = $('<div></div>').append(newForm + deleteLink);
+			    }
+			    else{
+			    	var newFormContainer = $('<div></div>').append(newForm);
+			    }
+			    link.before(newFormContainer);
+			}
 		});
 	</script>
 {% endblock %}

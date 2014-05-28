@@ -755,6 +755,15 @@ table.dinners{
 	}
 }
 
+.calendar{
+	td.event{
+		background:$orange;
+	}
+	td.today{
+		font-weight:bold;
+	}
+}
+
 //TODO remove debug styling
 .select2-container{
 	width:100%;

@@ -24,6 +24,7 @@ class DinnerController extends BaseController
         foreach ($dinners as $dinner) {
             $dinnersSimple[$dinner->getId()]['date'] = $dinner->getDate();
             $dinnersSimple[$dinner->getId()]['title'] = $dinner->getTitle();
+            $dinnersSimple[$dinner->getId()]['permalink'] = $dinner->getPermalink();
             $dinnersSimple[$dinner->getId()]['city'] = $dinner->getAddress()->getCity();
             $dinnersSimple[$dinner->getId()]['price'] = $dinner->getPrice();
             $dinnersSimple[$dinner->getId()]['lat'] = $dinner->getAddress()->getLat();
@@ -46,9 +47,11 @@ class DinnerController extends BaseController
             ->select('d')
             ->where($qb->expr()->gte('d.date', ':today'))
             ->setParameter('today', new \DateTime())
+            ->orderBy('d.title', 'ASC')
             ->getQuery();
 
         $dinners = $query->execute();
+
         $dinnersJSON = $this->getDinnersJson($dinners);
 
         $filters = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsFilter(1);

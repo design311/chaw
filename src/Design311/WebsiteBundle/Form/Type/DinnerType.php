@@ -37,6 +37,12 @@ class DinnerType extends AbstractType
             'class' => 'Design311WebsiteBundle:Diet',
             'label'=> 'Eetgewoonte'
             ));
+        $builder->add('photos', 'collection', array(
+            'type' => new PhotoType(),
+            'allow_add'    => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+        ));
 
         $builder->add('submit', 'submit');
     }

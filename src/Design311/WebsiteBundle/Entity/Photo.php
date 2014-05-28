@@ -49,9 +49,11 @@ class Photo
     private $extension;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="photos")
-     **/
-    private $recipe;
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type;
 
 
     /**
@@ -280,5 +282,28 @@ class Photo
     public function getExtension()
     {
         return $this->extension;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Photo
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

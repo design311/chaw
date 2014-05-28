@@ -25,7 +25,7 @@
 				{{recipe.recipe|markdown}}
 
 				<div class="recipephotos">
-					{% for key, photo in recipe.photos %}
+					{% for photo in recipe.photos %}
 						<img src="{{ asset(photo.webPath)}}" alt="{{photo.title}}">
 					{% endfor %}
 				</div>

@@ -12,6 +12,28 @@
 			<p><label for="locatie"><strong>Locatie</strong></label></p>
 			<p><input type="text" id="locatie"></p>
 			<p>TIP: Versleep de kaart om te filteren</p>
+			<div id="calendar" class="calendar">
+				<table>
+					<thead>
+						<tr>
+							<th><a href="#" id="prev_month">&laquo;</a></th>
+							<th id="current_month" colspan="5"></th>
+							<th><a href="#" id="next_month">&raquo;</a></th>
+						</tr>
+						<tr>
+							<th>Ma</th>
+							<th>Di</th>
+							<th>Wo</th>
+							<th>Do</th>
+							<th>Vr</th>
+							<th>Za</th>
+							<th>Zo</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
 			<div id="filters">
 				<p>
 					<label for="amount">Maximumprijs:</label> €<span class="amount"></span>
@@ -64,6 +86,9 @@
 			var nonefound = $('#nonefound').hide();
 			var tbody = $('#dinners tbody');
 			var dinners = {{dinners|raw}};
+			var visibleDinners = [];
+			var eventDates = [];
+			var months = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 
 			var map;
 			var markers = [];
@@ -105,6 +130,7 @@
 			//idle fires once instead of bounds_changed firing all the time
 			google.maps.event.addListener(map, 'idle', function() {
 					displayDinners(dinners);
+					updateCalendarEvents();
 			});
 
 			function updateMarkers(dinners){
@@ -137,10 +163,12 @@
 				tbody.empty();
 
 				var bounds = map.getBounds();
-				var visibleDinners = [];
+				visibleDinners = [];
+				eventDates = [];
 				for (var i=0; i<markers.length; i++){
 					if( bounds.contains(markers[i].getPosition()) ){
 						visibleDinners.push(dinners[markers[i].dinnerId]);
+						eventDates.push(dinners[markers[i].dinnerId].date);
 					}
 				}
 
@@ -160,7 +188,7 @@
 								<td>'+d+'-'+m+'-'+y+'</td> \
 								<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
 								<td>'+dinner.city+'</td> \
-								<td>'+dinner.price+'</td> \
+								<td>€'+dinner.price+'</td> \
 							</tr>')
 					})
 				}
@@ -189,8 +217,6 @@
 			})
 
 			$('#filters input').change(function(){
-
-
 				var filters = {};
 				$.each($('#filters input'), function(index, input) {
 					if ($(input).is(':checkbox')) {
@@ -206,21 +232,102 @@
 					}
 				});
 
-				console.log(filters);
-
 				$.ajax({
 					url: "{{path('design311website_dinners_filter')}}",
 					type: "POST",
 					data: filters,
 					dataType: "JSON",
 					success: function (data) {
-						console.log(data);
 						updateMarkers(data);
 						displayDinners(data);
 					}
 				});
+			})
 
-				
+
+			var now = new Date();
+			var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+			var firstOfMonth, lastOfMonth;
+			var currentMonth = new Date(today);
+			updateCalendar(currentMonth);
+
+			function updateCalendarEvents(){
+				$.each(eventDates, function(i, event) {
+					event = new Date(event);
+					if (event.getMonth() == currentMonth.getMonth()) {
+						$('#day-'+event.getDate()).addClass('event');
+					};
+				});
+			}
+
+			function updateCalendar(currentMonth){
+				$('#current_month').text(months[currentMonth.getMonth()]);
+				$('#calendar tbody').empty();
+
+				firstOfMonth = new Date(currentMonth);
+				firstOfMonth.setDate(1);
+				lastOfMonth = new Date(currentMonth);
+				lastOfMonth.setMonth(currentMonth.getMonth()+1);
+				lastOfMonth.setDate(0);
+
+				console.log('dates');
+				console.log(currentMonth);
+				console.log(firstOfMonth);
+				console.log(lastOfMonth);
+				console.log('end dates');
+
+				var table = '<tr>'
+				var emptyCell = '<td>&nbsp;</td>';
+
+				if (firstOfMonth.getDay() == 0) {
+					var counter = 7; //zondag
+				}
+				else{
+					var counter = firstOfMonth.getDay();
+				}
+
+				for (var i = 1; i < counter; i++) {
+					table += emptyCell;
+				};
+
+				for (var i = 1; i <= lastOfMonth.getDate(); i++) {
+					var date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
+
+					console.log(date);
+					if (date.toString() == today.toString()) {
+						table += '<td class="today" id="day-'+i+'">'+i+'</td>';
+					}
+					else{
+						table += '<td id="day-'+i+'">'+i+'</td>';
+					}
+
+					if (counter == 7 && i != lastOfMonth.getDate()) {
+						table += '</tr><tr>';
+						counter = 0;
+					};
+					counter++;
+				};
+
+				for (var i = counter; i <= 7; i++) {
+					table += emptyCell;
+				};
+
+				table += '</tr>';
+
+				$('#calendar tbody').append(table);
+				updateCalendarEvents();
+			}
+
+			$('#prev_month').click(function(){
+				currentMonth.setMonth(currentMonth.getMonth()-1);
+				updateCalendar(currentMonth);
+				return false;
+			})
+
+			$('#next_month').click(function(){
+				currentMonth.setMonth(currentMonth.getMonth()+1);
+				updateCalendar(currentMonth);
+				return false;
 			})
 		});
 	</script>

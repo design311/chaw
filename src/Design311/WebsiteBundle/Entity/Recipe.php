@@ -69,8 +69,12 @@ class Recipe
     private $diet;
 
     /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="recipe", cascade={"persist"})
-    **/
+     * @ORM\ManyToMany(targetEntity="Photo")
+     * @ORM\JoinTable(name="recipe_photos",
+     *      joinColumns={@ORM\JoinColumn(name="recipe_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="photo_id", referencedColumnName="id", unique=true)}
+     *      )
+     **/
     private $photos;
 
     /**
@@ -224,7 +228,7 @@ class Recipe
      */
     public function addPhoto(\Design311\WebsiteBundle\Entity\Photo $photos)
     {
-        $photos->setRecipe($this);
+        $photos->setType('recipe');
         $this->photos[] = $photos;
 
         return $this;

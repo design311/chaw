@@ -76,6 +76,15 @@ class Dinner
     private $meta;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Photo",cascade={"persist"})
+     * @ORM\JoinTable(name="dinner_photos",
+     *      joinColumns={@ORM\JoinColumn(name="dinner_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="photo_id", referencedColumnName="id", unique=true)}
+     *      )
+     **/
+    private $photos;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Diet")
      */
     private $diet;
@@ -455,5 +464,39 @@ class Dinner
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Add photos
+     *
+     * @param \Design311\WebsiteBundle\Entity\Photo $photos
+     * @return Dinner
+     */
+    public function addPhoto(\Design311\WebsiteBundle\Entity\Photo $photos)
+    {
+        $photos->setType('dinner');
+        $this->photos[] = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \Design311\WebsiteBundle\Entity\Photo $photos
+     */
+    public function removePhoto(\Design311\WebsiteBundle\Entity\Photo $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }
