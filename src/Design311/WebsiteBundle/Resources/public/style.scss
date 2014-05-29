@@ -768,11 +768,20 @@ table.dinners{
 		width:14.28%;
 		text-align:center;
 	}
+	td{
+		cursor:pointer;
+	}
 	td.event{
 		color:$orange;
 	}
 	td.today{
 		font-weight:bold;
+	}
+	td.highlight{
+		background:#eee;
+	}
+	td.empty{
+		background:#fff;
 	}
 	a{
 		display:block;

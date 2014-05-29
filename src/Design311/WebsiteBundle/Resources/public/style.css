@@ -1563,10 +1563,16 @@ table.dinners {
   padding: 10px;
   width: 14.28%;
   text-align: center; }
+.calendar td {
+  cursor: pointer; }
 .calendar td.event {
   color: #ff5c23; }
 .calendar td.today {
   font-weight: bold; }
+.calendar td.highlight {
+  background: #eee; }
+.calendar td.empty {
+  background: #fff; }
 .calendar a {
   display: block;
   height: 100%;
