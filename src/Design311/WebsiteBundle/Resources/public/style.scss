@@ -756,8 +756,16 @@ table.dinners{
 }
 
 .calendar{
+	table{
+		width:100%;
+	}
+	td, th{
+		padding:10px;
+		width:14.28%;
+		text-align:center;
+	}
 	td.event{
-		background:$orange;
+		color:$orange;
 	}
 	td.today{
 		font-weight:bold;

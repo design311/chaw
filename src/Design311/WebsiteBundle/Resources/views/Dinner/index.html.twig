@@ -8,7 +8,7 @@
 	<div class="container">
 		<div class="one-third filters">
 		<p><a href="{{ path('design311website_dinners_add') }}" class="button button-orange adddinner"><i class="sprite plus white"></i>Dinner toevoegen</a></p>
-			<p><strong>Filter de zoekresultaten</strong></p>
+			<h3>Filter de zoekresultaten</h3>
 			<p><label for="locatie"><strong>Locatie</strong></label></p>
 			<p><input type="text" id="locatie"></p>
 			<p>TIP: Versleep de kaart om te filteren</p>
@@ -270,12 +270,6 @@
 				lastOfMonth.setMonth(currentMonth.getMonth()+1);
 				lastOfMonth.setDate(0);
 
-				console.log('dates');
-				console.log(currentMonth);
-				console.log(firstOfMonth);
-				console.log(lastOfMonth);
-				console.log('end dates');
-
 				var table = '<tr>'
 				var emptyCell = '<td>&nbsp;</td>';
 
@@ -293,7 +287,6 @@
 				for (var i = 1; i <= lastOfMonth.getDate(); i++) {
 					var date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
 
-					console.log(date);
 					if (date.toString() == today.toString()) {
 						table += '<td class="today" id="day-'+i+'">'+i+'</td>';
 					}

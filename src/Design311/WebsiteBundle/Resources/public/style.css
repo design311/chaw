@@ -1554,8 +1554,14 @@ table.dinners {
   margin-top: 0;
   line-height: 1; }
 
+.calendar table {
+  width: 100%; }
+.calendar td, .calendar th {
+  padding: 10px;
+  width: 14.28%;
+  text-align: center; }
 .calendar td.event {
-  background: #ff5c23; }
+  color: #ff5c23; }
 .calendar td.today {
   font-weight: bold; }
 
