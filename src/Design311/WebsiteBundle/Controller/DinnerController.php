@@ -76,45 +76,15 @@ class DinnerController extends BaseController
         $qb = $qb
             ->from('Design311WebsiteBundle:Dinner', 'd')
             ->select('d')
-            ->andWhere($qb->expr()->lte('d.price', 50));
-
-
-        $startdate = $request->get('startdate');
-        $enddate = $request->get('startdate');
-
-        if ($startdate == $enddate) {
-            $qb = $qb
-                ->andWhere($qb->expr()->like('d.date', ':startdate'))
-                ->setParameter('startdate', $startdate.'%');
-        }
-        else{
-            $qb = $qb->andWhere($qb->expr()->gte('d.date', ':startdate'));
-
-            if ($startdate != null) {
-                $qb = $qb->setParameter('startdate', $startdate);
-            }
-            else{
-                $qb = $qb->setParameter('startdate', new \DateTime());
-            }
-
-            if ($enddate != null) {
-                $qb = $qb
-                    ->andWhere($qb->expr()->lte('d.date', ':enddate'))
-                    ->setParameter('enddate', $enddate);
-            }
-        }
-
+            ->andWhere($qb->expr()->gte('d.date', ':today'))
+            ->andWhere($qb->expr()->lte('d.price', $request->get('maxprice')))
+            ->setParameter('today', new \DateTime());
 
         if ($request->get('diet') != null) {
             $qb = $qb->andWhere($qb->expr()->in('d.diet', $request->get('diet')));
         }
 
         $query = $qb->getQuery();
-      /*  print_r(array(
-    'sql'        => $query->getSQL(),
-    'parameters' => $query->getParameters(),
-));*/
-        //die;
         $dinners = $query->execute();
 
         $dinnersJSON = $this->getDinnersJson($dinners);

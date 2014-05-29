@@ -12,30 +12,30 @@
 			<p><label for="locatie"><strong>Locatie</strong></label></p>
 			<p><input type="text" id="locatie"></p>
 			<p>TIP: Versleep de kaart om te filteren</p>
+			<div id="calendar" class="calendar">
+				<table>
+					<thead>
+						<tr>
+							<th><a href="#" id="prev_month">&laquo;</a></th>
+							<th id="current_month" colspan="5"></th>
+							<th><a href="#" id="next_month">&raquo;</a></th>
+						</tr>
+						<tr>
+							<th>Ma</th>
+							<th>Di</th>
+							<th>Wo</th>
+							<th>Do</th>
+							<th>Vr</th>
+							<th>Za</th>
+							<th>Zo</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<p>Van <input type="date" id="startdate"> tot <input type="date" id="enddate"></p>
+			</div>
 			<div id="filters">
-				<div id="calendar" class="calendar">
-					<table>
-						<thead>
-							<tr>
-								<th><a href="#" id="prev_month">&laquo;</a></th>
-								<th id="current_month" colspan="5"></th>
-								<th><a href="#" id="next_month">&raquo;</a></th>
-							</tr>
-							<tr>
-								<th>Ma</th>
-								<th>Di</th>
-								<th>Wo</th>
-								<th>Do</th>
-								<th>Vr</th>
-								<th>Za</th>
-								<th>Zo</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-					<p>Van <input type="date" id="startdate"> tot <input type="date" id="enddate"></p>
-				</div>
 				<p>
 					<label for="amount">Maximumprijs:</label> €<span class="amount"></span>
 					<input type="hidden" class="amount" id="maxprice">
@@ -87,9 +87,12 @@
 			var nonefound = $('#nonefound').hide();
 			var tbody = $('#dinners tbody');
 			var dinners = {{dinners|raw}};
+			var filteredDinners = dinners;
 			var visibleDinners = [];
 			var eventDates = [];
 			var months = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
+			var startdate = $('#startdate');
+			var enddate = $('#enddate');
 
 			var map;
 			var markers = [];
@@ -130,7 +133,7 @@
 
 			//idle fires once instead of bounds_changed firing all the time
 			google.maps.event.addListener(map, 'idle', function() {
-					displayDinners(dinners);
+					updateDinners();
 					updateCalendarEvents();
 			});
 
@@ -160,7 +163,7 @@
 				});
 			}
 
-			function displayDinners(dinners){
+			function updateDinners(){
 				tbody.empty();
 
 				var bounds = map.getBounds();
@@ -168,8 +171,8 @@
 				eventDates = [];
 				for (var i=0; i<markers.length; i++){
 					if( bounds.contains(markers[i].getPosition()) ){
-						visibleDinners.push(dinners[markers[i].dinnerId]);
-						eventDates.push(dinners[markers[i].dinnerId].date);
+						visibleDinners.push(filteredDinners[markers[i].dinnerId]);
+						eventDates.push(filteredDinners[markers[i].dinnerId].date);
 					}
 				}
 
@@ -178,11 +181,11 @@
 					nonefound.hide();
 					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}';
 					$.each(visibleDinners, function(i, dinner){
-						var formattedDate = new Date(dinner.date);
-						var d = formattedDate.getDate();
-						var m =  formattedDate.getMonth();
+						var dinnerDate = new Date(dinner.date);
+						var d = dinnerDate.getDate();
+						var m =  dinnerDate.getMonth();
 						m += 1;  // JavaScript months are 0-11
-						var y = formattedDate.getFullYear();
+						var y = dinnerDate.getFullYear();
 						detailLink = detail.replace('permalink_holder', dinner.permalink);
 						tbody.append(' \
 							<tr> \
@@ -190,7 +193,7 @@
 								<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
 								<td>'+dinner.city+'</td> \
 								<td>€'+dinner.price+'</td> \
-							</tr>')
+							</tr>');
 					})
 				}
 				else{
@@ -239,10 +242,9 @@
 					data: filters,
 					dataType: "JSON",
 					success: function (data) {
-						console.log(data);
+						filteredDinners = data;
 						updateMarkers(data);
-						displayDinners(data);
-						updateCalendar(currentMonth);
+						updateDinners();
 					}
 				});
 			})
@@ -252,8 +254,6 @@
 			var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 			var firstOfMonth, lastOfMonth;
 			var currentMonth = new Date(today);
-			var startdate = $('#startdate');
-			var enddate = $('#enddate');
 			updateCalendar(currentMonth);
 
 			function updateCalendarEvents(){
@@ -342,6 +342,31 @@
 					}
 					dateClickedCounter = 0;
 				}
+
+				filteredDinners = [];
+				$.each(dinners, function(i, dinner){
+						var dinnerDate = new Date(dinner.date);
+						var startval = startdate.val();
+						var endval = enddate.val();
+						var start = new Date(startval);
+						var end = new Date(endval);
+
+						start.setHours(0,0,0,0);
+						end.setHours(0,0,0,0);
+						dinnerDate.setHours(0,0,0,0);
+
+						if ( (dinnerDate >= start && dinnerDate <= end)
+							|| (dinnerDate >= start && endval == '')
+							|| (startval == '' && dinnerDate <= end)
+							|| (startval == '' && endval == '')
+							) {
+							filteredDinners.push(dinner);
+						}
+				});
+
+				updateMarkers(filteredDinners);
+				updateDinners();
+
 				return false;
 			})
 
