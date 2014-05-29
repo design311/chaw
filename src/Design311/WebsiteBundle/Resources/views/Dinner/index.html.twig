@@ -12,29 +12,30 @@
 			<p><label for="locatie"><strong>Locatie</strong></label></p>
 			<p><input type="text" id="locatie"></p>
 			<p>TIP: Versleep de kaart om te filteren</p>
-			<div id="calendar" class="calendar">
-				<table>
-					<thead>
-						<tr>
-							<th><a href="#" id="prev_month">&laquo;</a></th>
-							<th id="current_month" colspan="5"></th>
-							<th><a href="#" id="next_month">&raquo;</a></th>
-						</tr>
-						<tr>
-							<th>Ma</th>
-							<th>Di</th>
-							<th>Wo</th>
-							<th>Do</th>
-							<th>Vr</th>
-							<th>Za</th>
-							<th>Zo</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
 			<div id="filters">
+				<div id="calendar" class="calendar">
+					<table>
+						<thead>
+							<tr>
+								<th><a href="#" id="prev_month">&laquo;</a></th>
+								<th id="current_month" colspan="5"></th>
+								<th><a href="#" id="next_month">&raquo;</a></th>
+							</tr>
+							<tr>
+								<th>Ma</th>
+								<th>Di</th>
+								<th>Wo</th>
+								<th>Do</th>
+								<th>Vr</th>
+								<th>Za</th>
+								<th>Zo</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<p>Van <input type="date" id="startdate"> tot <input type="date" id="enddate"></p>
+				</div>
 				<p>
 					<label for="amount">Maximumprijs:</label> €<span class="amount"></span>
 					<input type="hidden" class="amount" id="maxprice">
@@ -238,8 +239,10 @@
 					data: filters,
 					dataType: "JSON",
 					success: function (data) {
+						console.log(data);
 						updateMarkers(data);
 						displayDinners(data);
+						updateCalendar(currentMonth);
 					}
 				});
 			})
@@ -249,6 +252,8 @@
 			var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 			var firstOfMonth, lastOfMonth;
 			var currentMonth = new Date(today);
+			var startdate = $('#startdate');
+			var enddate = $('#enddate');
 			updateCalendar(currentMonth);
 
 			function updateCalendarEvents(){
@@ -310,6 +315,35 @@
 				$('#calendar tbody').append(table);
 				updateCalendarEvents();
 			}
+
+
+			Date.prototype.toDateInputValue = (function() {
+				var local = new Date(this);
+				local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+				return local.toJSON().slice(0,10);
+			});
+
+			var dateClickedCounter = 0;
+
+			$('#calendar tbody').on('click', 'td', function(){
+				var clickedDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), $(this).text());
+				if (dateClickedCounter == 0) {
+					startdate.val(clickedDate.toDateInputValue());
+					enddate.val(clickedDate.toDateInputValue()).change();
+					dateClickedCounter++;
+				}
+				else{
+					if (clickedDate >= new Date(startdate.val()) ) {
+						enddate.val(clickedDate.toDateInputValue()).change();
+					}
+					else{
+						enddate.val(startdate.val());
+						startdate.val(clickedDate.toDateInputValue()).change();
+					}
+					dateClickedCounter = 0;
+				}
+				return false;
+			})
 
 			$('#prev_month').click(function(){
 				currentMonth.setMonth(currentMonth.getMonth()-1);

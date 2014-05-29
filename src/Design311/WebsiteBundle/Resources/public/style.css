@@ -1555,7 +1555,10 @@ table.dinners {
   line-height: 1; }
 
 .calendar table {
-  width: 100%; }
+  width: 100%;
+  border: 1px solid #ddd; }
+.calendar thead tr {
+  border-bottom: 1px solid #ddd; }
 .calendar td, .calendar th {
   padding: 10px;
   width: 14.28%;
@@ -1564,6 +1567,11 @@ table.dinners {
   color: #ff5c23; }
 .calendar td.today {
   font-weight: bold; }
+.calendar a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-decoration: none; }
 
 .select2-container {
   width: 100%; }

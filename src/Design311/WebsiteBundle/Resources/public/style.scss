@@ -758,6 +758,10 @@ table.dinners{
 .calendar{
 	table{
 		width:100%;
+		border:1px solid #ddd;
+	}
+	thead tr{
+		border-bottom:1px solid #ddd;
 	}
 	td, th{
 		padding:10px;
@@ -769,6 +773,12 @@ table.dinners{
 	}
 	td.today{
 		font-weight:bold;
+	}
+	a{
+		display:block;
+		height:100%;
+		width:100%;
+		text-decoration:none;
 	}
 }
 
