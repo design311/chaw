@@ -673,6 +673,13 @@ table.dinners{
 	th{
 		text-align:left;
 		background:#eee;
+		cursor:pointer;
+		i{
+			margin-right:5px;
+			&.sort-asc, &.sort-desc{
+				margin-bottom:2px;
+			}
+		}
 	}
 	tr{
 		border:1px solid #eee;

@@ -8,6 +8,10 @@
   width: 27px;
   height: 27px; }
 
+.small {
+  width: 7px;
+  height: 6px; }
+
 .heart {
   background-position: 0 0; }
   .heart.orange {
@@ -61,3 +65,13 @@
 
 .twitter {
   background-position: -81px -54px; }
+
+.sort {
+  height: 13px;
+  background-position: -108px 0; }
+
+.sort-desc {
+  background-position: -108px -7px; }
+
+.sort-asc {
+  background-position: -108px 0; }

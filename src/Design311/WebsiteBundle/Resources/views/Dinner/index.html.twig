@@ -61,11 +61,11 @@
 			<table id="dinners" class="dinners">
 				<thead>
 					<tr>
-						<th data-property="date">Datum</th>
-						<th data-property="title">Titel</th>
-						<th data-property="price">Prijs</th>
-						<th data-property="city">Plaats</th>
-						<th data-property="distance">Afstand</th>
+						<th data-property="date"><i class="sprite small sort-asc"></i>Datum</th>
+						<th data-property="title"><i class="sprite small sort"></i>Titel</th>
+						<th data-property="price"><i class="sprite small sort"></i>Prijs</th>
+						<th data-property="city"><i class="sprite small sort"></i>Plaats</th>
+						<th data-property="distance"><i class="sprite small sort"></i>Afstand</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -191,14 +191,17 @@
 					dinnersTable.show();
 					nonefound.hide();
 
+					$.each(visibleDinners, function(i, dinner){
+						if (typeof currentLocation != 'undefined') {
+							dinner.distance = getDistance(currentLocation.lat(), currentLocation.lng(), dinner.lat, dinner.lng);
+						}
+					})
+
 					visibleDinners = sortDinners(visibleDinners);
 
 					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}';
 					$.each(visibleDinners, function(i, dinner){
 
-						if (typeof dinner.distance == 'undefined' && typeof currentLocation != 'undefined') {
-							dinner.distance = getDistance(currentLocation.lat(), currentLocation.lng(), dinner.lat, dinner.lng);
-						}
 
 						var dinnerDate = new Date(dinner.date);
 						var d = dinnerDate.getDate();
@@ -212,8 +215,8 @@
 							<tr> \
 								<td>'+d+'-'+m+'-'+y+'</td> \
 								<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
-								<td>'+dinner.city+'</td> \
 								<td>€ '+dinner.price+'</td> \
+								<td>'+dinner.city+'</td> \
 								<td>'+ distance +' km</td> \
 							</tr>');
 					})
@@ -483,6 +486,13 @@
 					reverseSort = false;
 				}
 				currentSort = $(this).data('property');
+				$(dinnersTable).find('th i').removeClass('sort-asc sort-desc').addClass('sort');
+				if (reverseSort) {
+					$(this).children('i').removeClass('sort').addClass('sort-desc');
+				}
+				else{
+					$(this).children('i').removeClass('sort').addClass('sort-asc');
+				}
 				updateDinners();
 			})
 
