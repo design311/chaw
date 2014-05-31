@@ -21,14 +21,18 @@ class DinnerController extends BaseController
         if (count($dinners) == 0) {
             return '{}';
         }
+
+        $counter = 0;
         foreach ($dinners as $dinner) {
-            $dinnersSimple[$dinner->getId()]['date'] = $dinner->getDate();
-            $dinnersSimple[$dinner->getId()]['title'] = $dinner->getTitle();
-            $dinnersSimple[$dinner->getId()]['permalink'] = $dinner->getPermalink();
-            $dinnersSimple[$dinner->getId()]['city'] = $dinner->getAddress()->getCity();
-            $dinnersSimple[$dinner->getId()]['price'] = $dinner->getPrice();
-            $dinnersSimple[$dinner->getId()]['lat'] = $dinner->getAddress()->getLat();
-            $dinnersSimple[$dinner->getId()]['lng'] = $dinner->getAddress()->getLng();
+            $dinnersSimple[$counter]['id'] = $dinner->getId();
+            $dinnersSimple[$counter]['date'] = $dinner->getDate();
+            $dinnersSimple[$counter]['title'] = $dinner->getTitle();
+            $dinnersSimple[$counter]['permalink'] = $dinner->getPermalink();
+            $dinnersSimple[$counter]['city'] = $dinner->getAddress()->getCity();
+            $dinnersSimple[$counter]['price'] = $dinner->getPrice();
+            $dinnersSimple[$counter]['lat'] = $dinner->getAddress()->getLat();
+            $dinnersSimple[$counter]['lng'] = $dinner->getAddress()->getLng();
+            $counter++;
         }
 
         $serializer = $this->container->get('serializer');

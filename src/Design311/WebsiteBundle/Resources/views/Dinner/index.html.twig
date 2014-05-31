@@ -61,10 +61,10 @@
 			<table id="dinners" class="dinners">
 				<thead>
 					<tr>
-						<th>Datum</th>
-						<th>Titel</th>
-						<th>Plaats</th>
-						<th>Prijs</th>
+						<th data-property="date">Datum</th>
+						<th data-property="title">Titel</th>
+						<th data-property="city">Plaats</th>
+						<th data-property="price">Prijs</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -87,13 +87,14 @@
 			var dinnersTable = $('#dinners').hide();
 			var nonefound = $('#nonefound').hide();
 			var tbody = $('#dinners tbody');
-			var dinners = {{dinners|raw}};
-			var filteredDinners = dinners;
+			var dinners = $.parseJSON('{{dinners|raw}}');
 			var visibleDinners = [];
 			var eventDates = [];
 			var months = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 			var startdate = $('#startdate');
 			var enddate = $('#enddate');
+			var currentSort = 'date';
+			var reverseSort = false;
 
 			var map;
 			var markers = [];
@@ -153,7 +154,7 @@
 						map: map,
 						position: coords,
 						icon: "{{ asset('bundles/design311website/img/marker.png')}}",
-						dinnerId: i
+						dinnerId: item.id
 					});
 					markers.push(marker);
 					latlngbounds.extend(coords);
@@ -172,10 +173,17 @@
 				eventDates = [];
 				for (var i=0; i<markers.length; i++){
 					if( bounds.contains(markers[i].getPosition()) ){
-						visibleDinners.push(filteredDinners[markers[i].dinnerId]);
-						eventDates.push(filteredDinners[markers[i].dinnerId].date);
+						$.each(dinners, function(index, dinner) {
+							if (dinner.id == markers[i].dinnerId) {
+								visibleDinners.push(dinner);
+								eventDates.push(dinner.date);
+								return false; //exit $.each loop
+							}
+						});
 					}
 				}
+
+				visibleDinners = sortDinners(visibleDinners);
 
 				if (visibleDinners.length !== 0) {
 					dinnersTable.show();
@@ -434,6 +442,46 @@
 				$('#startdatetext').text(start.getDate()+'-'+ (start.getMonth()+1) +'-'+start.getFullYear());
 				$('#enddatetext').text(end.getDate()+'-'+ (end.getMonth()+1) +'-'+end.getFullYear());
 			})
+
+			$(dinnersTable).find('th').click(function(){
+				if (currentSort == $(this).data('property')) {
+					reverseSort = !reverseSort;
+				}
+				else{
+					reverseSort = false;
+				}
+				currentSort = $(this).data('property');
+				updateDinners();
+			})
+
+			function sortDinners(dinners){
+				var sorted = [];
+				$.each(dinners, function(index, dinner) {
+					sorted[index] = dinner;
+				});
+
+				sorted.sort(function(a, b){
+					if (currentSort == 'date') {
+						return new Date(a.date) - new Date(b.date);
+					}
+					else if (currentSort == 'price') {
+						return parseFloat(a.price) - parseFloat(b.price)
+					}
+					else{
+						return a[currentSort].localeCompare(b[currentSort]);
+					}
+				})
+
+				if (reverseSort) {
+					sorted.reverse();
+				}
+
+				$.each(sorted, function(index, val) {
+					 console.log(val[currentSort]);
+				});
+
+				return sorted;
+			}
 		});
 	</script>
 {% endblock %}
