@@ -210,14 +210,14 @@
 						var y = dinnerDate.getFullYear();
 
 						var detailLink = detail.replace('permalink_holder', dinner.permalink);
-						var distance = (dinner.distance) ? Math.round(dinner.distance*100)/100 : '<span title="Geef eerst je locatie op">-</span>';
+						var distance = (dinner.distance) ? Math.round(dinner.distance*100)/100 + ' km' : '<i title="Geef eerst je locatie op" class="sprite question tooltip"></i>';
 						tbody.append(' \
 							<tr> \
 								<td>'+d+'-'+m+'-'+y+'</td> \
 								<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
 								<td>€ '+dinner.price+'</td> \
 								<td>'+dinner.city+'</td> \
-								<td>'+ distance +' km</td> \
+								<td>'+ distance +'	</td> \
 							</tr>');
 					})
 				}

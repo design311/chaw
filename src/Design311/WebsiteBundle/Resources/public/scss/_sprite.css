@@ -54,6 +54,13 @@
   .bestek.white {
     background-position: -90px -36px; }
 
+.question {
+  background-position: -108px 0; }
+  .question.orange {
+    background-position: -108px -18px; }
+  .question.white {
+    background-position: -108px -36px; }
+
 .website {
   background-position: 0 -54px; }
 
@@ -68,10 +75,10 @@
 
 .sort {
   height: 13px;
-  background-position: -108px 0; }
+  background-position: -126px 0; }
 
 .sort-desc {
-  background-position: -108px -7px; }
+  background-position: -126px -7px; }
 
 .sort-asc {
-  background-position: -108px 0; }
+  background-position: -126px 0; }

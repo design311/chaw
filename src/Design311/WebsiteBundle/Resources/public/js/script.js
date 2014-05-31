@@ -74,6 +74,8 @@ $(function(){
 	    $( ".amount" ).text( $( "#slider-range" ).slider( "value" ) );
 	}
 
+	$('.tooltip').tipsy({gravity: 's', live: true});
+
 })
 
 //images loaded
