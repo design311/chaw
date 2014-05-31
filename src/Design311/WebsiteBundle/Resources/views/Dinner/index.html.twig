@@ -63,8 +63,9 @@
 					<tr>
 						<th data-property="date">Datum</th>
 						<th data-property="title">Titel</th>
-						<th data-property="city">Plaats</th>
 						<th data-property="price">Prijs</th>
+						<th data-property="city">Plaats</th>
+						<th data-property="distance">Afstand</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -93,8 +94,11 @@
 			var months = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 			var startdate = $('#startdate');
 			var enddate = $('#enddate');
+
 			var currentSort = 'date';
 			var reverseSort = false;
+
+			var currentLocation;
 
 			var map;
 			var markers = [];
@@ -117,8 +121,8 @@
 
 			if(navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
-					var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-					centerLocation(currentPosition);
+					currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+					centerLocation(currentLocation);
 				});
 			}
 
@@ -183,25 +187,34 @@
 					}
 				}
 
-				visibleDinners = sortDinners(visibleDinners);
-
 				if (visibleDinners.length !== 0) {
 					dinnersTable.show();
 					nonefound.hide();
+
+					visibleDinners = sortDinners(visibleDinners);
+
 					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}';
 					$.each(visibleDinners, function(i, dinner){
+
+						if (typeof dinner.distance == 'undefined' && typeof currentLocation != 'undefined') {
+							dinner.distance = getDistance(currentLocation.lat(), currentLocation.lng(), dinner.lat, dinner.lng);
+						}
+
 						var dinnerDate = new Date(dinner.date);
 						var d = dinnerDate.getDate();
 						var m =  dinnerDate.getMonth();
 						m += 1;  // JavaScript months are 0-11
 						var y = dinnerDate.getFullYear();
-						detailLink = detail.replace('permalink_holder', dinner.permalink);
+
+						var detailLink = detail.replace('permalink_holder', dinner.permalink);
+						var distance = (dinner.distance) ? Math.round(dinner.distance*100)/100 : '<span title="Geef eerst je locatie op">-</span>';
 						tbody.append(' \
 							<tr> \
 								<td>'+d+'-'+m+'-'+y+'</td> \
 								<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
 								<td>'+dinner.city+'</td> \
-								<td>€'+dinner.price+'</td> \
+								<td>€ '+dinner.price+'</td> \
+								<td>'+ distance +' km</td> \
 							</tr>');
 					})
 				}
@@ -212,6 +225,25 @@
 				$('#loading').hide();
 			}
 
+			Number.prototype.toRad = function() {
+				return this * Math.PI / 180;
+			}
+
+			function getDistance(lat1, lng1, lat2, lng2){
+				var R = 6371; // km
+				var x1 = lat2-lat1;
+				var dLat = x1.toRad();  
+				var x2 = lng2-lng1;
+				var dlng = x2.toRad();  
+				var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+						Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
+						Math.sin(dlng/2) * Math.sin(dlng/2);  
+				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+				var d = R * c;
+
+				return d;
+			}
+
 			$('#locatie').blur(function(){
 				if ($(this).val()) {};
 
@@ -219,8 +251,8 @@
 				geocoder.geocode( { 'address': address}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 
-						var latLng = results[0].geometry.location;
-						centerLocation(latLng);
+						currentLocation = results[0].geometry.location;
+						centerLocation(currentLocation);
 					}
 					else {
 						//TODO proper error message
@@ -464,8 +496,8 @@
 					if (currentSort == 'date') {
 						return new Date(a.date) - new Date(b.date);
 					}
-					else if (currentSort == 'price') {
-						return parseFloat(a.price) - parseFloat(b.price)
+					else if (currentSort == 'price' || currentSort == 'distance') {
+						return parseFloat(a[currentSort]) - parseFloat(b[currentSort])
 					}
 					else{
 						return a[currentSort].localeCompare(b[currentSort]);
@@ -475,10 +507,6 @@
 				if (reverseSort) {
 					sorted.reverse();
 				}
-
-				$.each(sorted, function(index, val) {
-					 console.log(val[currentSort]);
-				});
 
 				return sorted;
 			}
