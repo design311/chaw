@@ -13,10 +13,5 @@
 				{% endif %}
 			</ul>
 		</div>
-		{% if detail is defined and recipe.user == app.user %}
-		<div class="editrecipe">
-			<a href="{{ path('design311website_recepten_edit', {'recipeId': recipe.id }) }}" class="button button-orange">Recept bewerken</a>
-		</div>
-		{% endif %}
 	</div>
 </div>

@@ -61,6 +61,13 @@
   .question.white {
     background-position: -108px -36px; }
 
+.edit {
+  background-position: -126px 0; }
+  .edit.orange {
+    background-position: -126px -18px; }
+  .edit.white {
+    background-position: -126px -36px; }
+
 .website {
   background-position: 0 -54px; }
 

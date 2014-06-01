@@ -1,5 +1,8 @@
 <div class="one-third sidebar">
 	<p><a href="{{ path('design311website_recepten_add') }}" class="button button-orange addrecipe"><i class="sprite plus white"></i>Recept toevoegen</a></p>
+	{% if detail is defined and recipe.user == app.user %}
+		<p><a href="{{ path('design311website_recepten_edit', {'recipeId': recipe.id }) }}" class="button button-orange"><i class="sprite edit white"></i>Recept bewerken</a></p>
+	{% endif %}
 	<p><a href="{{ path('design311website_recepten_shoppinglist') }}" class="button shoppinglist"><i class="sprite cart white"></i>Winkellijstje bekijken (<span class="shoppinglistcount">{% if app.user %}{{app.user.shoppinglist|length}}{% else %}0{% endif %}</span>)</a></p>
 	{% if detail is defined and detail == true %}
 	<p><a href="#" class="like ajax-button button" data-ajax="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" title="Recept lekker vinden"><i class="sprite heart{% if app.user in recipe.likedBy %} orange{% endif %}"></i>Vind ik lekker</a></p>
