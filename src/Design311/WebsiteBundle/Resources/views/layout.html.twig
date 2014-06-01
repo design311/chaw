@@ -8,23 +8,21 @@
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css') }}">
 </head>
 <body class="{% block bodyclass %}{% endblock %} {{ app.user ? 'loggedin' : 'loggedout'}}">
-	<div class="flashmessages">
 	{% for flashMessage in app.session.flashbag.get('success') %}
 	    <div class="flash flash-success">
-	        {{ flashMessage }}
+	        {{ flashMessage }} <a href="#" class="flash-close">(x)</a>
 	    </div>
 	{% endfor %}
 	{% for flashMessage in app.session.flashbag.get('error') %}
 	    <div class="flash flash-error">
-	        {{ flashMessage }}
+	        {{ flashMessage }} <a href="#" class="flash-close">(x)</a>
 	    </div>
 	{% endfor %}
 	{% for flashMessage in app.session.flashbag.get('notice') %}
 	    <div class="flash flash-notice">
-	        {{ flashMessage }}
+	        {{ flashMessage }} <a href="#" class="flash-close">(x)</a>
 	    </div>
 	{% endfor %}
-	</div>
 	{% if not (app.request.attributes.get('_route') == 'design311website_homepage' and not app.user) %}
 	<div class="header">
 		<div class="topbar">

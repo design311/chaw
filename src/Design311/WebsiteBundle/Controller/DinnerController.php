@@ -179,7 +179,7 @@ class DinnerController extends BaseController
 
                     $invite = new DinnerInvite();
                     $invite->setDinner($dinner);
-                    $invite->setEmail($email);
+                    $invite->setEmail(trim($email));
 
                     $em->persist($invite);
                     $em->flush();

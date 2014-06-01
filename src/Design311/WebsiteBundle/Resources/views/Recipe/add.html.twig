@@ -2,17 +2,29 @@
 
 {% block content %}
 	<div class="container">
-		{% for emailField in form.photos %}
-	        <li>
-	            {{ form_errors(emailField) }}
-	            {{ form_widget(emailField) }}
-	            {{ladybug_dump(emailField.file)}}
-	            {% if emailField is not null %}
-					<img src="" alt="">
+	{{ form_start(form) }}
+		<script>var photofields = {};</script>
+		<div id="recipe_photos" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
+		{% for photofield in form.photos %}
+	        <div>
+	        	<script>
+	        		photofields['{{photofield.vars.id}}'] = '{{ form_row(photofield.file) }}';
+	        	</script>
+	            {{ form_errors(photofield) }}
+	            {{ form_row(photofield.title) }}
+	            {% if photofield.file.vars.image_url is not null %}
+	            	<div class="image">
+						<img src="{{asset(photofield.file.vars.image_url) | apply_filter('recipe_thumb')}}" alt="">
+						<a href="#" class="edit-file" data-fileid="{{photofield.vars.id}}">Edit</a>
+					</div>
+	            	<div class="photofield-file" data-fileid="{{photofield.vars.id}}" style="display:none;"></div>
+				{% else %}
+					<div class="photofield-file" data-fileid="{{photofield.vars.id}}"></div>
 	            {% endif %}
-	        </li>
+	        </div>
 	    {% endfor %}
-		{{ form(form) }}
+	    </div>
+	{{ form_end(form) }}
 	</div>
 {% endblock %}
 
@@ -26,10 +38,12 @@
 		var addIngredientLink = $('<p><a href="#" class="add_photo_link">Add an ingredient</a></p>');
 		var deleteLink = '<a href="#" class="deleterow">delete</a>';
 
-		jQuery(document).ready(function() {
+		$(function() {
 		    // Get the ul that holds the collection of photos
-		    photoHolder = $('div#recipe_photos');
-		    ingredientHolder = $('div#recipe_recipeingredients');
+		    photoHolder = $('#recipe_photos');
+		    ingredientHolder = $('#recipe_recipeingredients');
+
+		    console.log(photoHolder);
 
 		    // add the "add a photo" anchor and li to the photos ul
 		    photoHolder.append(addPhotoLink);
@@ -79,11 +93,28 @@
 		    	e.preventDefault();
 		    	$(this).parent().remove();
 		    });
+
+		    var cancel = '<a href="#" class="cancel-edit">Annuleren</a>';
+		    $('.edit-file').click(function(){
+		    	var id = $(this).data('fileid');
+		    	var parent = $(this).parent();
+		    	parent.hide();
+		    	parent.siblings('.photofield-file').append(photofields[id] + cancel).show();
+		    })
+
+		    $('#recipe_photos').on('click', '.cancel-edit', function(){
+		    	var id = $(this).data('fileid');
+		    	var parent = $(this).parent();
+		    	parent.empty().hide();
+		    	parent.siblings('.image').show();
+		    })
+
 		});
 
 		function addInput(holder, link, allowDelete) {
 		    // Get the data-prototype explained earlier
 		    var prototype = holder.data('prototype');
+		    console.log(holder);
 
 		    // get the new index
 		    var index = holder.data('index');

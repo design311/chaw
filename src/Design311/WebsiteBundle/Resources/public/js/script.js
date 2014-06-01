@@ -76,6 +76,16 @@ $(function(){
 
 	$('.tooltip').tipsy({gravity: 's', live: true});
 
+	$('.flash').addClass('visible');
+	var removeFlash = setTimeout(function(){
+		$('.flash').removeClass('visible');
+	}, 5000)
+	$('.flash-close').click(function(){
+		$('.flash').removeClass('visible');
+		clearTimeout(removeFlash);
+		return false;
+	})
+
 })
 
 //images loaded

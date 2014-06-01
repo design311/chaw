@@ -84,3 +84,9 @@ avalanche_imagine:
         avatar_355:
             type:    thumbnail
             options: { size: [355, 355], mode: outbound, cache_type: public, cache_expires: 2 weeks }
+
+services:
+    design311_website_bundle.photo_type_extension:
+        class: Design311\WebsiteBundle\Form\Extension\PhotoTypeExtension
+        tags:
+            - { name: form.type_extension, alias: file }

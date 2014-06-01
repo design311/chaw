@@ -143,6 +143,9 @@ class AjaxController extends BaseController
             $this->get('session')->getFlashBag()->add('error','Uitnodiging niet gevonden');
             return $this->redirect($this->generateUrl('design311website_dinners'));
         }
+
+        var_dump($this->getUser()->getEmail());
+        var_dump($invite->getEmail());
         
         if ($this->getUser()->getEmail() == $invite->getEmail()) {
 

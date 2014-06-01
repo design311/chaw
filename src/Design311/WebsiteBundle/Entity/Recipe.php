@@ -69,7 +69,7 @@ class Recipe
     private $diet;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Photo")
+     * @ORM\ManyToMany(targetEntity="Photo", cascade={"persist"})
      * @ORM\JoinTable(name="recipe_photos",
      *      joinColumns={@ORM\JoinColumn(name="recipe_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="photo_id", referencedColumnName="id", unique=true)}

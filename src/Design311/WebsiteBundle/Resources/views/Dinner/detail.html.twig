@@ -27,6 +27,9 @@
 			{% else %}
 			    <p>Momenteel zijn er nog geen deelnemers.</p>
 			{% endif %}
+			{% if app.user == dinner.user %}
+				<p><a href="{{ path('design311website_dinners_invite', {'permalink': dinner.permalink}) }}">Deelnemers uitnodigen</a></p>
+			{% endif %}
 		</div>
 		{% if app.user == dinner.user %}
 		<div class="widget">
@@ -60,8 +63,6 @@
 		</div>
 	</div>
 </div>
-
-<a href="{{ path('design311website_dinners_invite', {'permalink': dinner.permalink}) }}">Uitnodigen</a>
 
 {% endblock %}
 
