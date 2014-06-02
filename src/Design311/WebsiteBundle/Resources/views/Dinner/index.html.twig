@@ -167,6 +167,11 @@
 						icon: "{{ asset('bundles/design311website/img/marker.png')}}",
 						dinnerId: item.id
 					});
+
+					google.maps.event.addListener(marker, 'click', function(){
+						markerClicked(marker.dinnerId)
+					});
+
 					markers.push(marker);
 					latlngbounds.extend(coords);
 				})
@@ -174,6 +179,23 @@
 				markerCluster = new MarkerClusterer(map, markers, {
 					gridSize: 30
 				});
+			}
+
+			function markerClicked(id){
+				var dinner = '#dinner-'+id;
+				$('html,body').animate({
+					scrollTop: $(dinner).offset().top
+				}, 500);
+				$(dinner).addClass('focus');
+
+				setTimeout(function(){
+					$(dinner).css('backgroundColor','#fff');
+				}, 1500)
+
+				setTimeout(function(){
+					$(dinner).removeAttr('style');
+					$(dinner).removeClass('focus');
+				},2500);
 			}
 
 			function updateDinners(){
@@ -219,7 +241,7 @@
 						var detailLink = detail.replace('permalink_holder', dinner.permalink);
 						var distance = (dinner.distance) ? Math.round(dinner.distance*100)/100 + ' km' : '<i title="Geef eerst je locatie op" class="sprite question tooltip"></i>';
 						tbody.append(' \
-							<tr> \
+							<tr id="dinner-'+dinner.id+'"> \
 								<td>'+d+'-'+m+'-'+y+'</td> \
 								<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
 								<td>€ '+dinner.price+'</td> \

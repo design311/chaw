@@ -708,6 +708,14 @@ table.dinners{
 	}
 	tr{
 		border:1px solid #eee;
+		&.focus{
+			background-color:rgba($orange,0.2);
+			-webkit-transition:background-color 1s ease-out;
+			-moz-transition:background-color 1s ease-out;
+			-ms-transition:background-color 1s ease-out;
+			-o-transition:background-color 1s ease-out;
+			transition:background-color 1s ease-out;
+		}
 	}
 	td,th{
 		padding:5px;
