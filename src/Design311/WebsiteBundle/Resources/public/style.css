@@ -1074,9 +1074,6 @@ input, textarea, select {
   input[type="file"], textarea[type="file"], select[type="file"] {
     padding: 5px 0; }
 
-select {
-  padding: 7.5px 5px; }
-
 label {
   font-weight: bold;
   display: block; }
@@ -1684,6 +1681,44 @@ table.dinners {
   padding-right: 2%; }
 .dinnerform #dinner_address > div {
   margin-bottom: 1em; }
+
+.recipeform .onehalf > div {
+  margin-bottom: 1em; }
+.recipeform .amount, .recipeform .ingredient {
+  float: left;
+  margin-bottom: 1em; }
+  .recipeform .amount.label, .recipeform .ingredient.label {
+    margin-bottom: 0; }
+.recipeform .amount {
+  width: 30%; }
+.recipeform .ingredient {
+  width: 70%;
+  padding-left: 2%; }
+.recipeform #recipe_recipeingredients > div > div {
+  width: 97%;
+  clear: both; }
+.recipeform #recipe_recipeingredients .deleterow {
+  line-height: 33px;
+  text-decoration: none;
+  padding-left: 5px; }
+.recipeform .cooking, .recipeform .ready, .recipeform .aantal {
+  float: left;
+  width: 32%;
+  margin-left: 2%;
+  margin-bottom: 0 !important; }
+.recipeform .cooking {
+  margin-left: 0; }
+.recipeform .category, .recipeform .diet {
+  float: left;
+  width: 50%;
+  padding-left: 1%; }
+.recipeform .category {
+  padding-right: 1%;
+  padding-left: 0; }
+.recipeform .recipe-recipe {
+  margin-bottom: 0 !important; }
+.recipeform textarea {
+  height: 300px; }
 
 #dinner_photos > div, #recipe_photos > div {
   margin-top: 1em;

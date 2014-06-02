@@ -235,8 +235,10 @@ class RecipeController extends BaseController
         }
 
         return $this->render(
-            'Design311WebsiteBundle:Recipe:add.html.twig',
-            array('form' => $form->createView())
+            'Design311WebsiteBundle:Recipe:add.html.twig',array(
+                'form' => $form->createView(),
+                'recipe' => $recipe
+            )
         );
     }
 

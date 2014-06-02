@@ -74,10 +74,6 @@ input, textarea, select{
 	}
 }
 
-select{
-	padding:7.5px 5px;
-}
-
 label{
 	font-weight:bold;
 	display:block;
@@ -887,7 +883,67 @@ table.dinners{
 	#dinner_address>div{
 		margin-bottom:1em;
 	}
+}
 
+.recipeform{
+	.onehalf>div{
+		margin-bottom:1em;
+	}
+	.amount, .ingredient{
+		float:left;
+		margin-bottom:1em;
+		&.label{
+			margin-bottom:0;
+		}
+	}
+
+	.amount{
+		width:30%;
+	}
+	.ingredient{
+		width:70%;
+		padding-left:2%;
+	}
+
+	#recipe_recipeingredients{
+		&>div>div{
+			width:97%;
+			clear:both;
+		}
+		.deleterow{
+			line-height:33px;
+			text-decoration:none;
+			padding-left:5px;
+		}
+	}
+
+	.cooking, .ready, .aantal{
+		float:left;
+		width:32%;
+		margin-left:2%;
+		margin-bottom:0 $i;
+	}
+	.cooking{
+		margin-left:0;
+	}
+
+	.category, .diet{
+		float:left;
+		width:50%;
+		padding-left:1%;
+	}
+	.category{
+		padding-right:1%;
+		padding-left:0;
+	}
+
+	.recipe-recipe{
+		margin-bottom:0 $i;
+	}
+
+	textarea{
+		height:300px;
+	}
 }
 
 #dinner_photos, #recipe_photos{

@@ -2,28 +2,87 @@
 
 {% block content %}
 	<div class="container">
-	{{ form_start(form) }}
-		<script>var photofields = {};</script>
-		<div id="recipe_photos" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
-		{% for photofield in form.photos %}
-	        <div>
-	        	<script>
-	        		photofields['{{photofield.vars.id}}'] = '{{ form_row(photofield.file) }}';
-	        	</script>
-	            {{ form_errors(photofield) }}
-	            {{ form_row(photofield.title) }}
-	            {% if photofield.file.vars.image_url is not null %}
-	            	<div class="image">
-						<img src="{{asset(photofield.file.vars.image_url) | apply_filter('recipe_thumb')}}" alt="">
-						<a href="#" class="edit-file" data-fileid="{{photofield.vars.id}}">Edit</a>
-					</div>
-	            	<div class="photofield-file" data-fileid="{{photofield.vars.id}}" style="display:none;"></div>
-				{% else %}
-					<div class="photofield-file" data-fileid="{{photofield.vars.id}}"></div>
-	            {% endif %}
-	        </div>
-	    {% endfor %}
-	    </div>
+	{{ form_start(form, {'attr':{'class': 'recipeform'}}) }}
+		<div class="onehalf">
+			{{form_row(form.title)}}
+			<div>
+			{{form_label(form.recipeingredients)}}
+			<p class="inputinfo">Vul de ingredi&euml;n in die je nodig hebt voor dit recept. Optioneel vul je ook de hoeveelheid in van elk ingredient, bijvoorbeeld: 10cl, 100g, 2kg,...</p>
+			<label for="recipe_recipeingredients_0_amount" class="label amount">Hoeveelheid</label>
+			<label for="recipe_recipeingredients_0_ingredient_name" class="label ingredient">Ingredient</label>
+			{{form_errors(form.recipeingredients)}}
+			{% if form.recipeingredients|length == 0 %}
+				{{form_widget(form.recipeingredients)}}
+			{% else %}
+				<div id="recipe_recipeingredients" data-prototype="{{ form_widget(form.recipeingredients.vars.prototype)|e }}">
+				{% for ingredient in form.recipeingredients %}
+			        <div class="recipeingredient-row">
+			        	<div>
+			        		<div class="amount">
+			        			{{ form_row(ingredient.amount) }}
+			        		</div>
+			        		<div class="ingredient">
+			        			{{ form_row(ingredient.ingredient) }}
+			        		</div>
+			        	</div>			            
+			        </div>
+			    {% endfor %}
+			    </div>
+			{% endif %}
+			</div>
+			<div class="cooking">
+				{{form_row(form.cookingTime)}}
+			</div>
+			<div class="ready">
+				{{form_row(form.readyTime)}}
+			</div>
+			<div class="aantal">
+				{{form_row(form.aantalPersonen)}}
+			</div>
+			<p class="inputinfo clear">De bereidingstijd is de tijd dat u aan het koken bent, de totale tijd is de tijd waarna het gerecht klaar is, inclusief afkoelen en opwarmen in de oven.</p>
+			<div class="category">
+				{{form_row(form.category)}}
+			</div>
+			<div class="diet">
+				{{form_row(form.diet)}}
+			</div>
+			{% if recipe is defined %}
+				{{ form_row(form.submit, {'label':'Wijzigingen opslaan'}) }}
+			{% else %}
+				{{form_row(form.submit)}}
+			{% endif %}
+		</div>
+		<div class="onehalf last">
+			<div class="recipe-recipe">
+				{{form_row(form.recipe)}}
+			</div>
+			<p class="inputinfo">Dit veld ondersteunt <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a></p>
+			{% if form.photos|length == 0 %}
+				{{form_label(form.photos)}}
+				<p class="inputinfo">Laat met minstens 1 foto zien wat mensen kunnen verwachten van je recept. Je kan steeds meerdere foto's toe te voegen om ook de bereidingswijze te laten zien.</p>
+				{{form_widget(form.photos)}}
+			{% else %}
+				<script>var photofields = {};</script>
+				{{form_label(form.photos)}}
+				<p class="inputinfo">Laat met minstens 1 foto zien wat mensen kunnen verwachten van je recept. Je kan steeds meerdere foto's toe te voegen om ook de bereidingswijze te laten zien.</p>
+				<div id="recipe_photos" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
+				{% for photofield in form.photos %}
+			        <div class="photo-row">
+			        	<script>
+			        		photofields['{{photofield.vars.id}}'] = '{{ form_row(photofield.file) }}';
+			        	</script>
+			            {{ form_errors(photofield) }}
+			            {{ form_row(photofield.title) }}
+			            {% if photofield.file.vars.image_url is not null %}
+			            	<div class="image">
+								<img src="{{asset(photofield.file.vars.image_url) | apply_filter('onehalf')}}" alt="">
+							</div>
+			            {% endif %}
+			        </div>
+			    {% endfor %}
+			    </div>
+			{% endif %}
+		</div>
 	{{ form_end(form) }}
 	</div>
 {% endblock %}
@@ -34,9 +93,10 @@
     	var ingredientHolder;
 
 		// setup an "add a photo" link
-		var addPhotoLink = $('<p><a href="#" class="add_photo_link">Add a photo</a></p>');
-		var addIngredientLink = $('<p><a href="#" class="add_photo_link">Add an ingredient</a></p>');
-		var deleteLink = '<a href="#" class="deleterow">delete</a>';
+		var addPhotoLink = $('<p><a href="#" class="add_photo_link button">Foto toevoegen</a></p>');
+		var addIngredientLink = $('<p><a href="#" class="add_photo_link button">Ingredient toevoegen</a></p>');
+		var deletePhoto = '<a href="#" class="deleterow">Foto verwijderen</a>';
+		var deleteLink = '<a href="#" class="deleterow">X</a>';
 
 		$(function() {
 		    // Get the ul that holds the collection of photos
@@ -122,14 +182,23 @@
 
 		    // Replace '__name__' in the prototype's HTML to
 		    // instead be a number based on how many items we have
-		    var newForm = prototype.replace(/__name__/g, index);
+		    var newForm = prototype.replace(/<label class="required">__name__label__<\/label>/g, '');
+		    newForm = newForm.replace(/<div id="recipe_photos___name__">/g, '<div id="recipe_photos___name__" class="photo-row">');
+		    newForm = newForm.replace(/<div><input type="text" id="recipe_recipeingredients___name___amount"/g, '<div class="amount"><input type="text" id="recipe_recipeingredients___name___amount"');
+		    newForm = newForm.replace(/<div><div id="recipe_recipeingredients___name___ingredient"/g, '<div class="ingredient"><div id="recipe_recipeingredients___name___ingredient"');
+		    newForm = newForm.replace(/__name__/g, index);
 
 		    // increase the index with one for the next item
 		    holder.data('index', index + 1);
 
 		    // Display the form in the page in an li, before the "Add a photo" link li
 		    if (allowDelete) {
-		    	var newFormContainer = $('<div></div>').append(newForm + deleteLink);
+		    	if (holder == photoHolder) {
+		    		var newFormContainer = $('<div></div>').append(newForm + deletePhoto);
+		    	}
+		    	else{
+		    		var newFormContainer = $('<div></div>').append(newForm + deleteLink);
+		    	}
 		    }
 		    else{
 		    	var newFormContainer = $('<div></div>').append(newForm);

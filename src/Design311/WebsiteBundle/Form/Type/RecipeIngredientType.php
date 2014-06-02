@@ -11,8 +11,8 @@ class RecipeIngredientType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('amount', 'text', array('required' => false));
-        $builder->add('ingredient', new IngredientType());
+        $builder->add('amount', 'text', array('required' => false, 'label' => false));
+        $builder->add('ingredient', new IngredientType(), array('label' => false));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

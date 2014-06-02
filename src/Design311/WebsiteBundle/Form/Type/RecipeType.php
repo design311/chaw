@@ -17,10 +17,11 @@ class RecipeType extends AbstractType
             'allow_add'    => true,
             'allow_delete' => true,
             'by_reference' => false,
+            'label' => 'Ingrediënten',
         ));
         $builder->add('recipe', 'textarea');
-        $builder->add('cookingTime', 'integer');
-        $builder->add('readyTime', 'integer');
+        $builder->add('cookingTime', 'integer', array('label' => 'Bereidingstijd'));
+        $builder->add('readyTime', 'integer', array('label' => 'Totale tijd'));
         $builder->add('aantalPersonen', 'integer');
         $builder->add('category', 'entity', array('class' => 'Design311WebsiteBundle:RecipeCategory'));
         $builder->add('diet', 'entity', array(
@@ -32,8 +33,9 @@ class RecipeType extends AbstractType
             'allow_add'    => true,
             'allow_delete' => true,
             'by_reference' => false,
+            'label' => 'Foto\'s'
         ));
-        $builder->add('Recept toevoegen', 'submit');
+        $builder->add('submit', 'submit', array('label' => 'Recept toevoegen'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
