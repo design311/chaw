@@ -1,21 +1,59 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
 {% block content %}
-<form action="{{ path('design311website_user_aantal_personen') }}" method="get">
-	<input type="text" name="aantal" value="{{app.user.aantalPersonen}}"><input type="submit">
-</form>
-    {% for recipe in shoppinglist %}
-    <p><strong>{{recipe.title}}</strong> aantal pers {{recipe.aantalPersonen}}</p>
-	<ul>
-        {% for recipeingredient in recipe.recipeingredients %}
-			<li>{{recipeingredient.amount}} {{recipeingredient.ingredient}}</li>
-		{% endfor %}
+<div class="container">
+	<ul class="tabs">
+		<li class="active"><a href="#" class="tab-ingredients">Ingredienten</a></li>
+		<li><a href="#" class="tab-recipes">Recepten</a></li>
 	</ul>
-    {% endfor %}
------------------
-<ul>
-	{% for ingredient, amount in ingredients %}
-		<li>{{amount}} {{ingredient}}</li>
-    {% endfor %}
-</ul>
+	<div id="ingredients">
+		<form action="{{ path('design311website_user_aantal_personen') }}" method="get">
+			<input type="text" name="aantal" value="{{app.user.aantalPersonen}}"><input type="submit">
+		</form>
+		<ul>
+			{% for ingredient, amount in ingredients %}
+				<li>{{amount}} {{ingredient}}</li>
+		    {% endfor %}
+		</ul>
+	</div>
+	<div id="recipes" style="display:none;">
+	    {% for recipe in shoppinglist %}
+	    	<h2>{{recipe.title}}</h2>
+	    	<ul class="recipeinfo">
+	    		<li>Categorie: {{recipe.category.name}}</li>
+	    		<li>Eetgewoonte: {{recipe.diet}}</li>
+	    		<li>Bereidingstijd: {{recipe.cookingTime}} minuten</li>
+	    		<li>Totale tijd: {{recipe.readyTime}} minuten</li>
+	    		<li></li>
+	    		<li></li>
+	    	</ul>
+			{{recipe.recipe|markdown}}
+			<div class="clear"></div>
+	    {% endfor %}
+	</div>
+</div>
+{% endblock %}
+
+{% block footer %}
+    <script>
+		$(function(){
+			var ingredients = $('#ingredients');
+			var recipes = $('#recipes');
+			var tabs = $('.tabs');
+
+			$('.tab-ingredients').click(function(){
+				tabs.children().removeClass('active');
+				$(this).parent().addClass('active');
+				recipes.hide();
+				ingredients.fadeIn(600);
+			})
+
+			$('.tab-recipes').click(function(){
+				tabs.children().removeClass('active');
+				$(this).parent().addClass('active');
+				ingredients.hide();
+				recipes.fadeIn(600);
+			})
+		})
+    </script>
 {% endblock %}

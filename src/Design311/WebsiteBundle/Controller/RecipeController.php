@@ -192,6 +192,11 @@ class RecipeController extends BaseController
     {
         $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
 
+        if ($this->getUser() != $recipe->getUser()) {
+            $this->get('session')->getFlashBag()->add('error','Dit recept mag je niet bewerken');
+            return $this->redirect($this->generateUrl('design311website_recepten_detail', array('category' => strtolower($recipe->getCategory()->getPlural()), 'permalink' => $recipe->getPermalink()) ));
+        }
+
         $originalPhotos = new ArrayCollection();
         foreach ($recipe->getPhotos() as $photo) {
             $originalPhotos->add($photo);
@@ -231,7 +236,7 @@ class RecipeController extends BaseController
             $em->persist($recipe);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('design311website_recepten_detail', array('category' => $recipe->getCategory(), 'permalink' => $recipe->getPermalink()) ));
+            return $this->redirect($this->generateUrl('design311website_recepten_detail', array('category' => strtolower($recipe->getCategory()->getPlural()), 'permalink' => $recipe->getPermalink()) ));
         }
 
         return $this->render(
@@ -244,7 +249,17 @@ class RecipeController extends BaseController
 
     public function shoppinglistAction()
     {
-        $shoppinglist = $this->getUser()->getShoppinglist();
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        $qb = $qb
+            ->from('Design311WebsiteBundle:Recipe', 'r')
+            ->select('r')
+            ->leftJoin('r.shoppinglistFrom','s')
+            ->where('s.id = :userId')
+            ->setParameter("userId", $this->getUser()->getId())
+            ->orderBy('r.category');
+
+        $shoppinglist = $qb->getQuery()->execute();
 
         $ingredients = [];
 
@@ -253,13 +268,17 @@ class RecipeController extends BaseController
 
             foreach ($recipeIngredients as $recipeIngredient) {
                 $ingredient = $recipeIngredient->getIngredient()->getName();
-                //$amount = $recipeIngredient->getAmount();
-                $amount = $this->smartDivide($recipeIngredient->getAmount(), $recipe->getAantalPersonen() / $this->getUser()->getAantalPersonen());
-                if (array_key_exists($ingredient, $ingredients)) {
-                    $ingredients[$ingredient] = $this->smartAdd(array($ingredients[$ingredient], $amount));
+                if ($recipeIngredient->getAmount() != null) {
+                    $amount = $this->smartDivide($recipeIngredient->getAmount(), $recipe->getAantalPersonen() / $this->getUser()->getAantalPersonen());
+                    if (array_key_exists($ingredient, $ingredients)) {
+                        $ingredients[$ingredient] = $this->smartAdd(array($ingredients[$ingredient], $amount));
+                    }
+                    else{
+                        $ingredients[$ingredient] = $this->smartAdd(array($amount));
+                    }
                 }
                 else{
-                    $ingredients[$ingredient] = $this->smartAdd(array($amount));
+                    $ingredients[$ingredient] = null;
                 }
             }
         }
@@ -378,7 +397,6 @@ class RecipeController extends BaseController
             }
             $number .= $part;
         }
-
         return array($number, $unit);
     }
 }

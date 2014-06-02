@@ -30,8 +30,6 @@ $(function(){
 
 			var link = $(this);
 
-			console.log(link.find('.sprite'));
-
 			//TODO add loader gif for slow json
 			$.getJSON( $(this).data('ajax'), function( data ) {
 				if (data.status === 1) {

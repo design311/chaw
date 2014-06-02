@@ -1228,7 +1228,7 @@ a {
   line-height: 40px; }
 .home .register {
   background: #ff5c23;
-  border-radius: 5px;
+  border-radius: 7px;
   text-decoration: none;
   padding: 0 50px;
   text-shadow: none;
@@ -1733,6 +1733,41 @@ table.dinners {
 .add_photo_link {
   margin-top: 1em;
   display: inline-block; }
+
+.tabs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 3em; }
+  .tabs li {
+    display: inline-block;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    position: relative;
+    bottom: -1px;
+    left: -4px; }
+    .tabs li:first-child {
+      left: 0; }
+    .tabs li.active {
+      border-bottom-color: #fff;
+      background: #fff; }
+  .tabs a {
+    padding: 10px 30px;
+    display: block;
+    text-decoration: none; }
+
+.recipeinfo {
+  background: #eee;
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 20px;
+  border-radius: 7px;
+  margin-right: 1em;
+  margin-bottom: 1em; }
 
 .select2-container {
   width: 100%; }

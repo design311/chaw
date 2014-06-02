@@ -269,7 +269,7 @@ textarea{
 
 	.register{
 		background:$orange;
-		border-radius:5px;
+		border-radius:7px;
 		text-decoration:none;
 		padding:0 50px;
 		text-shadow:none;
@@ -966,6 +966,45 @@ table.dinners{
 .add_photo_link{
 	margin-top:1em;
 	display:inline-block;
+}
+
+.tabs{
+	@include minireset;
+	border-bottom:1px solid #ddd;
+	margin-bottom:3em;
+	li{
+		display:inline-block;
+		background:darken(#FFF,3);
+		border:1px solid #ddd;
+		border-top-right-radius:7px;
+		border-top-left-radius:7px;
+		position:relative;
+		bottom:-1px;
+		left:-4px;
+		&:first-child{
+			left:0;
+		}
+		&.active{
+			border-bottom-color:#fff;
+			background:#fff;
+		}
+	}
+	a{
+		padding:10px 30px;
+		display:block;
+		text-decoration:none;
+	}
+}
+
+.recipeinfo{
+	background:#eee;
+	float:left;
+	list-style:none;
+	margin:0;
+	padding:20px;
+	border-radius:7px;
+	margin-right:1em;
+	margin-bottom:1em;
 }
 
 //TODO remove debug styling

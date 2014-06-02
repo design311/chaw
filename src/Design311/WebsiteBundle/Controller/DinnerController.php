@@ -293,6 +293,12 @@ class DinnerController extends BaseController
     public function editAction(Request $request, $permalink)
     {
         $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
+
+        if ($this->getUser() != $dinner->getUser()) {
+            $this->get('session')->getFlashBag()->add('error','Dit dinner mag je niet bewerken');
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
+        }
+
         $metacategories = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsCalculated(0);
         $form = $this->createForm(new DinnerType($metacategories), $dinner);
 
