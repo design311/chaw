@@ -1063,7 +1063,7 @@ img {
   max-width: 100%;
   height: auto; }
 
-button {
+button, input[type="submit"] {
   border: 0; }
 
 input, textarea, select {
@@ -1075,8 +1075,7 @@ input, textarea, select {
     padding: 5px 0; }
 
 label {
-  font-weight: bold;
-  display: block; }
+  font-weight: bold; }
 
 textarea {
   max-width: 100%;
@@ -1416,7 +1415,7 @@ a {
   margin-bottom: 10px;
   line-height: 1; }
 
-.button, button {
+.button, button, input[type="submit"] {
   border-radius: 7px;
   display: block;
   padding: 15px 20px;
@@ -1424,14 +1423,14 @@ a {
   line-height: 18px;
   color: #333333;
   background: #ddd; }
-  .button i, button i {
+  .button i, button i, input[type="submit"] i {
     display: block;
     float: left;
     margin-right: 7px; }
-  .button:hover, button:hover, .button:focus, button:focus, .button:active, button:active {
+  .button:hover, button:hover, input[type="submit"]:hover, .button:focus, button:focus, input[type="submit"]:focus, .button:active, button:active, input[type="submit"]:active {
     box-shadow: 0 0 1px #333333; }
 
-.button-orange, button {
+.button-orange, button, input[type="submit"] {
   background: #ff5c23;
   color: #fff; }
 
@@ -1690,9 +1689,9 @@ table.dinners {
   .recipeform .amount.label, .recipeform .ingredient.label {
     margin-bottom: 0; }
 .recipeform .amount {
-  width: 30%; }
+  width: 33%; }
 .recipeform .ingredient {
-  width: 70%;
+  width: 67%;
   padding-left: 2%; }
 .recipeform #recipe_recipeingredients > div > div {
   width: 97%;

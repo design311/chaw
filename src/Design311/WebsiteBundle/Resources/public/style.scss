@@ -57,7 +57,7 @@ img{
 	height:auto;
 }
 
-button{
+button, input[type="submit"]{
 	@extend .button;
 	@extend .button-orange;
 	border:0;
@@ -76,7 +76,6 @@ input, textarea, select{
 
 label{
 	font-weight:bold;
-	display:block;
 }
 
 textarea{
@@ -898,10 +897,10 @@ table.dinners{
 	}
 
 	.amount{
-		width:30%;
+		width:33%;
 	}
 	.ingredient{
-		width:70%;
+		width:67%;
 		padding-left:2%;
 	}
 

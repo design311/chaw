@@ -90,7 +90,7 @@
 			var tbody = $('#dinners tbody');
 			var dinners = $.parseJSON('{{dinners|raw}}');
 			var visibleDinners = [];
-			var eventDates = [];
+			//var eventDates = [];
 			var months = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 			var startdate = $('#startdate');
 			var enddate = $('#enddate');
@@ -124,14 +124,9 @@
 					currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 					geocoder.geocode({'latLng': currentLocation}, function(results, status) {
 						if (status == google.maps.GeocoderStatus.OK) {
-							console.log(results);
-							if (results[0]) {
-								$('#locatie').val(results[0].formatted_address);
-							} else {
-								alert('No results found');
+							if (results[1]) {
+								$('#locatie').val(results[1].formatted_address);
 							}
-						} else {
-							alert('Geocoder failed due to: ' + status);
 						}
 					});
 					centerLocation(currentLocation);
@@ -152,7 +147,7 @@
 			//idle fires once instead of bounds_changed firing all the time
 			google.maps.event.addListener(map, 'idle', function() {
 					updateDinners();
-					updateCalendarEvents();
+					//updateCalendarEvents();
 			});
 
 			function updateMarkers(dinners){
@@ -186,13 +181,13 @@
 
 				var bounds = map.getBounds();
 				visibleDinners = [];
-				eventDates = [];
+				//eventDates = [];
 				for (var i=0; i<markers.length; i++){
 					if( bounds.contains(markers[i].getPosition()) ){
 						$.each(dinners, function(index, dinner) {
 							if (dinner.id == markers[i].dinnerId) {
 								visibleDinners.push(dinner);
-								eventDates.push(dinner.date);
+								//eventDates.push(dinner.date);
 								return false; //exit $.each loop
 							}
 						});
@@ -312,7 +307,7 @@
 			var currentMonth = new Date(today);
 			updateCalendar(currentMonth);
 
-			function updateCalendarEvents(){
+			/*function updateCalendarEvents(){
 				$('#calendar td.event').removeClass('event');
 				$.each(eventDates, function(i, event) {
 					event = new Date(event);
@@ -320,7 +315,7 @@
 						$('#day-'+event.getDate()).addClass('event');
 					};
 				});
-			}
+			}*/
 
 			function updateCalendar(currentMonth){
 				$('#current_month').text(months[currentMonth.getMonth()]);
@@ -371,7 +366,7 @@
 				table += '</tr>';
 
 				$('#calendar tbody').append(table);
-				updateCalendarEvents();
+				//updateCalendarEvents();
 			}
 
 
@@ -425,7 +420,7 @@
 
 					updateMarkers(filteredDinners);
 					updateDinners();
-					updateCalendarEvents();
+					//updateCalendarEvents();
 				}
 				updateHighlight();
 

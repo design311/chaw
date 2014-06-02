@@ -102,6 +102,35 @@
 				return false;
 			})
 
+			$('#dinner_price').blur(function(){
+				var price = $(this).val();
+				price = price.replace(',', '.');
+				price = parseFloat(price);
+				if (isNaN(price)) {
+					price = '';
+				};
+				$(this).val(price);
+			})
+
+			$('#dinner_maxinvitees').blur(function(){
+				var aantal = $(this).val();
+				aantal = parseInt(aantal);
+				if (isNaN(aantal)) {
+					aantal = 1;
+				};
+				$(this).val(aantal);
+			})
+
+			$('#dinner_date_date').val('notadate');
+			if ($('#dinner_date_date').val() == 'notadate') {
+				$('#dinner_date_date').val('YYYY-MM-DD');
+			}
+
+			$('#dinner_date_time').val('notatime');
+			if ($('#dinner_date_time').val() == 'notatime') {
+				$('#dinner_date_time').val('HH:MM');
+			}
+
 			// adding photos
 			var photoHolder;
 
