@@ -17,22 +17,23 @@ class DinnerType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text');
+        $builder->add('title', 'text', array('label' => 'Titel'));
         $builder->add('date', 'datetime', array(
             'date_widget' => 'single_text',
-            'time_widget' => 'single_text'
+            'time_widget' => 'single_text',
+            'label' => 'Datum'
             ));
         $builder->add('menu', 'textarea');
-        $builder->add('maxinvitees', 'integer');
-        $builder->add('price', 'money');
+        $builder->add('maxinvitees', 'integer', array('label' => 'Aantal gasten'));
+        $builder->add('price', 'money', array('currency' => false, 'label' => 'Prijs'));
         $builder->add('change_address', 'hidden', array(
             'mapped' => false,
             'data' => true
             ));
-        $builder->add('address', new AddressType());
-        $builder->add('metafields', new MetaType($this->metadata), array(
+        $builder->add('address', new AddressType(), array('label' => 'Adres'));
+        /*$builder->add('metafields', new MetaType($this->metadata), array(
             'mapped' => false
-            ));
+            ));*/
         $builder->add('diet', 'entity', array(
             'class' => 'Design311WebsiteBundle:Diet',
             'label'=> 'Eetgewoonte'
@@ -42,9 +43,10 @@ class DinnerType extends AbstractType
             'allow_add'    => true,
             'allow_delete' => true,
             'by_reference' => false,
+            'label' => 'Foto\'s'
         ));
 
-        $builder->add('submit', 'submit');
+        $builder->add('submit', 'submit', array('label' => 'Dinner organiseren'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

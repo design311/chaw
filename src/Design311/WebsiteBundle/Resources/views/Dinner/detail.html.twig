@@ -6,6 +6,9 @@
 
 <div class="container">
 	<div class="one-third">
+		{% if app.user == dinner.user %}
+		<p><a href="{{ path('design311website_dinners_edit', {'permalink': dinner.permalink}) }}" class="button button-orange"><i class="sprite edit white"></i>Dinner bewerken</a></p>
+		{% endif %}
 		<div class="widget">
 			<h3>Algemene informatie</h3>
 			<ul>

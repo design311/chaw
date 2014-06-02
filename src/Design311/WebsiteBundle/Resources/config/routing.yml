@@ -65,6 +65,10 @@ design311website_dinners_invite:
     path:     /dinners/{permalink}/uitnodigen/
     defaults: { _controller: Design311WebsiteBundle:Dinner:invite }
 
+design311website_dinners_edit:
+    path:     /dinners/{permalink}/edit/
+    defaults: { _controller: Design311WebsiteBundle:Dinner:edit }
+
 design311website_dinners_participant_decline:
     path:     /dinners/{permalink}/participant/{participantId}/decline/
     defaults: { _controller: Design311WebsiteBundle:Ajax:declineDinnerParticipant }
@@ -106,19 +110,19 @@ design311website_recepten_user:
     defaults: { _controller: Design311WebsiteBundle:Recipe:user }
 
 design311website_recepten_like:
-    path:     /recepten/{recipeId}/like/
+    path:     /recepten/{permalink}/like/
     defaults: { _controller: Design311WebsiteBundle:Ajax:likeRecipe }
 
 design311website_recepten_save:
-    path:     /recepten/{recipeId}/save/
+    path:     /recepten/{permalink}/save/
     defaults: { _controller: Design311WebsiteBundle:Ajax:saveRecipe }
 
 design311website_recepten_shop:
-    path:     /recepten/{recipeId}/shop/
+    path:     /recepten/{permalink}/shop/
     defaults: { _controller: Design311WebsiteBundle:Ajax:shopRecipe }
 
 design311website_recepten_edit:
-    path:     /recepten/{recipeId}/edit/
+    path:     /recepten/{permalink}/edit/
     defaults: { _controller: Design311WebsiteBundle:Recipe:edit }
 
 design311website_recepten_detail:

@@ -100,6 +100,7 @@
 		    	var parent = $(this).parent();
 		    	parent.hide();
 		    	parent.siblings('.photofield-file').append(photofields[id] + cancel).show();
+		    	return false;
 		    })
 
 		    $('#recipe_photos').on('click', '.cancel-edit', function(){
@@ -107,8 +108,8 @@
 		    	var parent = $(this).parent();
 		    	parent.empty().hide();
 		    	parent.siblings('.image').show();
+		    	return false;
 		    })
-
 		});
 
 		function addInput(holder, link, allowDelete) {

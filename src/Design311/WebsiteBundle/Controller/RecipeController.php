@@ -188,9 +188,9 @@ class RecipeController extends BaseController
         );
     }
 
-    public function editAction($recipeId, Request $request)
+    public function editAction($permalink, Request $request)
     {
-        $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->find($recipeId);
+        $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
 
         $originalPhotos = new ArrayCollection();
         foreach ($recipe->getPhotos() as $photo) {

@@ -11,8 +11,8 @@ class PhotoType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text');
-        $builder->add('file', 'file', array('image_path' => 'webPath'));
+        $builder->add('title', 'text', array('label' => 'Titel'));
+        $builder->add('file', 'file', array('image_path' => 'webPath', 'label' => false));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

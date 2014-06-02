@@ -230,7 +230,7 @@ class DinnerController extends BaseController
 
             $dinner = $form->getData();
 
-            $metafields = $form->get('metafields')->getData();
+            /*$metafields = $form->get('metafields')->getData();
             foreach ($metafields as $category => $meta) {
                 
                 foreach ($metacategories as $metacat) {
@@ -253,7 +253,7 @@ class DinnerController extends BaseController
                         break; //category found, break for each loop
                     }
                 }
-            }
+            }*/
 
             if ($form->get('change_address')->getData() == 1) {
                 //only geocode if new address
@@ -281,12 +281,79 @@ class DinnerController extends BaseController
             $em->persist($dinner);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('design311website_dinners'));
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
         }
 
         return $this->render(
             'Design311WebsiteBundle:Dinner:add.html.twig',
             array('form' => $form->createView())
+        );
+    }
+
+    public function editAction(Request $request, $permalink)
+    {
+        $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
+        $metacategories = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsCalculated(0);
+        $form = $this->createForm(new DinnerType($metacategories), $dinner);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $dinner = $form->getData();
+
+            /*$metafields = $form->get('metafields')->getData();
+            foreach ($metafields as $category => $meta) {
+                
+                foreach ($metacategories as $metacat) {
+                    if ($metacat->getName() == $category) {
+
+                        $qb = $em->createQueryBuilder();
+                        $query = $qb
+                            ->from('Design311WebsiteBundle:DinnerMeta', 'dm')
+                            ->select('dm')
+                            ->where($qb->expr()->eq('dm.category', $metacat->getId()))
+                            ->andWhere($qb->expr()->in('dm.id', $meta))
+                            ->getQuery();
+
+                        $dinnerMetas = $query->execute();
+
+                        foreach ($dinnerMetas as $dinnerMeta) {
+                            $dinner->addMetum($dinnerMeta);
+                        }
+
+                        break; //category found, break for each loop
+                    }
+                }
+            }
+*/
+            if ($form->get('change_address')->getData() == 1) {
+                //only geocode if new address
+                $latLng = $this->geocode($dinner->getAddress());
+                if (is_object($latLng)) {
+                    $dinner->getAddress()->setLat($latLng->lat);
+                    $dinner->getAddress()->setLng($latLng->lng);
+                }
+                else{
+                    //coords could not be found
+                    $dinner->getAddress()->setLat(0);
+                    $dinner->getAddress()->setLng(0);
+                }
+            }
+
+            $em->persist($dinner);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
+        }
+
+        return $this->render(
+            'Design311WebsiteBundle:Dinner:add.html.twig',array(
+                'form' => $form->createView(),
+                'dinner' => $dinner
+            )
         );
     }
 }

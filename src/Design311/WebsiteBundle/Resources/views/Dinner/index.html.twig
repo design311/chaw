@@ -9,9 +9,9 @@
 		<div class="one-third filters">
 		<p><a href="{{ path('design311website_dinners_add') }}" class="button button-orange adddinner"><i class="sprite plus white"></i>Dinner toevoegen</a></p>
 			<h3>Filter de zoekresultaten</h3>
-			<p><label for="locatie"><strong>Locatie</strong></label></p>
-			<p><input type="text" id="locatie"></p>
-			<p>TIP: Versleep de kaart om te filteren</p>
+			<p class="locationfilter"><label for="locatie"><strong>Locatie</strong></label><br>
+			<input type="text" id="locatie"> <br>
+			<span>TIP: Versleep de kaart om te filteren</span></p>
 			<div id="calendar" class="calendar">
 				<table>
 					<thead>
@@ -122,6 +122,18 @@
 			if(navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+					geocoder.geocode({'latLng': currentLocation}, function(results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							console.log(results);
+							if (results[0]) {
+								$('#locatie').val(results[0].formatted_address);
+							} else {
+								alert('No results found');
+							}
+						} else {
+							alert('Geocoder failed due to: ' + status);
+						}
+					});
 					centerLocation(currentLocation);
 				});
 			}

@@ -10,9 +10,9 @@
 					<p class="title">{{recipe.title}}</p>
 				</a>
 				<ul class="actions">
-					<li><a href="#" class="like ajax-button" data-ajax="{{path('design311website_recepten_like', {'recipeId': recipe.id})}}" title="Recept lekker vinden"><i class="sprite heart{% if app.user in recipe.likedBy %} orange{% endif %}"></i></a></li>
-					<li><a href="#" class="save ajax-button" data-ajax="{{path('design311website_recepten_save', {'recipeId': recipe.id})}}" title="Recept bewaren"><i class="sprite save{% if app.user in recipe.savedBy %} orange{% endif %}"></i></a></li>
-					<li><a href="#" class="shop ajax-button" data-ajax="{{path('design311website_recepten_shop', {'recipeId': recipe.id})}}" title="Recept toevoegen aan winkellijstje"><i class="sprite cart{% if app.user in recipe.shoppinglistFrom %} orange{% endif %}"></i></a></li>
+					<li><a href="#" class="like ajax-button" data-ajax="{{path('design311website_recepten_like', {'permalink': recipe.permalink})}}" title="Recept lekker vinden"><i class="sprite heart{% if app.user in recipe.likedBy %} orange{% endif %}"></i></a></li>
+					<li><a href="#" class="save ajax-button" data-ajax="{{path('design311website_recepten_save', {'permalink': recipe.permalink})}}" title="Recept bewaren"><i class="sprite save{% if app.user in recipe.savedBy %} orange{% endif %}"></i></a></li>
+					<li><a href="#" class="shop ajax-button" data-ajax="{{path('design311website_recepten_shop', {'permalink': recipe.permalink})}}" title="Recept toevoegen aan winkellijstje"><i class="sprite cart{% if app.user in recipe.shoppinglistFrom %} orange{% endif %}"></i></a></li>
 				</ul>
 		    </div>
 		{% endfor %}

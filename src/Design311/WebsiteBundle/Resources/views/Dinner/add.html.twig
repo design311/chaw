@@ -5,28 +5,80 @@
 	var addressField = '{{ form_row(form.address) }}';
 </script>
 <div class="container">
-	{{ form_start(form) }}
+	{{ form_start(form, {'attr':{'class': 'dinnerform'}}) }}
 		{{ form_row(form.title) }}
-		{{ form_row(form.date) }}
+		<p class="inputinfo">Bijvoorbeeld: "BBQ voor 8 personen", "Italiaanse keuken" of "Gezellig dinner op ons terras"</p>
 		{{ form_row(form.menu) }}
-		{{ form_row(form.maxinvitees) }}
-		{{ form_row(form.price) }}
-		{% if app.user.address is null %}
-			{{ form_row(form.change_address) }}
-			<div id="edit_address"></div>
-		{% else %}
-			{{ form_row(form.change_address, {'value': '0'}) }}
-			<div id="current_address"><strong>Adres</strong> <a href="#" id="change_address">(wijzigen)</a><br>
-			{{app.user.address.street}} {{app.user.address.number}}<br>
-			{{app.user.address.zipcode}} {{app.user.address.city}}<br>
-			{{app.user.address.country}}
+		<p class="inputinfo">Dit veld ondersteunt <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a></p>
+		<div class="onehalf">
+			<div class="date">
+				{{ form_row(form.date) }}
 			</div>
-		{% endif %}
-		{{ form_row(form.metafields) }}
-		{{ form_row(form.diet) }}
-		{{ form_row(form.photos) }}
-		{{ form_row(form.submit) }}
+			<div class="invitees">
+				{{ form_row(form.maxinvitees) }}
+			</div>
+			<div class="price">		
+				{{ form_row(form.price) }}
+			</div>
+			<i class="clear"></i>
+			{{ form_row(form.diet) }}
+			{% if dinner is defined %}
+				{{ form_row(form.change_address, {'value': '0'}) }}
+				<div id="current_address"><strong>Adres</strong> <a href="#" id="change_address">(wijzigen)</a><br>
+				{{dinner.address.street}} {{dinner.address.number}}<br>
+				{{dinner.address.zipcode}} {{dinner.address.city}}<br>
+				{{dinner.address.country}}
+				</div>
+			{% else %}
+			    {% if app.user.address is null %}
+					{{ form_row(form.change_address) }}
+					<div id="edit_address"></div>
+				{% else %}
+					{{ form_row(form.change_address, {'value': '0'}) }}
+					<div id="current_address"><strong>Adres</strong> <a href="#" id="change_address">(wijzigen)</a><br>
+					{{app.user.address.street}} {{app.user.address.number}}<br>
+					{{app.user.address.zipcode}} {{app.user.address.city}}<br>
+					{{app.user.address.country}}
+					</div>
+				{% endif %}
+			{% endif %}
+			{% if dinner is defined %}
+				{{ form_row(form.submit, {'label':'Wijzigingen opslaan'}) }}
+			{% else %}
+				{{ form_row(form.submit) }}
+			{% endif %}
+		</div>
+		<div class="onehalf last">
+			{% if form.photos|length == 0 %}
+				{{form_label(form.photos)}}
+				<p class="inputinfo">Met enkele foto's kan je je gasten laten zien wat ze kunnen verwachten, voeg optioneel enkele foto's van je eetkamer, je gerechten of jezelf toe.</p>
+				{{form_widget(form.photos)}}
+			{% else %}
+				<script>var photofields = {};</script>
+				{{form_label(form.photos)}}
+				<p class="inputinfo">Met enkele foto's kan je je gasten laten zien wat ze kunnen verwachten, voeg optioneel enkele foto's van je eetkamer, je gerechten of jezelf toe.</p>
+				<div id="dinner_photos" data-prototype="{{ form_widget(form.photos.vars.prototype)|e }}">
+				{% for photofield in form.photos %}
+			        <div class="photo-row">
+			        	<script>
+			        		photofields['{{photofield.vars.id}}'] = '{{ form_row(photofield.file) }}';
+			        	</script>
+			            {{ form_errors(photofield) }}
+			            {{ form_row(photofield.title) }}
+			            {% if photofield.file.vars.image_url is not null %}
+			            	<div class="image">
+								<img src="{{asset(photofield.file.vars.image_url) | apply_filter('onehalf')}}" alt="">
+							</div>
+						{% else %}
+							<div class="photofield-file" data-fileid="{{photofield.vars.id}}"></div>
+			            {% endif %}
+			        </div>
+			    {% endfor %}
+			    </div>
+			{% endif %}
+		</div>
 	{{ form_end(form) }}
+	<div class="clear"></div>
 </div>
 {% endblock %}
 
@@ -35,7 +87,7 @@
 		$(function(){
 
 			// address changing
-			$('#address').append(addressField);
+			$('#edit_address').append(addressField);
 
 			$('#change_address').click(function(){
 				$(this).parent().hide().after('<div id="edit_address">'+addressField+'<a href="#" id="cancel_change">Annuleren</a></div>');
@@ -54,8 +106,8 @@
 			var photoHolder;
 
 			// setup an "add a photo" link
-			var addPhotoLink = $('<p><a href="#" class="add_photo_link">Add a photo</a></p>');
-			var deleteLink = '<a href="#" class="deleterow">delete</a>';
+			var addPhotoLink = $('<p><a href="#" class="add_photo_link button">Foto toevoegen</a></p>');
+			var deleteLink = '<a href="#" class="deleterow">Foto verwijderen</a>';
 
 		    // Get the ul that holds the collection of photos
 		    photoHolder = $('div#dinner_photos');
@@ -93,7 +145,9 @@
 
 			    // Replace '__name__' in the prototype's HTML to
 			    // instead be a number based on how many items we have
-			    var newForm = prototype.replace(/__name__/g, index);
+			    var newForm = prototype.replace(/<label class="required">__name__label__<\/label>/g, '');
+			    newForm = newForm.replace(/<div id="dinner_photos___name__">/g, '<div id="dinner_photos___name__" class="photo-row">');
+			    newForm = newForm.replace(/__name__/g, index);
 
 			    // increase the index with one for the next item
 			    holder.data('index', index + 1);
