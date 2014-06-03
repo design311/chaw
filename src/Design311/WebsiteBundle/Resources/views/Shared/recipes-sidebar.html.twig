@@ -9,16 +9,8 @@
 	<p><a href="#" class="save ajax-button button" data-ajax="{{path('design311website_recepten_save', {'permalink': recipe.permalink})}}" title="Recept bewaren"><i class="sprite save{% if app.user in recipe.savedBy %} orange{% endif %}"></i>Bewaren voor later</a></p>
 	<p><a href="#" class="shop ajax-button button" data-ajax="{{path('design311website_recepten_shop', {'permalink': recipe.permalink})}}" title="Recept toevoegen aan winkellijstje"><i class="sprite cart{% if app.user in recipe.shoppinglistFrom %} orange{% endif %}"></i>Toevoegen aan winkellijstje</a></p>
 	{% endif %}
-	<div class="widget search-recipe">
-		<h3>Recepten zoeken op ingredient</h3>
-		{{ form_start(form) }}
-			{{ form_row(form.ingredients) }}
-			{{ form_row(form.category) }}
-			{{ form_row(form.diet) }}
-		{{ form_end(form) }}
-	</div>
 	{% if detail is defined and detail == true %}
-	<div class="widget recipe-user">
+	<div class="widget dark recipe-user">
 		{% if recipe.user.avatar %}
 			<img src="{{ asset(recipe.user.avatar) | apply_filter('avatar') }}" alt="Avatar {{recipe.user.displayname}}">
 		{% endif %}
@@ -42,4 +34,12 @@
 		<p><a href="{{path('design311website_recepten_user', {'username': recipe.user.username})}}">Bekijk alle recepten van {{recipe.user.displayName}}</a></p>
 	</div>
 	{% endif %}
+	<div class="widget dark search-recipe">
+		<h3>Recepten zoeken op ingredient</h3>
+		{{ form_start(form) }}
+			{{ form_row(form.ingredients) }}
+			{{ form_row(form.category) }}
+			{{ form_row(form.diet) }}
+		{{ form_end(form) }}
+	</div>
 </div>

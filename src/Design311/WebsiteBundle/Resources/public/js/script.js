@@ -72,7 +72,7 @@ $(function(){
 	    $( ".amount" ).text( $( "#slider-range" ).slider( "value" ) );
 	}
 
-	$('.tooltip').tipsy({gravity: 's', live: true});
+	$('.tooltip').tipsy({gravity: $.fn.tipsy.autoNS, live: true});
 
 	$('.flash').addClass('visible');
 	var removeFlash = setTimeout(function(){

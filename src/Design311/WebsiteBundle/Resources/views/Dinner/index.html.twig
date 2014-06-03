@@ -8,11 +8,12 @@
 	<div class="container">
 		<div class="one-third filters">
 		<p><a href="{{ path('design311website_dinners_add') }}" class="button button-orange adddinner"><i class="sprite plus white"></i>Dinner toevoegen</a></p>
-			<h3>Filter de zoekresultaten</h3>
-			<p class="locationfilter"><label for="locatie"><strong>Locatie</strong></label><br>
-			<input type="text" id="locatie"> <br>
-			<span>TIP: Versleep de kaart om te filteren</span></p>
-			<div id="calendar" class="calendar">
+			<div class="widget">
+				<div class="locationfilter"><label for="locatie"><strong>Locatie</strong></label><br>
+				<input type="text" id="locatie"> <br>
+				<span class="inputinfo">Gebruik de kaart om uw resultaten te filteren</span></div>
+			</div>
+			<div id="calendar" class="calendar widget">
 				<table>
 					<thead>
 						<tr>
@@ -33,26 +34,35 @@
 					<tbody>
 					</tbody>
 				</table>
-				<p>Dinners vanaf <strong id="startdatetext">{{"now"|date("d-m-Y")}}</strong> tot en met <strong id="enddatetext">...</strong></p>
+				<div><br>Toon dinners vanaf <strong id="startdatetext">{{"now"|date("d-m-Y")}}</strong><br>
+				Tot en met <strong id="enddatetext">...</strong></div>
 				<input type="hidden" id="startdate"><input type="hidden" id="enddate">
 			</div>
 			<div id="filters">
-				<p>
-					<label for="amount">Maximumprijs:</label> €<span class="amount"></span>
-					<input type="hidden" class="amount" id="maxprice">
-				</p>
-				<div id="slider-range"></div>
+				<div class="widget">
+					<p>
+						<label for="amount">Maximumprijs:</label> €<span class="amount"></span>
+						<input type="hidden" class="amount" id="maxprice">
+					</p>
+					<div id="slider-range"></div>
+				</div>
 				
-				<p><strong>Eetgewoonte</strong></p>
-				{% for diet in diets %}
-					<p><input type="checkbox" name="diet" value="{{diet.id}}" id="{{diet.value|lower}}"> <label for="{{diet.value|lower}}">{{diet.value}}</label></p>
-				{% endfor %}
+				<div class="widget checkboxes">
+					<p><strong>Eetgewoonte</strong></p>
+					<ul>
+					{% for diet in diets %}
+						<li><input type="checkbox" name="diet" value="{{diet.id}}" id="{{diet.value|lower}}"> <label for="{{diet.value|lower}}">{{diet.value}}</label></li>
+					{% endfor %}
+					</ul>
+				</div>
 				
 				{% for filter in filters %}
-					<p><strong>{{filter.name}}</strong></p>
-					{% for child in filter.children %}
-							<p><input type="checkbox" name="{{filter.name|lower}}" value="{{child.value|lower}}" id="{{child.value|lower}}"> <label for="{{child.value|lower}}">{{child.value}}</label></p>
-					{% endfor %}
+					<div class="widget checkboxes">
+						<p><strong>{{filter.name}}</strong></p>
+						{% for child in filter.children %}
+								<p><input type="checkbox" name="{{filter.name|lower}}" value="{{child.value|lower}}" id="{{child.value|lower}}"> <label for="{{child.value|lower}}">{{child.value}}</label></p>
+						{% endfor %}
+					</div>
 				{% endfor %}
 			</div>
 		</div>
@@ -98,6 +108,7 @@
 			var currentSort = 'date';
 			var reverseSort = false;
 
+			var currentPosition;
 			var currentLocation;
 
 			var map;
@@ -121,15 +132,16 @@
 
 			if(navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
-					currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-					geocoder.geocode({'latLng': currentLocation}, function(results, status) {
+					currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+					geocoder.geocode({'latLng': currentPosition}, function(results, status) {
 						if (status == google.maps.GeocoderStatus.OK) {
 							if (results[1]) {
+								currentLocation = results[1].formatted_address;
 								$('#locatie').val(results[1].formatted_address);
 							}
 						}
 					});
-					centerLocation(currentLocation);
+					centerLocation(currentPosition);
 				});
 			}
 
@@ -221,8 +233,8 @@
 					nonefound.hide();
 
 					$.each(visibleDinners, function(i, dinner){
-						if (typeof currentLocation != 'undefined') {
-							dinner.distance = getDistance(currentLocation.lat(), currentLocation.lng(), dinner.lat, dinner.lng);
+						if (typeof currentPosition != 'undefined') {
+							dinner.distance = getDistance(currentPosition.lat(), currentPosition.lng(), dinner.lat, dinner.lng);
 						}
 					})
 
@@ -239,7 +251,7 @@
 						var y = dinnerDate.getFullYear();
 
 						var detailLink = detail.replace('permalink_holder', dinner.permalink);
-						var distance = (dinner.distance) ? Math.round(dinner.distance*100)/100 + ' km' : '<i title="Geef eerst je locatie op" class="sprite question tooltip"></i>';
+						var distance = (dinner.distance) ? '<span class="tooltip" title="Afstand vanaf '+currentLocation+'">'+Math.round(dinner.distance*100)/100 + ' km</span>' : '<i title="Geef eerst je locatie op" class="sprite question tooltip"></i>';
 						tbody.append(' \
 							<tr id="dinner-'+dinner.id+'"> \
 								<td>'+d+'-'+m+'-'+y+'</td> \
@@ -277,14 +289,12 @@
 			}
 
 			$('#locatie').blur(function(){
-				if ($(this).val()) {};
-
 				var address = $(this).val();
 				geocoder.geocode( { 'address': address}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
-
-						currentLocation = results[0].geometry.location;
-						centerLocation(currentLocation);
+						currentLocation = address;
+						currentPosition = results[0].geometry.location;
+						centerLocation(currentPosition);
 					}
 					else {
 						//TODO proper error message
@@ -368,7 +378,7 @@
 					var date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
 
 					if (date.toString() == today.toString()) {
-						table += '<td class="today" id="day-'+i+'">'+i+'</td>';
+						table += '<td class="today tooltip" title="Vandaag" id="day-'+i+'">'+i+'</td>';
 					}
 					else{
 						table += '<td id="day-'+i+'">'+i+'</td>';

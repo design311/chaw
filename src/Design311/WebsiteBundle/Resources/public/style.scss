@@ -722,11 +722,24 @@ table.dinners{
 	}
 }
 
+.checkboxes{
+	label{
+		font-weight:300;
+	}
+	ul{
+		@include minireset;
+		list-style:none;
+	}
+}
+
 .widget{
-	background:#ddd;
+	background:darken(#fff,5);
 	padding:20px;
 	border-radius:7px;
 	margin:1em 0;
+	&.dark{
+		background:#ddd;
+	}
 	h3{
 		margin-top:0;
 	}
@@ -812,10 +825,10 @@ table.dinners{
 		font-weight:bold;
 	}
 	td.highlight{
-		background:#eee;
+		background:#fff;
 	}
 	td.empty{
-		background:#fff;
+		background:darken(#fff,5);
 	}
 	a{
 		display:block;
@@ -982,7 +995,7 @@ table.dinners{
 	margin-bottom:3em;
 	li{
 		display:inline-block;
-		background:darken(#FFF,3);
+		background:darken(#fff,3);
 		border:1px solid #ddd;
 		border-top-right-radius:7px;
 		border-top-left-radius:7px;
@@ -1013,6 +1026,15 @@ table.dinners{
 	border-radius:7px;
 	margin-right:1em;
 	margin-bottom:1em;
+}
+
+.ingredients{
+	ul{
+		@include minireset;
+	}
+	li:before{
+		content:"- ";
+	}
 }
 
 //TODO remove debug styling
