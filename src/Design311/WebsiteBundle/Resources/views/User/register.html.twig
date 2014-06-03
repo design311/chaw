@@ -2,9 +2,29 @@
 
 {% block content %}
 <div class="container">
-
-	<h1>Registreren</h1>
-	{{ form(form) }}
+	<h1 class="averia">Word lid van Chaw</h1>
+	<div class="onehalf">
+		<p>Maak <strong>gratis</strong> een account aan op Chaw om de website ten volste te benutten, met een account krijg je veel meer functies:</p>
+		<p><strong>Dinners</strong></p>
+		<ul>
+			<li>Organiseer zelf een dinner, nodig mensen uit bij jouw thuis</li>
+			<li>Neem deel naam de verschillende dinners in jouw buurt</li>
+			<li>Geef feedback aan de organisators van een dinner</li>
+			<li>...</li>
+		</ul>
+		<p><strong>Recepten</strong></p>
+		<ul>
+			<li>Bekijk de recepten voor een ander aantal personen</li>
+			<li>Voeg recepten toe aan je winkellijstje</li>
+			<li>Print de ingredienten voor de recepten op je winkellijstje</li>
+			<li>Print alle recepten op je winkellijstje</li>
+			<li>Bewaar recepten die je later eens zou willen klaarmaken</li>
+			<li>...</li>
+		</ul>
+	</div>
+	<div class="onehalf last">	
+		{{ form(form, {'attr': {'class': 'registerform'}} ) }}
+	</div>
 
 </div>
 

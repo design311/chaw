@@ -53,10 +53,15 @@
 		<h1>{{dinner.title}}</h1>
 		{{dinner.menu|markdown}}
 
-		{% if app.user != dinner.user and app.user not in dinner.participants and app.user not in dinner.participantRequests %}
-		<h2>Deelnemen</h2>
-		<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
-		{{ form(form) }}
+		{% if app.user %}
+			{% if app.user != dinner.user and app.user not in dinner.participants and app.user not in dinner.participantRequests %}
+			<h2>Deelnemen</h2>
+			<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
+			{{ form(form) }}
+			{% endif %}
+		{% else %}
+		    <h2>Krijg je al spontaan honger?</h2>
+		    <p><a href="{{ path('design311website_login') }}">Meld je aan om deel te nemen</a></p>
 		{% endif %}
 
 		<div class="dinnerphotos">

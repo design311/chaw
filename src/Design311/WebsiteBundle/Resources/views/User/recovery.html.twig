@@ -2,15 +2,15 @@
 
 {% block content %}
 <div class="container">
-
-	<h1>Wachtwoord vergeten</h1>
+	<div class="onehalf">
+		<h1 class="averia">Wachtwoord vergeten</h1>
+			
+		{% if error is not null %}
+			<p class="message error">{{error}}</p>
+		{% endif %}
 		
-	{% if error is defined %}
-		<p class="error">{{error}}</p>
-	{% endif %}
-	
-	{{ form(form) }}
-	
+		{{ form(form, {'attr': {'class': 'recoveryform'}} ) }}
+	</div>
 </div>
 
 {% endblock %}

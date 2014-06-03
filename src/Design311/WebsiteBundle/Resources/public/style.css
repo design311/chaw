@@ -1063,9 +1063,6 @@ img {
   max-width: 100%;
   height: auto; }
 
-button, input[type="submit"] {
-  border: 0; }
-
 input, textarea, select {
   padding: 5px;
   width: 100%; }
@@ -1080,6 +1077,10 @@ label {
 textarea {
   max-width: 100%;
   height: 150px; }
+
+button, input[type="submit"] {
+  border: 0;
+  width: auto; }
 
 .inputinfo {
   font-size: 90%;
@@ -1657,7 +1658,8 @@ table.dinners {
   -moz-transition: top 250ms ease-in;
   -ms-transition: top 250ms ease-in;
   -o-transition: top 250ms ease-in;
-  transition: top 250ms ease-in; }
+  transition: top 250ms ease-in;
+  border-bottom: 1px solid; }
   .flash.visible {
     -webkit-transition: top 250ms ease-in 1000ms;
     -moz-transition: top 250ms ease-in 1000ms;
@@ -1671,17 +1673,22 @@ table.dinners {
     .flash a:hover, .flash a:active, .flash a:focus {
       color: #000; }
 
-.flash-succes {
+.message {
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 7px; }
+
+.flash-succes, .succes {
   background: #8bf97c;
-  border-bottom: 1px solid #118e00; }
+  border-color: #118e00; }
 
-.flash-error {
+.flash-error, .error {
   background: #eb7764;
-  border-bottom: 1px solid #cd1d00; }
+  border-color: #cd1d00; }
 
-.flash-notice {
+.flash-notice, .notice {
   background: #f0b174;
-  border-bottom: 1px solid #e46600; }
+  border-color: #e46600; }
 
 .dinnerform .onehalf > div {
   margin-bottom: 1em; }
@@ -1792,6 +1799,12 @@ table.dinners {
   list-style: none; }
 .ingredients li:before {
   content: "- "; }
+
+.loginform .recover {
+  line-height: 48px; }
+
+.registerform div > div, .recoveryform div > div {
+  margin-bottom: 1em; }
 
 .select2-container {
   width: 100%; }

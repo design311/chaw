@@ -10,11 +10,13 @@ class UserRegisterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username', 'text');
-        $builder->add('email', 'email');
+        $builder->add('username', 'text', array('label' => 'Gebruikersnaam'));
+        $builder->add('email', 'email', array('label' => 'E-mail'));
         $builder->add('password', 'repeated', array(
            'first_name'  => 'password',
            'second_name' => 'confirm',
+           'first_options'  => array('label' => 'Wachtwoord'),
+           'second_options' => array('label' => 'Bevestig wachtwoord'),
            'type'        => 'password',
         ));
 
