@@ -10,7 +10,7 @@ class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('file', 'file', array('required' => false));
+        $builder->add('file', 'file', array('required' => false, 'label' => 'Nieuwe profielafbeelding uploaden'));
         $builder->add('displayName', 'text');
         $builder->add('email', 'email');
         

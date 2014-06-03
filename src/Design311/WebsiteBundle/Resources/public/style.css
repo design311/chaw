@@ -1576,7 +1576,7 @@ table.dinners {
   background: #f2f2f2;
   padding: 20px;
   border-radius: 7px;
-  margin: 1em 0; }
+  margin-bottom: 1em; }
   .widget.dark {
     background: #ddd; }
   .widget h3 {
@@ -1609,7 +1609,9 @@ table.dinners {
   float: left;
   margin-right: 50px;
   margin-bottom: 1em;
-  border-radius: 7px; }
+  border-radius: 7px;
+  width: 355px;
+  height: 355px; }
 .profile-view .content {
   margin-top: -207.5px;
   background: #fff; }

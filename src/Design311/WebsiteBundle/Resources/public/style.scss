@@ -737,7 +737,7 @@ table.dinners{
 	background:darken(#fff,5);
 	padding:20px;
 	border-radius:7px;
-	margin:1em 0;
+	margin-bottom:1em;
 	&.dark{
 		background:#ddd;
 	}
@@ -787,6 +787,8 @@ table.dinners{
 		margin-right:50px;
 		margin-bottom:1em;
 		border-radius:7px;
+		width:355px;
+		height:355px;
 	}
 	.content{
 		margin-top:-207.5px;

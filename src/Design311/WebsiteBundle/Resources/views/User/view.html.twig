@@ -8,7 +8,7 @@
 
 <div class="container content">
 
-	<img src="{{ asset(user.avatar) | apply_filter('avatar_355') }}" alt="Avatar {{user.displayname}}" class="avatar">
+	<img src="{{ user.avatar | apply_filter('avatar_355') }}" alt="Avatar {{user.displayname}}" class="avatar">
 	<h1>{{user.displayName}}</h1>
 	<p>{{user.description}}</p>
 

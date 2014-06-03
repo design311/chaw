@@ -75,7 +75,7 @@
 			            {{ form_row(photofield.title) }}
 			            {% if photofield.file.vars.image_url is not null %}
 			            	<div class="image">
-								<img src="{{asset(photofield.file.vars.image_url) | apply_filter('onehalf')}}" alt="">
+								<img src="{{ photofield.file.vars.image_url | apply_filter('onehalf')}}" alt="">
 							</div>
 			            {% endif %}
 			        </div>

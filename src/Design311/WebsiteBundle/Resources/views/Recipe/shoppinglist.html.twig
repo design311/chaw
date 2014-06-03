@@ -6,7 +6,7 @@
 		<li class="active"><a href="#" class="tab-ingredients">Ingredienten</a></li>
 		<li><a href="#" class="tab-recipes">Recepten</a></li>
 	</ul>
-	<div id="ingredients">
+	<div id="ingredients" class="ingredients">
 		<form action="{{ path('design311website_user_aantal_personen') }}" method="get">
 			<input type="text" name="aantal" value="{{app.user.aantalPersonen}}"><input type="submit">
 		</form>

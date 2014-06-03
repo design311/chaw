@@ -42,10 +42,11 @@ security:
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: /.*/add/, roles: ROLE_USER }
+        - { path: /.*/edit/, roles: ROLE_USER }
         - { path: /recepten/.*/like/, roles: ROLE_USER }
         - { path: /recepten/.*/save/, roles: ROLE_USER }
         - { path: /recepten/.*/shop/, roles: ROLE_USER }
+        - { path: /recepten/shoppinglist/, roles: ROLE_USER }
         - { path: /dinners/.*/accept/, roles: ROLE_USER }
         - { path: /dinners/.*/decline/, roles: ROLE_USER }
-        - { path: /admin, roles: ROLE_ADMIN }
         - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
