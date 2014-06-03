@@ -7,9 +7,9 @@
 			{{form_row(form.title)}}
 			<div>
 			{{form_label(form.recipeingredients)}}
-			<p class="inputinfo">Vul de ingredi&euml;n in die je nodig hebt voor dit recept. Optioneel vul je ook de hoeveelheid in van elk ingredient, bijvoorbeeld: 10cl, 100g, 2kg,...</p>
+			<p class="inputinfo">Vul de ingredi&euml;n in die je nodig hebt voor dit recept. Optioneel vul je ook de hoeveelheid in van elk ingredi&euml;nt, bijvoorbeeld: 10cl, 100g, 2kg,...</p>
 			<label for="recipe_recipeingredients_0_amount" class="label amount">Hoeveelheid</label>
-			<label for="recipe_recipeingredients_0_ingredient_name" class="label ingredient">Ingredient</label>
+			<label for="recipe_recipeingredients_0_ingredient_name" class="label ingredient">Ingredi&euml;nt</label>
 			{{form_errors(form.recipeingredients)}}
 			{% if form.recipeingredients|length == 0 %}
 				{{form_widget(form.recipeingredients)}}
@@ -94,7 +94,7 @@
 
 		// setup an "add a photo" link
 		var addPhotoLink = $('<p><a href="#" class="add_photo_link button">Foto toevoegen</a></p>');
-		var addIngredientLink = $('<p><a href="#" class="add_photo_link button">Ingredient toevoegen</a></p>');
+		var addIngredientLink = $('<p><a href="#" class="add_photo_link button">Ingredi&euml;nt toevoegen</a></p>');
 		var deletePhoto = '<a href="#" class="deleterow">Foto verwijderen</a>';
 		var deleteLink = '<a href="#" class="deleterow">X</a>';
 

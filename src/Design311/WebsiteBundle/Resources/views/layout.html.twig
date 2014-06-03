@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
 	<meta charset="UTF-8">
 	<title>{% block title %}Chaw{% endblock %}</title>
@@ -7,6 +7,11 @@
 	{% block head %}{% endblock %}
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css') }}">
 	<script type='text/javascript'>
+	var BugHerdConfig = {
+		"reporter": {
+			"required":"true"
+		}
+	};
 	(function (d, t) {
 	  var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
 	  bh.type = 'text/javascript';
@@ -45,7 +50,7 @@
 		</div>
 		<div class="container">
 			<ul class="menu">
-				<li class="logo"><a href="{{ path('design311website_homepage') }}">Chaw</a></li>
+				<li class="logo notranslate"><a href="{{ path('design311website_homepage') }}">Chaw</a></li>
 				<li><a href="{{ path('design311website_dinners') }}">Dinners</a></li>
 				<li><a href="{{ path('design311website_recepten') }}">Recepten</a></li>
 				<li><a href="#" class="tooltip" title="Binnenkort beschikbaar">Foto's</a></li>

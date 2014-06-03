@@ -13,6 +13,7 @@
 		<div class="onehalf">
 			<div class="date">
 				{{ form_row(form.date) }}
+				<div class="inputinfo date-info"></div>
 			</div>
 			<div class="invitees">
 				{{ form_row(form.maxinvitees) }}
@@ -123,13 +124,23 @@
 
 			$('#dinner_date_date').val('notadate');
 			if ($('#dinner_date_date').val() == 'notadate') {
-				$('#dinner_date_date').val('YYYY-MM-DD');
+				$('#dinner_date_date').val('DD-MM-JJJJ');
+
+				$('.dinnerform').submit(function(){
+					var date = $('#dinner_date_date').val();
+					var days = date.slice(0, 2);
+					var month = date.slice(3, 5);
+					var year = date.slice(6, 10);
+					$('#dinner_date_date').val(year + '-' + month + '-'+days);
+					return true;
+				})
 			}
 
 			$('#dinner_date_time').val('notatime');
 			if ($('#dinner_date_time').val() == 'notatime') {
-				$('#dinner_date_time').val('HH:MM');
+				$('#dinner_date_time').val('UU:MM');
 			}
+
 
 			// adding photos
 			var photoHolder;
