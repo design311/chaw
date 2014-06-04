@@ -24,6 +24,7 @@
 			</div>
 			<i class="clear"></i>
 			{{ form_row(form.diet) }}
+			<p class="inputinfo">Staat je eetgewoonte er niet bij? Mail: <a href="mailto:info@chaw.be">info@chaw.be</a></p>
 			{% if dinner is defined %}
 				{{ form_row(form.change_address, {'value': '0'}) }}
 				<div id="current_address"><strong>Adres</strong> <a href="#" id="change_address">(wijzigen)</a><br>

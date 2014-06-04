@@ -51,7 +51,6 @@ class DinnerController extends BaseController
             ->select('d')
             ->where($qb->expr()->gte('d.date', ':today'))
             ->setParameter('today', new \DateTime())
-            ->orderBy('d.title', 'ASC')
             ->getQuery();
 
         $dinners = $query->execute();

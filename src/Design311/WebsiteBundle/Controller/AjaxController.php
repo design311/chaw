@@ -101,6 +101,8 @@ class AjaxController extends BaseController
             $em->remove($participantRequest);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('success','Je hebt het verzoek geweigerd');
+
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
         }
         else{
@@ -127,6 +129,8 @@ class AjaxController extends BaseController
             $em->persist($participant);
             $em->remove($participantRequest);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success','Je hebt het verzoek geaccepteerd');
 
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participantRequest->getDinner()->getPermalink()) ));
         }

@@ -61,7 +61,7 @@
 			{% endfor %}
 
 			{% set participantUsers = {} %}
-			{% for item in dinner.participantRequests %}
+			{% for item in dinner.participants %}
 			    {% set participantUsers = participantUsers|merge({(loop.index0): item.user.username}) %}
 			{% endfor %}
 

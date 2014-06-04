@@ -1,19 +1,7 @@
-{% if recipes|length != 0 %}
-	<div class="recipe-section">
-		<h2 class="averia">{{title}}</h2>
-		{% for recipe in recipes|slice(0,6) %}
-			<div class="homerecipe{% if (loop.index + 1) is divisible by(3) %} middle{% endif %}">
-				<a href="{{path('design311website_recepten_detail', {'category': recipe.category, 'permalink': recipe.permalink})}}">
-					<img src="{{recipe.photos.0.webPath | apply_filter('recipe_tiny') }}" alt="{{recipe.photos.0.title}}">
-					{{recipe.title}}
-				</a>
-			</div>
-			{% if (loop.index) is divisible by(3) %}<div class="clear"></div>{% endif %}
-		{% endfor %}
-		<div class="clear"></div>
-		{% if recipes|length > 6 %}
-			<div class="showmore">
-				{% for recipe in recipes|slice(6) %}
+<div class="recipe-section">
+	<h2 class="averia">{{title}}</h2>
+	{% if recipes|length != 0 %}
+			{% for recipe in recipes|slice(0,6) %}
 				<div class="homerecipe{% if (loop.index + 1) is divisible by(3) %} middle{% endif %}">
 					<a href="{{path('design311website_recepten_detail', {'category': recipe.category, 'permalink': recipe.permalink})}}">
 						<img src="{{recipe.photos.0.webPath | apply_filter('recipe_tiny') }}" alt="{{recipe.photos.0.title}}">
@@ -21,10 +9,33 @@
 					</a>
 				</div>
 				{% if (loop.index) is divisible by(3) %}<div class="clear"></div>{% endif %}
-				{% endfor %}
-				<div class="clear"></div>
-			</div>
-			<p><a href="#" class="showmore-toggle"><i class="sprite sort-desc small"></i><span>Meer recepten weergeven</span></a></p>
-		{% endif %}
-	</div>
-{% endif %}
+			{% endfor %}
+			<div class="clear"></div>
+			{% if recipes|length > 6 %}
+				<div class="showmore">
+					{% for recipe in recipes|slice(6) %}
+					<div class="homerecipe{% if (loop.index + 1) is divisible by(3) %} middle{% endif %}">
+						<a href="{{path('design311website_recepten_detail', {'category': recipe.category, 'permalink': recipe.permalink})}}">
+							<img src="{{recipe.photos.0.webPath | apply_filter('recipe_tiny') }}" alt="{{recipe.photos.0.title}}">
+							{{recipe.title}}
+						</a>
+					</div>
+					{% if (loop.index) is divisible by(3) %}<div class="clear"></div>{% endif %}
+					{% endfor %}
+					<div class="clear"></div>
+				</div>
+				<p><a href="#" class="showmore-toggle"><i class="sprite sort-desc small"></i><span>Meer recepten weergeven</span></a></p>
+			{% endif %}
+	{% else %}
+	    {% if type == 'saved' %}
+	        <p class="nonefound"><i class="sprite save"></i>Je hebt nog geen recepten bewaard die je later wil maken.</p>
+	    {% else %}
+	    	{% if type == 'liked' %}  
+	        	<p class="nonefound"><i class="sprite heart"></i>Je vind geen enkel recept lekker.</p>
+	    	{% else %}  
+	        	<p class="nonefound"><i class="sprite add"></i>Je hebt zelf nog geen recepten <a href="{{ path('design311website_recepten_add') }}">toegevoegd</a>.</p>
+	    	{% endif %}
+	        
+	    {% endif %}
+	{% endif %}
+</div>

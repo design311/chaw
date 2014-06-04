@@ -1782,7 +1782,6 @@ table.dinners {
   margin-bottom: 1em; }
 
 .add_photo_link {
-  margin-top: 1em;
   display: inline-block; }
 
 .tabs {
@@ -1855,6 +1854,8 @@ table.dinners {
   background: #eee;
   border: 1px solid #ccc;
   padding: 50px; }
+  .welcome h1 {
+    margin-top: 0; }
 
 .userform .onehalf > div {
   margin-bottom: 1em; }
@@ -1880,3 +1881,25 @@ table.dinners {
 
 .recipe-section h2 {
   margin-bottom: 0.5em; }
+
+.dinnerlist {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+  .dinnerlist img {
+    float: left;
+    margin-right: 1em; }
+  .dinnerlist p {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden; }
+  .dinnerlist .title {
+    margin-bottom: 0; }
+  .dinnerlist .dinnermeta {
+    color: #aaa; }
+
+.nonefound {
+  line-height: 18px; }
+  .nonefound i {
+    float: left;
+    margin-right: 5px; }

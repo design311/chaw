@@ -11,7 +11,28 @@ class DefaultController extends BaseController
     	$securityContext = $this->container->get('security.context');
 		if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
             //logged in
-        	return $this->render('Design311WebsiteBundle:User:index.html.twig');
+
+            $em = $this->getDoctrine()->getManager();
+            $qb = $em->createQueryBuilder();
+            $query = $qb
+                ->from('Design311WebsiteBundle:Dinner', 'd')
+                ->select('d')
+                ->innerJoin('d.participants', 'p')
+                ->where($qb->expr()->gte('d.date', ':today'))
+                ->andWhere($qb->expr()->orX(
+                        $qb->expr()->eq('d.user', ':user'),
+                        $qb->expr()->eq('p.user', ':user')
+                    ))
+                ->groupBy('d.id')
+                ->setParameter('today', new \DateTime())
+                ->setParameter('user', $this->getUser()->getId())
+                ->getQuery();
+
+            $dinners = $query->execute();
+
+        	return $this->render('Design311WebsiteBundle:User:index.html.twig', array(
+                'dinners' => $dinners
+                ));
         }
         else{
             //logged out

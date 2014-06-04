@@ -23,7 +23,7 @@ class RecipeType extends AbstractType
         $builder->add('cookingTime', 'integer', array('label' => 'Bereidingstijd (min)'));
         $builder->add('readyTime', 'integer', array('label' => 'Totale tijd (min)'));
         $builder->add('aantalPersonen', 'integer');
-        $builder->add('category', 'entity', array('class' => 'Design311WebsiteBundle:RecipeCategory'));
+        $builder->add('category', 'entity', array('class' => 'Design311WebsiteBundle:RecipeCategory', 'label' => 'Categorie'));
         $builder->add('diet', 'entity', array(
             'class' => 'Design311WebsiteBundle:Diet',
             'label'=> 'Eetgewoonte'

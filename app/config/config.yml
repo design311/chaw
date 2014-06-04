@@ -88,6 +88,9 @@ avalanche_imagine:
         avatar:
             type:    thumbnail
             options: { size: [315, 315], mode: outbound, cache_type: public, cache_expires: 2 weeks }
+        avatar_tiny:
+            type:    thumbnail
+            options: { size: [50, 50], mode: outbound, cache_type: public, cache_expires: 2 weeks }
         avatar_355:
             type:    thumbnail
             options: { size: [355, 355], mode: outbound, cache_type: public, cache_expires: 2 weeks }
