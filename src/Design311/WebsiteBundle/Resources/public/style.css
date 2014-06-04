@@ -1858,3 +1858,25 @@ table.dinners {
 
 .userform .onehalf > div {
   margin-bottom: 1em; }
+
+.showmore-toggle i {
+  margin-right: 5px; }
+
+.showmore {
+  display: none; }
+
+.homerecipe {
+  width: 32%;
+  float: left;
+  margin-bottom: 1em;
+  font-size: 120%; }
+  .homerecipe a {
+    text-decoration: none; }
+  .homerecipe img {
+    float: left; }
+  .homerecipe.middle {
+    margin-left: 2%;
+    margin-right: 2%; }
+
+.recipe-section h2 {
+  margin-bottom: 0.5em; }

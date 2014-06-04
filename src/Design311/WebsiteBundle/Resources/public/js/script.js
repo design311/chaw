@@ -85,6 +85,21 @@ $(function(){
 		return false;
 	})
 
+	$('.showmore-toggle').click(function(){
+		var toggle = $(this);
+		$(this).parent().siblings('.showmore').slideToggle(function(){
+			if ($(this).is(':visible')) {
+				toggle.children('i').removeClass('sort-desc').addClass('sort-asc');
+				toggle.children('span').text('Minder recepten weergeven');
+			}
+			else{
+				toggle.children('i').removeClass('sort-asc').addClass('sort-desc');
+				toggle.children('span').text('Meer recepten weergeven');
+			}
+		});
+		return false;
+	})
+
 })
 
 //images loaded

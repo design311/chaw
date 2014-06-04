@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    {% if app.user.description is null and app.user.recipes|length == 0 and app.user.dinners|length == 0 %}
+	{% if app.user.description is null and app.user.recipes|length == 0 and app.user.dinners|length == 0 %}
 		<div class="welcome">
 			<h1 class="averia">Welkom bij Chaw</h1>
 			<div class="onehalf">
@@ -20,14 +20,22 @@
 			</div>
 			<div class="clear"></div>
 		</div>
-    {% endif %}
+	{% endif %}
+	
+	<div class="activities">
+		<div class="one-third">
+			<h2 class="averia">Dinners waaraan je deelneemt</h2>
 
-    <h1 class="averia">Recente activiteiten</h1>
-    <div class="onehalf">
-    	<h2>Recepten</h2>
-    </div>
-    <div class="onehalf last">
-    	<h2>Dinners</h2>
-    </div>
+			<h2 class="averia">Dinners die je organiseerd</h2>
+		</div>
+		<div class="two-third last">
+			{% include 'Design311WebsiteBundle:Shared:homepage-recipes.html.twig' with {'recipes': app.user.savedRecipes, 'title': 'Bewaarde recepten'} only %}
+
+			{% include 'Design311WebsiteBundle:Shared:homepage-recipes.html.twig' with {'recipes': app.user.likedRecipes, 'title': 'Recepten die ik lekker vind'} only %}
+
+			{% include 'Design311WebsiteBundle:Shared:homepage-recipes.html.twig' with {'recipes': app.user.recipes, 'title': 'Mijn recepten'} only %}
+
+		</div>
+	</div>
 </div>
 {% endblock %}
