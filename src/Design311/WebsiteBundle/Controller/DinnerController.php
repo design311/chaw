@@ -84,7 +84,7 @@ class DinnerController extends BaseController
             ->andWhere($qb->expr()->lte('d.price', $request->get('maxprice')))
             ->setParameter('today', new \DateTime());
 
-        if ($request->get('diet') != null) {
+        if ($request->get('diet') != null && $request->get('diet') != 0) {
             $qb = $qb->andWhere($qb->expr()->in('d.diet', $request->get('diet')));
         }
 
@@ -138,7 +138,7 @@ class DinnerController extends BaseController
             ;
             $this->get('mailer')->send($mail);
 
-            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink())));
+            $this->get('session')->getFlashBag()->add('success','Je deelnameverzoek is verzonden!');
         }
 
         return $this->render(

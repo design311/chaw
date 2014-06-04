@@ -57,9 +57,14 @@ img{
 	height:auto;
 }
 
+abbr{
+	border-bottom:1px dotted;
+}
+
 input, textarea, select{
 	padding:5px;
 	width:100%;
+	border:1px solid #ccc;
 	&[type="checkbox"]{
 		width:auto;
 	}
@@ -551,6 +556,9 @@ button, input[type="submit"]{
 .button-orange{
 	background:$orange;
 	color:#fff;
+	&:hover, &:focus, &:active{
+		color:#ddd;
+	}
 }
 
 .recipecontent{
@@ -720,6 +728,24 @@ table.dinners{
 	}
 	td,th{
 		padding:5px;
+		text-overflow:ellipsis;
+		white-space:nowrap;
+		overflow:hidden;
+	}
+	.date-col{
+		max-width:101px;
+	}
+	.title-col{
+		max-width:733px - 101 - 62 - 103 - 92;
+	}
+	.price-col{
+		max-width:62px;
+	}
+	.city-col{
+		max-width:103px;
+	}
+	.distance-col{
+		max-width:92px;
 	}
 }
 
@@ -880,7 +906,7 @@ table.dinners{
 	border-radius:7px;
 }
 
-.flash-succes, .succes{
+.flash-success, .success{
 	background:#8bf97c;
 	border-color:#118e00;
 }
@@ -926,6 +952,10 @@ table.dinners{
 		&.label{
 			margin-bottom:0;
 		}
+	}
+
+	.labels{
+		width:97%;
 	}
 
 	.amount{
@@ -1057,6 +1087,30 @@ table.dinners{
 .registerform, .recoveryform{
 	div>div{
 		margin-bottom:1em;
+	}
+}
+
+.adddinner{
+	text-align:right;
+	.button{
+		display:inline-block;
+		margin-left:1em;
+	}
+}
+
+.markdown{
+	display:none;
+	table{
+		width:100%;
+	}
+	td,th{
+		padding:5px;
+		border:1px solid #ccc;
+		width:50%;
+	}
+	th{
+		text-align:left;
+		background:#eee;
 	}
 }
 

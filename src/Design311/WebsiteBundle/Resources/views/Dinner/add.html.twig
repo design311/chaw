@@ -9,8 +9,9 @@
 		{{ form_row(form.title) }}
 		<p class="inputinfo">Bijvoorbeeld: "BBQ voor 8 personen", "Italiaanse keuken" of "Gezellig dinner op ons terras"</p>
 		{{ form_row(form.menu) }}
-		<p class="inputinfo">Dit veld ondersteunt <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a></p>
+		<p class="inputinfo">Dit veld ondersteunt <a href="#" id="markdown-toggle">eenvoudige opmaak</a></p>
 		<div class="onehalf">
+			{% include 'Design311WebsiteBundle:Shared:markdown.html.twig' %}
 			<div class="date">
 				{{ form_row(form.date) }}
 				<div class="inputinfo date-info"></div>

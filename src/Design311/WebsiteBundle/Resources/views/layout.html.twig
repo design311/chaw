@@ -66,6 +66,7 @@
 	<script src="{{ asset('bundles/design311website/js/tipsy/jquery.tipsy.min.js') }}"></script>
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/js/tipsy/jquery.tipsy.css') }}">
 	{% block footer %}{% endblock %}
+	<script>var loginpage = "{{path('design311website_login_required', {'auth': 'auth'})}}"</script>
 	<script src="{{ asset('bundles/design311website/js/script.js') }}"></script>
 </body>
 </html>

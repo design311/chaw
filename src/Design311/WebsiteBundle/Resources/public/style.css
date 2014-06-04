@@ -1063,9 +1063,13 @@ img {
   max-width: 100%;
   height: auto; }
 
+abbr {
+  border-bottom: 1px dotted; }
+
 input, textarea, select {
   padding: 5px;
-  width: 100%; }
+  width: 100%;
+  border: 1px solid #ccc; }
   input[type="checkbox"], textarea[type="checkbox"], select[type="checkbox"] {
     width: auto; }
   input[type="file"], textarea[type="file"], select[type="file"] {
@@ -1434,6 +1438,8 @@ a {
 .button-orange, button, input[type="submit"] {
   background: #ff5c23;
   color: #fff; }
+  .button-orange:hover, button:hover, input[type="submit"]:hover, .button-orange:focus, button:focus, input[type="submit"]:focus, .button-orange:active, button:active, input[type="submit"]:active {
+    color: #ddd; }
 
 .recipecontent {
   background: #eee;
@@ -1562,7 +1568,20 @@ table.dinners {
       -o-transition: background-color 1s ease-out;
       transition: background-color 1s ease-out; }
   table.dinners td, table.dinners th {
-    padding: 5px; }
+    padding: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
+  table.dinners .date-col {
+    max-width: 101px; }
+  table.dinners .title-col {
+    max-width: 375px; }
+  table.dinners .price-col {
+    max-width: 62px; }
+  table.dinners .city-col {
+    max-width: 103px; }
+  table.dinners .distance-col {
+    max-width: 92px; }
 
 .checkboxes label {
   font-weight: 300; }
@@ -1680,7 +1699,7 @@ table.dinners {
   border: 1px solid;
   border-radius: 7px; }
 
-.flash-succes, .succes {
+.flash-success, .success {
   background: #8bf97c;
   border-color: #118e00; }
 
@@ -1714,6 +1733,8 @@ table.dinners {
   margin-bottom: 1em; }
   .recipeform .amount.label, .recipeform .ingredient.label {
     margin-bottom: 0; }
+.recipeform .labels {
+  width: 97%; }
 .recipeform .amount {
   width: 33%; }
 .recipeform .ingredient {
@@ -1807,6 +1828,24 @@ table.dinners {
 
 .registerform div > div, .recoveryform div > div {
   margin-bottom: 1em; }
+
+.adddinner {
+  text-align: right; }
+  .adddinner .button, .adddinner button, .adddinner input[type="submit"] {
+    display: inline-block;
+    margin-left: 1em; }
+
+.markdown {
+  display: none; }
+  .markdown table {
+    width: 100%; }
+  .markdown td, .markdown th {
+    padding: 5px;
+    border: 1px solid #ccc;
+    width: 50%; }
+  .markdown th {
+    text-align: left;
+    background: #eee; }
 
 .select2-container {
   width: 100%; }

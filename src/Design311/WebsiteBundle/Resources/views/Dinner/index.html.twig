@@ -7,7 +7,6 @@
 <div class="content">
 	<div class="container">
 		<div class="one-third filters">
-		<p><a href="{{ path('design311website_dinners_add') }}" class="button button-orange adddinner"><i class="sprite plus white"></i>Dinner toevoegen</a></p>
 			<div class="widget">
 				<div class="locationfilter"><label for="locatie"><strong>Locatie</strong></label><br>
 				<input type="text" id="locatie"> <br>
@@ -48,11 +47,14 @@
 				</div>
 				
 				<div class="widget checkboxes">
-					<p><strong>Eetgewoonte</strong></p>
+					<p><label for="diet">Eetgewoonte</label></p>
 					<ul>
-					{% for diet in diets %}
-						<li><input type="checkbox" name="diet" value="{{diet.id}}" id="{{diet.value|lower}}"> <label for="{{diet.value|lower}}">{{diet.value}}</label></li>
-					{% endfor %}
+					<select name="diet" id="diet">
+						<option value="0">Geen voorkeur</option>
+						{% for diet in diets %}
+							<option value="{{diet.id}}">{{diet.value}}</option>
+						{% endfor %}
+					</select>
 					</ul>
 				</div>
 				
@@ -67,6 +69,7 @@
 			</div>
 		</div>
 		<div class="two-third">
+			<p class="adddinner">Zelf ook een dinner organiseren?<a href="{{ path('design311website_dinners_add') }}" class="button button-orange"><i class="sprite plus white"></i>Dinner toevoegen</a></p>
 			<img src="{{ asset('bundles/design311website/img/loader.gif') }}" alt="Loading..." width="16" height="16" id="loading">
 			<table id="dinners" class="dinners">
 				<thead>
@@ -228,6 +231,9 @@
 					}
 				}
 
+				visibleDinners = sortDinners(visibleDinners);
+				visibleDinners = filterDinnersByDate(visibleDinners);
+
 				if (visibleDinners.length !== 0) {
 					dinnersTable.show();
 					nonefound.hide();
@@ -237,8 +243,6 @@
 							dinner.distance = getDistance(currentPosition.lat(), currentPosition.lng(), dinner.lat, dinner.lng);
 						}
 					})
-
-					visibleDinners = sortDinners(visibleDinners);
 
 					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}';
 					$.each(visibleDinners, function(i, dinner){
@@ -254,11 +258,11 @@
 						var distance = (dinner.distance) ? '<span class="tooltip" title="Afstand vanaf '+currentLocation+'">'+Math.round(dinner.distance*100)/100 + ' km</span>' : '<i title="Geef eerst je locatie op" class="sprite question tooltip"></i>';
 						tbody.append(' \
 							<tr id="dinner-'+dinner.id+'"> \
-								<td>'+d+'-'+m+'-'+y+'</td> \
-								<td><a href="'+detailLink+'">'+dinner.title+'</a></td> \
-								<td>€ '+dinner.price+'</td> \
-								<td>'+dinner.city+'</td> \
-								<td>'+ distance +'	</td> \
+								<td class="date-col">'+d+'-'+m+'-'+y+'</td> \
+								<td class="title-col"><a href="'+detailLink+'">'+dinner.title+'</a></td> \
+								<td class="price-col">€ '+dinner.price+'</td> \
+								<td class="city-col">'+dinner.city+'</td> \
+								<td class="distance-col">'+ distance +'	</td> \
 							</tr>');
 					})
 				}
@@ -303,7 +307,8 @@
 				});
 			})
 
-			$('#filters input').change(function(){
+			$('#filters input, #filters select').change(function(){
+				console.log('testing');
 				var filters = {};
 				$.each($('#filters input'), function(index, input) {
 					if ($(input).is(':checkbox')) {
@@ -317,6 +322,9 @@
 					else{
 						filters[input.id] = input.value;
 					}
+				});
+				$.each($('#filters select'), function(index, input) {
+					filters[input.id] = input.value;
 				});
 
 				$.ajax({
@@ -428,36 +436,40 @@
 					dateClickedCounter = 0;
 				}
 
-				if (dateClickedCounter == 0) {
-					filteredDinners = {};
-					$.each(dinners, function(i, dinner){
-							var dinnerDate = new Date(dinner.date);
-							var startval = startdate.val();
-							var endval = enddate.val();
-							var start = new Date(startval);
-							var end = new Date(endval);
+				var filteredDinners = filterDinnersByDate(dinners);
 
-							start.setHours(0,0,0,0);
-							end.setHours(0,0,0,0);
-							dinnerDate.setHours(0,0,0,0);
-
-							if ( (dinnerDate >= start && dinnerDate <= end)
-								|| (dinnerDate >= start && endval == '')
-								|| (startval == '' && dinnerDate <= end)
-								|| (startval == '' && endval == '')
-								) {
-								filteredDinners[i] = dinner;
-							}
-					});
-
-					updateMarkers(filteredDinners);
-					updateDinners();
-					//updateCalendarEvents();
-				}
+				updateMarkers(filteredDinners);
+				updateDinners();
+				//updateCalendarEvents();
 				updateHighlight();
 
 				return false;
 			})
+
+			function filterDinnersByDate(dinners){
+				var filteredDinners = [];
+				$.each(dinners, function(i, dinner){
+						var dinnerDate = new Date(dinner.date);
+						var startval = startdate.val();
+						var endval = enddate.val();
+						var start = new Date(startval);
+						var end = new Date(endval);
+
+						start.setHours(0,0,0,0);
+						end.setHours(0,0,0,0);
+						dinnerDate.setHours(0,0,0,0);
+
+						if ( (dinnerDate >= start && dinnerDate <= end)
+							|| (dinnerDate >= start && endval == '')
+							|| (startval == '' && dinnerDate <= end)
+							|| (startval == '' && endval == '')
+							) {
+							filteredDinners.push(dinner);
+						}
+				});
+
+				return filteredDinners;
+			}
 
 			function updateHighlight(){
 				var start = new Date(startdate.val());

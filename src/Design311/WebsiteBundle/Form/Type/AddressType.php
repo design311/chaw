@@ -10,11 +10,11 @@ class AddressType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('street','text');
-        $builder->add('number','text');
-        $builder->add('zipcode','text');
-        $builder->add('city','text');
-        $builder->add('country','text');
+        $builder->add('street','text', array('label' => 'Straat'));
+        $builder->add('number','text', array('label' => 'Nummer'));
+        $builder->add('zipcode','text', array('label' => 'Postcode'));
+        $builder->add('city','text', array('label' => 'Plaats'));
+        $builder->add('country','text', array('label' => 'Land'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

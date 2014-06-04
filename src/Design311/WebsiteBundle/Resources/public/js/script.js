@@ -45,7 +45,7 @@ $(function(){
 			});
 		}
 		else{
-			window.location = '/login/auth/';
+			window.location = loginpage;
 		}
 		
 		return false;
@@ -72,15 +72,16 @@ $(function(){
 	    $( ".amount" ).text( $( "#slider-range" ).slider( "value" ) );
 	}
 
-	$('.tooltip').tipsy({gravity: $.fn.tipsy.autoNS, live: true});
+	$('.tooltip').tipsy({gravity: $.fn.tipsy.autoNS, live: true, html: true});
 
 	$('.flash').addClass('visible');
-	var removeFlash = setTimeout(function(){
-		$('.flash').removeClass('visible');
-	}, 5000)
 	$('.flash-close').click(function(){
 		$('.flash').removeClass('visible');
-		clearTimeout(removeFlash);
+		return false;
+	})
+
+	$('#markdown-toggle').click(function(){
+		$('.markdown').slideToggle();
 		return false;
 	})
 

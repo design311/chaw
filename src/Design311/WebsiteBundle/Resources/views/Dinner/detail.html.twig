@@ -24,7 +24,7 @@
 			{% if dinner.participants|length > 0 %}
 			<ul>
 			{% for participant in dinner.participants %}
-			    <li>{{participant.user.displayName}}</li>
+			    <li><a href="{{ path('design311website_profile_view', {'username': participant.user.username}) }}">{{participant.user.displayName}}</a></li>
 			{% endfor %}
 			</ul>
 			{% else %}
@@ -40,7 +40,7 @@
 			{% if dinner.participantRequests|length > 0 %}
 			<ul>
 			{% for request in dinner.participantRequests %}
-			    <li>{{request.user.displayName}}</li>
+			    <li><a href="{{ path('design311website_profile_view', {'username': request.user.username}) }}">{{request.user.displayName}}</a></li>
 			{% endfor %}
 			</ul>
 			{% else %}
@@ -54,10 +54,29 @@
 		{{dinner.menu|markdown}}
 
 		{% if app.user %}
-			{% if app.user != dinner.user and app.user not in dinner.participants and app.user not in dinner.participantRequests %}
-			<h2>Deelnemen</h2>
-			<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
-			{{ form(form) }}
+
+			{% set requestUsers = {} %}
+			{% for item in dinner.participantRequests %}
+			    {% set requestUsers = requestUsers|merge({(loop.index0): item.user.username}) %}
+			{% endfor %}
+
+			{% set participantUsers = {} %}
+			{% for item in dinner.participantRequests %}
+			    {% set participantUsers = participantUsers|merge({(loop.index0): item.user.username}) %}
+			{% endfor %}
+
+			{% if app.user != dinner.user and app.user.username not in requestUsers and app.user.username not in participantUsers %}
+				<h2>Deelnemen</h2>
+				<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
+				{{ form(form) }}
+			{% else %}
+				{% if app.user.username in participantUsers %}
+				    <h2>Deelnemen</h2>
+				    <p class="success message">Je neemt al deel aan dit dinner.</p>
+				{% else %}
+				    <h2>Deelnemen</h2>
+				    <p class="success message">Je hebt al een deelnameverzoek verzonden.</p>
+				{% endif %}
 			{% endif %}
 		{% else %}
 		    <h2>Krijg je al spontaan honger?</h2>

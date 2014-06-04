@@ -21,7 +21,8 @@ class DinnerType extends AbstractType
         $builder->add('date', 'datetime', array(
             'date_widget' => 'single_text',
             'time_widget' => 'single_text',
-            'label' => 'Datum'
+            'label' => 'Datum en tijdstip',
+            'label_attr' => array('for' => 'dinner_date_date')
             ));
         $builder->add('menu', 'textarea');
         $builder->add('maxinvitees', 'integer', array('label' => 'Aantal gasten'));

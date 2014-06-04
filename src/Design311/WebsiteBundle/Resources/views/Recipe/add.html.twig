@@ -8,8 +8,10 @@
 			<div>
 			{{form_label(form.recipeingredients)}}
 			<p class="inputinfo">Vul de ingredi&euml;n in die je nodig hebt voor dit recept. Optioneel vul je ook de hoeveelheid in van elk ingredi&euml;nt, bijvoorbeeld: 10cl, 100g, 2kg,...</p>
-			<label for="recipe_recipeingredients_0_amount" class="label amount">Hoeveelheid</label>
-			<label for="recipe_recipeingredients_0_ingredient_name" class="label ingredient">Ingredi&euml;nt</label>
+			<div class="labels">
+				<label for="recipe_recipeingredients_0_amount" class="label amount">Hoeveelheid</label>
+				<label for="recipe_recipeingredients_0_ingredient_name" class="label ingredient">Ingredi&euml;nt</label>
+			</div>
 			{{form_errors(form.recipeingredients)}}
 			{% if form.recipeingredients|length == 0 %}
 				{{form_widget(form.recipeingredients)}}
@@ -56,7 +58,8 @@
 			<div class="recipe-recipe">
 				{{form_row(form.recipe)}}
 			</div>
-			<p class="inputinfo">Dit veld ondersteunt <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a></p>
+			<p class="inputinfo">Gelieve geen hoeveelheden in dit veld te vermelden, de ingredi&euml;nten zullen omgezet worden naar een ander aantal personen. Dit veld ondersteunt <a href="#" id="markdown-toggle">eenvoudige opmaak</a></p>
+			{% include 'Design311WebsiteBundle:Shared:markdown.html.twig' %}
 			{% if form.photos|length == 0 %}
 				{{form_label(form.photos)}}
 				<p class="inputinfo">Laat met minstens 1 foto zien wat mensen kunnen verwachten van je recept. Je kan steeds meerdere foto's toe te voegen om ook de bereidingswijze te laten zien.</p>

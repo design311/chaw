@@ -19,7 +19,7 @@ class RecipeType extends AbstractType
             'by_reference' => false,
             'label' => 'Ingrediënten',
         ));
-        $builder->add('recipe', 'textarea');
+        $builder->add('recipe', 'textarea', array('label' => 'Recept'));
         $builder->add('cookingTime', 'integer', array('label' => 'Bereidingstijd (min)'));
         $builder->add('readyTime', 'integer', array('label' => 'Totale tijd (min)'));
         $builder->add('aantalPersonen', 'integer');
