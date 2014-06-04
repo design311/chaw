@@ -19,6 +19,9 @@
 			<input id="username" type="text" name="_username" value="{{ last_username }}" /></p>
 			<p><label for="password">Wachtwoord</label><br>
 			<input id="password" type="password" name="_password" /></p>
+			{% if auth == false %}
+				<input type="hidden" name="_target_path" value="{{referer}}" />
+			{% endif %}
 			<p class="fr"><input type="submit" name="login" value="Aanmelden" /></p>
 			<p class="recover"><a href="{{ path('design311website_password_recovery') }}">Wachtwoord of gebruikersnaam vergeten?</a></p>
 		</form>

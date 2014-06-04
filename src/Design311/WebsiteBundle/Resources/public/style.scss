@@ -70,6 +70,7 @@ input, textarea, select{
 	}
 	&[type="file"]{
 		padding:5px 0;
+		border:0;
 	}
 }
 
@@ -789,6 +790,10 @@ table.dinners{
 	}
 }
 
+.select2-container{
+	width:100%;
+}
+
 .recipe-user{
 	h3{
 		margin-top:0;
@@ -1114,7 +1119,14 @@ table.dinners{
 	}
 }
 
-//TODO remove debug styling
-.select2-container{
-	width:100%;
+.welcome{
+	background:#eee;
+	border:1px solid #ccc;
+	padding:50px;
+}
+
+.userform{
+	.onehalf>div{
+		margin-bottom:1em;
+	}
 }

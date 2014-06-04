@@ -4,10 +4,8 @@
 <div class="container">
 
 	<h1>Profiel bewerken</h1>
-	<img src="{{ asset(app.user.avatar) | apply_filter('avatar') }}" alt="Avatar {{app.user.displayname}}">
-
-	{{ form_start(form) }}
-		{{ form_row(form.file) }}
+	{{ form_start(form, {'attr':{'class': 'userform'}}) }}
+	<div class="onehalf">
 		{{ form_row(form.displayName) }}
 		{{ form_row(form.email) }}
 		{{ form_row(form.description) }}
@@ -16,9 +14,13 @@
 		{{ form_row(form.twitter) }}
 		{{ form_row(form.googleplus) }}
 		{{ form_row(form.submit) }}
+		<a href="{{ path('design311website_profile_password') }}">Wachtwoord wijzigen?</a>
+	</div>
+	<div class="onehalf last">
+		<img src="{{ asset(app.user.avatar) | apply_filter('avatar') }}" alt="Avatar {{app.user.displayname}}">
+		{{ form_row(form.file) }}
+	</div>
 	{{ form_end(form) }}
-
-	<a href="{{ path('design311website_profile_password') }}">Wachtwoord wijzigen?</a>
 
 
 </div>

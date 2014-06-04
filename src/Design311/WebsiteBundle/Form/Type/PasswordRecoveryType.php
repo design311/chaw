@@ -10,7 +10,7 @@ class PasswordRecoveryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', 'email');
+        $builder->add('email', 'email', array('label' => 'E-mail'));
         $builder->add('submit', 'submit', array('label' => 'Verzenden'));
     }
 

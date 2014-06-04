@@ -1073,7 +1073,8 @@ input, textarea, select {
   input[type="checkbox"], textarea[type="checkbox"], select[type="checkbox"] {
     width: auto; }
   input[type="file"], textarea[type="file"], select[type="file"] {
-    padding: 5px 0; }
+    padding: 5px 0;
+    border: 0; }
 
 label {
   font-weight: bold; }
@@ -1613,6 +1614,9 @@ table.dinners {
   .search-recipe button {
     margin-top: 2em; }
 
+.select2-container {
+  width: 100%; }
+
 .recipe-user h3 {
   margin-top: 0; }
 
@@ -1847,5 +1851,10 @@ table.dinners {
     text-align: left;
     background: #eee; }
 
-.select2-container {
-  width: 100%; }
+.welcome {
+  background: #eee;
+  border: 1px solid #ccc;
+  padding: 50px; }
+
+.userform .onehalf > div {
+  margin-bottom: 1em; }

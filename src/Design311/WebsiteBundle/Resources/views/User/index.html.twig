@@ -1,8 +1,33 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
 {% block content %}
-    
+<div class="container">
+    {% if app.user.description is null and app.user.recipes|length == 0 and app.user.dinners|length == 0 %}
+		<div class="welcome">
+			<h1 class="averia">Welkom bij Chaw</h1>
+			<div class="onehalf">
+				<p>Bedankt voor je aanmelding bij <a href="http://chaw.be">Chaw</a>, de community voor iedereen die graag lekker eet, iedereen dus? Maar ook wel een community voor de <em>proefgierigen</em> onder ons, ga eens bij een andere foodie eten en leer nieuwe recepten kennen.</p>
+				<p>Ik wens je alvast heel veel lekkers toe, laat het smaken, geniet ervan met volle teugen.</p>
+				<p><a href="{{ path('design311website_profile_view', {'username': 'yentl'}) }}">Yentl Bresseleers</a></p>
+			</div>
+			<div class="onehalf last">
+				<strong>Wat doe ik nu?</strong>
+				<ol>
+					<li><a href="{{ path('design311website_profile_edit') }}">Vul je profielgegevens aan &amp; upload een profielafbeelding</a></li>
+					<li><a href="{{ path('design311website_recepten') }}">Ga op zoek naar een lekker recept</a> of <a href="{{ path('design311website_recepten_add') }}">deel zelf een recept</a></li>
+					<li><a href="{{ path('design311website_dinners') }}">Neem deel aan een dinner</a> of <a href="{{ path('design311website_dinners_add') }}">organiseer een etentje bij je thuis</a></li>
+				</ol>
+			</div>
+			<div class="clear"></div>
+		</div>
+    {% endif %}
 
-<h1>Logged in!</h1>
-<a href="{{ path('design311website_logout') }}">Logout</a>
+    <h1 class="averia">Recente activiteiten</h1>
+    <div class="onehalf">
+    	<h2>Recepten</h2>
+    </div>
+    <div class="onehalf last">
+    	<h2>Dinners</h2>
+    </div>
+</div>
 {% endblock %}

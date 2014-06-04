@@ -4,6 +4,7 @@ namespace Design311\WebsiteBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -30,13 +31,23 @@ class UserController extends BaseController
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
+        if ($request->headers->get('referer') == $this->generateUrl('design311website_login', array(), true)
+            || $request->headers->get('referer') == $this->generateUrl('design311website_login_required', array('auth' => 'auth'), true)
+            || $request->headers->get('referer') == '') {
+            $referer = $this->generateUrl('design311website_homepage');
+        }
+        else{
+            $referer = $request->headers->get('referer');
+        }
+
         return $this->render(
             'Design311WebsiteBundle:User:login.html.twig',
             array(
                 // last username entered by the user
                 'last_username' => $session->get(SecurityContext::LAST_USERNAME),
                 'error' => $error,
-                'auth' => $auth
+                'auth' => $auth,
+                'referer' => $referer
             )
         );
     }
@@ -77,6 +88,10 @@ class UserController extends BaseController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+            $this->get('security.context')->setToken($token);
+            $this->get('session')->set('_security_main',serialize($token));
 
             return $this->redirect($this->generateUrl('design311website_homepage'));
         }
