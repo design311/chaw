@@ -1088,7 +1088,13 @@ table.dinners{
 	}
 }
 
-.registerform, .recoveryform{
+.registerform{
+	>div{
+		margin-bottom:1em;
+	}
+}
+
+.recoveryform{
 	div>div{
 		margin-bottom:1em;
 	}

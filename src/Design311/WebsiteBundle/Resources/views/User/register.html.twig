@@ -22,8 +22,16 @@
 			<li>...</li>
 		</ul>
 	</div>
-	<div class="onehalf last">	
-		{{ form(form, {'attr': {'class': 'registerform'}} ) }}
+	<div class="onehalf last">
+		{% if error is defined %}
+			<p class="message error">{{error}}</p>
+		{% endif %}
+		{{ form_start(form, {'attr':{'class': 'registerform'}}) }}
+			<div>
+				{{form_row(form.username) }}
+				<p class="inputinfo">Gebruik enkel letters, cijfers en - voor je gebruikersnaam</p>
+			</div>
+		{{ form_end(form) }}
 	</div>
 
 </div>

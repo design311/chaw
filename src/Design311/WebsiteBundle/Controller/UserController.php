@@ -62,16 +62,18 @@ class UserController extends BaseController
         if ($form->isValid()) {
             $user = $form->getData();
 
-            /*$latLng = $this->geocode($user->getAddress());
-            if (is_object($latLng)) {
-                $user->getAddress()->setLat($latLng->lat);
-                $user->getAddress()->setLng($latLng->lng);
+            $allowedChars = array_merge(range('a', 'z'), range(0,9), array('-'));
+            $allowedChars = array_map('strval', $allowedChars);
+            $usernameChars = str_split( strtolower($user->getUsername()) );
+
+            foreach ($usernameChars as $char) {
+                if (!in_array($char, $allowedChars)) {
+                    return $this->render('Design311WebsiteBundle:User:register.html.twig',array(
+                        'form' => $form->createView(),
+                        'error' => 'De gebruikersnaam bevat ongeldige karaters'
+                    ));
+                }
             }
-            else{
-                //coords could not be found
-                $user->getAddress()->setLat(0);
-                $user->getAddress()->setLng(0);
-            }*/
 
             //set default display name
             $user->setDisplayName($user->getUsername());

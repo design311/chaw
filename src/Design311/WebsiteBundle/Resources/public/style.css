@@ -1829,7 +1829,10 @@ table.dinners {
 .loginform .recover {
   line-height: 48px; }
 
-.registerform div > div, .recoveryform div > div {
+.registerform > div {
+  margin-bottom: 1em; }
+
+.recoveryform div > div {
   margin-bottom: 1em; }
 
 .adddinner {
