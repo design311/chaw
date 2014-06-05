@@ -119,11 +119,47 @@
 			var markerCluster;
 			var geocoder = new google.maps.Geocoder();
 
+			var mapStyle = [
+				{
+					"stylers": [
+						{ "hue": "#ff9100" }
+					]
+				},{
+					"featureType": "poi",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "road",
+					"elementType": "labels.icon",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "transit",
+					"elementType": "labels",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "water",
+					"stylers": [
+						{ "visibility": "simplified" }
+					]
+				},{
+					"featureType": "administrative.neighborhood",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				}
+			]
+
 			map = new google.maps.Map(document.getElementById('map'), {
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				streetViewControl: false,
 				mapTypeControl: false,
-				scrollwheel: false
+				scrollwheel: false,
+				styles:mapStyle
 			});
 			
 			var latlngbounds = new google.maps.LatLngBounds();

@@ -1906,3 +1906,16 @@ table.dinners {
   .nonefound i {
     float: left;
     margin-right: 5px; }
+
+.participantlist {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+  .participantlist li {
+    margin-bottom: 1em; }
+
+.participant {
+  line-height: 50px; }
+  .participant img {
+    float: left;
+    margin-right: 1em; }

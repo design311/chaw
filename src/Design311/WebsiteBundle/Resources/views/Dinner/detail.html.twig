@@ -22,9 +22,9 @@
 		<div class="widget">
 			<h3>Deelnemers</h3>
 			{% if dinner.participants|length > 0 %}
-			<ul>
+			<ul class="participantlist">
 			{% for participant in dinner.participants %}
-			    <li><a href="{{ path('design311website_profile_view', {'username': participant.user.username}) }}">{{participant.user.displayName}}</a></li>
+			    <li class="participant"><a href="{{ path('design311website_profile_view', {'username': participant.user.username}) }}"><img src="{{participant.user.avatar | apply_filter('avatar_tiny') }}" alt="{{participant.user.displayName}}">{{participant.user.displayName}}</a></li>
 			{% endfor %}
 			</ul>
 			{% else %}
@@ -38,9 +38,9 @@
 		<div class="widget">
 			<h3>Verzoeken</h3>
 			{% if dinner.participantRequests|length > 0 %}
-			<ul>
+			<ul class="participantlist">
 			{% for request in dinner.participantRequests %}
-			    <li><a href="{{ path('design311website_profile_view', {'username': request.user.username}) }}">{{request.user.displayName}}</a></li>
+			    <li class="participant"><a href="{{ path('design311website_profile_view', {'username': request.user.username}) }}"><img src="{{request.user.avatar | apply_filter('avatar_tiny') }}" alt="{{request.user.displayName}}">{{request.user.displayName}}</a></li>
 			{% endfor %}
 			</ul>
 			{% else %}

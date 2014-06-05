@@ -1198,3 +1198,18 @@ table.dinners{
 		margin-right:5px;
 	}
 }
+
+.participantlist{
+	@include minireset;
+	li{
+		margin-bottom:1em;
+	}
+}
+
+.participant{
+	img{
+		float:left;
+		margin-right:1em;
+	}
+	line-height:50px;
+}
