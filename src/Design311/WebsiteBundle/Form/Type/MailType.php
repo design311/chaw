@@ -11,9 +11,9 @@ class MailType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('mails', 'text');
-        $builder->add('message', 'textarea');
-        $builder->add('Verzenden', 'submit');
+        $builder->add('mails', 'text', array('label' => 'E-mails'));
+        $builder->add('message', 'textarea', array('label' => 'Uitnodiging'));
+        $builder->add('submit', 'submit', array('label' => 'Verzenden'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

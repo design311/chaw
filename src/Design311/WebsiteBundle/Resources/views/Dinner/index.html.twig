@@ -283,8 +283,7 @@
 					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}';
 					$.each(visibleDinners, function(i, dinner){
 
-
-						var dinnerDate = new Date(dinner.date);
+						var dinnerDate = new Date((dinner.date).slice(0,19)); //slice for IE fix
 						var d = dinnerDate.getDate();
 						var m =  dinnerDate.getMonth();
 						m += 1;  // JavaScript months are 0-11
@@ -344,7 +343,6 @@
 			})
 
 			$('#filters input, #filters select').change(function(){
-				console.log('testing');
 				var filters = {};
 				$.each($('#filters input'), function(index, input) {
 					if ($(input).is(':checkbox')) {

@@ -124,24 +124,55 @@
 				$(this).val(aantal);
 			})
 
-			$('#dinner_date_date').val('notadate');
-			if ($('#dinner_date_date').val() == 'notadate') {
-				$('#dinner_date_date').val('DD-MM-JJJJ');
-
-				$('.dinnerform').submit(function(){
-					var date = $('#dinner_date_date').val();
+			function convertDate(date, type){
+				if (type == 'us') {
 					var days = date.slice(0, 2);
 					var month = date.slice(3, 5);
 					var year = date.slice(6, 10);
-					$('#dinner_date_date').val(year + '-' + month + '-'+days);
+					return year + '-' + month + '-'+days;
+				}
+				else{
+					var year = date.slice(0, 4);
+					var month = date.slice(5, 7);
+					var days = date.slice(8, 10);
+					return days + '-' + month + '-'+year;
+				}
+			}
+
+			var dateVal = $('#dinner_date_date').val();
+			$('#dinner_date_date').val('notadate');
+			if ($('#dinner_date_date').val() == 'notadate') {
+				//input date not supported
+
+				if (dateVal == '') {
+					$('#dinner_date_date').val('DD-MM-JJJJ');
+				}
+				else{
+					var date = convertDate(dateVal,'eu')
+					$('#dinner_date_date').val(date);
+				}
+
+				$('.dinnerform').submit(function(){
+					var date = convertDate($('#dinner_date_date').val(),'us');
+					$('#dinner_date_date').val(date);
 					return true;
 				})
 			}
-
-			$('#dinner_date_time').val('notatime');
-			if ($('#dinner_date_time').val() == 'notatime') {
-				$('#dinner_date_time').val('UU:MM');
+			else{
+				$('#dinner_date_date').val(dateVal);
 			}
+
+			var timeVal = $('#dinner_date_time').val();
+			if (timeVal == '') {
+				$('#dinner_date_time').val('notatime');
+				if ($('#dinner_date_time').val() == 'notatime') {
+					$('#dinner_date_time').val('UU:MM');
+				}
+			}
+			else{
+				$('#dinner_date_time').val(timeVal);
+			}
+
 
 
 			// adding photos

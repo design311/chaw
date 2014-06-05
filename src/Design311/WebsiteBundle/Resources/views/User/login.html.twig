@@ -6,12 +6,12 @@
 		
 		<h1 class="averia">Aanmelden</h1>
 		{% if auth != false %}
-			<p class="message error">Hiervoor moet je eerst aanmelden</p>
+			<p class="message notice">Hiervoor moet je eerst aanmelden</p>
 		{% endif %}
 		<p>Heb je nog geen account? <a href="{{ path('design311website_register') }}">Maak hier je account aan</a></p>
 
 		{% if error %}
-		<div>{{ error.message }}</div>
+			<p class="error message">{{ error.message|trans({},'messages') }}</p>
 		{% endif %}
 		
 		<form action="{{ path('design311website_login_check') }}" method="post" class="loginform">

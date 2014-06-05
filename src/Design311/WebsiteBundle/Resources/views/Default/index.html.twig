@@ -3,7 +3,7 @@
 {% block bodyclass %}home{% endblock %}
 
 {% block head %}
-		<link rel="stylesheet" href="{{ asset('bundles/design311website/js/flexslider/flexslider.css') }}">
+		<!-- <link rel="stylesheet" href="{{ asset('bundles/design311website/js/flexslider/flexslider.css') }}"> -->
 {% endblock %}
 
 {% block content %}
@@ -12,9 +12,10 @@
 			<div>
 				<div class="container">
 					<h1>Chaw</h1>
-					<p class="intro">Laat je inspireren door de smakelijke foto's van andere foodies,<br>meld je aan om zelf ook foto's te delen.</p>
-					<p class="signup"><a href="{{ path('design311website_register') }}" class="register">Registreren</a> of <a href="">explore foto's</a></p>
-					<p class="login">Al lid? <a href="{{ path('design311website_login') }}">Meld je aan</a></p>
+					<p class="intro">Food-community voor iedereen die van lekker eten houd. Doorzoek de recepten of ga eens lekker eten bij een andere Foodie.</p>
+					<!-- <p class="intro">Laat je inspireren door de smakelijke foto's van andere foodies,<br>meld je aan om zelf ook foto's te delen.</p> -->
+					<p class="signup"><a href="{{ path('design311website_register') }}" class="register">Registreren</a> of <a href="#" id="moreinfo">Meer informatie</a></p>
+					<p class="login">Ben je al lid? <a href="{{ path('design311website_login') }}">Meld je aan</a></p>
 				</div>
 			</div>
 		</div>
@@ -32,7 +33,7 @@
 			<h1>Ga eten bij mensen uit je buurt</h1>
 			<p class="intro">Bekijk alle huidige etentjes op de kaart,<br>meld je aan om een etentje te organiseren<br>of om zelf deel de nemen.</p>
 			<p class="signup"><a href="{{ path('design311website_register') }}" class="register">Registreren</a> of <a href="{{ path('design311website_dinners') }}">bekijk alle etentjes</a></p>
-			<p class="login">Al lid? <a href="{{ path('design311website_login') }}">Meld je aan</a></p>
+			<p class="login">Ben je al lid? <a href="{{ path('design311website_login') }}">Meld je aan</a></p>
 		</div>
 		<div id="map"></div>
 	</div>
@@ -43,31 +44,28 @@
 				<h1>...of maak zelf lekker eten</h1>
 				<p class="intro">Zoek recepten op basis van je beschikbare ingredi&euml;nten, meld je aan om recepten toe te voegen aan je winkellijstje.</p>
 				<p class="signup"><a href="{{ path('design311website_register') }}" class="register">Registreren</a> of <a href="{{ path('design311website_recepten') }}">bekijk alle recepten</a></p>
-				<p class="login">Al lid? <a href="{{ path('design311website_login') }}">Meld je aan</a></p>
-				<div class="onehalf">
-					<div class="recept orangehover">
-						<img src="{{ asset('bundles/design311website/img/pictures/food%20(1).jpg') }}" alt="">
-						<div class="hover">
-							<h2 class="text">Pittige Kipfilet a la Pizzaiola</h2>
+				<p class="login">Ben je al lid? <a href="{{ path('design311website_login') }}">Meld je aan</a></p>
+				{% for recipe in newestrecipes %}
+					<div class="onehalf{% if loop.last %} last{% endif %}">
+						<div class="recept orangehover">
+							<img src="{{ recipe.photos.0.webPath |  apply_filter('onehalf') }}" alt="{{recipe.photos.0.title}}">
+							<div class="hover">
+								<h2 class="text">{{recipe.title}}</h2>
+							</div>
 						</div>
+						<p class="likes"><i class="sprite heart"></i>{% if recipe.likedBy|length == 0 %}
+						Nog niemand heeft dit geproefd
+						{% else %}
+						    {{recipe.likedBy|length == 1 ? '1 iemand vind dit lekker' : recipe.likedBy|length ~ ' mensen vinden dit lekker'}}
+						{% endif %}</p>
 					</div>
-					<p class="likes">Nog niemand heeft dit geproefd, wees de eerste!</p>
-				</div>
-				<div class="onehalf last">
-					<div class="recept orangehover">
-						<img src="{{ asset('bundles/design311website/img/pictures/food%20(2).jpg') }}" alt="">
-						<div class="hover">
-							<h2 class="text">Nacho cheese ovenschotel</h2>
-						</div>
-					</div>
-					<p class="likes">5 mensen vinden dit lekker</p>
-				</div>
+				{% endfor %}
 				<div class="clear"></div>
 			</div>
 		</div>
 	</div>
 
-	<div class="restaurants section">
+	<!-- <div class="restaurants section">
 		<div class="flexslider">
 			<ul class="slides">
 				{% for i in 1..4 %}
@@ -81,12 +79,12 @@
 				{% endfor %}
 			</ul>
 		</div>
-	</div>
+	</div> -->
 
 {% endblock %}
 
 {% block footer %}
-	<script src="{{ asset('bundles/design311website/js/flexslider/jquery.flexslider-min.js') }}"></script>
+	<!--script src="{{ asset('bundles/design311website/js/flexslider/jquery.flexslider-min.js') }}"></script-->
 	<script src="{{ asset('bundles/design311website/js/script.js') }}"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
 	<script>
@@ -97,7 +95,7 @@
 				{
 					"stylers": [
 						{ "hue": "#ff9100" },
-						{ "lightness": 70 }
+						{ "lightness": 80 }
 					]
 				},{
 					"featureType": "poi",
@@ -137,6 +135,13 @@
 				styles: mapStyle,
 				center: coord
 			});
+
+			$('#moreinfo').click(function(){
+				$('html,body').animate({
+					scrollTop: $('.map.section').offset().top
+				},1000)
+				return false;
+			})
 		})
 	</script>
 {% endblock %}

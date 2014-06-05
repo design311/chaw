@@ -36,7 +36,12 @@ class DefaultController extends BaseController
         }
         else{
             //logged out
-            return $this->render('Design311WebsiteBundle:Default:index.html.twig'); 
+
+            $newestrecipes = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findBy(array(), array('id' => 'DESC'), 2);
+
+            return $this->render('Design311WebsiteBundle:Default:index.html.twig', array(
+                'newestrecipes' => $newestrecipes
+                )); 
 		}
     }
 
