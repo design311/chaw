@@ -29,8 +29,7 @@ $(function(){
 		if (body.hasClass('loggedin')) {
 
 			var link = $(this);
-
-			//TODO add loader gif for slow json
+			
 			$.getJSON( $(this).data('ajax'), function( data ) {
 				if (data.status === 1) {
 					link.find('.sprite').addClass('orange');

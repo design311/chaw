@@ -326,6 +326,9 @@ class RecipeController extends BaseController
         if ($unit == 'g') {
             $result = round($result);
         }
+        else{
+            $result = round($result,2);
+        }
 
         return $result . $unit;
     }

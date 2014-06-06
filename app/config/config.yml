@@ -66,8 +66,7 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    #spool:     { type: memory }
-    #TODO ENABLE EMAIL SPOOLING
+    spool:     { type: memory }
 
 #avalanche_imagine Configuration
 avalanche_imagine:

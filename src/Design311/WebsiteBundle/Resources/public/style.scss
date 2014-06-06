@@ -1320,3 +1320,20 @@ table.dinners{
 		}
 	}
 }
+
+.printrecipe{
+	position:absolute;
+	right:50px;
+	bottom:30px;
+	line-height:18px;
+	i{
+		float:left;
+		margin-right:5px;
+	}
+	a{
+		color:#fff;
+		&:hover, &:active, &:focus{
+			color:#ccc;
+		}
+	}
+}
