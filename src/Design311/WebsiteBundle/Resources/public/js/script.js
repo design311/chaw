@@ -100,6 +100,27 @@ $(function(){
 		return false;
 	})
 
+	$('.resize').click(function(){
+		
+		$('.mapcontainer').toggleClass('fullscreen');
+
+		if ($('.mapcontainer').hasClass('fullscreen')) {
+			$(this).text('Kaart verkleinen');
+			$('.mapcontainer').animate({
+				height:'100%'
+			}, 1000, 'linear');
+		}
+		else{
+			$(this).text('Kaart vergroten');
+			$('.mapcontainer').animate({
+				height:'495px'
+			}, 1000, 'linear');
+		}
+		setTimeout(function(){
+			google.maps.event.trigger(map, "resize");
+		},1000)
+	})
+
 })
 
 //images loaded

@@ -11,9 +11,14 @@
 	{% endif %}
 {% endspaceless %}{% endblock %}
 
+{% block bodyclass %}mapheader{% endblock %}
+
 {% block content %}
 
-<div id="map" class="map"></div>
+<div class="mapcontainer">
+	<div id="map" class="map"></div>
+	<div class="resize">Kaart vergroten</div>
+</div>
 
 <div class="container">
 	<div class="one-third">
@@ -85,8 +90,10 @@
 				    <h2>Deelnemen</h2>
 				    <p class="success message">Je neemt al deel aan dit dinner.</p>
 				{% else %}
-				    <h2>Deelnemen</h2>
-				    <p class="success message">Je hebt al een deelnameverzoek verzonden.</p>
+					{% if app.user != dinner.user %}
+				   		<h2>Deelnemen</h2>
+				   		<p class="success message">Je hebt al een deelnameverzoek verzonden.</p>
+					{% endif %}
 				{% endif %}
 			{% endif %}
 		{% else %}
@@ -118,13 +125,49 @@
 
 			var dinnerCoords = new google.maps.LatLng({{dinner.address.lat}}, {{dinner.address.lng}});
 
+			var mapStyle = [
+				{
+					"stylers": [
+						{ "hue": "#ff9100" }
+					]
+				},{
+					"featureType": "poi",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "road",
+					"elementType": "labels.icon",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "transit",
+					"elementType": "labels",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "water",
+					"stylers": [
+						{ "visibility": "simplified" }
+					]
+				},{
+					"featureType": "administrative.neighborhood",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				}
+			]
+
 			map = new google.maps.Map(document.getElementById('map'), {
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				streetViewControl: false,
 				mapTypeControl: false,
 				scrollwheel: false,
 				zoom:16,
-				center:dinnerCoords
+				center:dinnerCoords,
+				styles:mapStyle
 			});
 			
 			var marker = new google.maps.Marker({
