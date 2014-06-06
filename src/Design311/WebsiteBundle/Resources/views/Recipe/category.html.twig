@@ -1,11 +1,15 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
+{% block title %}{{ ('Recepten voor ' ~ category.plural|lower ~ ' - ' ~ parent()) 	|truncate(55) }}{% endblock %}
+{% block description %}Blader door de recepten voor {{category.plural|lower}} en zoek naar recepten op basis van je beschikbare indregi&euml;nten.{% endblock %}
+{% block ogimage %}{{ app.request.uriForPath('/' ~ recipes.0.photos.0.webpath) }}{% endblock %}
+
 {% block bodyclass %}recipepage{% endblock %}
 
 {% block content %}
 	<div class="container">
 		<h1 class="averia">{{category.plural}}</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, inventore, vel, sunt labore eius blanditiis ratione enim fuga dolorem id quam nisi dicta necessitatibus expedita neque corrupti adipisci quas quos.</p>
+		<p>{{category.description}}</p>
 	</div>
 	<div class="recipecontent">	
 		<div class="container">

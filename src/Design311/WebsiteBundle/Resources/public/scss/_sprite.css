@@ -68,6 +68,13 @@
   .edit.white {
     background-position: -126px -36px; }
 
+.printicon {
+  background-position: -126px 0; }
+  .printicon.orange {
+    background-position: -126px -18px; }
+  .printicon.white {
+    background-position: -126px -36px; }
+
 .website {
   background-position: 0 -54px; }
 

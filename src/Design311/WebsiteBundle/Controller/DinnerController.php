@@ -100,7 +100,9 @@ class DinnerController extends BaseController
         $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
 
         $data = array();
-        $form = $this->createForm(new MessageType(), $data);
+        $form = $this->createForm(new MessageType(), $data, array(
+            'action' => $this->generateUrl('design311website_dinners_detail', array('permalink' => $permalink))
+            ));
 
         $form->handleRequest($request);
 
@@ -149,10 +151,12 @@ class DinnerController extends BaseController
 
     public function inviteAction(Request $request, $permalink)
     {
-        $invalidMails = [];
+        $invalidMails = array();
 
         $data = array();
-        $form = $this->createForm(new MailType(), $data);
+        $form = $this->createForm(new MailType(), $data, array(
+            'action' => $this->generateUrl('design311website_dinners_invite', array('permalink' => $permalink))
+            ));
 
         $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
 
@@ -219,7 +223,9 @@ class DinnerController extends BaseController
     {
         $dinner = new Dinner();
         $metacategories = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsCalculated(0);
-        $form = $this->createForm(new DinnerType($metacategories), $dinner);
+        $form = $this->createForm(new DinnerType($metacategories), $dinner, array(
+            'action' => $this->generateUrl('design311website_dinners_add')
+            ));
 
         $form->handleRequest($request);
 
@@ -299,7 +305,9 @@ class DinnerController extends BaseController
         }
 
         $metacategories = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsCalculated(0);
-        $form = $this->createForm(new DinnerType($metacategories), $dinner);
+        $form = $this->createForm(new DinnerType($metacategories), $dinner, array(
+            'action' => $this->generateUrl('design311website_dinners_edit')
+            ));
 
         $form->handleRequest($request);
 

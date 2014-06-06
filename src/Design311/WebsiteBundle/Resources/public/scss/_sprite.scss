@@ -95,6 +95,16 @@
 	}
 }
 
+.printicon{
+	background-position:-126px 0;
+	&.orange{
+		background-position:-126px -18px;
+	}
+	&.white{
+		background-position:-126px -36px;
+	}
+}
+
 .website{
 	background-position:0 -54px;
 }

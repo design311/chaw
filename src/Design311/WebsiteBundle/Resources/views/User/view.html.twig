@@ -1,5 +1,9 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
+{% block title %}Foodie {{user.displayName}} - {{parent()}}{% endblock %}
+{% block description %}{{ user.description|truncate(150) }}{% endblock %}
+{% block ogimage %}{{ app.request.uriForPath('/' ~ user.avatar) }}{% endblock %}
+
 {% block bodyclass %}profile-view{% endblock %}
 
 {% block content %}

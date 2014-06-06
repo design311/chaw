@@ -1,5 +1,16 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
+{% block title %}{{ (dinner.title ~ ' - Social Dinnir')|truncate(55) }}{% endblock %}
+{% block description %}{{ ('Social dinner bij ' ~ dinner.user.displayName ~ ': ' ~ dinner.menu)|truncate(150) }}{% endblock %}
+
+{% block ogimage %}{% spaceless %}   
+	{% if dinner.photos.0 is defined %}
+		{{ app.request.uriForPath('/' ~ dinner.photos.0.webPath) }}
+	{% else %}
+		{{ parent() }}
+	{% endif %}
+{% endspaceless %}{% endblock %}
+
 {% block content %}
 
 <div id="map" class="map"></div>

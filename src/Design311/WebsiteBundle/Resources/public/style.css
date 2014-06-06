@@ -1003,6 +1003,13 @@ html[dir="rtl"] .select2-search-choice-close {
   .edit.white {
     background-position: -126px -36px; }
 
+.printicon {
+  background-position: -126px 0; }
+  .printicon.orange {
+    background-position: -126px -18px; }
+  .printicon.white {
+    background-position: -126px -36px; }
+
 .website {
   background-position: 0 -54px; }
 
@@ -1108,6 +1115,12 @@ a {
 
 .clear {
   clear: both; }
+
+.print {
+  display: none; }
+
+.contentblock {
+  height: 100%; }
 
 .onehalf {
   width: 50%;
@@ -1802,7 +1815,8 @@ table.dinners {
     border-top-left-radius: 7px;
     position: relative;
     bottom: -1px;
-    left: -4px; }
+    left: -4px;
+    line-height: 18px; }
     .tabs li:first-child {
       left: 0; }
     .tabs li.active {
@@ -1926,3 +1940,30 @@ table.dinners {
 
 .form > div {
   margin-bottom: 1em; }
+
+.dinners-title {
+  margin: 0;
+  line-height: 48px; }
+
+.ingredientpersons .aantal {
+  width: 35px;
+  text-align: center; }
+
+.recipes h2 {
+  font-size: 1.6em; }
+.recipes h3 {
+  font-size: 1.3em; }
+.recipes > div {
+  border-bottom: 1px solid #ddd; }
+
+.printshoppinglist {
+  float: right;
+  left: 0 !important;
+  background: none !important;
+  border: 0 !important; }
+  .printshoppinglist a {
+    padding-right: 0;
+    padding-left: 0; }
+  .printshoppinglist i {
+    float: left;
+    margin-right: 5px; }

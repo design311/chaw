@@ -1,5 +1,14 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
+{% block title %}Login{% if auth != false %} vereist{% endif %} - {{parent()}}{% endblock %}
+{% block description %}{% spaceless %}
+	{% if auth != false %}
+		Meld je aan om gebruik te maken van deze functie. Nog geen account? Registreer je snel en word lid van Chaw.
+	{% else %}
+		Meld je aan om gebruik te maken van alle functies: deelnemen aan dinners, recepten toevoegen aan je winkelwagentje,...
+	{% endif %}
+{% endspaceless %}{% endblock %}
+
 {% block content %}
 <div class="container">
 	<div class="onehalf">

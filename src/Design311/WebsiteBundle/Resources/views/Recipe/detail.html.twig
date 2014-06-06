@@ -1,6 +1,10 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
-{% block bodyclass %}recipepage recipe-detail{% endblock %}
+{% block title %}{{ (recipe.title ~ ' ('~recipe.readytime~' min) - ' ~ recipe.category ~ ' recept - Chaw recepten')|truncate(55) }}{% endblock %}
+{% block description %}{{ (recipe.recipe)|truncate(150) }}{% endblock %}
+{% block ogimage %}{{ app.request.uriForPath('/' ~ recipe.photos.0.webpath) }}{% endblock %}
+
+{% block bodyclass %}recipepage recipe-detail printthis{% endblock %}
 
 {% block content %}
 	<div class="fixedfix"></div>

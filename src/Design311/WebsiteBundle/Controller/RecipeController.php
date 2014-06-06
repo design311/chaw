@@ -150,7 +150,9 @@ class RecipeController extends BaseController
 
     public function addAction(Request $request)
     {
-        $form = $this->createForm(new RecipeType(), new Recipe());
+        $form = $this->createForm(new RecipeType(), new Recipe(), array(
+            'action' => $this->generateUrl('design311website_recepten_add')
+            ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -207,7 +209,9 @@ class RecipeController extends BaseController
         }
 
 
-        $form = $this->createForm(new RecipeType(), $recipe);
+        $form = $this->createForm(new RecipeType(), $recipe, array(
+            'action' => $this->generateUrl('design311website_recepten_edit')
+            ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -261,7 +265,7 @@ class RecipeController extends BaseController
 
         $shoppinglist = $qb->getQuery()->execute();
 
-        $ingredients = [];
+        $ingredients = array();
 
         foreach ($shoppinglist as $recipe) {
             $recipeIngredients = $recipe->getRecipeIngredients();
@@ -391,9 +395,11 @@ class RecipeController extends BaseController
             $unit = false;
         }
 
+        $decimalPoint = localeconv();
+        $decimalPoint = $decimalPoint['decimal_point'];
         foreach ($numberparts[0] as $key => $part) {
             if (count($numberparts[0])-1 === $key && $key !== 0) {
-                $number.= localeconv()['decimal_point'];
+                $number.= $decimalPoint;
             }
             $number .= $part;
         }

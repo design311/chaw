@@ -5,12 +5,13 @@
 			<ul class="recipemeta">
 				<li><i class="pot white sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
 				<li><i class="bestek white sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
-				<li><i class="heart white sprite"></i>
+				<li class="hide4print"><i class="heart white sprite"></i>
 				{% if recipe.likedBy|length == 0 %}
 				Nog niemand heeft dit geproefd.
 				{% else %}
-				{{recipe.likedBy|length}} {{recipe.likedBy|length == 1 ? 'iemand vindt' : 'mensen vinden'}} dit lekker</li>
+				{{recipe.likedBy|length}} {{recipe.likedBy|length == 1 ? 'iemand vindt' : 'mensen vinden'}} dit lekker
 				{% endif %}
+				</li>
 			</ul>
 		</div>
 	</div>

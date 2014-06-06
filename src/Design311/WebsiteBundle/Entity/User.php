@@ -239,7 +239,8 @@ class User implements UserInterface
     public function preUpload()
     {
         if (null !== $this->getFile()) {
-            $this->avatar = $this->getUsername() .'.'. $this->getFileParts()[1];
+            $fileparts = $this->getFileParts();
+            $this->avatar = $this->getUsername() .'.'. $fileparts[1];
         }
     }
 

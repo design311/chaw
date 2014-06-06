@@ -173,8 +173,9 @@ class Photo
     public function preUpload()
     {   
         if (null !== $this->getFile()) {
-            $this->filename = $this->getFileParts()[0];
-            $this->extension = $this->getFileParts()[1];
+            $fileparts = $this->getFileParts();
+            $this->filename = $fileparts[0];
+            $this->extension = $fileparts[1];
         }
     }
 

@@ -1,0 +1,119 @@
+* {
+  background-image: none !important;
+  background-color: transparent !important;
+  color: #222222 !important; }
+
+.sprite {
+  background-image: url("img/sprite.png") !important; }
+
+.print {
+  display: block; }
+
+.hide4print {
+  display: none; }
+
+.flash, .header {
+  display: none; }
+
+.container, .onehalf, .one-third, .two-third {
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important; }
+
+.print-title {
+  color: #ff5c23 !important;
+  font-family: "Averia Libre", Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+  margin-top: 0;
+  border-bottom: 1px dashed #222;
+  margin-bottom: 0;
+  padding-bottom: 0.6em; }
+
+.print-notice {
+  margin-top: 1em; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Lato", Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+  color: #333; }
+
+.contentblock {
+  display: none; }
+
+.printthis .contentblock {
+  display: block;
+  height: auto; }
+.printthis .print-notice {
+  display: none; }
+.printthis .sprite {
+  -webkit-print-color-adjust: exact; }
+.printthis .heart {
+  background-position: 0 0; }
+.printthis .save {
+  background-position: -18px 0; }
+.printthis .cart {
+  background-position: -36px 0; }
+.printthis .plus {
+  background-position: -54px 0; }
+.printthis .pot {
+  background-position: -72px 0; }
+.printthis .bestek {
+  background-position: -90px 0; }
+.printthis .question {
+  background-position: -108px 0; }
+.printthis .edit {
+  background-position: -126px 0; }
+.printthis .recipemeta li {
+  margin-right: 20px; }
+  .printthis .recipemeta li:after {
+    content: "";
+    padding: 0; }
+
+.recipe-detail .sidebar {
+  display: none; }
+.recipe-detail .detailheader {
+  position: static !important;
+  background: none !important;
+  margin: 0 !important;
+  height: auto; }
+.recipe-detail .title {
+  position: static;
+  background: none;
+  height: auto;
+  margin-bottom: 2em; }
+  .recipe-detail .title h1 {
+    font-size: 1.6em;
+    margin: 0.67em 0; }
+.recipe-detail .fixedfix {
+  display: none; }
+.recipe-detail .recipephotos {
+  display: none; }
+.recipe-detail h2 {
+  font-size: 1.3em; }
+.recipe-detail .recipecontent {
+  border: 0;
+  margin: 0 !important; }
+
+.shoppinglist .ingredients {
+  margin-top: 1em; }
+.shoppinglist .recipelist {
+  margin-bottom: 2em; }
+.shoppinglist .ingredientlist li {
+  line-height: 32px;
+  margin-bottom: 1em;
+  float: left;
+  width: 50%; }
+  .shoppinglist .ingredientlist li:before {
+    content: "";
+    width: 30px;
+    height: 30px;
+    display: block;
+    float: left;
+    border: 1px solid;
+    margin-right: 10px; }
+.shoppinglist .tabs {
+  display: none; }
+.shoppinglist .aantal {
+  border: 0;
+  font-weight: bold;
+  width: 25px; }
+.shoppinglist .recipes > div {
+  border-bottom: 1px dashed; }

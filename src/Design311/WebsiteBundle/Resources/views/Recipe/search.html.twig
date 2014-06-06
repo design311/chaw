@@ -1,5 +1,8 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
+{% block title %}{{ ('Recepten zoeken: ' ~ recipes|length ~ (recipes|length == 1 ? ' recept' : ' recepten') ~ ' gevonden - ' ~ parent())|truncate(55)}}{% endblock %}
+{% block description %}Zoek recepten op basis van de ingredi&euml;nten die je nog hebt, of gewoonweg de dingen die je graag eet.{% endblock %}
+
 {% block bodyclass %}recipepage{% endblock %}
 
 {% block content %}

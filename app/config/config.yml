@@ -103,3 +103,7 @@ services:
         class: Design311\WebsiteBundle\Form\Extension\PhotoTypeExtension
         tags:
             - { name: form.type_extension, alias: file }
+    twig.extension.text:
+     class: Twig_Extensions_Extension_Text
+     tags:
+         - { name: twig.extension }

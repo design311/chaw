@@ -36,6 +36,13 @@ class RecipeCategory
     private $plural;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
      * @ORM\OneToMany(targetEntity="Recipe", mappedBy="category")
     **/
     private $recipe;
@@ -140,5 +147,28 @@ class RecipeCategory
     public function getPlural()
     {
         return $this->plural;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return RecipeCategory
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

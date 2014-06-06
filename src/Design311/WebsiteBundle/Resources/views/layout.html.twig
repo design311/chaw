@@ -2,23 +2,19 @@
 <html lang="nl">
 <head>
 	<meta charset="UTF-8">
-	<title>{% block title %}Chaw{% endblock %}</title>
-	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400|Averia+Libre' rel='stylesheet' type='text/css'>
+	<title>{% block title %}Chaw: Social Dining & Recepten{% endblock %}</title>
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400%7cAveria+Libre' rel='stylesheet' type='text/css'>
 	{% block head %}{% endblock %}
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css') }}">
-	<script type='text/javascript'>
-	var BugHerdConfig = {
-		"reporter": {
-			"required":"true"
-		}
-	};
-	(function (d, t) {
-	  var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
-	  bh.type = 'text/javascript';
-	  bh.src = '//www.bugherd.com/sidebarv2.js?apikey=kt4mldn3ozwspifeszwqyq';
-	  s.parentNode.insertBefore(bh, s);
-	  })(document, 'script');
-	</script>
+	<link rel="stylesheet" href="{{ asset('bundles/design311website/print.css') }}" media="print">
+	<link rel="stylesheet" href="{{ asset('bundles/design311website/js/tipsy/jquery.tipsy.css') }}">
+	<link rel="icon" href="{{ asset('bundles/design311website/img/favicon.ico') }}" type="image/x-icon" />
+	<link rel="shortcut icon" href="{{ asset('bundles/design311website/img/favicon.ico') }}" type="image/x-icon" />
+	<meta name="description" content="{% block description %}Food-community voor iedereen die van lekker eten houd. Doorzoek de recepten of ga eens lekker eten bij een andere Foodie.{% endblock %}">
+	<meta property="og:title" content="{{block('title')}}" />
+	<meta property="og:description" content="{{block('description')}}" />
+	<meta property="og:image" content="{% block ogimage %}{{ app.request.uriForPath('/bundles/design311website/img/chaw.png') }}{% endblock %}" />
+	<meta property="og:site_name" content="Chaw: Social Dining &amp; Recepten" />
 </head>
 <body class="{% block bodyclass %}{% endblock %} {{ app.user ? 'loggedin' : 'loggedout'}}">
 	{% for flashMessage in app.session.flashbag.get('success') %}
@@ -59,14 +55,39 @@
 		</div>
 	</div>
 	{% endif %}
+	<h1 class="print averia print-title">Chaw.be</h1>
+	<p class="print print-notice">Waarom zou je deze pagina willen printen? Laat het ons weten: <a href="mailto:info@chaw.be">info@chaw.be</a></p>
+	<div class="contentblock">
 	{% block content %}{% endblock %}
+	</div>
 	
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="{{ asset('bundles/design311website/js/tipsy/jquery.tipsy.min.js') }}"></script>
-	<link rel="stylesheet" href="{{ asset('bundles/design311website/js/tipsy/jquery.tipsy.css') }}">
 	{% block footer %}{% endblock %}
 	<script>var loginpage = "{{path('design311website_login_required', {'auth': 'auth'})}}"</script>
 	<script src="{{ asset('bundles/design311website/js/script.js') }}"></script>
+	<script type='text/javascript'>
+	var BugHerdConfig = {
+		"reporter": {
+			"required":"true"
+		}
+	};
+	(function (d, t) {
+	  var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
+	  bh.type = 'text/javascript';
+	  bh.src = '//www.bugherd.com/sidebarv2.js?apikey=kt4mldn3ozwspifeszwqyq';
+	  s.parentNode.insertBefore(bh, s);
+	  })(document, 'script');
+	</script>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-22029665-14', 'chaw.be');
+		ga('send', 'pageview');
+	</script>
 </body>
 </html>

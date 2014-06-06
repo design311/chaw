@@ -1,5 +1,9 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
+{% block title %}Alle recepten van {{user.displayName}} - {{ parent() }}{% endblock %}
+{% block description %}Bekijk alle recepten van {{user.displayName}}, voeg ze toe aan je winkellijstje of bewaar je voor later.{% endblock %}
+{% block ogimage %}{{ app.request.uriForPath('/' ~ user.avatar) }}{% endblock %}
+
 {% block bodyclass %}recipepage{% endblock %}
 
 {% block content %}

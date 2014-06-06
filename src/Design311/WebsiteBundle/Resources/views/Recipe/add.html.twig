@@ -1,5 +1,8 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
+{% block title %}Recept toevoegen - {{parent()}}{% endblock %}
+{% block description %}Voeg een recept toe aan Chaw, deel je recept met de wereld en krijg wat promotie voor je eigen website of blog.{% endblock %}
+
 {% block content %}
 	<div class="container">
 	{{ form_start(form, {'attr':{'class': 'recipeform'}}) }}

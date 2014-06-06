@@ -114,6 +114,14 @@ button, input[type="submit"]{
 	clear:both;
 }
 
+.print{
+	display:none;
+}
+
+.contentblock{
+	height:100%;
+}
+
 .onehalf{
 	width:50%;
 	float:left;
@@ -1051,6 +1059,7 @@ table.dinners{
 		position:relative;
 		bottom:-1px;
 		left:-4px;
+		line-height:18px;
 		&:first-child{
 			left:0;
 		}
@@ -1221,5 +1230,44 @@ table.dinners{
 .form{
 	>div{
 		margin-bottom:1em;
+	}
+}
+
+.dinners-title{
+	margin:0;
+	line-height:48px;
+}
+
+.ingredientpersons{
+	.aantal{
+		width:35px;
+		text-align:center;
+	}
+}
+
+.recipes{
+	h2{
+		font-size:1.6em;
+	}
+	h3{
+		font-size:1.3em;
+	}
+	>div{
+		border-bottom:1px solid #ddd;
+	}
+}
+
+.printshoppinglist{
+	float:right;
+	left:0 $i;
+	background:none $i;
+	border:0 $i;
+	a{
+		padding-right:0;
+		padding-left:0;
+	}
+	i{
+		float:left;
+		margin-right:5px;
 	}
 }

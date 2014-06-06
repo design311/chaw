@@ -55,7 +55,9 @@ class UserController extends BaseController
     public function registerAction(Request $request)
     {
         $user = new User();
-        $form = $this->createForm(new UserRegisterType(), $user);
+        $form = $this->createForm(new UserRegisterType(), $user, array(
+            'action' => $this->generateUrl('design311website_register')
+            ));
 
         $form->handleRequest($request);
 
@@ -106,7 +108,9 @@ class UserController extends BaseController
 
     public function editAction(Request $request)
     {
-        $form = $this->createForm(new UserEditType(), $this->getUser());
+        $form = $this->createForm(new UserEditType(), $this->getUser(), array(
+            'action' => $this->generateUrl('design311website_profile_edit')
+            ));
 
         $form->handleRequest($request);
 
@@ -150,7 +154,9 @@ class UserController extends BaseController
 
     public function passwordAction(Request $request)
     {
-        $form = $this->createForm(new UserPasswordType(), $this->getUser());
+        $form = $this->createForm(new UserPasswordType(), $this->getUser(), array(
+            'action' => $this->generateUrl('design311website_profile_password')
+            ));
 
         $form->handleRequest($request);
 
@@ -192,7 +198,9 @@ class UserController extends BaseController
 
             $error = null;
 
-            $form = $this->createForm(new PasswordRecoveryType(), array());
+            $form = $this->createForm(new PasswordRecoveryType(), array(), array(
+                'action' => $this->generateUrl('design311website_password_recovery')
+                ));
 
             $form->handleRequest($request);
 
@@ -241,7 +249,9 @@ class UserController extends BaseController
             $key = $this->generateRecoveryKey($user);
 
             if ($key == $request->query->get('key')) {
-                $form = $this->createForm(new UserPasswordType(), $user);
+                $form = $this->createForm(new UserPasswordType(), $user, array(
+                    'action' => $this->generateUrl('design311website_password_recovery')
+                ));
 
                 $form->handleRequest($request);
 
