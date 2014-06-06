@@ -753,7 +753,7 @@ table.dinners{
 	.price-col{
 		max-width:62px;
 	}
-	.city-col{
+	.diet-col{
 		max-width:103px;
 	}
 	.distance-col{
@@ -1295,5 +1295,28 @@ table.dinners{
 		background:rgba($orange, 0.7);
 		color:#fff;
 		cursor:pointer;
+	}
+}
+
+.dinnerinfo{
+	border-top:1px solid #ddd;
+	&:first-child{
+		border-top:0;
+	}
+	h2{
+		font-size:1.3em;
+		margin-bottom:0;
+	}
+	.dinnermeta{
+		@include minireset;
+		li{
+			display:inline;
+			color:#666;
+			&:first-child{
+				&:after{
+					content:" - "
+				}
+			}
+		}
 	}
 }

@@ -28,7 +28,7 @@ class DinnerController extends BaseController
             $dinnersSimple[$counter]['date'] = $dinner->getDate();
             $dinnersSimple[$counter]['title'] = $dinner->getTitle();
             $dinnersSimple[$counter]['permalink'] = $dinner->getPermalink();
-            $dinnersSimple[$counter]['city'] = $dinner->getAddress()->getCity();
+            $dinnersSimple[$counter]['diet'] = $dinner->getDiet()->getValue();
             $dinnersSimple[$counter]['price'] = $dinner->getPrice();
             $dinnersSimple[$counter]['lat'] = $dinner->getAddress()->getLat();
             $dinnersSimple[$counter]['lng'] = $dinner->getAddress()->getLng();

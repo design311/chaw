@@ -85,7 +85,7 @@
 						<th data-property="date"><i class="sprite small sort-asc"></i>Datum</th>
 						<th data-property="title"><i class="sprite small sort"></i>Titel</th>
 						<th data-property="price"><i class="sprite small sort"></i>Prijs</th>
-						<th data-property="city"><i class="sprite small sort"></i>Plaats</th>
+						<th data-property="diet"><i class="sprite small sort"></i>Eetgewoonte</th>
 						<th data-property="distance"><i class="sprite small sort"></i>Afstand</th>
 					</tr>
 				</thead>
@@ -114,6 +114,7 @@
 			var tbody = $('#dinners tbody');
 			var dinners = $.parseJSON('{{dinners|raw}}');
 			var visibleDinners = [];
+			var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}';
 			//var eventDates = [];
 			var months = ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'];
 			var startdate = $('#startdate');
@@ -129,6 +130,7 @@
 			var markers = [];
 			var markerCluster;
 			var geocoder = new google.maps.Geocoder();
+			var infowindow = new google.maps.InfoWindow();
 
 			var mapStyle = [
 				{
@@ -219,19 +221,48 @@
 				};
 				markers = [];
 
-				$.each(dinners, function(i, item){
+				$.each(dinners, function(i, dinner){
 
-					var coords = new google.maps.LatLng(item.lat, item.lng);
+					var coords = new google.maps.LatLng(dinner.lat, dinner.lng);
+
+					var dinnerDate = new Date((dinner.date).slice(0,19)); //slice for IE fix
+					var d = dinnerDate.getDate();
+					var m =  dinnerDate.getMonth();
+					m += 1;  // JavaScript months are 0-11
+					var y = dinnerDate.getFullYear();
+
+					var detailLink = detail.replace('permalink_holder', dinner.permalink);
+
+					var content = '\
+						<div class="dinnerinfo"> \
+							<h2><a href="'+detailLink+'">'+dinner.title+'</a></h2> \
+							<ul class="dinnermeta"> \
+								<li>'+d+'-'+m+'-'+y+'</li> \
+								<li>&euro;'+dinner.price+'</li> \
+							</ul> \
+							<p>Eetgewoonte: '+dinner.diet+'</p> \
+						</div> \
+					';
+
+
+					$.each(markers, function(index, marker) {
+						var pos = marker.getPosition();
+						if (coords.equals(pos)) {
+							content = marker.info + content;
+							return false; //exit each
+						}
+					});
 					
 					var marker = new google.maps.Marker({
 						map: map,
 						position: coords,
 						icon: "{{ asset('bundles/design311website/img/marker.png')}}",
-						dinnerId: item.id
+						dinnerId: dinner.id,
+						info: content
 					});
 
 					google.maps.event.addListener(marker, 'click', function(){
-						markerClicked(marker.dinnerId)
+						markerClicked(marker)
 					});
 
 					markers.push(marker);
@@ -239,12 +270,19 @@
 				})
 
 				markerCluster = new MarkerClusterer(map, markers, {
-					gridSize: 30
+					gridSize: 30,
+					maxZoom: 12
 				});
 			}
 
-			function markerClicked(id){
-				var dinner = '#dinner-'+id;
+			function markerClicked(marker){
+				infowindow.close();
+				infowindow = new google.maps.InfoWindow({
+					content: marker.info
+				});
+				infowindow.open(map,marker);
+
+				/*var dinner = '#dinner-'+id;
 				$('html,body').animate({
 					scrollTop: $(dinner).offset().top
 				}, 500);
@@ -257,7 +295,7 @@
 				setTimeout(function(){
 					$(dinner).removeAttr('style');
 					$(dinner).removeClass('focus');
-				},2500);
+				},2500);*/
 			}
 
 			function updateDinners(){
@@ -291,7 +329,6 @@
 						}
 					})
 
-					var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}';
 					$.each(visibleDinners, function(i, dinner){
 
 						var dinnerDate = new Date((dinner.date).slice(0,19)); //slice for IE fix
@@ -307,7 +344,7 @@
 								<td class="date-col">'+d+'-'+m+'-'+y+'</td> \
 								<td class="title-col"><a href="'+detailLink+'">'+dinner.title+'</a></td> \
 								<td class="price-col">€ '+dinner.price+'</td> \
-								<td class="city-col">'+dinner.city+'</td> \
+								<td class="diet-col">'+dinner.diet+'</td> \
 								<td class="distance-col">'+ distance +'	</td> \
 							</tr>');
 					})
@@ -345,10 +382,6 @@
 						currentLocation = address;
 						currentPosition = results[0].geometry.location;
 						centerLocation(currentPosition);
-					}
-					else {
-						//TODO proper error message
-						alert('Geocode was not successful for the following reason: ' + status);
 					}
 				});
 			})

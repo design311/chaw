@@ -1595,7 +1595,7 @@ table.dinners {
     max-width: 375px; }
   table.dinners .price-col {
     max-width: 62px; }
-  table.dinners .city-col {
+  table.dinners .diet-col {
     max-width: 103px; }
   table.dinners .distance-col {
     max-width: 92px; }
@@ -1986,3 +1986,20 @@ table.dinners {
   background: rgba(255, 92, 35, 0.7);
   color: #fff;
   cursor: pointer; }
+
+.dinnerinfo {
+  border-top: 1px solid #ddd; }
+  .dinnerinfo:first-child {
+    border-top: 0; }
+  .dinnerinfo h2 {
+    font-size: 1.3em;
+    margin-bottom: 0; }
+  .dinnerinfo .dinnermeta {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+    .dinnerinfo .dinnermeta li {
+      display: inline;
+      color: #666; }
+      .dinnerinfo .dinnermeta li:first-child:after {
+        content: " - "; }
