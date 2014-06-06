@@ -85,6 +85,9 @@
 								<img src="{{ photofield.file.vars.image_url | apply_filter('onehalf')}}" alt="">
 							</div>
 			            {% endif %}
+			            {% if loop.first %}
+							<p><a href="#" class="newphoto">Nieuwe foto uploaden</a></p>
+			            {% endif %}
 			        </div>
 			    {% endfor %}
 			    </div>
@@ -98,6 +101,8 @@
     <script>
     	var photoHolder;
     	var ingredientHolder;
+
+    	console.log(photofields);
 
 		// setup an "add a photo" link
 		var addPhotoLink = $('<p><a href="#" class="add_photo_link button">Foto toevoegen</a></p>');
@@ -123,7 +128,7 @@
 
 		    photoHolder.children('div').each(function(i, el) {
 		    	if (i != 0) {
-		    		$(el).append(deleteLink);
+		    		$(el).append(deletePhoto);
 		    	};
 		    });
 		    ingredientHolder.children('div').each(function(i, el) {
@@ -175,6 +180,20 @@
 		    	var parent = $(this).parent();
 		    	parent.empty().hide();
 		    	parent.siblings('.image').show();
+		    	return false;
+		    })
+
+		    $('.newphoto').click(function(){
+		    	$(this).toggleClass('active');
+
+		    	if ($(this).hasClass('active')) {
+		    		$(this).before('<div class="recipe_photos_0">'+photofields.recipe_photos_0+'</div>');
+		    		$(this).text('Annuleren');
+		    	}
+		    	else{
+		    		$('.recipe_photos_0').remove();
+		    		$(this).text('Nieuwe foto uploaden');
+		    	}
 		    	return false;
 		    })
 		});

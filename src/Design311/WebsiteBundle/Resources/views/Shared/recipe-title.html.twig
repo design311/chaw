@@ -1,7 +1,7 @@
 <div class="title">
 	<div class="container">
 		<div class="fl">
-			<h1 class="averia">{{recipe.title}}</h1>
+			<h1 class="averia" title="{{recipe.title}}">{{recipe.title}}</h1>
 			<ul class="recipemeta">
 				<li><i class="pot white sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
 				<li><i class="bestek white sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
@@ -14,6 +14,8 @@
 				</li>
 			</ul>
 		</div>
+		{% if detail is defined %}
 		<div class="printrecipe"><a href="javascript:window.print()"><i class="sprite white printer"></i>Print deze pagina</a></div>
+		{% endif %}
 	</div>
 </div>

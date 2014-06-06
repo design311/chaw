@@ -1027,7 +1027,9 @@ html[dir="rtl"] .select2-search-choice-close {
   background-position: -108px -54px; }
 
 html, body, .contentwrapper {
-  height: 100%; }
+  height: 100%;
+  margin: 0;
+  padding: 0; }
 
 body {
   font: 16px/1.6em 'Lato', Arial, 'Helvetica Neue', Helvetica, sans-serif;
@@ -1425,6 +1427,8 @@ a {
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   height: 126px; }
+  .newestrecipes .title a {
+    color: #fff; }
 .newestrecipes .container, .newestrecipes .flex-control-nav {
   padding: 20px 50px 30px; }
 .newestrecipes h1 {
@@ -1532,9 +1536,12 @@ a {
     cursor: pointer; }
   .detailheader h1 {
     margin-bottom: 10px;
-    line-height: 1; }
-  .detailheader .container, .detailheader .newestrecipes .flex-control-nav, .newestrecipes .detailheader .flex-control-nav {
-    display: table; }
+    line-height: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden; }
+  .detailheader .fl {
+    width: 100%; }
 
 .recipe-detail .header {
   position: absolute;

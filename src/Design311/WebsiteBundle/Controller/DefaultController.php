@@ -17,13 +17,14 @@ class DefaultController extends BaseController
             $query = $qb
                 ->from('Design311WebsiteBundle:Dinner', 'd')
                 ->select('d')
-                ->innerJoin('d.participants', 'p')
+                ->leftJoin('d.participants', 'p')
                 ->where($qb->expr()->gte('d.date', ':today'))
                 ->andWhere($qb->expr()->orX(
                         $qb->expr()->eq('d.user', ':user'),
                         $qb->expr()->eq('p.user', ':user')
                     ))
                 ->groupBy('d.id')
+                ->orderBy('d.date')
                 ->setParameter('today', new \DateTime())
                 ->setParameter('user', $this->getUser()->getId())
                 ->getQuery();

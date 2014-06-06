@@ -10,6 +10,8 @@ $orange:#ff5c23;
 
 html, body, .contentwrapper{
 	height:100%;
+	margin:0;
+	padding:0;
 }
 
 body{
@@ -537,6 +539,9 @@ button, input[type="submit"]{
 		background:rgba(#000,0.8);
 		color:#fff;
 		height:126px;
+		a{
+			color:#fff;
+		}
 	}
 	.container{
 		padding:20px 50px 30px;
@@ -670,9 +675,12 @@ button, input[type="submit"]{
 	h1{
 		margin-bottom:10px;
 		line-height:1;
+		white-space:nowrap;
+		text-overflow:ellipsis;
+		overflow:hidden;
 	}
-	.container{
-		display:table;
+	.fl{
+		width:100%;
 	}
 }
 

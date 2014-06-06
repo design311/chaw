@@ -72,7 +72,7 @@ class Photo
         // check if we have an old image filename
         if (isset($this->filename)) {
             // store the old name to delete after the update
-            $this->temp = $this->filename;
+            $this->temp = $this->getPath();
             $this->filename = null;
         } else {
             $this->filename = 'initial';
@@ -141,7 +141,7 @@ class Photo
 
     private function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__.'/../../../../public_html/'.$this->getUploadDir();
     }
 
     private function getUploadDir()

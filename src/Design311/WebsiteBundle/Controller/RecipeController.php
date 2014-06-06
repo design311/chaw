@@ -210,7 +210,7 @@ class RecipeController extends BaseController
 
 
         $form = $this->createForm(new RecipeType(), $recipe, array(
-            'action' => $this->generateUrl('design311website_recepten_edit')
+            'action' => $this->generateUrl('design311website_recepten_edit', array('permalink' => $permalink))
             ));
         $form->handleRequest($request);
 
