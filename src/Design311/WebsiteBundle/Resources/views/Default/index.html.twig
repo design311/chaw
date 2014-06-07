@@ -19,19 +19,12 @@
 			<div>
 				<div class="container">
 					<h1>Chaw</h1>
-					<p class="intro">Food-community voor iedereen die van lekker eten houd. Doorzoek de recepten of ga eens lekker eten bij een andere Foodie.</p>
+					<p class="intro">Food-community voor iedereen die van lekker eten houdt. Doorzoek de recepten of ga eens lekker eten bij een andere Foodie.</p>
 					<!-- <p class="intro">Laat je inspireren door de smakelijke foto's van andere foodies,<br>meld je aan om zelf ook foto's te delen.</p> -->
 					<p class="signup"><a href="{{ path('design311website_register') }}" class="register">Registreren</a> of <a href="#" id="moreinfo">Meer informatie</a></p>
 					<p class="login">Ben je al lid? <a href="{{ path('design311website_login') }}">Meld je aan</a></p>
 				</div>
 			</div>
-		</div>
-		<div class="inner">
-			{% for i in 1..23 %}
-				<img src="{{ asset('bundles/design311website/img/pictures/food%20(' ~ i ~ ').jpg') }}" alt="">
-			{% endfor %}
-			<img src="{{ asset('bundles/design311website/img/pictures/food%20(1).png') }}" alt="">
-			<div class="clear"></div>
 		</div>
 	</div>
 
@@ -54,12 +47,14 @@
 				<p class="login">Ben je al lid? <a href="{{ path('design311website_login') }}">Meld je aan</a></p>
 				{% for recipe in newestrecipes %}
 					<div class="onehalf{% if loop.last %} last{% endif %}">
-						<div class="recept orangehover">
-							<img src="{{ recipe.photos.0.webPath |  apply_filter('onehalf') }}" alt="{{recipe.photos.0.title}}">
-							<div class="hover">
-								<h2 class="text">{{recipe.title}}</h2>
+						<a href="{{path('design311website_recepten_detail', {'category': recipe.category.plural|lower, 'permalink': recipe.permalink})}}">
+							<div class="recept orangehover">
+								<img src="{{ recipe.photos.0.webPath |  apply_filter('onehalf') }}" alt="{{recipe.photos.0.title}}">
+								<div class="hover">
+									<h2 class="text">{{recipe.title}}</h2>
+								</div>
 							</div>
-						</div>
+						</a>
 						<p class="likes"><i class="sprite heart"></i>{% if recipe.likedBy|length == 0 %}
 						Nog niemand heeft dit geproefd
 						{% else %}

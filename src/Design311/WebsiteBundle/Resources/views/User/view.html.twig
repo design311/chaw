@@ -46,14 +46,14 @@
 				<li>Nam deel aan <strong>{{user.dinnersParticipated|length}}</strong>  {{user.dinnersParticipated|length == 1 ? 'dinner' : 'dinners'}}</li>
 			</ul>
 		</div>
-		{% if app.user != user %}
+		<!-- {% if app.user != user %}
 		<div class="widget">
 			//feedback form
 		</div>
 		{% endif %}
 		<div class="widget">
 			//feedback
-		</div>
+		</div> -->
 	</div>
 	{% include 'Design311WebsiteBundle:Shared:recipes-list.html.twig' with {'recipes':user.recipes, 'userprofile': user} %}
 
@@ -70,13 +70,49 @@
 
 			var userCoords = new google.maps.LatLng({{location.lat}}, {{location.lng}});
 
+			var mapStyle = [
+				{
+					"stylers": [
+						{ "hue": "#ff9100" }
+					]
+				},{
+					"featureType": "poi",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "road",
+					"elementType": "labels.icon",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "transit",
+					"elementType": "labels",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				},{
+					"featureType": "water",
+					"stylers": [
+						{ "visibility": "simplified" }
+					]
+				},{
+					"featureType": "administrative.neighborhood",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				}
+			]
+
 			map = new google.maps.Map(document.getElementById('map'), {
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				streetViewControl: false,
 				mapTypeControl: false,
 				scrollwheel: false,
 				zoom:14,
-				center:userCoords
+				center:userCoords,
+				styles:mapStyle
 			});
     	})
     </script>

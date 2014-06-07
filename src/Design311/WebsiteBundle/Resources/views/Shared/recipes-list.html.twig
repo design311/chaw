@@ -15,6 +15,9 @@
 					<li><a href="#" class="shop ajax-button" data-ajax="{{path('design311website_recepten_shop', {'permalink': recipe.permalink})}}" title="Recept toevoegen aan winkellijstje"><i class="sprite cart{% if app.user in recipe.shoppinglistFrom %} orange{% endif %}"></i></a></li>
 				</ul>
 		    </div>
+		    {% if loop.index is even %}
+				<div class="clear"></div>
+		    {% endif %}
 		{% endfor %}
 	{% else %}
 		<p>Geen recepten gevonden</p>

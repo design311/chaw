@@ -63,6 +63,7 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
+    encryption: "%mailer_encryption%"
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
@@ -70,8 +71,8 @@ swiftmailer:
 
 #avalanche_imagine Configuration
 avalanche_imagine:
-    source_root:  %kernel.root_dir%/../web
-    web_root:     %kernel.root_dir%/../web
+    source_root:  %kernel.root_dir%/../public_html
+    web_root:     %kernel.root_dir%/../public_html
     cache_prefix: media/cache
     driver:       gd
     filters:

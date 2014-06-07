@@ -306,7 +306,7 @@ class DinnerController extends BaseController
 
         $metacategories = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerCategories')->findByIsCalculated(0);
         $form = $this->createForm(new DinnerType($metacategories), $dinner, array(
-            'action' => $this->generateUrl('design311website_dinners_edit')
+            'action' => $this->generateUrl('design311website_dinners_edit', array('permalink' => $dinner->getPermalink()) )
             ));
 
         $form->handleRequest($request);

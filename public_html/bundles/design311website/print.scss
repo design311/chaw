@@ -1,0 +1,184 @@
+
+$orange:#ff5c23;
+$i:!important;
+
+*{
+	background-image:none $i;
+	background-color:transparent $i;
+	color:#222 $i;
+}
+
+.sprite{
+	background-image:url("img/sprite.png") $i;
+}
+
+.print{
+	display:block;
+}
+
+.hide4print{
+	display:none;
+}
+
+.flash, .header{
+	display:none;
+}
+
+.container, .onehalf, .one-third, .two-third{
+	width:100%;
+	margin:0 $i;
+	padding:0 $i;
+}
+
+.print-title{
+	color:$orange $i;
+	font-family:'Averia Libre', Arial, 'Helvetica Neue', Helvetica, sans-serif $i;
+	margin-top:0;
+	border-bottom:1px dashed #222;
+	margin-bottom:0;
+	padding-bottom:0.6em;
+}
+
+.print-notice{
+	margin-top:1em;
+}
+
+h1, h2, h3, h4, h5, h6{
+	font-family:'Lato', Arial, 'Helvetica Neue', Helvetica, sans-serif $i;
+	color:#333;
+}
+
+.contentblock{
+	display:none;
+}
+
+.printthis{
+	.contentblock{
+		display:block;
+		height:auto;
+	}
+	.print-notice{
+		display:none;
+	}
+	.sprite{
+		-webkit-print-color-adjust: exact;
+	}
+	.heart{
+		background-position:0 0;
+	}
+
+	.save{
+		background-position:-18px 0;
+	}
+
+	.cart{
+		background-position:-36px 0;
+	}
+
+	.plus{
+		background-position:-54px 0;
+	}
+
+	.pot{
+		background-position:-72px 0;
+	}
+
+	.bestek{
+		background-position:-90px 0;
+	}
+
+	.question{
+		background-position:-108px 0;
+	}
+
+	.edit{
+		background-position:-126px 0;
+	}
+	.recipemeta{
+		li{
+			margin-right:20px;
+			&:after{
+				content:"";
+				padding:0;
+			}
+		}
+	}
+}
+
+.recipe-detail{
+	.sidebar{
+		display:none;
+	}
+	.detailheader{
+		position:static $i;
+		background:none $i;
+		margin:0 $i;
+		height:auto;
+	}
+	.title{
+		position:static;
+		background:none;
+		height:auto;
+		margin-bottom:2em;
+		h1{
+			font-size:1.6em;
+			margin:0.67em 0;
+		}
+	}
+	.fixedfix{
+		display:none;
+	}
+	.recipephotos{
+		display:none;
+	}
+	h2{
+		font-size:1.3em;
+	}
+	.recipecontent{
+		border:0;
+		margin:0 $i;
+	}
+}
+
+.shoppinglist{
+	.ingredients{
+		margin-top:1em;
+	}
+	.recipelist{
+		margin-bottom:2em;
+	}
+	.ingredientlist{
+		li{
+			line-height:32px;
+			margin-bottom:1em;
+			float:left;
+			width:50%;
+			&:before{
+				content:"";
+				width:30px;
+				height:30px;
+				display:block;
+				float:left;
+				border:1px solid;
+				margin-right:10px;
+			}
+		}
+	}
+	.tabs{
+		display:none;
+	}
+	.aantal{
+		border:0;
+		font-weight:bold;
+		width:25px;
+	}
+	.recipes{
+		>div{
+			border-bottom:1px dashed;
+		}
+	}
+}
+
+.printrecipe{
+	display:none;
+}
