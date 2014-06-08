@@ -121,7 +121,7 @@ class UserController extends BaseController
             $em->persist($user);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('design311website_profile_view', array('username' => $this->getUser()->getUsername())));
+            return $this->redirect($this->generateUrl('design311website_profile_view', array('username' => strtolower($this->getUser()->getUsername())) ));
         }
 
         return $this->render('Design311WebsiteBundle:User:edit.html.twig',array(

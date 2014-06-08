@@ -1648,9 +1648,7 @@ table.dinners {
   float: left;
   margin-right: 50px;
   margin-bottom: 1em;
-  border-radius: 7px;
-  width: 355px;
-  height: 355px; }
+  border-radius: 7px; }
 .profile-view .content {
   margin-top: -207.5px;
   background: #fff; }
@@ -2018,3 +2016,39 @@ table.dinners {
     color: #fff; }
     .printrecipe a:hover, .printrecipe a:active, .printrecipe a:focus {
       color: #ccc; }
+
+.dinnerinfolist {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+  .dinnerinfolist li {
+    border-top: 1px solid #ccc;
+    padding: 5px 0; }
+    .dinnerinfolist li:first-child {
+      border-top: 0; }
+
+@media screen and (max-width: 1240px) {
+  .container, .newestrecipes .flex-control-nav {
+    width: 960px; }
+
+  .home .intro {
+    font-size: 2em; }
+  .home .recept {
+    height: 250px; }
+
+  .loginform .recover {
+    clear: both; }
+
+  .mapheader .mapcontainer {
+    height: 395px; }
+
+  .calendar th, .calendar td {
+    padding: 5px; }
+
+  table.dinners .date-col, table.dinners .price-col, table.dinners .diet-col, table.dinners .distance-col {
+    width: auto; }
+  table.dinners .title-col {
+    max-width: 220px; }
+
+  .recipeindex .recipeblock .text {
+    font-size: 2em; } }

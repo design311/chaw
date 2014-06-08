@@ -207,7 +207,7 @@ class User implements UserInterface
 
     private function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__.'/../../../../public_html/'.$this->getUploadDir();
     }
 
     private function getUploadDir()
@@ -240,7 +240,7 @@ class User implements UserInterface
     {
         if (null !== $this->getFile()) {
             $fileparts = $this->getFileParts();
-            $this->avatar = $this->getUsername() .'.'. $fileparts[1];
+            $this->avatar = time() .'-'. $this->getUsername() .'.'. $fileparts[1];
         }
     }
 

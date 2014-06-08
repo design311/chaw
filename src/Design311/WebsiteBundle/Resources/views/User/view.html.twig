@@ -12,24 +12,28 @@
 
 <div class="container content">
 
-	<img src="{{ user.avatar | apply_filter('avatar_355') }}" alt="Avatar {{user.displayname}}" class="avatar">
-	<h1>{{user.displayName}}</h1>
-	<p>{{user.description}}</p>
+	<div class="one-third">
+		<img src="{{ user.avatar | apply_filter('avatar_355') }}" alt="Avatar {{user.displayname}}" class="avatar">
+	</div>
+	<div class="two-third">
+		<h1>{{user.displayName}}</h1>
+		<p>{{user.description}}</p>
 
-	<ul class="user-social">
-		{% if user.website is not null %}
-		<li><a href="{{user.website}}" target="_blank"><i class="sprite medium website"></i></a></li>
-		{% endif %}
-		{% if user.facebook is not null %}
-		<li><a href="{{user.facebook}}" target="_blank"><i class="sprite medium facebook"></i></a></li>
-		{% endif %}
-		{% if user.twitter is not null %}
-		<li><a href="{{user.twitter}}" target="_blank"><i class="sprite medium twitter"></i></a></li>
-		{% endif %}
-		{% if user.googleplus is not null %}
-		<li><a href="{{user.googleplus}}" target="_blank"><i class="sprite medium googleplus"></i></a></li>
-		{% endif %}
-	</ul>
+		<ul class="user-social">
+			{% if user.website is not null %}
+			<li><a href="{{user.website}}" target="_blank"><i class="sprite medium website"></i></a></li>
+			{% endif %}
+			{% if user.facebook is not null %}
+			<li><a href="{{user.facebook}}" target="_blank"><i class="sprite medium facebook"></i></a></li>
+			{% endif %}
+			{% if user.twitter is not null %}
+			<li><a href="{{user.twitter}}" target="_blank"><i class="sprite medium twitter"></i></a></li>
+			{% endif %}
+			{% if user.googleplus is not null %}
+			<li><a href="{{user.googleplus}}" target="_blank"><i class="sprite medium googleplus"></i></a></li>
+			{% endif %}
+		</ul>
+	</div>
 
 	<div class="clear"></div>
 

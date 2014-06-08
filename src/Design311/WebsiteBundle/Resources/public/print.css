@@ -82,6 +82,8 @@ h1, h2, h3, h4, h5, h6 {
   .recipe-detail .title h1 {
     font-size: 1.6em;
     margin: 0.67em 0; }
+  .recipe-detail .title .fl {
+    overflow: hidden; }
 .recipe-detail .fixedfix {
   display: none; }
 .recipe-detail .recipephotos {

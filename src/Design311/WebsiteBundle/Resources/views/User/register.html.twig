@@ -32,11 +32,21 @@
 		{{ form_start(form, {'attr':{'class': 'registerform'}}) }}
 			<div>
 				{{form_row(form.username) }}
-				<p class="inputinfo">Gebruik enkel letters, cijfers en - voor je gebruikersnaam</p>
+				<p class="inputinfo">Gebruik enkel kleine letters, cijfers en - voor je gebruikersnaam</p>
 			</div>
 		{{ form_end(form) }}
 	</div>
 
 </div>
 
+{% endblock %}
+
+{% block footer %}
+    <script>
+    $(function(){
+    	$('#userregister_username').change(function(){
+    		$('#userregister_username').val($('#userregister_username').val().toLowerCase());
+    	})
+    })
+    </script>
 {% endblock %}

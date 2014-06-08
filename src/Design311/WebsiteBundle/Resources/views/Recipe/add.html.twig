@@ -102,8 +102,6 @@
     	var photoHolder;
     	var ingredientHolder;
 
-    	console.log(photofields);
-
 		// setup an "add a photo" link
 		var addPhotoLink = $('<p><a href="#" class="add_photo_link button">Foto toevoegen</a></p>');
 		var addIngredientLink = $('<p><a href="#" class="add_photo_link button">Ingredi&euml;nt toevoegen</a></p>');
@@ -114,8 +112,6 @@
 		    // Get the ul that holds the collection of photos
 		    photoHolder = $('#recipe_photos');
 		    ingredientHolder = $('#recipe_recipeingredients');
-
-		    console.log(photoHolder);
 
 		    // add the "add a photo" anchor and li to the photos ul
 		    photoHolder.append(addPhotoLink);
@@ -201,7 +197,6 @@
 		function addInput(holder, link, allowDelete) {
 		    // Get the data-prototype explained earlier
 		    var prototype = holder.data('prototype');
-		    console.log(holder);
 
 		    // get the new index
 		    var index = holder.data('index');

@@ -99,10 +99,10 @@ $(function(){
 		return false;
 	})
 
+	var mapHeight = $('.mapcontainer').css('height');
 	$('.resize').click(function(){
 		
 		$('.mapcontainer').toggleClass('fullscreen');
-
 		if ($('.mapcontainer').hasClass('fullscreen')) {
 			$(this).text('Kaart verkleinen');
 			$('.mapcontainer').animate({
@@ -112,7 +112,7 @@ $(function(){
 		else{
 			$(this).text('Kaart vergroten');
 			$('.mapcontainer').animate({
-				height:'495px'
+				height:mapHeight
 			}, 1000);
 		}
 		setTimeout(function(){

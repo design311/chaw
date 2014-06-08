@@ -27,8 +27,8 @@
 		{% endif %}
 		<div class="widget">
 			<h3>Algemene informatie</h3>
-			<ul>
-				<li>Organisator: <a href="{{ path('design311website_profile_view', {'username': dinner.user.username}) }}">{{dinner.user.displayName}}</a></li>
+			<ul class="dinnerinfolist">
+				<li>Organisator: <a href="{{ path('design311website_profile_view', {'username': dinner.user.username|lower}) }}">{{dinner.user.displayName}}</a></li>
 				<li>Maximum aantal personen: {{dinner.maxInvitees}}</li>
 				<li>Prijs: €{{dinner.price}}</li>
 				<li>Datum: {{dinner.date | date("m/d/Y") }}</li>
@@ -40,7 +40,7 @@
 			{% if dinner.participants|length > 0 %}
 			<ul class="participantlist">
 			{% for participant in dinner.participants %}
-			    <li class="participant"><a href="{{ path('design311website_profile_view', {'username': participant.user.username}) }}"><img src="{{participant.user.avatar | apply_filter('avatar_tiny') }}" alt="{{participant.user.displayName}}">{{participant.user.displayName}}</a></li>
+			    <li class="participant"><a href="{{ path('design311website_profile_view', {'username': participant.user.username|lower}) }}"><img src="{{participant.user.avatar | apply_filter('avatar_tiny') }}" alt="{{participant.user.displayName}}">{{participant.user.displayName}}</a></li>
 			{% endfor %}
 			</ul>
 			{% else %}
@@ -56,7 +56,7 @@
 			{% if dinner.participantRequests|length > 0 %}
 			<ul class="participantlist">
 			{% for request in dinner.participantRequests %}
-			    <li class="participant"><a href="{{ path('design311website_profile_view', {'username': request.user.username}) }}"><img src="{{request.user.avatar | apply_filter('avatar_tiny') }}" alt="{{request.user.displayName}}">{{request.user.displayName}}</a></li>
+			    <li class="participant"><a href="{{ path('design311website_profile_view', {'username': request.user.username|lower}) }}"><img src="{{request.user.avatar | apply_filter('avatar_tiny') }}" alt="{{request.user.displayName}}">{{request.user.displayName}}</a></li>
 			{% endfor %}
 			</ul>
 			{% else %}

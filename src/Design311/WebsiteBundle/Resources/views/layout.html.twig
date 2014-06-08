@@ -37,7 +37,7 @@
 		<div class="topbar">
 			<div class="container">
 				{% if app.user %}
-				<div class="login"><a href="{{ path('design311website_profile_view', {'username': app.user.username}) }}">{{app.user.displayname}}</a><a href="{{ path('design311website_recepten_shoppinglist') }}">Winkellijstje bekijken (<span class="shoppinglistcount">{{app.user.shoppinglist|length}}</span>)</a><a href="{{ path('design311website_logout') }}">Logout</a></div>
+				<div class="login"><a href="{{ path('design311website_profile_view', {'username': app.user.username|lower}) }}">{{app.user.displayname}}</a><a href="{{ path('design311website_recepten_shoppinglist') }}">Winkellijstje bekijken (<span class="shoppinglistcount">{{app.user.shoppinglist|length}}</span>)</a><a href="{{ path('design311website_logout') }}">Logout</a></div>
 				{% else %}
 				<div class="login"><a href="{{ path('design311website_login') }}">Login</a><a href="{{ path('design311website_register') }}">Registreren</a></div>
 				{% endif %}

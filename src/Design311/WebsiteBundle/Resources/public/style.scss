@@ -835,8 +835,6 @@ table.dinners{
 		margin-right:50px;
 		margin-bottom:1em;
 		border-radius:7px;
-		width:355px;
-		height:355px;
 	}
 	.content{
 		margin-top:-207.5px;
@@ -1344,6 +1342,67 @@ table.dinners{
 		color:#fff;
 		&:hover, &:active, &:focus{
 			color:#ccc;
+		}
+	}
+}
+
+.dinnerinfolist{
+	@include minireset;
+	li{
+		border-top:1px solid #ccc;
+		padding:5px 0;
+		&:first-child{
+			border-top:0;
+		}
+	}
+}
+
+@media screen and (max-width:1240px){
+	.container{
+		width:960px;
+	}
+
+	.home{
+		.intro{
+			font-size:2em;
+		}
+		.recept{
+			height:250px;
+		}
+	}
+
+	.loginform{
+		.recover{
+			clear:both;
+		}
+	}
+
+	.mapheader{
+		.mapcontainer{
+			height:395px;
+		}
+	}
+
+	.calendar{
+		th,td{
+			padding:5px;
+		}
+	}
+
+	table.dinners{
+		.date-col, .price-col, .diet-col, .distance-col{
+			width:auto;
+		}
+		.title-col{
+			max-width:220px;
+		}
+	}
+
+	.recipeindex{
+		.recipeblock{
+			.text{
+				font-size:2em;
+			}
 		}
 	}
 }

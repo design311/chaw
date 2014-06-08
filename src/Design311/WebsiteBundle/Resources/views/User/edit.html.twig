@@ -29,3 +29,46 @@
 </div>
 
 {% endblock %}
+
+{% block footer %}
+    <script>
+    $(function(){
+    	$('#useredit_website').change(function(){
+    		var val = $('#useredit_website').val();
+    		if (val.toLowerCase().indexOf("http") == -1){
+    			$('#useredit_website').val('http://'+val);
+    		}
+    	})
+
+    	$('#useredit_facebook').change(function(){
+    		var val = $('#useredit_facebook').val();
+    		if (val.toLowerCase().indexOf("http") == -1){
+    			$('#useredit_facebook').val('http://'+val);
+    			if (val.toLowerCase().indexOf("facebook") == -1){
+    				$('#useredit_facebook').val('http://facebook.com/'+val);
+    			}
+    		}
+    	})
+
+    	$('#useredit_twitter').change(function(){
+    		var val = $('#useredit_twitter').val();
+    		if (val.toLowerCase().indexOf("http") == -1){
+    			$('#useredit_twitter').val('http://'+val);
+    			if (val.toLowerCase().indexOf("twitter") == -1){
+    				$('#useredit_twitter').val('http://twitter.com/'+val);
+    			}
+    		}
+    	})
+
+    	$('#useredit_googleplus').change(function(){
+    		var val = $('#useredit_googleplus').val();
+    		if (val.toLowerCase().indexOf("http") == -1){
+    			$('#useredit_googleplus').val('http://'+val);
+    			if (val.toLowerCase().indexOf("google") == -1){
+    				$('#useredit_googleplus').val('http://plus.google.com/u/0/'+val);
+    			}
+    		}
+    	})
+    })
+    </script>
+{% endblock %}

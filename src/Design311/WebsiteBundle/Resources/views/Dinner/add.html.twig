@@ -4,9 +4,6 @@
 {% block description %}Op een originele manier netwerken? Nodig mensen uit bij je thuis om samen lekker te eten. Social dining is de nieuwe manier om mensen te leren kennen.{% endblock %}
 
 {% block content %}
-<script>
-	var addressField = '{{ form_row(form.address) }}';
-</script>
 <div class="container">
 	{{ form_start(form, {'attr':{'class': 'dinnerform'}}) }}
 		{{ form_row(form.title) }}
@@ -35,16 +32,23 @@
 				{{dinner.address.zipcode}} {{dinner.address.city}}<br>
 				{{dinner.address.country}}
 				</div>
+				<div id="edit_address" style="display:none;">
+					{{ form_row(form.address) }}
+					<a href="#" id="cancel_change">Annuleren</a>
+				</div>
 			{% else %}
 			    {% if app.user.address is null %}
 					{{ form_row(form.change_address) }}
-					<div id="edit_address"></div>
 				{% else %}
 					{{ form_row(form.change_address, {'value': '0'}) }}
 					<div id="current_address"><strong>Adres</strong> <a href="#" id="change_address">(wijzigen)</a><br>
 					{{app.user.address.street}} {{app.user.address.number}}<br>
 					{{app.user.address.zipcode}} {{app.user.address.city}}<br>
 					{{app.user.address.country}}
+					</div>
+					<div id="edit_address" style="display:none;">
+						{{ form_row(form.address) }}
+						<a href="#" id="cancel_change">Annuleren</a>
 					</div>
 				{% endif %}
 			{% endif %}
@@ -93,16 +97,15 @@
 		$(function(){
 
 			// address changing
-			$('#edit_address').append(addressField);
-
 			$('#change_address').click(function(){
-				$(this).parent().hide().after('<div id="edit_address">'+addressField+'<a href="#" id="cancel_change">Annuleren</a></div>');
+				$(this).parent().hide();
+				$('#edit_address').show();
 				$('#dinner_change_address').val(1);
 				return false;
 			})
 
 			$('form').on('click', '#cancel_change', function(){
-				$(this).parent().remove();
+				$(this).parent().hide();
 				$('#current_address').show();
 				$('#dinner_change_address').val(0);
 				return false;
@@ -183,7 +186,7 @@
 
 			// setup an "add a photo" link
 			var addPhotoLink = $('<p><a href="#" class="add_photo_link button">Foto toevoegen</a></p>');
-			var deleteLink = '<a href="#" class="deleterow">Foto verwijderen</a>';
+			var deleteLink = '<p><a href="#" class="deleterow">Foto verwijderen</a></p>';
 
 		    // Get the ul that holds the collection of photos
 		    photoHolder = $('div#dinner_photos');
@@ -209,7 +212,7 @@
 
 		    $('form').on('click','.deleterow', function(e) {
 		    	e.preventDefault();
-		    	$(this).parent().remove();
+		    	$(this).parent().parent().remove();
 		    });
 
 			function addInput(holder, link, allowDelete) {

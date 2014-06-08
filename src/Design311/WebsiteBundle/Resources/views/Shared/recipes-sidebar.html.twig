@@ -12,10 +12,10 @@
 	{% if detail is defined and detail == true %}
 	<div class="widget dark recipe-user">
 		{% if recipe.user.avatar %}
-			<a href="{{path('design311website_profile_view', {'username': recipe.user.username})}}"><img src="{{ recipe.user.avatar | apply_filter('avatar') }}" alt="Avatar {{recipe.user.displayname}}"></a>
+			<a href="{{path('design311website_profile_view', {'username': recipe.user.username|lower})}}"><img src="{{ recipe.user.avatar | apply_filter('avatar') }}" alt="Avatar {{recipe.user.displayname}}"></a>
 		{% endif %}
 		{{recipe.title}}, een recept van:
-		<h3><a href="{{path('design311website_profile_view', {'username': recipe.user.username})}}">{{recipe.user.displayName}}</a></h3>
+		<h3><a href="{{path('design311website_profile_view', {'username': recipe.user.username|lower})}}">{{recipe.user.displayName}}</a></h3>
 		<p>{{recipe.user.description}}</p>
 		<ul class="user-social">
 			{% if recipe.user.website is not null %}
@@ -31,7 +31,7 @@
 			<li><a href="{{recipe.user.googleplus}}" target="_blank"><i class="sprite medium googleplus"></i></a></li>
 			{% endif %}
 		</ul>
-		<p><a href="{{path('design311website_recepten_user', {'username': recipe.user.username})}}">Bekijk alle recepten van {{recipe.user.displayName}}</a></p>
+		<p><a href="{{path('design311website_recepten_user', {'username': recipe.user.username|lower})}}">Bekijk alle recepten van {{recipe.user.displayName}}</a></p>
 	</div>
 	{% endif %}
 	<div class="widget dark search-recipe">
