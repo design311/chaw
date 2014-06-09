@@ -124,6 +124,14 @@ button, input[type="submit"]{
 	height:100%;
 }
 
+.container{
+	position:relative;
+	overflow:auto;
+	width:1240px;
+	padding:50px;
+	margin:0 auto;
+}
+
 .onehalf{
 	width:50%;
 	float:left;
@@ -132,14 +140,6 @@ button, input[type="submit"]{
 		padding-right:0;
 		padding-left:50px;
 	}
-}
-
-.container{
-	position:relative;
-	overflow:auto;
-	width:1240px;
-	padding:50px;
-	margin:0 auto;
 }
 
 .one-third{
@@ -945,6 +945,10 @@ table.dinners{
 }
 
 .dinnerform{
+	h1{
+		margin-top:0;
+		line-height:1;
+	}
 	.onehalf>div{
 		margin-bottom:1em;
 	}
@@ -965,6 +969,14 @@ table.dinners{
 	#dinner_address>div{
 		margin-bottom:1em;
 	}
+	#dinner_submit{
+		float:right;
+		margin-top:3em;
+	}
+}
+
+#topsubmit{
+	margin-top:0.3em;
 }
 
 .recipeform{
@@ -1029,6 +1041,14 @@ table.dinners{
 
 	textarea{
 		height:300px;
+	}
+
+	h1{
+		margin-top:0;
+		line-height:1;
+	}
+	#recipe_submit{
+		float:right;
 	}
 }
 
@@ -1157,6 +1177,13 @@ table.dinners{
 .userform{
 	.onehalf>div{
 		margin-bottom:1em;
+	}
+	h1{
+		margin-top:0;
+		line-height:1;
+	}
+	#useredit_submit{
+		float:right;
 	}
 }
 
@@ -1406,6 +1433,93 @@ table.dinners{
 		.recipeblock{
 			.text{
 				font-size:2em;
+			}
+		}
+	}
+
+	.newestrecipes .flex-control-nav{
+		margin-left: -(960px / 2);
+	}
+}
+
+@media screen and (max-width:960px){
+	
+	.container{
+		width:100%;
+		padding:20px;
+	}
+
+	.onehalf{
+		padding:0 $i;
+		width:100%;
+	}
+
+	.one-third{
+		padding:0 $i;
+		width:100%;
+
+	}
+
+	.two-third{
+		padding:0 $i;
+		width:100%;
+	}
+
+	.home{
+		.description{
+			width:100%;
+			margin-left:0;
+			left:0;
+			padding:20px;
+		}
+		.section{
+			min-height:100%;
+		}
+	}
+
+	.dinnerindex{
+		.sidebar{
+			display:none;
+		}
+	}
+
+	.newestrecipes .flex-control-nav{
+		display:none;
+	}
+
+	.recipeindex .newestrecipes{
+		height:40%;
+	}
+	.recipe-detail{
+		.widget{
+			display:none;
+		}
+	}
+	.printrecipe{
+		display:none;
+	}
+
+	.profile-view{
+		.map{
+			display:none;
+		}
+		.content{
+			margin-top:0;
+		}
+	}
+}
+
+@media screen and (max-width:400px){
+	.home{
+		.intro{
+			display:none;
+		}
+		h1{
+			margin-bottom:20px;
+		}
+		.recepten{
+			.onehalf.last{
+				display:none;
 			}
 		}
 	}

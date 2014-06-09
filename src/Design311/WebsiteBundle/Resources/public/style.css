@@ -1118,6 +1118,13 @@ a {
 .contentblock {
   height: 100%; }
 
+.container, .newestrecipes .flex-control-nav {
+  position: relative;
+  overflow: auto;
+  width: 1240px;
+  padding: 50px;
+  margin: 0 auto; }
+
 .onehalf {
   width: 50%;
   float: left;
@@ -1125,13 +1132,6 @@ a {
   .onehalf.last {
     padding-right: 0;
     padding-left: 50px; }
-
-.container, .newestrecipes .flex-control-nav {
-  position: relative;
-  overflow: auto;
-  width: 1240px;
-  padding: 50px;
-  margin: 0 auto; }
 
 .one-third {
   float: left;
@@ -1732,6 +1732,9 @@ table.dinners {
   background: #f0b174;
   border-color: #e46600; }
 
+.dinnerform h1 {
+  margin-top: 0;
+  line-height: 1; }
 .dinnerform .onehalf > div {
   margin-bottom: 1em; }
 .dinnerform #dinner_date_date {
@@ -1746,6 +1749,12 @@ table.dinners {
   padding-right: 2%; }
 .dinnerform #dinner_address > div {
   margin-bottom: 1em; }
+.dinnerform #dinner_submit {
+  float: right;
+  margin-top: 3em; }
+
+#topsubmit {
+  margin-top: 0.3em; }
 
 .recipeform .onehalf > div {
   margin-bottom: 1em; }
@@ -1786,6 +1795,11 @@ table.dinners {
   margin-bottom: 0 !important; }
 .recipeform textarea {
   height: 300px; }
+.recipeform h1 {
+  margin-top: 0;
+  line-height: 1; }
+.recipeform #recipe_submit {
+  float: right; }
 
 #dinner_photos > div, #recipe_photos > div {
   margin-top: 1em;
@@ -1880,6 +1894,11 @@ table.dinners {
 
 .userform .onehalf > div {
   margin-bottom: 1em; }
+.userform h1 {
+  margin-top: 0;
+  line-height: 1; }
+.userform #useredit_submit {
+  float: right; }
 
 .showmore-toggle i {
   margin-right: 5px; }
@@ -2053,4 +2072,58 @@ table.dinners {
     max-width: 220px; }
 
   .recipeindex .recipeblock .text {
-    font-size: 2em; } }
+    font-size: 2em; }
+
+  .newestrecipes .flex-control-nav {
+    margin-left: -480px; } }
+@media screen and (max-width: 960px) {
+  .container, .newestrecipes .flex-control-nav {
+    width: 100%;
+    padding: 20px; }
+
+  .onehalf {
+    padding: 0 !important;
+    width: 100%; }
+
+  .one-third {
+    padding: 0 !important;
+    width: 100%; }
+
+  .two-third {
+    padding: 0 !important;
+    width: 100%; }
+
+  .home .description {
+    width: 100%;
+    margin-left: 0;
+    left: 0;
+    padding: 20px; }
+  .home .section {
+    min-height: 100%; }
+
+  .dinnerindex .sidebar {
+    display: none; }
+
+  .newestrecipes .flex-control-nav {
+    display: none; }
+
+  .recipeindex .newestrecipes {
+    height: 40%; }
+
+  .recipe-detail .widget {
+    display: none; }
+
+  .printrecipe {
+    display: none; }
+
+  .profile-view .map {
+    display: none; }
+  .profile-view .content {
+    margin-top: 0; } }
+@media screen and (max-width: 400px) {
+  .home .intro {
+    display: none; }
+  .home h1 {
+    margin-bottom: 20px; }
+  .home .recepten .onehalf.last {
+    display: none; } }

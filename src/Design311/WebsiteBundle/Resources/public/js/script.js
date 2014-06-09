@@ -125,7 +125,6 @@ $(function(){
 			google.maps.event.trigger(map, "resize");
 		},1000)
 	})
-
 })
 
 //images loaded

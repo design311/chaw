@@ -3,27 +3,32 @@
 {% block title %}Profiel bewerken - {{parent()}}{% endblock %}
 {% block description %}Bewerk je profiel, schrijf een leuke beschrijving van jezelf zodat andere Foodies je beter leren kennen.{% endblock %}
 
+{% block bodyclass %}userform{% endblock %}
+
 {% block content %}
 <div class="container">
 
-	<h1>Profiel bewerken</h1>
-	{{ form_start(form, {'attr':{'class': 'userform'}}) }}
+	<h1 class="fl">Profiel bewerken</h1>
+    <div class="fr"><a href="#" class="button button-orange" id="topsubmit">Opslaan</a></div>
+    <div class="clear"></div>
+	{{ form_start(form)}}
 	<div class="onehalf">
 		{{ form_row(form.displayName) }}
 		{{ form_row(form.email) }}
-		{{ form_row(form.description) }}
+		{{ form_row(form.description, {'attr':{'maxlength': '512'}}) }}
 		{{ form_row(form.website) }}
 		{{ form_row(form.facebook) }}
 		{{ form_row(form.twitter) }}
 		{{ form_row(form.googleplus) }}
+        <a href="{{ path('design311website_profile_password') }}">Wachtwoord wijzigen?</a>
+    </div>
+    <div class="onehalf last">
+        <img src="{{ app.user.avatar | apply_filter('avatar') }}" alt="Avatar {{app.user.displayname}}">
+        {{ form_row(form.file) }}
+    </div>
+    <div class="clear"></div>
 		{{ form_row(form.submit) }}
-		<a href="{{ path('design311website_profile_password') }}">Wachtwoord wijzigen?</a>
-	</div>
-	<div class="onehalf last">
-		<img src="{{ app.user.avatar | apply_filter('avatar') }}" alt="Avatar {{app.user.displayname}}">
-		{{ form_row(form.file) }}
-	</div>
-	{{ form_end(form) }}
+    {{ form_end(form) }}
 
 
 </div>
@@ -33,6 +38,12 @@
 {% block footer %}
     <script>
     $(function(){
+
+        $('#topsubmit').click(function(){
+            $('#useredit_submit').click();
+            return false;
+        })
+
     	$('#useredit_website').change(function(){
     		var val = $('#useredit_website').val();
     		if (val.toLowerCase().indexOf("http") == -1){

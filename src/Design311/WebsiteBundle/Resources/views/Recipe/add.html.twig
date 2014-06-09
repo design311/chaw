@@ -3,9 +3,19 @@
 {% block title %}Recept toevoegen - {{parent()}}{% endblock %}
 {% block description %}Voeg een recept toe aan Chaw, deel je recept met de wereld en krijg wat promotie voor je eigen website of blog.{% endblock %}
 
+{% block bodyclass %}recipeform{% endblock %}
+
 {% block content %}
 	<div class="container">
-	{{ form_start(form, {'attr':{'class': 'recipeform'}}) }}
+	{% if recipe is defined %}
+		<h1 class="fl">Recept bewerken</h1>
+		<div class="fr"><a href="#" class="button button-orange" id="topsubmit">Wijzigingen opslaan</a></div>
+	{% else %}
+	    <h1 class="fl">Recept toevoegen</h1>
+		<div class="fr"><a href="#" class="button button-orange" id="topsubmit">Recept toevoegen</a></div>
+	{% endif %}
+	<div class="clear"></div>
+	{{ form_start(form) }}
 		<div class="onehalf">
 			{{form_row(form.title)}}
 			<div>
@@ -52,11 +62,6 @@
 				{{form_row(form.diet)}}
 				<p class="inputinfo">Staat je eetgewoonte er niet bij? Mail: <a href="mailto:info@chaw.be">info@chaw.be</a></p>
 			</div>
-			{% if recipe is defined %}
-				{{ form_row(form.submit, {'label':'Wijzigingen opslaan'}) }}
-			{% else %}
-				{{form_row(form.submit)}}
-			{% endif %}
 		</div>
 		<div class="onehalf last">
 			<div class="recipe-recipe">
@@ -91,6 +96,11 @@
 			        </div>
 			    {% endfor %}
 			    </div>
+			{% endif %}
+			{% if recipe is defined %}
+				{{ form_row(form.submit, {'label':'Wijzigingen opslaan'}) }}
+			{% else %}
+				{{form_row(form.submit)}}
 			{% endif %}
 		</div>
 	{{ form_end(form) }}
@@ -192,6 +202,11 @@
 		    	}
 		    	return false;
 		    })
+
+	        $('#topsubmit').click(function(){
+	            $('#recipe_submit').click();
+	            return false;
+	        })
 		});
 
 		function addInput(holder, link, allowDelete) {

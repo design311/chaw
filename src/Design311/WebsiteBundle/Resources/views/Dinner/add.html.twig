@@ -3,9 +3,19 @@
 {% block title %}Zelf Social Dining organiseren. Random People Dinners{% endblock %}
 {% block description %}Op een originele manier netwerken? Nodig mensen uit bij je thuis om samen lekker te eten. Social dining is de nieuwe manier om mensen te leren kennen.{% endblock %}
 
+{% block bodyclass %}dinnerform{% endblock %}
+
 {% block content %}
 <div class="container">
-	{{ form_start(form, {'attr':{'class': 'dinnerform'}}) }}
+	{% if dinner is defined %}
+		<h1 class="fl">Dinner bewerken</h1>
+		<div class="fr"><a href="#" class="button button-orange" id="topsubmit">Wijzigingen opslaan</a></div>
+	{% else %}
+	    <h1 class="fl">Dinner organiseren</h1>
+		<div class="fr"><a href="#" class="button button-orange" id="topsubmit">Dinner organiseren</a></div>
+	{% endif %}
+	<div class="clear"></div>
+	{{ form_start(form) }}
 		{{ form_row(form.title) }}
 		<p class="inputinfo">Bijvoorbeeld: "BBQ voor 8 personen", "Italiaanse keuken" of "Gezellig dinner op ons terras"</p>
 		{{ form_row(form.menu) }}
@@ -39,6 +49,7 @@
 			{% else %}
 			    {% if app.user.address is null %}
 					{{ form_row(form.change_address) }}
+					{{ form_row(form.address) }}
 				{% else %}
 					{{ form_row(form.change_address, {'value': '0'}) }}
 					<div id="current_address"><strong>Adres</strong> <a href="#" id="change_address">(wijzigen)</a><br>
@@ -51,11 +62,6 @@
 						<a href="#" id="cancel_change">Annuleren</a>
 					</div>
 				{% endif %}
-			{% endif %}
-			{% if dinner is defined %}
-				{{ form_row(form.submit, {'label':'Wijzigingen opslaan'}) }}
-			{% else %}
-				{{ form_row(form.submit) }}
 			{% endif %}
 		</div>
 		<div class="onehalf last">
@@ -86,6 +92,11 @@
 			    {% endfor %}
 			    </div>
 			{% endif %}
+			{% if dinner is defined %}
+				{{ form_row(form.submit, {'label':'Wijzigingen opslaan'}) }}
+			{% else %}
+				{{ form_row(form.submit) }}
+			{% endif %}
 		</div>
 	{{ form_end(form) }}
 	<div class="clear"></div>
@@ -95,6 +106,11 @@
 {% block footer %}
     <script type="text/javascript">
 		$(function(){
+
+			$('#topsubmit').click(function(){
+				$('#dinner_submit').click();
+				return false;
+			})
 
 			// address changing
 			$('#change_address').click(function(){
