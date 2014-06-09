@@ -31,7 +31,10 @@
 		{% endif %}
 		{{ form_start(form, {'attr':{'class': 'registerform'}}) }}
 			<div>
-				{{form_row(form.username) }}
+				{{form_label(form.username) }}
+				<strong class="usernameexists"></strong>
+				{{form_errors(form.username) }}
+				{{form_widget(form.username) }}
 				<p class="inputinfo">Gebruik enkel kleine letters, cijfers en - voor je gebruikersnaam</p>
 			</div>
 		{{ form_end(form) }}
@@ -45,7 +48,24 @@
     <script>
     $(function(){
     	$('#userregister_username').change(function(){
-    		$('#userregister_username').val($('#userregister_username').val().toLowerCase());
+    		var username = $('#userregister_username').val().toLowerCase();
+    		$('#userregister_username').val(username);
+    		$.ajax({
+				url: "{{path('design311website_ajax_username_exists')}}",
+				type: "POST",
+				data: {'username': username},
+				dataType: "JSON",
+				success: function (data) {
+					if (data) {
+						$('#userregister_submit').prop('disabled', true);
+						$('.usernameexists').text('('+username + ' is al in gebruik)').addClass('red').removeClass('green');
+					}
+					else{
+						$('#userregister_submit').prop('disabled', false);
+						$('.usernameexists').text('('+username + ' is beschikbaar)').addClass('green').removeClass('red');
+					}
+				}
+			});
     	})
     })
     </script>

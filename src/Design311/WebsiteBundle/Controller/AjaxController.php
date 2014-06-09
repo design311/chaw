@@ -281,4 +281,15 @@ class AjaxController extends BaseController
             throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
         }
     }
+
+    public function usernameExistsAction(Request $request){
+        $user = $this->getDoctrine()->getRepository('Design311WebsiteBundle:User')->findOneByUsername($request->get('username'));
+
+        if ($user == null) {
+            return new JsonResponse(false);
+        }
+        else{
+            return new JsonResponse(true);
+        }
+    }
 }

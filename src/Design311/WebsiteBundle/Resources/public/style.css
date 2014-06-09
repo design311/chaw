@@ -1089,6 +1089,9 @@ textarea {
 button, input[type="submit"] {
   border: 0;
   width: auto; }
+  button:disabled, input[type="submit"]:disabled {
+    background: #ccc;
+    color: #333333; }
 
 .inputinfo {
   font-size: 90%;
@@ -1739,6 +1742,15 @@ table.dinners {
 .flash-notice, .notice {
   background: #f0b174;
   border-color: #e46600; }
+
+.red {
+  color: #cd1d00; }
+
+.green {
+  color: #118e00; }
+
+.yellow {
+  color: #e46600; }
 
 .dinnerform h1 {
   margin-top: 0;

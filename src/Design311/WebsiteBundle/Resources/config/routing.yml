@@ -25,6 +25,10 @@ design311website_register:
     path:      /registreren/
     defaults:  { _controller: Design311WebsiteBundle:User:register }
 
+design311website_ajax_username_exists:
+    path:      /username-exists/
+    defaults:  { _controller: Design311WebsiteBundle:Ajax:usernameExists }
+
 design311website_profile_edit:
     path:      /profiel/edit/
     defaults:  { _controller: Design311WebsiteBundle:User:edit }

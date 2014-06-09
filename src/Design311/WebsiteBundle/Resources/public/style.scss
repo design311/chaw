@@ -90,6 +90,10 @@ button, input[type="submit"]{
 	@extend .button-orange;
 	border:0;
 	width:auto;
+	&:disabled{
+		background:#ccc;
+		color:$black;
+	}
 }
 
 .inputinfo{
@@ -952,6 +956,18 @@ table.dinners{
 .flash-notice, .notice{
 	background:#f0b174;
 	border-color:#e46600;
+}
+
+.red{
+	color:#cd1d00;
+}
+
+.green{
+	color:#118e00;
+}
+
+.yellow{
+	color:#e46600;
 }
 
 .dinnerform{
