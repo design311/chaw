@@ -17,20 +17,24 @@
 	</div>
 	<div class="two-third">
 		<h1>{{user.displayName}}</h1>
-		<p>{{user.description}}</p>
+		{% if user.description is empty %}
+			<p>{{user.description}}</p>
+		{% else %}
+			<p>{{user.displayName}} heeft nog geen korte voorstelling.</p> 
+		{% endif %}
 
 		<ul class="user-social">
 			{% if user.website is not null %}
-			<li><a href="{{user.website}}" target="_blank"><i class="sprite medium website"></i></a></li>
+			<li><a href="{{user.website}}" target="_blank"><i class="sprite medium website tooltip" title="Website"></i></a></li>
 			{% endif %}
 			{% if user.facebook is not null %}
-			<li><a href="{{user.facebook}}" target="_blank"><i class="sprite medium facebook"></i></a></li>
+			<li><a href="{{user.facebook}}" target="_blank"><i class="sprite medium facebook tooltip" title="Facebook"></i></a></li>
 			{% endif %}
 			{% if user.twitter is not null %}
-			<li><a href="{{user.twitter}}" target="_blank"><i class="sprite medium twitter"></i></a></li>
+			<li><a href="{{user.twitter}}" target="_blank"><i class="sprite medium twitter tooltip" title="Twitter"></i></a></li>
 			{% endif %}
 			{% if user.googleplus is not null %}
-			<li><a href="{{user.googleplus}}" target="_blank"><i class="sprite medium googleplus"></i></a></li>
+			<li><a href="{{user.googleplus}}" target="_blank"><i class="sprite medium googleplus tooltip" title="Google+"></i></a></li>
 			{% endif %}
 		</ul>
 	</div>
@@ -44,22 +48,18 @@
 		{% endif %}
 
 		<div class="widget">
-			<ul>
+			<ul class="borderlist">
+				<li><a href="{{path('design311website_recepten_user', {'username': user.username})}}">Heeft <strong>{{user.recipes|length}}</strong> {{user.likedrecipes|length == 1 ? 'recept' : 'recepten'}} toegevoegd</a></li>
 				<li>Vindt <strong>{{user.likedrecipes|length}}</strong> {{user.likedrecipes|length == 1 ? 'recept' : 'recepten'}} lekker</li>
 				<li>Heeft <strong>{{user.dinners|length}}</strong> {{user.dinners|length == 1 ? 'dinner' : 'dinners'}} georganiseerd</li>
 				<li>Nam deel aan <strong>{{user.dinnersParticipated|length}}</strong>  {{user.dinnersParticipated|length == 1 ? 'dinner' : 'dinners'}}</li>
 			</ul>
 		</div>
-		<!-- {% if app.user != user %}
-		<div class="widget">
-			//feedback form
-		</div>
-		{% endif %}
-		<div class="widget">
-			//feedback
-		</div> -->
 	</div>
-	{% include 'Design311WebsiteBundle:Shared:recipes-list.html.twig' with {'recipes':user.recipes, 'userprofile': user} %}
+	<div class="two-third main">
+		<h2>Geef {{user.displayName}} feedback</h2>
+		<div class="fb-comments" data-href="{{ url('design311website_profile_view', {'username': user.username})}}" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+	</div>
 
 		
 </div>
@@ -67,12 +67,11 @@
 {% endblock %}
 
 {% block footer %}
+	{% include 'Design311WebsiteBundle:Shared:facebook.html.twig' %}
     <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script>
     	$(function(){
     		var map;
-
-			var userCoords = new google.maps.LatLng({{location.lat}}, {{location.lng}});
 
 			var mapStyle = [
 				{
@@ -109,15 +108,30 @@
 				}
 			]
 
-			map = new google.maps.Map(document.getElementById('map'), {
-				mapTypeId: google.maps.MapTypeId.ROADMAP,
-				streetViewControl: false,
-				mapTypeControl: false,
-				scrollwheel: false,
-				zoom:14,
-				center:userCoords,
-				styles:mapStyle
-			});
+			{% if location == false %}
+    			var userCoords = new google.maps.LatLng(41.529970, 6.322287);
+				map = new google.maps.Map(document.getElementById('map'), {
+					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					streetViewControl: false,
+					mapTypeControl: false,
+					scrollwheel: false,
+					zoom:3,
+					center:userCoords,
+					styles:mapStyle
+				});
+   			{% else %}
+				var userCoords = new google.maps.LatLng({{location.lat}}, {{location.lng}});
+				map = new google.maps.Map(document.getElementById('map'), {
+					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					streetViewControl: false,
+					mapTypeControl: false,
+					scrollwheel: false,
+					zoom:12,
+					center:userCoords,
+					styles:mapStyle
+				});
+    		{% endif %}
+
     	})
     </script>
 {% endblock %}

@@ -19,16 +19,16 @@
 		<p>{{recipe.user.description}}</p>
 		<ul class="user-social">
 			{% if recipe.user.website is not null %}
-			<li><a href="{{recipe.user.website}}" target="_blank"><i class="sprite medium website"></i></a></li>
+			<li><a href="{{recipe.user.website}}" target="_blank"><i class="sprite medium website tooltip" title="Website"></i></a></li>
 			{% endif %}
 			{% if recipe.user.facebook is not null %}
-			<li><a href="{{recipe.user.facebook}}" target="_blank"><i class="sprite medium facebook"></i></a></li>
+			<li><a href="{{recipe.user.facebook}}" target="_blank"><i class="sprite medium facebook tooltip" title="Facebook"></i></a></li>
 			{% endif %}
 			{% if recipe.user.twitter is not null %}
-			<li><a href="{{recipe.user.twitter}}" target="_blank"><i class="sprite medium twitter"></i></a></li>
+			<li><a href="{{recipe.user.twitter}}" target="_blank"><i class="sprite medium twitter tooltip" title="Twitter"></i></a></li>
 			{% endif %}
 			{% if recipe.user.googleplus is not null %}
-			<li><a href="{{recipe.user.googleplus}}" target="_blank"><i class="sprite medium googleplus"></i></a></li>
+			<li><a href="{{recipe.user.googleplus}}" target="_blank"><i class="sprite medium googleplus tooltip" title="Google+"></i></a></li>
 			{% endif %}
 		</ul>
 		<p><a href="{{path('design311website_recepten_user', {'username': recipe.user.username|lower})}}">Bekijk alle recepten van {{recipe.user.displayName}}</a></p>

@@ -33,6 +33,9 @@
 						<img src="{{ asset(photo.webPath)}}" alt="{{photo.title}}">
 					{% endfor %}
 				</div>
+
+				<h2>Wat vind je van dit recept?</h2>
+				<div class="fb-comments" data-href="{{ url('design311website_recepten_detail', {'category': recipe.category, 'permalink': recipe.permalink})}}" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
 			</div>
 		</div>
 	</div>
@@ -40,4 +43,5 @@
 
 {% block footer %}
 	<script src="{{ asset('bundles/design311website/js/select2/select2.min.js') }}"></script>
+	{% include 'Design311WebsiteBundle:Shared:facebook.html.twig' %}
 {% endblock %}

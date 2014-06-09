@@ -30,7 +30,7 @@ design311website_profile_edit:
     defaults:  { _controller: Design311WebsiteBundle:User:edit }
 
 design311website_profile_view:
-    path:      /profiel/{username}
+    path:      /profiel/{username}/
     defaults:  { _controller: Design311WebsiteBundle:User:view }
 
 design311website_profile_password:
@@ -120,6 +120,10 @@ design311website_recepten_save:
 design311website_recepten_shop:
     path:     /recepten/{permalink}/shop/
     defaults: { _controller: Design311WebsiteBundle:Ajax:shopRecipe }
+
+design311website_recepten_remove_shop:
+    path:     /recepten/{permalink}/remove-shop/
+    defaults: { _controller: Design311WebsiteBundle:Ajax:removeFromShop }
 
 design311website_recepten_edit:
     path:     /recepten/{permalink}/edit/

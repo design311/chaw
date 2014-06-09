@@ -84,6 +84,20 @@ class AjaxController extends BaseController
         ));
     }
 
+    public function removeFromShopAction($permalink)
+    {
+
+        $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
+        
+        $recipe->removeShoppinglistFrom($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($recipe);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('design311website_recepten_shoppinglist'));
+    }
+
     public function declineDinnerParticipantAction($participantId)
     {
         $participantRequest = $this->getDoctrine()->getRepository('Design311WebsiteBundle:DinnerParticipantRequest')->find($participantId);

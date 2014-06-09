@@ -1655,8 +1655,7 @@ table.dinners {
 .profile-view h1 {
   margin-top: 0; }
 .profile-view .main h2 {
-  margin-top: 0;
-  line-height: 1; }
+  margin-top: 0; }
 
 .calendar table {
   width: 100%;
@@ -2017,14 +2016,14 @@ table.dinners {
     .printrecipe a:hover, .printrecipe a:active, .printrecipe a:focus {
       color: #ccc; }
 
-.dinnerinfolist {
+.borderlist {
   margin: 0;
   padding: 0;
   list-style: none; }
-  .dinnerinfolist li {
+  .borderlist li {
     border-top: 1px solid #ccc;
     padding: 5px 0; }
-    .dinnerinfolist li:first-child {
+    .borderlist li:first-child {
       border-top: 0; }
 
 @media screen and (max-width: 1240px) {

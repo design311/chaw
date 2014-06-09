@@ -27,12 +27,12 @@
 		{% endif %}
 		<div class="widget">
 			<h3>Algemene informatie</h3>
-			<ul class="dinnerinfolist">
+			<ul class="borderlist">
 				<li>Organisator: <a href="{{ path('design311website_profile_view', {'username': dinner.user.username|lower}) }}">{{dinner.user.displayName}}</a></li>
 				<li>Maximum aantal personen: {{dinner.maxInvitees}}</li>
 				<li>Prijs: €{{dinner.price}}</li>
 				<li>Datum: {{dinner.date | date("m/d/Y") }}</li>
-				<li>Tijdstip: {{dinner.date | date("G:i") }}</li>
+				<li>Tijdstip: {{dinner.date | date("G:i") }} uur</li>
 			</ul>
 		</div>
 		<div class="widget">

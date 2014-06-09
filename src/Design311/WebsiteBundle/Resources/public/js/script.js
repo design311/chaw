@@ -46,8 +46,14 @@ $(function(){
 		else{
 			window.location = loginpage;
 		}
+
+		if (link.data('refresh')) {
+			location.reload(true);
+		}
+		else{
+			return false;
+		}
 		
-		return false;
 	})
 
 	if (typeof $('body').select2 == 'function') { 
@@ -85,7 +91,7 @@ $(function(){
 	})
 
 	$('.showmore-toggle').click(function(){
-		var toggle = $(this);
+		var toggle = link;
 		$(this).parent().siblings('.showmore').slideToggle(function(){
 			if ($(this).is(':visible')) {
 				toggle.children('i').removeClass('sort-desc').addClass('sort-asc');

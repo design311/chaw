@@ -133,13 +133,8 @@ class UserController extends BaseController
     {
         $user = $this->getDoctrine()->getRepository('Design311WebsiteBundle:User')->findOneByUsername($username);
 
-        if ($user->getAddress() == null) {
-            $location = array(
-                'lat' => 51.216667,
-                'lng' => 4.4
-            );
-        }
-        else{
+        $location = false;
+        if ($user->getAddress() != null) {
             $location = array(
                 'lat' => $user->getAddress()->getLat(),
                 'lng' => $user->getAddress()->getLng()

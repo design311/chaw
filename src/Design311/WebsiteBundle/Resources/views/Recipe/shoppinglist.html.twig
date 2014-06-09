@@ -7,57 +7,61 @@
 
 {% block content %}
 <div class="container">
-	<ul class="tabs">
-		<li class="active"><a href="#" class="tab-ingredients">Ingredi&euml;nten</a></li>
-		<li><a href="#" class="tab-recipes">Recepten</a></li>
-		<li class="printshoppinglist"><a href="javascript:window.print()"><i class="sprite printer"></i>Print deze pagina</a></li>
-	</ul>
-	<div id="ingredients" class="ingredients">
-		<div class="onehalf">
-		<p><strong>Ingredi&euml;nten voor de volgende recepten:</strong></p>
-			<ul class="recipelist">
-				{% for recipe in shoppinglist %}
-		    	<li>{{recipe.title}}</li>
-		    {% endfor %}
-			</ul>
-		</div>
-		<div class="onehalf last">
-			<form action="{{ path('design311website_user_aantal_personen') }}" method="get" class="ingredientpersons">
-				<p><label for="aantal">Ingredi&euml;nten voor <input type="text" name="aantal" id="aantal" value="{{app.user.aantalPersonen}}" class="aantal"> personen </label></p>
-			</form>
-			<ul class="ingredientlist">
-				{% for ingredient, amount in ingredients %}
-					<li>{{amount}} {{ingredient}}</li>
+	{% if shoppinglist|length == 0 %}
+		<p>Er staan nog geen recepten op je winkellijstje. Voeg recepten toe door op het winkelwagentje <i class="sprite cart"></i> te klikken.</p>
+		{% else %}
+		<ul class="tabs">
+			<li class="active"><a href="#" class="tab-ingredients">Ingredi&euml;nten</a></li>
+			<li><a href="#" class="tab-recipes">Recepten</a></li>
+			<li class="printshoppinglist"><a href="javascript:window.print()"><i class="sprite printer"></i>Print deze pagina</a></li>
+		</ul>
+		<div id="ingredients" class="ingredients">
+			<div class="onehalf">
+			<p><strong>Ingredi&euml;nten voor de volgende recepten:</strong></p>
+				<ul class="recipelist">
+					{% for recipe in shoppinglist %}
+			    	<li>{{recipe.title}} <a href="{{path('design311website_recepten_remove_shop', {'permalink': recipe.permalink})}}" class="tooltip" title="Recept uit winkellijstje verwijderen">X</a></li>
 			    {% endfor %}
-			</ul>
-			<p></p>
-		</div>
-	</div>
-	<div id="recipes" class="recipes" style="display:none;">
-	    {% for recipe in shoppinglist %}
-	    	<div>
-		    	<h2>{{recipe.title}}</h2>
-		    	<ul class="recipemeta">
-					<li><i class="pot sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
-					<li><i class="bestek sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
 				</ul>
-				<div class="clear"></div>
-		    	<div class="ingredients">
-					<h3>Ingredi&euml;nten</h3>
-					<ul>
-					{% for ingredient in recipe.recipeingredients %}
-						<li>{{ingredient.amount}} {{ingredient.ingredient}}</li>
-					{% endfor %}
-					</ul>
-				</div>
-				<div class="clear"></div>
-
-				<h3>Bereidingswijze</h3>
-				{{recipe.recipe|markdown}}
-				<div class="clear"></div>
 			</div>
-	    {% endfor %}
-	</div>
+			<div class="onehalf last">
+				<form action="{{ path('design311website_user_aantal_personen') }}" method="get" class="ingredientpersons">
+					<p><label for="aantal">Ingredi&euml;nten voor <input type="text" name="aantal" id="aantal" value="{{app.user.aantalPersonen}}" class="aantal"> personen </label></p>
+				</form>
+				<ul class="ingredientlist">
+					{% for ingredient, amount in ingredients %}
+						<li>{{amount}} {{ingredient}}</li>
+				    {% endfor %}
+				</ul>
+				<p></p>
+			</div>
+		</div>
+		<div id="recipes" class="recipes" style="display:none;">
+		    {% for recipe in shoppinglist %}
+		    	<div>
+			    	<h2>{{recipe.title}}</h2>
+			    	<ul class="recipemeta">
+						<li><i class="pot sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
+						<li><i class="bestek sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
+					</ul>
+					<div class="clear"></div>
+			    	<div class="ingredients">
+						<h3>Ingredi&euml;nten</h3>
+						<ul>
+						{% for ingredient in recipe.recipeingredients %}
+							<li>{{ingredient.amount}} {{ingredient.ingredient}}</li>
+						{% endfor %}
+						</ul>
+					</div>
+					<div class="clear"></div>
+
+					<h3>Bereidingswijze</h3>
+					{{recipe.recipe|markdown}}
+					<div class="clear"></div>
+				</div>
+		    {% endfor %}
+		</div>
+	{% endif %}
 </div>
 {% endblock %}
 
