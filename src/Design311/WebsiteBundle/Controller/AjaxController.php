@@ -110,10 +110,28 @@ class AjaxController extends BaseController
         if ($this->getUser() == $participantRequest->getDinner()->getUser()) {
 
             $dinner = $participantRequest->getDinner(); //needed for redirect
+            $user = $participantRequest->getUser();
 
             $em = $this->getDoctrine()->getManager();
             $em->remove($participantRequest);
             $em->flush();
+
+            $mail = \Swift_Message::newInstance()
+                ->setSubject($dinner->getUser()->getDisplayName() . ' heeft je verzoek geweigerd')
+                ->setFrom('info@chaw.be')
+                ->setReplyTo('info@chaw.be')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'Design311WebsiteBundle:Mail:layout.html.twig',
+                        array(
+                            'message' => $dinner->getUser()->getDisplayName() . ' heeft je deelnameverzoek geweigerd, dit kan voor heel veel verschillende redenen zijn, je hoeft je zeker niet aangevallen voelen. Kijk snel naar de andere etentjes.',
+                            )
+                    ),
+                    'text/html'
+                )
+            ;
+            $this->get('mailer')->send($mail);
 
             $this->get('session')->getFlashBag()->add('success','Je hebt het verzoek geweigerd');
 
@@ -144,6 +162,23 @@ class AjaxController extends BaseController
             $em->remove($participantRequest);
             $em->flush();
 
+            $mail = \Swift_Message::newInstance()
+                ->setSubject($dinner->getUser()->getDisplayName() . ' heeft je verzoek geaccepteerd')
+                ->setFrom($dinner->getUser()->getEmail())
+                ->setReplyTo($dinner->getUser()->getEmail())
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'Design311WebsiteBundle:Mail:layout.html.twig',
+                        array(
+                            'message' => $dinner->getUser()->getDisplayName() . ' heeft je deelnameverzoek geaccepteerd, als je vragen hebt kan je contact opnemen met hem/haar door deze mail te beantwoorden.',
+                            )
+                    ),
+                    'text/html'
+                )
+            ;
+            $this->get('mailer')->send($mail);
+
             $this->get('session')->getFlashBag()->add('success','Je hebt het verzoek geaccepteerd');
 
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participantRequest->getDinner()->getPermalink()) ));
@@ -169,9 +204,28 @@ class AjaxController extends BaseController
 
             $dinner = $invite->getDinner(); //needed for redirect
 
+            $dinnerUser = $invite->getDinner()->getUser();
+
             $em = $this->getDoctrine()->getManager();
             $em->remove($invite);
             $em->flush();
+
+            $mail = \Swift_Message::newInstance()
+                ->setSubject($this->getUser()->getDisplayName() . ' heeft je uitnodiging geweigerd')
+                ->setFrom($this->getUser()->getEmail())
+                ->setReplyTo($this->getUser()->getEmail())
+                ->setTo($dinnerUser->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'Design311WebsiteBundle:Mail:layout.html.twig',
+                        array(
+                            'message' => $dinner->getUser()->getDisplayName() . ' zal niet aanwezig kunnen zijn op je dinner, nodig snel iemand anders uit.',
+                            )
+                    ),
+                    'text/html'
+                )
+            ;
+            $this->get('mailer')->send($mail);
 
             $this->get('session')->getFlashBag()->add('success','Je hebt de uitnodiging geweigerd');
 
@@ -201,6 +255,23 @@ class AjaxController extends BaseController
             $em->persist($participant);
             $em->remove($invite);
             $em->flush();
+
+            $mail = \Swift_Message::newInstance()
+                ->setSubject($this->getUser()->getDisplayName() . ' heeft je uitnodiging geaccepteerd')
+                ->setFrom($this->getUser()->getEmail())
+                ->setReplyTo($this->getUser()->getEmail())
+                ->setTo($participant->getDinner()->getUser()->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'Design311WebsiteBundle:Mail:layout.html.twig',
+                        array(
+                            'message' => $dinner->getUser()->getDisplayName() . ' zal aanwezig zijn op je dinner.',
+                            )
+                    ),
+                    'text/html'
+                )
+            ;
+            $this->get('mailer')->send($mail);
 
             $this->get('session')->getFlashBag()->add('success','Je hebt de uitnodiging geaccepteerd');
 

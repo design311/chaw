@@ -120,7 +120,7 @@ class DinnerController extends BaseController
             $em->flush();
 
             $mail = \Swift_Message::newInstance()
-                ->setSubject($this->getUser()->getDisplayName() . ' wil graag deelnemen aan je dinner.')
+                ->setSubject($this->getUser()->getDisplayName() . ' wil graag deelnemen aan je dinner')
                 ->setFrom($this->getUser()->getEmail())
                 ->setReplyTo($this->getUser()->getEmail())
                 ->setTo($dinner->getUser()->getEmail())
