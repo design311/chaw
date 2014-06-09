@@ -46,12 +46,27 @@
 			</div>
 		</div>
 		<div class="container">
-			<ul class="menu">
+			<ul class="menu desktop">
 				<li class="logo notranslate"><a href="{{ path('design311website_homepage') }}">Chaw</a></li>
 				<li><a href="{{ path('design311website_dinners') }}">Dinners</a></li>
 				<li><a href="{{ path('design311website_recepten') }}">Recepten</a></li>
 				<!-- <li><a href="#" class="tooltip" title="Binnenkort beschikbaar">Foodspiration</a></li> -->
 			</ul>
+			<div class="menu mobile">
+				<h1 class="logo notranslate"><a href="{{ path('design311website_homepage') }}">Chaw</a></h1>
+				<a href="#" class="menutoggle">Menu</a>
+				<ul>
+					<li><a href="{{ path('design311website_dinners') }}">Dinners</a></li>
+					<li><a href="{{ path('design311website_recepten') }}">Recepten</a></li>
+					{% if app.user %}
+						<li><a href="{{ path('design311website_profile_view', {'username': app.user.username|lower}) }}">{{app.user.displayname}}</a></li>
+						<li><a href="{{ path('design311website_recepten_shoppinglist') }}">Winkellijstje bekijken (<span class="shoppinglistcount">{{app.user.shoppinglist|length}}</span>)</a><a href="{{ path('design311website_logout') }}">Logout</a></li>
+					{% else %}
+						<li><a href="{{ path('design311website_login') }}">Login</a></li>
+						<li><a href="{{ path('design311website_register') }}">Registreren</a></li>
+					{% endif %}
+				</ul>
+			</div>
 			<div class="clear"></div>
 		</div>
 	</div>

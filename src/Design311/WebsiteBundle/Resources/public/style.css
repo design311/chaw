@@ -1115,6 +1115,9 @@ a {
 .print {
   display: none; }
 
+.mobile {
+  display: none; }
+
 .contentblock {
   height: 100%; }
 
@@ -1376,6 +1379,10 @@ a {
   .flexslider .slides, .flexslider li {
     height: 100%;
     overflow: hidden; }
+  .flexslider .imagecontainer {
+    height: 100%;
+    background-size: cover;
+    background-position: center center; }
 
 .flex-control-nav {
   position: absolute;
@@ -1523,6 +1530,7 @@ a {
 .detailheader {
   height: 100%;
   background-size: cover;
+  background-position: center center;
   position: relative; }
   .detailheader.fixed {
     position: fixed;
@@ -2048,6 +2056,10 @@ table.dinners {
     .borderlist li:first-child {
       border-top: 0; }
 
+.dinner-detail h1 {
+  margin-top: 0;
+  line-height: 1; }
+
 @media screen and (max-width: 1240px) {
   .container, .newestrecipes .flex-control-nav {
     width: 960px; }
@@ -2081,6 +2093,9 @@ table.dinners {
     width: 100%;
     padding: 20px; }
 
+  .header .container, .header .newestrecipes .flex-control-nav, .newestrecipes .header .flex-control-nav {
+    padding: 0 20px !important; }
+
   .onehalf {
     padding: 0 !important;
     width: 100%; }
@@ -2100,6 +2115,12 @@ table.dinners {
     padding: 20px; }
   .home .section {
     min-height: 100%; }
+  .home h1 {
+    font-size: 2em; }
+  .home .picturewall h1 {
+    font-size: 3em; }
+  .home .intro {
+    font-size: 1.6em; }
 
   .dinnerindex .sidebar {
     display: none; }
@@ -2120,10 +2141,53 @@ table.dinners {
     display: none; }
   .profile-view .content {
     margin-top: 0; } }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
+  .mobile {
+    display: block; }
+
+  .desktop {
+    display: none; }
+
+  .header {
+    min-height: 95px;
+    height: auto; }
+    .header .container, .header .newestrecipes .flex-control-nav, .newestrecipes .header .flex-control-nav {
+      height: 100%;
+      overflow: hidden; }
+
+  .menu.mobile {
+    left: 0; }
+    .menu.mobile a {
+      padding: 0;
+      line-height: 1; }
+    .menu.mobile h1 {
+      margin: 0.3em 0 0.6em;
+      line-height: 1; }
+    .menu.mobile ul {
+      display: none;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      margin-bottom: 1em;
+      margin-top: 1em; }
+    .menu.mobile li {
+      border-top: 1px solid #ccc;
+      display: block;
+      float: none; }
+      .menu.mobile li a {
+        line-height: 50px; }
+        .menu.mobile li a:active, .menu.mobile li a:hover, .menu.mobile li a:focus {
+          background: #ddd; }
+    .menu.mobile .menutoggle {
+      font-weight: bold;
+      line-height: 30px; }
+      .menu.mobile .menutoggle:active, .menu.mobile .menutoggle:hover, .menu.mobile .menutoggle:focus {
+        text-decoration: underline; }
+
   .home .intro {
     display: none; }
   .home h1 {
     margin-bottom: 20px; }
-  .home .recepten .onehalf.last {
+
+  .topbar {
     display: none; } }

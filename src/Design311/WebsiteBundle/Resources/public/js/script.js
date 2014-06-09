@@ -125,6 +125,11 @@ $(function(){
 			google.maps.event.trigger(map, "resize");
 		},1000)
 	})
+
+	$('.menutoggle').click(function(){
+		$(this).siblings('ul').slideToggle();
+		return false;
+	})
 })
 
 //images loaded

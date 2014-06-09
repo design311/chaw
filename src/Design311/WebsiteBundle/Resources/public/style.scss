@@ -120,6 +120,10 @@ button, input[type="submit"]{
 	display:none;
 }
 
+.mobile{
+	display:none;
+}
+
 .contentblock{
 	height:100%;
 }
@@ -471,6 +475,11 @@ button, input[type="submit"]{
 		height:100%;
 		overflow:hidden;
 	}
+	.imagecontainer{
+		height:100%;
+		background-size:cover;
+		background-position:center center;
+	}
 }
 
 .flex-control-nav{
@@ -658,6 +667,7 @@ button, input[type="submit"]{
 .detailheader{
 	height:100%;
 	background-size:cover;
+	background-position:center center;
 	position:relative;
 	&.fixed{
 		position:fixed;
@@ -1388,6 +1398,13 @@ table.dinners{
 	}
 }
 
+.dinner-detail{
+	h1{
+		margin-top:0;
+		line-height:1;
+	}
+}
+
 @media screen and (max-width:1240px){
 	.container{
 		width:960px;
@@ -1449,6 +1466,12 @@ table.dinners{
 		padding:20px;
 	}
 
+	.header{
+		.container{
+			padding:0 20px $i;
+		}
+	}
+
 	.onehalf{
 		padding:0 $i;
 		width:100%;
@@ -1474,6 +1497,17 @@ table.dinners{
 		}
 		.section{
 			min-height:100%;
+		}
+		h1{
+			font-size:2em;
+		}
+		.picturewall{
+			h1{
+				font-size:3em;
+			}
+		}
+		.intro{
+			font-size:1.6em;
 		}
 	}
 
@@ -1509,7 +1543,60 @@ table.dinners{
 	}
 }
 
-@media screen and (max-width:400px){
+@media screen and (max-width:450px){
+	.mobile{
+		display:block;
+	}
+
+	.desktop{
+		display:none;
+	}
+
+	.header{
+		min-height:95px;
+		height:auto;
+		.container{
+			height:100%;
+			overflow:hidden;
+		}
+	}
+
+	.menu.mobile{
+		left:0;
+		a{
+			padding:0;
+			line-height:1;
+		}
+		h1{
+			margin:0.3em 0 0.6em;
+			line-height:1;
+		}
+		ul{
+			display:none;
+			@include minireset;
+			margin-bottom:1em;
+			margin-top:1em;
+		}
+		li{
+			border-top:1px solid #ccc;
+			display:block;
+			float:none;
+			a{
+				line-height:50px;
+				&:active, &:hover, &:focus{
+					background:#ddd;
+				}
+			}
+		}
+		.menutoggle{
+			font-weight:bold;
+			line-height:30px;
+			&:active, &:hover, &:focus{
+				text-decoration:underline;
+			}
+		}
+	}
+
 	.home{
 		.intro{
 			display:none;
@@ -1517,10 +1604,9 @@ table.dinners{
 		h1{
 			margin-bottom:20px;
 		}
-		.recepten{
-			.onehalf.last{
-				display:none;
-			}
-		}
+	}
+
+	.topbar{
+		display:none;
 	}
 }
