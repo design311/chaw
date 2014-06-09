@@ -1662,6 +1662,10 @@ table.dinners {
   border: 1px solid #ddd; }
 .calendar thead tr {
   border-bottom: 1px solid #ddd; }
+  .calendar thead tr a {
+    display: block;
+    height: 100%;
+    width: 100%; }
 .calendar td, .calendar th {
   padding: 10px;
   width: 14.28%;
@@ -1676,10 +1680,9 @@ table.dinners {
   background: #fff; }
 .calendar td.empty {
   background: #f2f2f2; }
+.calendar td.disabled {
+  cursor: default; }
 .calendar a {
-  display: block;
-  height: 100%;
-  width: 100%;
   text-decoration: none; }
 
 .flash {

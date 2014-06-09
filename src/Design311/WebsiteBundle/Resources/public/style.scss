@@ -857,6 +857,11 @@ table.dinners{
 	}
 	thead tr{
 		border-bottom:1px solid #ddd;
+		a{
+			display:block;
+			height:100%;
+			width:100%;
+		}
 	}
 	td, th{
 		padding:10px;
@@ -878,10 +883,10 @@ table.dinners{
 	td.empty{
 		background:darken(#fff,5);
 	}
+	td.disabled{
+		cursor:default;
+	}
 	a{
-		display:block;
-		height:100%;
-		width:100%;
 		text-decoration:none;
 	}
 }

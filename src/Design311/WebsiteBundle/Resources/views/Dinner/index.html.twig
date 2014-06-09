@@ -24,7 +24,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th><a href="#" id="prev_month">&laquo;</a></th>
+							<th><a href="#" id="prev_month" style="display:none;">&laquo;</a></th>
 							<th colspan="5"><span id="current_month"></span> <span id="current_year"></span></th>
 							<th><a href="#" id="next_month">&raquo;</a></th>
 						</tr>
@@ -42,7 +42,8 @@
 					</tbody>
 				</table>
 				<div><br>Toon dinners vanaf <strong id="startdatetext">{{"now"|date("d-m-Y")}}</strong><br>
-				Tot en met <strong id="enddatetext">...</strong></div>
+				Tot en met <strong id="enddatetext">...</strong><br>
+				<a href="#" id="resetdates">Reset</a></div>
 				<input type="hidden" id="startdate"><input type="hidden" id="enddate">
 			</div>
 			<div id="filters">
@@ -386,6 +387,12 @@
 				});
 			})
 
+			$('#locatie').keypress(function(e) {
+				if (e.keyCode == 13) {
+					$('#locatie').blur();
+				}
+			});
+
 			$('#filters input, #filters select').change(function(){
 				var filters = {};
 				$.each($('#filters input'), function(index, input) {
@@ -467,7 +474,12 @@
 						table += '<td class="today tooltip" title="Vandaag" id="day-'+i+'">'+i+'</td>';
 					}
 					else{
-						table += '<td id="day-'+i+'">'+i+'</td>';
+						if (date > today) {
+							table += '<td id="day-'+i+'">'+i+'</td>';
+						}
+						else{
+							table += '<td id="day-'+i+'" class="disabled">'+i+'</td>';
+						}
 					}
 
 					if (counter == 7 && i != lastOfMonth.getDate()) {
@@ -498,28 +510,33 @@
 
 			$('#calendar tbody').on('click', 'td', function(){
 				var clickedDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), $(this).text());
-				if (dateClickedCounter == 0) {
-					startdate.val(clickedDate.toDateInputValue());
-					enddate.val(clickedDate.toDateInputValue()).change();
-					dateClickedCounter++;
-				}
-				else{
-					if (clickedDate >= new Date(startdate.val()) ) {
+
+				if (clickedDate > today || clickedDate.toString() == today.toString()) {
+
+					if (dateClickedCounter == 0) {
+						startdate.val(clickedDate.toDateInputValue());
 						enddate.val(clickedDate.toDateInputValue()).change();
+						dateClickedCounter++;
 					}
 					else{
-						enddate.val(startdate.val());
-						startdate.val(clickedDate.toDateInputValue()).change();
+						if (clickedDate >= new Date(startdate.val()) ) {
+							enddate.val(clickedDate.toDateInputValue()).change();
+						}
+						else{
+							enddate.val(startdate.val());
+							startdate.val(clickedDate.toDateInputValue()).change();
+						}
+						dateClickedCounter = 0;
 					}
-					dateClickedCounter = 0;
+
+					var filteredDinners = filterDinnersByDate(dinners);
+
+					updateMarkers(filteredDinners);
+					updateDinners();
+					//updateCalendarEvents();
+					updateHighlight();
+
 				}
-
-				var filteredDinners = filterDinnersByDate(dinners);
-
-				updateMarkers(filteredDinners);
-				updateDinners();
-				//updateCalendarEvents();
-				updateHighlight();
 
 				return false;
 			})
@@ -555,38 +572,45 @@
 
 				$('#calendar tbody td.highlight').removeClass('highlight');
 
-				//both in this month
-				if (start.getMonth() == currentMonth.getMonth() && end.getMonth() == currentMonth.getMonth()) {
-					for (var i = start.getDate(); i <= end.getDate(); i++) {
-						$('#calendar tbody td#day-'+i).addClass('highlight');
-					};
-					return;
-				}
+				if (enddate.val() != '') {
 
-				//start this month
-				if (start.getMonth() == currentMonth.getMonth()) {
-					for (var i = start.getDate(); i <= lastOfMonth.getDate(); i++) {
-						$('#calendar tbody td#day-'+i).addClass('highlight');
-					};
-					return;
-				}
+					//both in this month
+					if (start.getMonth() == currentMonth.getMonth() && end.getMonth() == currentMonth.getMonth()) {
+						for (var i = start.getDate(); i <= end.getDate(); i++) {
+							$('#calendar tbody td#day-'+i).addClass('highlight');
+						};
+						return;
+					}
 
-				//end this month
-				if (end.getMonth() == currentMonth.getMonth()) {
-					for (var i = firstOfMonth.getDate(); i <= end.getDate(); i++) {
-						$('#calendar tbody td#day-'+i).addClass('highlight');
-					};
-					return;
-				}
+					//start this month
+					if (start.getMonth() == currentMonth.getMonth()) {
+						for (var i = start.getDate(); i <= lastOfMonth.getDate(); i++) {
+							$('#calendar tbody td#day-'+i).addClass('highlight');
+						};
+						return;
+					}
 
-				if (start.getMonth() < currentMonth.getMonth() && end.getMonth() > currentMonth.getMonth()) {
-					$('#calendar tbody td').addClass('highlight');
-					return;
+					//end this month
+					if (end.getMonth() == currentMonth.getMonth()) {
+						for (var i = firstOfMonth.getDate(); i <= end.getDate(); i++) {
+							$('#calendar tbody td#day-'+i).addClass('highlight');
+						};
+						return;
+					}
+
+					if (start.getMonth() < currentMonth.getMonth() && end.getMonth() > currentMonth.getMonth()) {
+						$('#calendar tbody td').addClass('highlight');
+						return;
+					}
+
 				}
 
 			}
 
 			$('#prev_month').click(function(){
+				if (currentMonth.getMonth()-1 == today.getMonth()) {
+					$(this).hide();
+				}
 				currentMonth.setMonth(currentMonth.getMonth()-1);
 				updateCalendar(currentMonth);
 				updateHighlight();
@@ -594,6 +618,7 @@
 			})
 
 			$('#next_month').click(function(){
+				$('#prev_month').show();
 				currentMonth.setMonth(currentMonth.getMonth()+1);
 				updateCalendar(currentMonth);
 				updateHighlight();
@@ -606,6 +631,17 @@
 				$('#startdatetext').text(start.getDate()+'-'+ (start.getMonth()+1) +'-'+start.getFullYear());
 				$('#enddatetext').text(end.getDate()+'-'+ (end.getMonth()+1) +'-'+end.getFullYear());
 			})
+
+			$('#resetdates').click(function(){
+				startdate.val(today.toDateInputValue());
+				enddate.val('');
+				$('#startdatetext').text(today.getDate()+'-'+ (today.getMonth()+1) +'-'+today.getFullYear());
+				$('#enddatetext').text('...');
+				updateHighlight();
+				updateMarkers(dinners);
+				updateDinners();
+				return false;
+			});
 
 			$(dinnersTable).find('th').click(function(){
 				if (currentSort == $(this).data('property')) {
