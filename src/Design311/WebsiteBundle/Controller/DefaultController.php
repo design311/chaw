@@ -13,6 +13,7 @@ class DefaultController extends BaseController
             //logged in
 
             $em = $this->getDoctrine()->getManager();
+
             $qb = $em->createQueryBuilder();
             $query = $qb
                 ->from('Design311WebsiteBundle:Dinner', 'd')
@@ -29,10 +30,45 @@ class DefaultController extends BaseController
                 ->setParameter('user', $this->getUser()->getId())
                 ->getQuery();
 
+            $dinnerevents = $query->execute();
+
+            $qb = $em->createQueryBuilder();
+            $query = $qb
+                ->from('Design311WebsiteBundle:Dinner', 'd')
+                ->select('d')
+                ->where($qb->expr()->gte('d.date', ':today'))
+                ->andWhere($qb->expr()->eq('d.user', ':user'))
+                ->orderBy('d.date')
+                ->setParameter('today', new \DateTime())
+                ->setParameter('user', $this->getUser()->getId())
+                ->getQuery();
+
             $dinners = $query->execute();
+            
+            $qb = $em->createQueryBuilder();
+            $query = $qb
+                ->from('Design311WebsiteBundle:Dinner', 'd')
+                ->select('d')
+                ->leftJoin('d.participants', 'p')
+                ->where($qb->expr()->lt('d.date', ':today'))
+                ->andWhere($qb->expr()->orX(
+                        $qb->expr()->eq('d.user', ':user'),
+                        $qb->expr()->eq('p.user', ':user')
+                    ))
+                ->groupBy('d.id')
+                ->orderBy('d.date', 'DESC')
+                ->setParameter('today', new \DateTime())
+                ->setParameter('user', $this->getUser()->getId())
+                ->getQuery();
+
+            $pastdinners = $query->execute();
+
+
 
         	return $this->render('Design311WebsiteBundle:User:index.html.twig', array(
-                'dinners' => $dinners
+                'dinnerevents' => $dinnerevents,
+                'dinners' => $dinners,
+                'pastdinners' => $pastdinners
                 ));
         }
         else{
