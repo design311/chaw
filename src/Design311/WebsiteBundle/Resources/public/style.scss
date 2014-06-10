@@ -1027,6 +1027,9 @@ table.dinners{
 	.ingredient{
 		width:67%;
 		padding-left:2%;
+		>div{
+			position:relative;
+		}
 	}
 
 	#recipe_recipeingredients{
@@ -1039,6 +1042,41 @@ table.dinners{
 			text-decoration:none;
 			padding-left:5px;
 		}
+		.select2-container-active{
+			.select2-choices{
+				border-color:#5897fb;
+			}
+		}		
+		.select2-choices{
+			padding:0 5px;
+			background:transparent;
+			border-color:#ccc;
+		}
+		.select2-search-choice{
+			margin:1px 0;
+			padding:4px 0;
+			font-size:16px;
+			line-height:initial;
+			font-family:sans-serif;
+			background:transparent;
+			border:0;
+			box-shadow:none;
+			a{
+				display:none;
+			}
+		}
+		.select2-search-field{
+			input{
+				padding:4px 0;
+			}
+		}
+	}
+
+	.select2-selection-limit{
+		display:none $i;
+	}
+	.select2-results{
+		margin:0;
 	}
 
 	.cooking, .ready, .aantal{

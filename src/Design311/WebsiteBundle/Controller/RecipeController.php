@@ -154,14 +154,14 @@ class RecipeController extends BaseController
             'action' => $this->generateUrl('design311website_recepten_add')
             ));
         $form->handleRequest($request);
+    
+        $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
 
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
 
             $recept = $form->getData();
-
-            $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
 
             if ($recept->getRecipeIngredients()) {
                 foreach ($recept->getRecipeIngredients() as $key => $recipeIngredient) {
@@ -170,6 +170,7 @@ class RecipeController extends BaseController
                             $ingredient = $recipeIngredient->getIngredient();
                             $ingredient = $currentIngredient;
                             $recipeIngredient->setIngredient($ingredient);
+                            break;
                         }
                     }
                 }
@@ -184,9 +185,16 @@ class RecipeController extends BaseController
             return $this->redirect($this->generateUrl('design311website_recepten_detail', array('category' => $recept->getCategory(), 'permalink' => $recept->getPermalink()) ));
         }
 
+        $ingredients = [];
+        foreach ($currentIngredients as $currentIngredient) {
+            $ingredients[] = $currentIngredient->getName();
+        }
+
         return $this->render(
-            'Design311WebsiteBundle:Recipe:add.html.twig',
-            array('form' => $form->createView())
+            'Design311WebsiteBundle:Recipe:add.html.twig', array(
+                'form' => $form->createView(),
+                'ingredients' => $ingredients
+            )
         );
     }
 
@@ -213,6 +221,8 @@ class RecipeController extends BaseController
             'action' => $this->generateUrl('design311website_recepten_edit', array('permalink' => $permalink))
             ));
         $form->handleRequest($request);
+    
+        $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
 
         if ($form->isValid()) {
 
@@ -222,6 +232,19 @@ class RecipeController extends BaseController
 
             $photos = $recipe->getPhotos();
             $ingredients = $recipe->getRecipeIngredients();
+
+            if ($recept->getRecipeIngredients()) {
+                foreach ($recept->getRecipeIngredients() as $key => $recipeIngredient) {
+                    foreach ($currentIngredients as $currentIngredient) {
+                        if ($recipeIngredient->getIngredient()->getName() == $currentIngredient->getName()) {
+                            $ingredient = $recipeIngredient->getIngredient();
+                            $ingredient = $currentIngredient;
+                            $recipeIngredient->setIngredient($ingredient);
+                            break;
+                        }
+                    }
+                }
+            }
 
             foreach ($originalIngredients as $ingredient) {
                 if (false === $recipe->getRecipeIngredients()->contains($ingredient)) {
@@ -243,10 +266,16 @@ class RecipeController extends BaseController
             return $this->redirect($this->generateUrl('design311website_recepten_detail', array('category' => strtolower($recipe->getCategory()->getPlural()), 'permalink' => $recipe->getPermalink()) ));
         }
 
+        $ingredients = [];
+        foreach ($currentIngredients as $currentIngredient) {
+            $ingredients[] = $currentIngredient->getName();
+        }
+
         return $this->render(
             'Design311WebsiteBundle:Recipe:add.html.twig',array(
                 'form' => $form->createView(),
-                'recipe' => $recipe
+                'recipe' => $recipe,
+                'ingredients' => $ingredients
             )
         );
     }

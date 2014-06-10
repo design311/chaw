@@ -108,7 +108,10 @@
 {% endblock %}
 
 {% block footer %}
+	<script src="{{ asset('bundles/design311website/js/select2/select2.min.js') }}"></script>
     <script>
+    	var ingredients = {{ingredients|serialize|raw}};
+
     	var photoHolder;
     	var ingredientHolder;
 
@@ -141,6 +144,8 @@
 		    	if (i != 0) {
 		    		$(el).append(deleteLink);
 		    	};
+		    	var input = $(el).find('.ingredient input');
+		    	select2Ingredient(input);
 		    });
 
 		    if (photoHolder.data('index') == 0) {
@@ -207,7 +212,16 @@
 	            $('#recipe_submit').click();
 	            return false;
 	        })
+
 		});
+
+        function select2Ingredient(input){
+	    	input.select2({
+	    		tags:ingredients,
+	    		tokenSeparators: [",", " "],
+	    		maximumSelectionSize: 1
+	    	});
+        }
 
 		function addInput(holder, link, allowDelete) {
 		    // Get the data-prototype explained earlier
@@ -240,6 +254,9 @@
 		    	var newFormContainer = $('<div></div>').append(newForm);
 		    }
 		    link.before(newFormContainer);
+
+		    var input = $(newFormContainer).find('.ingredient input');
+		    select2Ingredient(input);
 		}
     </script>
 {% endblock %}

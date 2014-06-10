@@ -181,7 +181,7 @@ class AjaxController extends BaseController
 
             $this->get('session')->getFlashBag()->add('success','Je hebt het verzoek geaccepteerd');
 
-            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participantRequest->getDinner()->getPermalink()) ));
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participant->getDinner()->getPermalink()) ));
         }
         else{
             throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
@@ -196,9 +196,6 @@ class AjaxController extends BaseController
             $this->get('session')->getFlashBag()->add('error','Uitnodiging niet gevonden');
             return $this->redirect($this->generateUrl('design311website_dinners'));
         }
-
-        var_dump($this->getUser()->getEmail());
-        var_dump($invite->getEmail());
         
         if ($this->getUser()->getEmail() == $invite->getEmail()) {
 
@@ -275,7 +272,7 @@ class AjaxController extends BaseController
 
             $this->get('session')->getFlashBag()->add('success','Je hebt de uitnodiging geaccepteerd');
 
-            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $invite->getDinner()->getPermalink()) ));
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participant->getDinner()->getPermalink()) ));
         }
         else{
             throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');

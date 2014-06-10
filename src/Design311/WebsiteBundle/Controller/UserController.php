@@ -180,10 +180,10 @@ class UserController extends BaseController
     private function generateRecoveryKey(User $user){
         $key = '';
         for ($i=0; $i < 10; $i++) { 
-            $key = md5($user->getEmail() . $user->getUsername() . $key);
+            $key = md5($user->getEmail() . $user->getPassword() . $key);
         }
 
-        return md5($key . $user->getEmail());
+        return md5($key . $user->getUsername());
     }
 
     public function recoveryAction(Request $request, $hash = null)

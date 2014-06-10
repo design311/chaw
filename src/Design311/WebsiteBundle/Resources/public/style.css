@@ -1790,6 +1790,8 @@ table.dinners {
 .recipeform .ingredient {
   width: 67%;
   padding-left: 2%; }
+  .recipeform .ingredient > div {
+    position: relative; }
 .recipeform #recipe_recipeingredients > div > div {
   width: 97%;
   clear: both; }
@@ -1797,6 +1799,29 @@ table.dinners {
   line-height: 33px;
   text-decoration: none;
   padding-left: 5px; }
+.recipeform #recipe_recipeingredients .select2-container-active .select2-choices {
+  border-color: #5897fb; }
+.recipeform #recipe_recipeingredients .select2-choices {
+  padding: 0 5px;
+  background: transparent;
+  border-color: #ccc; }
+.recipeform #recipe_recipeingredients .select2-search-choice {
+  margin: 1px 0;
+  padding: 4px 0;
+  font-size: 16px;
+  line-height: initial;
+  font-family: sans-serif;
+  background: transparent;
+  border: 0;
+  box-shadow: none; }
+  .recipeform #recipe_recipeingredients .select2-search-choice a {
+    display: none; }
+.recipeform #recipe_recipeingredients .select2-search-field input {
+  padding: 4px 0; }
+.recipeform .select2-selection-limit {
+  display: none !important; }
+.recipeform .select2-results {
+  margin: 0; }
 .recipeform .cooking, .recipeform .ready, .recipeform .aantal {
   float: left;
   width: 32%;

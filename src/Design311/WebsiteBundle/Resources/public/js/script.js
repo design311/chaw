@@ -91,7 +91,7 @@ $(function(){
 	})
 
 	$('.showmore-toggle').click(function(){
-		var toggle = link;
+		var toggle = $(this);
 		$(this).parent().siblings('.showmore').slideToggle(function(){
 			if ($(this).is(':visible')) {
 				toggle.children('i').removeClass('sort-desc').addClass('sort-asc');

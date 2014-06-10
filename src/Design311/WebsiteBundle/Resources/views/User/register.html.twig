@@ -48,24 +48,27 @@
     <script>
     $(function(){
     	$('#userregister_username').change(function(){
-    		var username = $('#userregister_username').val().toLowerCase();
+    		var username = $.trim($('#userregister_username').val().toLowerCase());
     		$('#userregister_username').val(username);
-    		$.ajax({
-				url: "{{path('design311website_ajax_username_exists')}}",
-				type: "POST",
-				data: {'username': username},
-				dataType: "JSON",
-				success: function (data) {
-					if (data) {
-						$('#userregister_submit').prop('disabled', true);
-						$('.usernameexists').text('('+username + ' is al in gebruik)').addClass('red').removeClass('green');
+
+    		if (username != '') {
+	    		$.ajax({	
+					url: "{{path('design311website_ajax_username_exists')}}",
+					type: "POST",
+					data: {'username': username},
+					dataType: "JSON",
+					success: function (data) {
+						if (data) {
+							$('#userregister_submit').prop('disabled', true);
+							$('.usernameexists').text('(\''+username + '\' is al in gebruik)').addClass('red').removeClass('green');
+						}
+						else{
+							$('#userregister_submit').prop('disabled', false);
+							$('.usernameexists').text('('+username + ' is beschikbaar)').addClass('green').removeClass('red');
+						}
 					}
-					else{
-						$('#userregister_submit').prop('disabled', false);
-						$('.usernameexists').text('('+username + ' is beschikbaar)').addClass('green').removeClass('red');
-					}
-				}
-			});
+				});
+    		}
     	})
     })
     </script>
