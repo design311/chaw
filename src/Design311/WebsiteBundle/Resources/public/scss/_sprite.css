@@ -1,5 +1,5 @@
 .sprite {
-  background-image: url("img/sprite2.png");
+  background-image: url("img/sprite3.png");
   display: inline-block;
   width: 18px;
   height: 18px; }
@@ -91,3 +91,8 @@
 
 .sort-asc {
   background-position: -108px -54px; }
+
+.arrowdown {
+  width: 108px;
+  height: 40px;
+  background-position: 0 -81px; }

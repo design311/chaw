@@ -21,10 +21,11 @@
 					<h1>Chaw</h1>
 					<p class="intro">Food-community voor iedereen die van lekker eten houdt. Doorzoek de recepten of ga eens lekker eten bij een andere Foodie.</p>
 					<!-- <p class="intro">Laat je inspireren door de smakelijke foto's van andere foodies,<br>meld je aan om zelf ook foto's te delen.</p> -->
-					<p class="signup"><a href="{{ path('design311website_register') }}" class="register">Registreren</a> of <a href="#" id="moreinfo">Meer informatie</a></p>
+					<p class="signup"><a href="{{ path('design311website_register') }}" class="register">Registreren</a> of <a href="#" class="moreinfo">Meer informatie</a></p>
 					<p class="login">Ben je al lid? <a href="{{ path('design311website_login') }}">Meld je aan</a></p>
 				</div>
 			</div>
+			<i class="sprite arrowdown moreinfo animated"></i>
 		</div>
 	</div>
 
@@ -138,7 +139,7 @@
 				center: coord
 			});
 
-			$('#moreinfo').click(function(){
+			$('.moreinfo').click(function(){
 				$('html,body').animate({
 					scrollTop: $('.map.section').offset().top
 				},1000)

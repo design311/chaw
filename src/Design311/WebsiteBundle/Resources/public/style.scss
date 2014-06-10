@@ -270,6 +270,12 @@ button, input[type="submit"]{
 		color:$black;
 		&.active{
 			font-weight:bold;
+			&:hover, &:focus, &:active{
+				color:lighten($black,20);
+			}
+		}
+		&:hover, &:focus, &:active{
+			color:$orange;
 		}
 	}
 }
@@ -340,6 +346,47 @@ button, input[type="submit"]{
 	}
 }
 
+
+
+@mixin keyframes($name) {
+	@-webkit-keyframes #{$name} {
+		@content; 
+	}
+	@-moz-keyframes #{$name} {
+		@content;
+	}
+	@-ms-keyframes #{$name} {
+		@content;
+	}
+	@keyframes #{$name} {
+		@content;
+	} 
+}
+@mixin animation($animation) {
+	-webkit-animation: #{$animation};
+	-moz-animation: #{$animation};
+	-ms-animation: #{$animation};
+	animation: #{$animation};
+}
+@mixin transform($transform) {
+	-webkit-transform: $transform;
+	-moz-transform: $transform;
+	-ms-transform: $transform;
+	transform: $transform;
+}
+
+@include keyframes(bounce) {
+	0%, 20%, 50%, 80%, 100% {
+		@include transform(translateY(0));
+	}
+	40% {
+		@include transform(translateY(-8px));
+	}
+	60% {
+		@include transform(translateY(-4px));
+	}
+}
+
 .picturewall{
 	clear:both;
 	overflow:hidden;
@@ -367,10 +414,13 @@ button, input[type="submit"]{
 		}
 	}
 
-	img{
-		float:left;
-		height:33.4%;
-		width:auto;
+	.arrowdown{
+		position:absolute;
+		bottom:30px;
+		left:50%;
+		margin-left:-54px;
+		cursor:pointer;
+		@include animation(bounce 2s infinite);
 	}
 }
 
