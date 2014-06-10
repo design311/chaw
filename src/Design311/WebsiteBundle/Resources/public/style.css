@@ -934,7 +934,7 @@ html[dir="rtl"] .select2-search-choice-close {
   .select2-search input {
     background-position: 100% -21px !important; } }
 .sprite {
-  background-image: url("img/sprite.png");
+  background-image: url("img/sprite2.png");
   display: inline-block;
   width: 18px;
   height: 18px; }
@@ -991,10 +991,6 @@ html[dir="rtl"] .select2-search-choice-close {
 
 .question {
   background-position: -108px 0; }
-  .question.orange {
-    background-position: -108px -18px; }
-  .question.white {
-    background-position: -108px -36px; }
 
 .edit.white {
   background-position: -126px -36px; }
@@ -1003,6 +999,11 @@ html[dir="rtl"] .select2-search-choice-close {
   background-position: -126px 0; }
   .printer.white {
     background-position: -126px -18px; }
+
+.people {
+  background-position: -108px -18px; }
+  .people.white {
+    background-position: -108px -36px; }
 
 .website {
   background-position: 0 -54px; }
@@ -1749,8 +1750,8 @@ table.dinners {
 .green {
   color: #118e00; }
 
-.yellow {
-  color: #e46600; }
+.orange {
+  color: #ff5c23; }
 
 .dinnerform h1 {
   margin-top: 0;

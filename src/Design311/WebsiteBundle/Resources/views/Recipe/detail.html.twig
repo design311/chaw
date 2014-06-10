@@ -15,8 +15,11 @@
 		<div class="container">
 			{% include 'Design311WebsiteBundle:Shared:recipes-sidebar.html.twig' with {'detail':true} %}
 			<div class="two-third main">
+				{% if recipe.diet != 'Normaal' %}
+					<p class="orange"><strong>Dit recept is {{recipe.diet}}</strong></p>
+				{% endif %}
 				<div class="ingredients">
-					<h2>Ingredi&euml;nten</h2>
+					<h2>Ingredi&euml;nten voor {{recipe.aantalPersonen}} {{recipe.aantalPersonen == 1 ? 'persoon' : 'personen'}}</h2>
 					<ul>
 					{% for ingredient in recipe.recipeingredients %}
 						<li>{{ingredient.amount}} {{ingredient.ingredient}}</li>
@@ -33,9 +36,11 @@
 						<img src="{{ asset(photo.webPath)}}" alt="{{photo.title}}">
 					{% endfor %}
 				</div>
-
-				<h2>Wat vind je van dit recept?</h2>
-				<div class="fb-comments" data-href="{{ url('design311website_recepten_detail', {'category': recipe.category, 'permalink': recipe.permalink})}}" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+	
+				<div class="feedback">
+					<h2>Wat vind je van dit recept?</h2>
+					<div class="fb-comments" data-href="{{ url('design311website_recepten_detail', {'category': recipe.category, 'permalink': recipe.permalink})}}" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -14,6 +14,7 @@ class SearchRecipeType extends AbstractType
             'class' => 'Design311WebsiteBundle:Ingredient',
             'property' => 'name',
             'multiple'  => true,
+            'required' => false,
             'label' => 'Ingrediënten'
         ));
         $builder->add('category', 'entity', array(

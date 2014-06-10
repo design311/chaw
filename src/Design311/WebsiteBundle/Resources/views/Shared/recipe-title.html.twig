@@ -5,6 +5,7 @@
 			<ul class="recipemeta">
 				<li><i class="pot white sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
 				<li><i class="bestek white sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
+				<li><i class="people white sprite" title="Aantal personen"></i>{{recipe.aantalPersonen}} {{recipe.aantalPersonen == 1 ? 'persoon' : 'personen'}}</li>
 				<li class="hide4print"><i class="heart white sprite"></i>
 				{% if recipe.likedBy|length == 0 %}
 				Nog niemand heeft dit geproefd.

@@ -1,5 +1,5 @@
 .sprite{
-	background-image:url('img/sprite.png');
+	background-image:url('img/sprite2.png');
 	display:inline-block;
 	width:18px;
 	height:18px;
@@ -77,12 +77,6 @@
 
 .question{
 	background-position:-108px 0;
-	&.orange{
-		background-position:-108px -18px;
-	}
-	&.white{
-		background-position:-108px -36px;
-	}
 }
 
 .edit{
@@ -95,6 +89,13 @@
 	background-position:-126px 0;
 	&.white{
 		background-position:-126px -18px;
+	}
+}
+
+.people{
+	background-position:-108px -18px;
+	&.white{
+		background-position:-108px -36px;
 	}
 }
 

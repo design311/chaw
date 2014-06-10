@@ -90,6 +90,10 @@ h1, h2, h3, h4, h5, h6{
 	.question{
 		background-position:-108px 0;
 	}
+	.people{
+		background-position:-108px -18px;
+	}
+
 
 	.edit{
 		background-position:-126px 0;
@@ -140,6 +144,9 @@ h1, h2, h3, h4, h5, h6{
 	.recipecontent{
 		border:0;
 		margin:0 $i;
+	}
+	.feedback{
+		display:none;
 	}
 }
 

@@ -59,6 +59,8 @@ h1, h2, h3, h4, h5, h6 {
   background-position: -90px 0; }
 .printthis .question {
   background-position: -108px 0; }
+.printthis .people {
+  background-position: -108px -18px; }
 .printthis .edit {
   background-position: -126px 0; }
 .printthis .recipemeta li {
@@ -93,6 +95,8 @@ h1, h2, h3, h4, h5, h6 {
 .recipe-detail .recipecontent {
   border: 0;
   margin: 0 !important; }
+.recipe-detail .feedback {
+  display: none; }
 
 .shoppinglist .ingredients {
   margin-top: 1em; }

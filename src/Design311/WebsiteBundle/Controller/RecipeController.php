@@ -86,20 +86,25 @@ class RecipeController extends BaseController
 
             $searchData = $form->getData();
 
-            $ingredientIds = array();
-
-            foreach ($searchData['ingredients'] as $ingredient) {
-                $ingredientIds[] = $ingredient->getId();
-            }
-
             $qb = $em->createQueryBuilder();
             $qb = $qb
                 ->from('Design311WebsiteBundle:Recipe', 'r')
-                ->select('r')
-                ->where($qb->expr()->in('ri.ingredient', $ingredientIds))
-                ->leftJoin('Design311WebsiteBundle:RecipeIngredient', 'ri', 'WITH', 'r.id = ri.recipes')
-                ->groupBy('r.id')
-                ->having('count(r.id) = ' . count($ingredientIds));
+                ->select('r');
+
+            if (count($searchData['ingredients']) > 0) {
+
+                $ingredientIds = array();
+
+                foreach ($searchData['ingredients'] as $ingredient) {
+                    $ingredientIds[] = $ingredient->getId();
+                }
+
+                $qb = $qb
+                    ->andWhere($qb->expr()->in('ri.ingredient', $ingredientIds))
+                    ->leftJoin('Design311WebsiteBundle:RecipeIngredient', 'ri', 'WITH', 'r.id = ri.recipes')
+                    ->groupBy('r.id')
+                    ->having('count(r.id) = ' . count($ingredientIds));
+            }
 
             if ($searchData['category'] != null ) {
                 $qb->andWhere($qb->expr()->eq('r.category', $searchData['category']->getId()));
