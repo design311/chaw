@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+            new Presta\SitemapBundle\PrestaSitemapBundle(),
             new Design311\WebsiteBundle\Design311WebsiteBundle(),
         );
 

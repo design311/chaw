@@ -74,6 +74,18 @@ class RecipeController extends BaseController
         );
     }
 
+    public function searchInfoAction()
+    {
+        $form = $this->searchRecipeForm();
+
+        return $this->render(
+            'Design311WebsiteBundle:Recipe:searchInfo.html.twig',
+            array(
+                'form' => $form->createView(),
+                )
+        );
+    }
+
     public function searchAction(Request $request)
     {
         $form = $this->searchRecipeForm();
@@ -166,10 +178,10 @@ class RecipeController extends BaseController
 
             $em = $this->getDoctrine()->getManager();
 
-            $recept = $form->getData();
+            $recipe = $form->getData();
 
-            if ($recept->getRecipeIngredients()) {
-                foreach ($recept->getRecipeIngredients() as $key => $recipeIngredient) {
+            if ($recipe->getRecipeIngredients()) {
+                foreach ($recipe->getRecipeIngredients() as $key => $recipeIngredient) {
                     foreach ($currentIngredients as $currentIngredient) {
                         if ($recipeIngredient->getIngredient()->getName() == $currentIngredient->getName()) {
                             $ingredient = $recipeIngredient->getIngredient();
@@ -181,13 +193,13 @@ class RecipeController extends BaseController
                 }
             }
             
-            $recept->setUser($this->getUser());
-            $recept->setPermalink($this->getPermalink($recept->getTitle(), 'Recipe'));
+            $recipe->setUser($this->getUser());
+            $recipe->setPermalink($this->getPermalink($recipe->getTitle(), 'Recipe'));
 
-            $em->persist($recept);
+            $em->persist($recipe);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('design311website_recepten_detail', array('category' => $recept->getCategory(), 'permalink' => $recept->getPermalink()) ));
+            return $this->redirect($this->generateUrl('design311website_recepten_detail', array('category' => $recipe->getCategory(), 'permalink' => $recipe->getPermalink()) ));
         }
 
         $ingredients = [];
@@ -238,8 +250,8 @@ class RecipeController extends BaseController
             $photos = $recipe->getPhotos();
             $ingredients = $recipe->getRecipeIngredients();
 
-            if ($recept->getRecipeIngredients()) {
-                foreach ($recept->getRecipeIngredients() as $key => $recipeIngredient) {
+            if ($recipe->getRecipeIngredients()) {
+                foreach ($recipe->getRecipeIngredients() as $key => $recipeIngredient) {
                     foreach ($currentIngredients as $currentIngredient) {
                         if ($recipeIngredient->getIngredient()->getName() == $currentIngredient->getName()) {
                             $ingredient = $recipeIngredient->getIngredient();

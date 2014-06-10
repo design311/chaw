@@ -2,6 +2,10 @@ design311_website:
     resource: "@Design311WebsiteBundle/Resources/config/routing.yml"
     prefix:   /
 
+PrestaSitemapBundle:
+    resource: "@PrestaSitemapBundle/Resources/config/routing.yml"
+    prefix:   /
+
 _imagine:
     resource: .
     type:     imagine

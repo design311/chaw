@@ -805,10 +805,12 @@ table.dinners{
 }
 
 .search-recipe{
-	border-bottom:1px dashed #ddd;
 	form>div{
 		margin-top:1em;
 		position:relative; //for select2 validation message
+		&:first-child{
+			margin-top:0;
+		}
 	}
 	label{
 		margin-right:7px;

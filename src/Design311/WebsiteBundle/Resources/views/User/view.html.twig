@@ -49,7 +49,7 @@
 
 		<div class="widget">
 			<ul class="borderlist">
-				<li><a href="{{path('design311website_recepten_user', {'username': user.username})}}">Heeft <strong>{{user.recipes|length}}</strong> {{user.likedrecipes|length == 1 ? 'recept' : 'recepten'}} toegevoegd</a></li>
+				<li><a href="{{path('design311website_recepten_user', {'username': user.username})}}">Heeft <strong>{{user.recipes|length}}</strong> {{user.recipes|length == 1 ? 'recept' : 'recepten'}} toegevoegd</a></li>
 				<li>Vindt <strong>{{user.likedrecipes|length}}</strong> {{user.likedrecipes|length == 1 ? 'recept' : 'recepten'}} lekker</li>
 				<li>Heeft <strong>{{user.dinners|length}}</strong> {{user.dinners|length == 1 ? 'dinner' : 'dinners'}} georganiseerd</li>
 				<li>Nam deel aan <strong>{{user.dinnersParticipated|length}}</strong>  {{user.dinnersParticipated|length == 1 ? 'dinner' : 'dinners'}}</li>

@@ -1,0 +1,41 @@
+{% extends 'Design311WebsiteBundle::layout.html.twig' %}
+
+{% block title %}Doorzoek recepten van andere Foodies - {{parent()}}{% endblock %}
+{% block description %}Bekijk alle recepten die zijn toegevoegd aan Chaw, de community van echte Foodies. Geen zin om zelf te koken? Probeer social dining.{% endblock %}
+
+{% block bodyclass %}searchinfo{% endblock %}
+
+{% block content %}
+<div class="container">
+	<h1 class="averia">Recepten op ingredi&euml;nten zoeken</h1>
+	<div class="onehalf">
+		<p>Wil je recepten zoeken op basis van je beschikbare ingredi&euml;nten? Perfect! Vul je ingredi&euml;nten in om recepten te zoeken waarvoor je die ingredi&euml;nten nodig hebt. Je krijgt recepten te zien waarvoor je al die ingredi&euml;nten nodig hebt.</p>
+		<p>Het gebeurt wel vaker, je hebt nog een aantal restjes in huis liggen en wil er een lekker receptje mee maken maar je hebt totaal geen ideee wat je er nu net mee kan of wil maken. Recepten zoeken op basis van de ingredi&euml;nten kan je helpen met het zoeken naar recepten met jouw restjes.</p>
+		<p>Recepten op ingredi&euml;nten zoeken zorgt ervoor dat je minder restjes moet weggooien omdat ze niet meer eetbaar zijn, heel erg handig om je afvalberg te verkleinen dus!</p>
+	</div>
+	<div class="onehalf last">
+		<div class="search-recipe">
+			{{ form_start(form) }}
+				{{ form_row(form.ingredients) }}
+				{{ form_row(form.category) }}
+				{{ form_row(form.diet) }}
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block head %}
+		<link rel="stylesheet" href="{{ asset('bundles/design311website/js/flexslider/flexslider.css') }}">
+{% endblock %}
+
+{% block footer %}
+	<script src="{{ asset('bundles/design311website/js/flexslider/jquery.flexslider-min.js') }}"></script>
+	<script src="{{ asset('bundles/design311website/js/select2/select2.min.js') }}"></script>
+	<script>
+		$(function(){
+
+		})
+	</script>
+{% endblock %}

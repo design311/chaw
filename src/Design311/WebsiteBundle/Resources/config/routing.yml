@@ -6,11 +6,6 @@ design311website_login:
     pattern: /login/
     defaults: { _controller: Design311WebsiteBundle:User:login }
 
-#TODO remove testing routing
-design311website_testing:
-    pattern: /testing/
-    defaults: { _controller: Design311WebsiteBundle:User:testing }
-
 design311website_login_required:
     pattern: /login/{auth}/
     defaults: { _controller: Design311WebsiteBundle:User:login }
@@ -96,6 +91,10 @@ design311website_recepten:
 design311website_recepten_add:
     path:     /recepten/add/
     defaults: { _controller: Design311WebsiteBundle:Recipe:add }
+
+design311website_recepten_zoeken_info:
+    path:     /recepten/zoeken-op-ingredienten/
+    defaults: { _controller: Design311WebsiteBundle:Recipe:searchInfo }
 
 design311website_recepten_shoppinglist:
     path:     /recepten/shoppinglist/

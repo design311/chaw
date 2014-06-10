@@ -1630,17 +1630,17 @@ table.dinners {
   .widget h3 {
     margin-top: 0; }
 
-.search-recipe {
-  border-bottom: 1px dashed #ddd; }
-  .search-recipe form > div {
-    margin-top: 1em;
-    position: relative; }
-  .search-recipe label {
-    margin-right: 7px; }
-  .search-recipe select {
-    padding: 5px; }
-  .search-recipe button {
-    margin-top: 2em; }
+.search-recipe form > div {
+  margin-top: 1em;
+  position: relative; }
+  .search-recipe form > div:first-child {
+    margin-top: 0; }
+.search-recipe label {
+  margin-right: 7px; }
+.search-recipe select {
+  padding: 5px; }
+.search-recipe button {
+  margin-top: 2em; }
 
 .select2-container {
   width: 100%; }

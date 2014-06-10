@@ -5,6 +5,8 @@ namespace Design311\WebsiteBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+use Doctrine\ORM\EntityRepository;
+
 class SearchRecipeType extends AbstractType
 {
 
@@ -15,7 +17,11 @@ class SearchRecipeType extends AbstractType
             'property' => 'name',
             'multiple'  => true,
             'required' => false,
-            'label' => 'Ingrediënten'
+            'label' => 'Ingrediënten',
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('i')
+                    ->orderBy('i.name', 'ASC');
+            },
         ));
         $builder->add('category', 'entity', array(
             'class' => 'Design311WebsiteBundle:RecipeCategory',
