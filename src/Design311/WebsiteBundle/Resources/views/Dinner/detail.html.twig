@@ -84,7 +84,7 @@
 			{% if app.user != dinner.user and app.user.username not in requestUsers and app.user.username not in participantUsers %}
 				<h2>Deelnemen</h2>
 				<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
-				{{ form(form) }}
+				{{ form(form, {'attr': {'class': 'deelnemenform'}}) }}
 			{% else %}
 				{% if app.user.username in participantUsers %}
 				    <h2>Deelnemen</h2>

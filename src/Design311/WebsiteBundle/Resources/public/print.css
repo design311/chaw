@@ -119,10 +119,11 @@ h1, h2, h3, h4, h5, h6 {
   display: none; }
 .shoppinglist .aantal {
   border: 0;
-  font-weight: bold;
-  width: 25px; }
+  font-weight: bold; }
 .shoppinglist .recipes > div {
   border-bottom: 1px dashed; }
+.shoppinglist .removerecipe {
+  display: none; }
 
 .printrecipe {
   display: none; }

@@ -39,7 +39,7 @@
 	
 				<div class="feedback">
 					<h2>Wat vind je van dit recept?</h2>
-					<div class="fb-comments" data-href="{{ url('design311website_recepten_detail', {'category': recipe.category, 'permalink': recipe.permalink})}}" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+					<div class="fb-comments" data-href="{{ url('design311website_recepten_detail', {'category': recipe.category.plural|lower, 'permalink': recipe.permalink})}}" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
 				</div>
 			</div>
 		</div>

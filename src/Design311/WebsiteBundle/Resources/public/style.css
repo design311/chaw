@@ -2098,6 +2098,9 @@ table.dinners {
   margin-top: 0;
   line-height: 1; }
 
+.deelnemenform > div > div {
+  margin-bottom: 1em; }
+
 @media screen and (max-width: 1240px) {
   .container, .newestrecipes .flex-control-nav {
     width: 960px; }

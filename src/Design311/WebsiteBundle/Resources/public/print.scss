@@ -180,12 +180,14 @@ h1, h2, h3, h4, h5, h6{
 	.aantal{
 		border:0;
 		font-weight:bold;
-		width:25px;
 	}
 	.recipes{
 		>div{
 			border-bottom:1px dashed;
 		}
+	}
+	.removerecipe{
+		display:none;
 	}
 }
 

@@ -20,7 +20,7 @@
 			<p><strong>Ingredi&euml;nten voor de volgende recepten:</strong></p>
 				<ul class="recipelist">
 					{% for recipe in shoppinglist %}
-			    	<li>{{recipe.title}} <a href="{{path('design311website_recepten_remove_shop', {'permalink': recipe.permalink})}}" class="tooltip" title="Recept uit winkellijstje verwijderen">X</a></li>
+			    	<li>{{recipe.title}} <a href="{{path('design311website_recepten_remove_shop', {'permalink': recipe.permalink})}}" class="removerecipe tooltip" title="Recept uit winkellijstje verwijderen">X</a></li>
 			    {% endfor %}
 				</ul>
 			</div>
@@ -41,8 +41,7 @@
 		    	<div>
 			    	<h2>{{recipe.title}}</h2>
 			    	<ul class="recipemeta">
-						<li><i class="pot sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
-						<li><i class="bestek sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
+						{% include 'Design311WebsiteBundle:Shared:recipe-meta.html.twig' %}
 					</ul>
 					<div class="clear"></div>
 			    	<div class="ingredients">
@@ -77,6 +76,7 @@
 				$(this).parent().addClass('active');
 				recipes.hide();
 				ingredients.fadeIn(600);
+				return false;
 			})
 
 			$('.tab-recipes').click(function(){
@@ -84,6 +84,7 @@
 				$(this).parent().addClass('active');
 				ingredients.hide();
 				recipes.fadeIn(600);
+				return false;
 			})
 
 			$('.aantal').blur(function(){
