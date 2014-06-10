@@ -16,7 +16,6 @@ class AjaxController extends BaseController
 {
     public function likeRecipeAction($permalink)
     {
-
         $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
 
         $response = $recipe->getLikedBy()->contains($this->getUser()) ? 0 : 1;
@@ -163,15 +162,15 @@ class AjaxController extends BaseController
             $em->flush();
 
             $mail = \Swift_Message::newInstance()
-                ->setSubject($dinner->getUser()->getDisplayName() . ' heeft je verzoek geaccepteerd')
-                ->setFrom($dinner->getUser()->getEmail())
-                ->setReplyTo($dinner->getUser()->getEmail())
-                ->setTo($user->getEmail())
+                ->setSubject($participant->getDinner()->getUser()->getDisplayName() . ' heeft je verzoek geaccepteerd')
+                ->setFrom($participant->getDinner()->getUser()->getEmail())
+                ->setReplyTo($participant->getDinner()->getUser()->getEmail())
+                ->setTo($participant->getUser()->getEmail())
                 ->setBody(
                     $this->renderView(
                         'Design311WebsiteBundle:Mail:layout.html.twig',
                         array(
-                            'message' => $dinner->getUser()->getDisplayName() . ' heeft je deelnameverzoek geaccepteerd, als je vragen hebt kan je contact opnemen met hem/haar door deze mail te beantwoorden.',
+                            'message' => $participant->getDinner()->getUser()->getDisplayName() . ' heeft je deelnameverzoek geaccepteerd, als je vragen hebt kan je contact opnemen met hem/haar door deze mail te beantwoorden.',
                             )
                     ),
                     'text/html'

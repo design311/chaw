@@ -199,7 +199,7 @@ class RecipeController extends BaseController
             $em->persist($recipe);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('design311website_recepten_detail', array('category' => $recipe->getCategory(), 'permalink' => $recipe->getPermalink()) ));
+            return $this->redirect($this->generateUrl('design311website_recepten_detail', array('category' => strtolower($recipe->getCategory()->getPlural()), 'permalink' => $recipe->getPermalink()) ));
         }
 
         $ingredients = [];

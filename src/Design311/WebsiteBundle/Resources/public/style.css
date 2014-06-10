@@ -1234,6 +1234,9 @@ a {
     font-size: 1.2em;
     padding: 0 30px;
     color: #333333; }
+    .menu a.active {
+      font-weight: bold;
+      color: #ff5c23; }
 
 .home .section {
   height: 100%;

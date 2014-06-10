@@ -28,13 +28,13 @@ design311website_profile_edit:
     path:      /profiel/edit/
     defaults:  { _controller: Design311WebsiteBundle:User:edit }
 
-design311website_profile_view:
-    path:      /profiel/{username}/
-    defaults:  { _controller: Design311WebsiteBundle:User:view }
-
 design311website_profile_password:
     path:      /profiel/wachtwoord/
     defaults:  { _controller: Design311WebsiteBundle:User:password }
+
+design311website_profile_view:
+    path:      /profiel/{username}/
+    defaults:  { _controller: Design311WebsiteBundle:User:view }
 
 design311website_password_recovery:
     path:      /password-recovery/

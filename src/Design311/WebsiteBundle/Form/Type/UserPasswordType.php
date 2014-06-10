@@ -13,6 +13,8 @@ class UserPasswordType extends AbstractType
         $builder->add('password', 'repeated', array(
            'first_name'  => 'password',
            'second_name' => 'confirm',
+           'first_options'  => array('label' => 'Wachtwoord'),
+           'second_options' => array('label' => 'Bevestig wachtwoord'),
            'type'        => 'password',
         ));
 

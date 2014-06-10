@@ -18,9 +18,9 @@
 	<div class="two-third">
 		<h1>{{user.displayName}}</h1>
 		{% if user.description is empty %}
-			<p>{{user.description}}</p>
-		{% else %}
 			<p>{{user.displayName}} heeft nog geen korte voorstelling.</p> 
+		{% else %}
+			<p>{{user.description}}</p>
 		{% endif %}
 
 		<ul class="user-social">

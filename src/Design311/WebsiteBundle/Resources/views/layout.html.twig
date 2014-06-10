@@ -48,8 +48,8 @@
 		<div class="container">
 			<ul class="menu desktop">
 				<li class="logo notranslate"><a href="{{ path('design311website_homepage') }}">Chaw</a></li>
-				<li><a href="{{ path('design311website_dinners') }}">Dinners</a></li>
-				<li><a href="{{ path('design311website_recepten') }}">Recepten</a></li>
+				<li><a href="{{ path('design311website_dinners') }}"{% if 'dinners' in app.request.attributes.get('_route') %} class="active"{% endif %}>Dinners</a></li>
+				<li><a href="{{ path('design311website_recepten') }}"{% if 'recepten' in app.request.attributes.get('_route') %} class="active"{% endif %}>Recepten</a></li>
 				<!-- <li><a href="#" class="tooltip" title="Binnenkort beschikbaar">Foodspiration</a></li> -->
 			</ul>
 			<div class="menu mobile">
