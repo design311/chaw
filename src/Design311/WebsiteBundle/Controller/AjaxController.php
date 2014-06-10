@@ -137,7 +137,8 @@ class AjaxController extends BaseController
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
         }
         else{
-            throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
+            $this->get('session')->getFlashBag()->add('error','Dit deelnameverzoek is niet voor jouw dinner.');
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participantRequest->getDinner()->getPermalink()) ));
         }
     }
 
@@ -183,7 +184,8 @@ class AjaxController extends BaseController
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participant->getDinner()->getPermalink()) ));
         }
         else{
-            throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
+            $this->get('session')->getFlashBag()->add('error','Dit deelnameverzoek is niet voor jouw dinner.');
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participantRequest->getDinner()->getPermalink()) ));
         }
     }
 
@@ -228,7 +230,8 @@ class AjaxController extends BaseController
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
         }
         else{
-            throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
+            $this->get('session')->getFlashBag()->add('error','Je hebt geen toegang tot deze uitnodiging, e-mailadressen komen niet overeen.');
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $invite->getDinner()->getPermalink()) ));
         }
     }
 
@@ -261,7 +264,7 @@ class AjaxController extends BaseController
                     $this->renderView(
                         'Design311WebsiteBundle:Mail:layout.html.twig',
                         array(
-                            'message' => $dinner->getUser()->getDisplayName() . ' zal aanwezig zijn op je dinner.',
+                            'message' => $participant->getDinner()->getUser()->getDisplayName() . ' zal aanwezig zijn op je dinner.',
                             )
                     ),
                     'text/html'
@@ -274,7 +277,8 @@ class AjaxController extends BaseController
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $participant->getDinner()->getPermalink()) ));
         }
         else{
-            throw new AccessDeniedException('Je hebt geen toegang tot deze pagina');
+            $this->get('session')->getFlashBag()->add('error','Je hebt geen toegang tot deze uitnodiging, e-mailadressen komen niet overeen.');
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $invite->getDinner()->getPermalink()) ));
         }
     }
 

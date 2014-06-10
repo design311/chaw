@@ -206,8 +206,11 @@ class DinnerController extends BaseController
                         )
                     ;
                     $this->get('mailer')->send($mail);
-
                 }
+
+
+                $count = count($emails);
+                $this->get('session')->getFlashBag()->add('success',($count == 1 ? 'Er is ' :'Er zijn '). $count . ' uitnodiging'. ($count > 1 ? 'en' :'').' verzonden.' );
 
                 return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink())));
             }
