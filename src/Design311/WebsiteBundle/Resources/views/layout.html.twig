@@ -75,7 +75,7 @@
 	{% endif %}
 	<h1 class="print averia print-title">Chaw.be</h1>
 	<p class="print print-notice">Waarom zou je deze pagina willen printen? Laat het ons weten: <a href="mailto:info@chaw.be">info@chaw.be</a></p>
-	<div class="contentblock">
+	<div class="contentblock"{% if 'design311website_recepten_detail' == app.request.attributes.get('_route') %} itemscope itemtype="http://schema.org/Recipe"{% endif %}>
 		{% block content %}{% endblock %}
 		<div class="clear"></div>
 
@@ -102,6 +102,7 @@
 				</div>
 			</div>
 		</div>
+		
 	</div>
 	
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

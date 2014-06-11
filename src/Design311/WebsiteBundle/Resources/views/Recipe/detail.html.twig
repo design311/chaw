@@ -12,7 +12,7 @@
 		{% include 'Design311WebsiteBundle:Shared:recipe-title.html.twig' with {'detail':true} %}
 	</div>
 	<div class="recipecontent">	
-		<div class="container" itemscope itemtype="http://schema.org/Recipe">
+		<div class="container">
 			{% include 'Design311WebsiteBundle:Shared:recipes-sidebar.html.twig' with {'detail':true} %}
 			<div class="two-third main">
 				{% if recipe.diet != 'Normaal' %}

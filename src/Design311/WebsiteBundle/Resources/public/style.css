@@ -2201,8 +2201,7 @@ table.dinners {
   background: #333333;
   color: #ccc;
   line-height: 27px;
-  border-top: 1px solid #111;
-  margin-top: 100px; }
+  border-top: 1px solid #111; }
   .footer a {
     color: #ddd; }
     .footer a:hover, .footer a:active, .footer a:focus {
