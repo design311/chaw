@@ -4,7 +4,7 @@
 {% block description %}Bekijk alle recepten die zijn toegevoegd aan Chaw, de community van echte Foodies. Geen zin om zelf te koken? Probeer social dining.{% endblock %}
 {% block ogimage %}{{ app.request.uriForPath('/' ~ newestrecipes.0.photos.0.webpath) }}{% endblock %}
 
-{% block bodyclass %}recipepage recipeindex{% endblock %}
+{% block bodyclass %}recipepage recipeindex fullheight{% endblock %}
 
 {% block content %}
 	<div class="newestrecipes">

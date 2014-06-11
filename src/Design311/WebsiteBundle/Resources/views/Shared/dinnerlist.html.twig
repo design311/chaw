@@ -1,0 +1,9 @@
+<ul class="dinnerlist">
+	{% for dinner in dinners %}
+	    <li>
+			<a href="{{path('design311website_dinners_detail', {'permalink':dinner.permalink})}}"><img src="{{dinner.user.avatar | apply_filter('avatar_tiny') }}" alt="{{dinner.user.displayName}}"></a>
+	    	<p class="title"><a href="{{path('design311website_dinners_detail', {'permalink':dinner.permalink})}}">{{dinner.title}}</a></p>
+	    	<p class="dinnermeta">{{dinner.date|date('d-m-Y')}} - {{dinner.date|date('H:i')}} - {{dinner.address.city}}</p>
+	    </li>
+	{% endfor %}
+</ul>

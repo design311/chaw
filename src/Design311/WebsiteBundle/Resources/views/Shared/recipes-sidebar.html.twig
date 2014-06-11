@@ -15,7 +15,7 @@
 			<a href="{{path('design311website_profile_view', {'username': recipe.user.username|lower})}}"><img src="{{ recipe.user.avatar | apply_filter('avatar') }}" alt="Avatar {{recipe.user.displayname}}"></a>
 		{% endif %}
 		{{recipe.title}}, een recept van:
-		<h3><a href="{{path('design311website_profile_view', {'username': recipe.user.username|lower})}}">{{recipe.user.displayName}}</a></h3>
+		<h3 itemprop="author"><a href="{{path('design311website_profile_view', {'username': recipe.user.username|lower})}}">{{recipe.user.displayName}}</a></h3>
 		<p>{{recipe.user.description}}</p>
 		<ul class="user-social">
 			{% if recipe.user.website is not null %}

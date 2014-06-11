@@ -1,0 +1,27 @@
+{% extends 'Design311WebsiteBundle::layout.html.twig' %}
+
+{% block content %}
+
+	<div class="container">
+		{% if country == 'be' %}
+			<h1 class="averia">Social Dinners in Belgi&euml;</h1>
+			<div class="onehalf">
+				<p>Ben je op zoek naar Social Dinners in Belgi&euml;? Hiernaast zie je een selectie van de Social Dinners in Belgi&euml;, bekijk <a href="{{path('design311website_dinners')}}">alle social dinners op de kaart</a>. Deelnemen aan een Social Dinner in Belgi&euml; kan heel eenvoudig via <a href="{{path('design311website_dinners')}}">Chaw</a>, als je liever zelf een Social Dinner organiseert kan dat natuurlijk ook.</p>
+				<p>Social Dining is een nieuwe vorm van netwerken waarbij verschillende mensen die elkaar nog niet zo goed kennen afspreken en samen eten. De laatste jaren is social dining steeds meer en meer aanwezig in Belgi&euml;, door de sociale media is het veel makkelijker om af te spreken met mensen die je nog niet goed kent.</p>
+				<p>Op Twitter staat het fenoneem bekend als <a href="http://www.twunch.be/" target="_blank">Twunch</a>, een Twitter lunch, maar voor de mensen die geen Twitter hebben of voor Twitteraars die willen socializen met andere mensen is er <a href="{{path('design311website_dinners')}}">Chaw</a></p>
+			</div>
+		{% else %}
+		    <h1 class="averia">Social Dinners in Nederland</h1>
+			<div class="onehalf">
+				<p>Ben je op zoek naar Social Dinners in Nederland? Hiernaast zie je een selectie van de Social Dinners in Nederland, bekijk <a href="{{path('design311website_dinners')}}">alle social dinners op de kaart</a>.</p>
+				<p>Social Dining is een nieuwe vorm van netwerken waarbij verschillende mensen die elkaar nog niet zo goed kennen afspreken en samen eten. De laatste jaren is social dining steeds meer en meer aanwezig in Nederland, door de sociale media is het veel makkelijker om af te spreken met mensen die je nog niet goed kent.</p>
+				<p>In Belgi&euml; staat het fenoneem op Twitter bekend als <a href="http://www.twunch.be/" target="_blank">Twunch</a>, een Twitter lunch. Voor de mensen die geen Twitter hebben of voor Twitteraars die willen socializen met andere mensen is er <a href="{{path('design311website_dinners')}}">Chaw</a></p>
+			</div>
+		{% endif %}
+		<div class="onehalf last">
+			{% include 'Design311WebsiteBundle:Shared:dinnerlist.html.twig' with {'dinners': dinners|slice(0,5) } %}
+			<p><a href="{{path('design311website_dinners')}}">Alle etentjes bekijken op de kaart</a></p>
+		</div>
+	</div>
+	
+{% endblock %}

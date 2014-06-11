@@ -132,6 +132,9 @@ class UserController extends BaseController
     public function viewAction(Request $request, $username)
     {
         $user = $this->getDoctrine()->getRepository('Design311WebsiteBundle:User')->findOneByUsername($username);
+        if (!$user) {
+            throw $this->createNotFoundException('Gebruiker niet gevonden');
+        }
 
         $location = false;
         if ($user->getAddress() != null) {

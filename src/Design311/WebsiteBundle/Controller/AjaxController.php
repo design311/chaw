@@ -17,6 +17,9 @@ class AjaxController extends BaseController
     public function likeRecipeAction($permalink)
     {
         $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
+        if (!$recipe) {
+            throw $this->createNotFoundException('Recept niet gevonden');
+        }
 
         $response = $recipe->getLikedBy()->contains($this->getUser()) ? 0 : 1;
 
@@ -40,6 +43,9 @@ class AjaxController extends BaseController
     {
 
         $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
+        if (!$recipe) {
+            throw $this->createNotFoundException('Recept niet gevonden');
+        }
 
         $response = $recipe->getSavedBy()->contains($this->getUser()) ? 0 : 1;
 
@@ -63,6 +69,9 @@ class AjaxController extends BaseController
     {
 
         $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
+        if (!$recipe) {
+            throw $this->createNotFoundException('Recept niet gevonden');
+        }
 
         $response = $recipe->getShoppinglistFrom()->contains($this->getUser()) ? 0 : 1;
 
@@ -87,6 +96,9 @@ class AjaxController extends BaseController
     {
 
         $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
+        if (!$recipe) {
+            throw $this->createNotFoundException('Recept niet gevonden');
+        }
         
         $recipe->removeShoppinglistFrom($this->getUser());
 

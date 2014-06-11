@@ -5,7 +5,7 @@
 	<title>{% block title %}Chaw: Social Dining & Recepten{% endblock %}</title>
 	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400%7cAveria+Libre' rel='stylesheet' type='text/css'>
 	{% block head %}{% endblock %}
-	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css?v1.5') }}">
+	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css?v1.6') }}">
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/print.css?v1.2') }}" media="print">
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/js/tipsy/jquery.tipsy.css') }}">
 	<link rel="icon" href="{{ asset('bundles/design311website/img/favicon.ico') }}" type="image/x-icon" />
@@ -57,6 +57,7 @@
 				<h1 class="logo notranslate"><a href="{{ path('design311website_homepage') }}">Chaw</a></h1>
 				<a href="#" class="menutoggle">Menu</a>
 				<ul>
+					<li><a href="{{ path('design311website_homepage') }}">Home</a></li>
 					<li><a href="{{ path('design311website_dinners') }}">Dinners</a></li>
 					<li><a href="{{ path('design311website_recepten') }}">Recepten</a></li>
 					{% if app.user %}
@@ -75,7 +76,32 @@
 	<h1 class="print averia print-title">Chaw.be</h1>
 	<p class="print print-notice">Waarom zou je deze pagina willen printen? Laat het ons weten: <a href="mailto:info@chaw.be">info@chaw.be</a></p>
 	<div class="contentblock">
-	{% block content %}{% endblock %}
+		{% block content %}{% endblock %}
+		<div class="clear"></div>
+
+		<div class="footer">
+			<div class="container">
+				<div class="one-third">
+					<p><strong><span class="orange">Chaw</span> - Social Dining &amp; Recepten</strong></p>
+					<ul class="links">
+						<li><a href="{{path('design311website_dinners_info_belgie')}}">Social Dinners in Belgi&euml;</a></li>
+						<li><a href="{{path('design311website_dinners_info_nederland')}}">Social Dinners in Nederland</a></li>
+						<li><a href="{{path('design311website_recepten_zoeken_info')}}">Recepten op ingredi&euml;nten zoeken</a></li>
+					</ul>
+				</div>
+				<div class="two-third">
+					<p><strong>Volg <span class="orange">Chaw</span> op sociale media</strong></p>
+					<ul class="links social">
+						<li><a href="https://www.facebook.com/chawBE" target="_blank"><i class="sprite medium facebook"></i>Like op Facebook</a></li>
+						<li><a href="https://twitter.com/chaw_BE" target="_blank"><i class="sprite medium twitter"></i>Volgen op Twitter</a></li>
+					</ul>
+				</div>
+				<div class="clear"></div>
+				<div class="copy">
+					{{"now"|date('Y')}} &copy; Alle rechten voorbehouden. Afbeeldingen en recepten behoren toe tot de rechtmatige eigenaars. Design &amp; coding door <a href="http://design311.com/">Design 311</a>.
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

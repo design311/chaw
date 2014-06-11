@@ -45,6 +45,10 @@ class RecipeController extends BaseController
     {
         //TODO pagination
         $category = $this->getDoctrine()->getRepository('Design311WebsiteBundle:RecipeCategory')->findOneByPlural(ucfirst($category));
+        if (!$category) {
+            throw $this->createNotFoundException('Categorie niet gevonden');
+        }
+
         $recipes = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findBy(array('category' => $category->getId()), array('id' => 'DESC'));
 
         $form = $this->searchRecipeForm();
@@ -62,6 +66,9 @@ class RecipeController extends BaseController
     public function detailAction($category, $permalink)
     {
         $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
+        if (!$recipe) {
+            throw $this->createNotFoundException('Recept niet gevonden');
+        }
 
         $form = $this->searchRecipeForm();
 
@@ -145,6 +152,9 @@ class RecipeController extends BaseController
     {
         $form = $this->searchRecipeForm();
         $user = $this->getDoctrine()->getRepository('Design311WebsiteBundle:User')->findOneByUsername($username);
+        if (!$user) {
+            throw $this->createNotFoundException('Gebruiker niet gevonden');
+        }
 
         $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder();
@@ -218,6 +228,9 @@ class RecipeController extends BaseController
     public function editAction($permalink, Request $request)
     {
         $recipe = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Recipe')->findOneByPermalink($permalink);
+        if (!$recipe) {
+            throw $this->createNotFoundException('Recept niet gevonden');
+        }
 
         if ($this->getUser() != $recipe->getUser()) {
             $this->get('session')->getFlashBag()->add('error','Dit recept mag je niet bewerken');

@@ -1,3 +1,7 @@
-<li><i class="pot {% if white is defined %}white {% endif %}sprite" title="Bereidingstijd"></i>{{recipe.cookingTime}} minuten</li>
-<li><i class="bestek {% if white is defined %}white {% endif %}sprite" title="Klaar om op te genieten"></i>{{recipe.readyTime}} minuten</li>
-<li><i class="people {% if white is defined %}white {% endif %}sprite" title="Aantal personen"></i>{{recipe.aantalPersonen}} {{recipe.aantalPersonen == 1 ? 'persoon' : 'personen'}}</li>
+{% set cookTime %}PT{% if recipe.cookingTime > 60 %}{{recipe.cookingTime // 60}}H{% endif %}{{recipe.cookingTime % 60}}M{% endset %}
+
+{% set totalTime %}PT{% if recipe.readyTime > 60 %}{{recipe.readyTime // 60}}H{% endif %}{{recipe.readyTime % 60}}M{% endset %}
+
+<li><i class="pot {% if white is defined %}white {% endif %}sprite" title="Bereidingstijd"{% if detail is defined %} itemprop="cookTime" content="{{cookTime}}"{% endif %}></i>{{recipe.cookingTime}} minuten</li>
+<li><i class="bestek {% if white is defined %}white {% endif %}sprite" title="Klaar om op te genieten"{% if detail is defined %} itemprop="totalTime" content="{{totalTime}}"{% endif %}></i>{{recipe.readyTime}} minuten</li>
+<li><i class="people {% if white is defined %}white {% endif %}sprite" title="Aantal personen"{% if detail is defined %} itemprop="recipeYield"{% endif %}></i>{{recipe.aantalPersonen}} {{recipe.aantalPersonen == 1 ? 'persoon' : 'personen'}}</li>

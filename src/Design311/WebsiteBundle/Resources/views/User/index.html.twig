@@ -13,45 +13,21 @@
 				<p>Er zijn geen dinners voor je gepland, <a href="{{ path('design311website_dinners') }}">neem deel aan een dinner</a> of <a href="{{ path('design311website_dinners_add') }}">organiseer er zelf één</a>.</p>
 				{% endif %}
 				{% if dinnerevents|length != 0 %}
-					<ul class="dinnerlist">
-					{% for dinnerevent in dinnerevents %}
-					    <li>
-							<a href="{{path('design311website_dinners_detail', {'permalink':dinnerevent.permalink})}}"><img src="{{dinnerevent.user.avatar | apply_filter('avatar_tiny') }}" alt="{{dinnerevent.user.displayName}}"></a>
-					    	<p class="title"><a href="{{path('design311website_dinners_detail', {'permalink':dinnerevent.permalink})}}">{{dinnerevent.title}}</a></p>
-					    	<p class="dinnermeta">{{dinnerevent.date|date('d-m-Y')}} - {{dinnerevent.date|date('H:i')}} - {{dinnerevent.address.city}}</p>
-					    </li>
-					{% endfor %}
-					</ul>
+					{% include 'Design311WebsiteBundle:Shared:dinnerlist.html.twig' with {'dinners': dinnerevents} %}
 				{% endif %}
 				<h2 class="averia">Mijn Dinners</h2>
 				{% if dinners|length == 0 %}
 				<p>Je hebt nog geen dinners gepland, <a href="{{ path('design311website_dinners_add') }}">organiseer er één</a>.</p>
 				{% endif %}
 				{% if dinners|length != 0 %}
-					<ul class="dinnerlist">
-					{% for dinner in dinners %}
-					    <li>
-							<a href="{{path('design311website_dinners_detail', {'permalink':dinner.permalink})}}"><img src="{{dinner.user.avatar | apply_filter('avatar_tiny') }}" alt="{{dinner.user.displayName}}"></a>
-					    	<p class="title"><a href="{{path('design311website_dinners_detail', {'permalink':dinner.permalink})}}">{{dinner.title}}</a></p>
-					    	<p class="dinnermeta">{{dinner.date|date('d-m-Y')}} - {{dinner.date|date('H:i')}} - {{dinner.address.city}}</p>
-					    </li>
-					{% endfor %}
-					</ul>
+					{% include 'Design311WebsiteBundle:Shared:dinnerlist.html.twig' with {'dinners': dinners} %}
 				{% endif %}
 				<h2 class="averia">Dinners waar je aan deelnam</h2>
 				{% if pastdinners|length == 0 %}
 				<p>Je hebt nog niet aan een dinner deelgenomen, <a href="{{ path('design311website_dinners') }}">kies er eentje uit</a> of <a href="{{ path('design311website_dinners_add') }}">organiseer er zelf één</a>.</p>
 				{% endif %}
 				{% if pastdinners|length != 0 %}
-					<ul class="dinnerlist">
-					{% for pastdinner in pastdinners %}
-					    <li>
-							<a href="{{path('design311website_dinners_detail', {'permalink':pastdinner.permalink})}}"><img src="{{pastdinner.user.avatar | apply_filter('avatar_tiny') }}" alt="{{pastdinner.user.displayName}}"></a>
-					    	<p class="title"><a href="{{path('design311website_dinners_detail', {'permalink':pastdinner.permalink})}}">{{pastdinner.title}}</a></p>
-					    	<p class="dinnermeta">{{pastdinner.date|date('d-m-Y')}} - {{pastdinner.date|date('H:i')}} - {{pastdinner.address.city}}</p>
-					    </li>
-					{% endfor %}
-					</ul>
+					{% include 'Design311WebsiteBundle:Shared:dinnerlist.html.twig' with {'dinners': pastdinners} %}
 				{% endif %}
 			</div>
 			<div class="two-third last">

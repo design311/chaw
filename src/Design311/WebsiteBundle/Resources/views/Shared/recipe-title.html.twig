@@ -1,7 +1,7 @@
 <div class="title">
 	<div class="container">
 		<div class="fl">
-			<h1 class="averia" title="{{recipe.title}}">{{recipe.title}}</h1>
+			<h1 class="averia" title="{{recipe.title}}"{% if detail is defined %} itemprop="name"{% endif %}>{{recipe.title}}</h1>
 			<ul class="recipemeta">
 				{% include 'Design311WebsiteBundle:Shared:recipe-meta.html.twig' with {'white': true} %}
 				<li class="hide4print"><i class="heart white sprite"></i>

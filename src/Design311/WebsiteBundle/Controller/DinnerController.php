@@ -98,6 +98,9 @@ class DinnerController extends BaseController
     public function detailAction(Request $request, $permalink)
     {
         $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
+        if (!$dinner) {
+            throw $this->createNotFoundException('Dinner niet gevonden');
+        }
 
         $data = array();
         $form = $this->createForm(new MessageType(), $data, array(
@@ -301,6 +304,9 @@ class DinnerController extends BaseController
     public function editAction(Request $request, $permalink)
     {
         $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
+        if (!$dinner) {
+            throw $this->createNotFoundException('Dinner niet gevonden');
+        }
 
         if ($this->getUser() != $dinner->getUser()) {
             $this->get('session')->getFlashBag()->add('error','Dit dinner mag je niet bewerken');
@@ -370,6 +376,62 @@ class DinnerController extends BaseController
                 'form' => $form->createView(),
                 'dinner' => $dinner
             )
+        );
+    }
+
+    public function dinnersBeAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        $query = $qb
+            ->from('Design311WebsiteBundle:Dinner', 'd')
+            ->select('d')
+            ->leftJoin('d.address', 'a')
+            ->where($qb->expr()->gte('d.date', ':today'))
+            ->andWhere($qb->expr()->like('a.country', $qb->expr()->literal('Be%')))
+            ->orderBy('d.date')
+            ->setParameter('today', new \DateTime())
+            ->getQuery();
+
+        $dinners = $query->execute();
+
+        return $this->render(
+            'Design311WebsiteBundle:Dinner:dinnerInfo.html.twig',
+            array(
+                'country' => 'be',
+                'dinners' => $dinners
+                )
+        );
+    }
+
+    public function dinnersNlAction()
+    {
+        $country = array('Belgium', 'Belgie', 'België', 'BE');
+        $country = array_merge($country, array_map('strtolower', $country));
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        $query = $qb
+            ->from('Design311WebsiteBundle:Dinner', 'd')
+            ->select('d')
+            ->leftJoin('d.address', 'a')
+            ->where($qb->expr()->gte('d.date', ':today'))
+            ->andWhere($qb->expr()->orX(
+                        $qb->expr()->like('a.country', $qb->expr()->literal('Ne%')),
+                        $qb->expr()->like('a.country', $qb->expr()->literal('nl'))
+                    ))
+            ->orderBy('d.date')
+            ->setParameter('today', new \DateTime())
+            ->getQuery();
+
+        $dinners = $query->execute();
+
+        return $this->render(
+            'Design311WebsiteBundle:Dinner:dinnerInfo.html.twig',
+            array(
+                'country' => 'nl',
+                'dinners' => $dinners
+                )
         );
     }
 }

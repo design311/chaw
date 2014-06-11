@@ -20,7 +20,7 @@
 	<div class="resize">Kaart vergroten</div>
 </div>
 
-<div class="container">
+<div class="container" itemscope itemtype="http://schema.org/Event">
 	<div class="one-third">
 		{% if app.user == dinner.user %}
 		<p><a href="{{ path('design311website_dinners_edit', {'permalink': dinner.permalink}) }}" class="button button-orange"><i class="sprite edit white"></i>Dinner bewerken</a></p>
@@ -30,9 +30,14 @@
 			<ul class="borderlist">
 				<li>Organisator: <a href="{{ path('design311website_profile_view', {'username': dinner.user.username|lower}) }}">{{dinner.user.displayName}}</a></li>
 				<li>Maximum aantal personen: {{dinner.maxInvitees}}</li>
-				<li>Prijs: €{{dinner.price}}</li>
-				<li>Datum: {{dinner.date | date("m/d/Y") }}</li>
+				<li itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">Prijs: <span itemprop="price">€{{dinner.price}}</span></li>
+				<li>Datum: <span itemprop="startDate" content="{{dinner.date|date('Y-m-d\TH:i:sO')}}">{{dinner.date | date("m/d/Y") }}</span></li>
 				<li>Tijdstip: {{dinner.date | date("G:i") }} uur</li>
+				<li>Adres:<br><span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+					{{dinner.address.street}}{% if app.user in dinner.participants %} {{dinner.address.number}}{% endif %}<br>
+					{{dinner.address.zipcode}} {{dinner.address.city}}<br>
+					{{dinner.address.country}}</span>
+				</li>
 			</ul>
 		</div>
 		<div class="widget">
@@ -66,7 +71,7 @@
 		{% endif %}
 	</div>
 	<div class="two-third main">
-		<h1>{{dinner.title}}</h1>
+		<h1 itemprop="name">{{dinner.title}}</h1>
 		{{dinner.menu|markdown}}
 
 		{% if app.user %}
@@ -103,7 +108,7 @@
 
 		<div class="dinnerphotos">
 			{% for photo in dinner.photos %}
-				<img src="{{ asset(photo.webPath)}}" alt="{{photo.title}}">
+				<img src="{{ asset(photo.webPath)}}" alt="{{photo.title}}" itemprop="image">
 			{% endfor %}
 		</div>
 	</div>

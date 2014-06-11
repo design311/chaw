@@ -52,6 +52,14 @@ design311website_dinners_add:
     path:     /dinners/add/
     defaults: { _controller: Design311WebsiteBundle:Dinner:add }
 
+design311website_dinners_info_belgie:
+    path:     /dinners/social-dinners-belgie/
+    defaults: { _controller: Design311WebsiteBundle:Dinner:dinnersBe }
+
+design311website_dinners_info_nederland:
+    path:     /dinners/social-dinners-nederland/
+    defaults: { _controller: Design311WebsiteBundle:Dinner:dinnersNl }
+
 design311website_dinners_filter:
     path:     /dinners/filter/
     defaults: { _controller: Design311WebsiteBundle:Dinner:filterDinners }
