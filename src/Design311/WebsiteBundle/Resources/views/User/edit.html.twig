@@ -13,7 +13,8 @@
     <div class="clear"></div>
 	{{ form_start(form)}}
 	<div class="onehalf">
-		{{ form_row(form.displayName) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.displayName) }}
 		{{ form_row(form.email) }}
 		{{ form_row(form.description, {'attr':{'maxlength': '512'}}) }}
 		{{ form_row(form.website) }}
