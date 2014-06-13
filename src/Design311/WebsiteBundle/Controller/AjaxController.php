@@ -229,7 +229,7 @@ class AjaxController extends BaseController
                     $this->renderView(
                         'Design311WebsiteBundle:Mail:layout.html.twig',
                         array(
-                            'message' => $dinner->getUser()->getDisplayName() . ' zal niet aanwezig kunnen zijn op je dinner, nodig snel iemand anders uit.',
+                            'message' => $this->getUser()->getDisplayName() . ' zal niet aanwezig kunnen zijn op je dinner, nodig snel iemand anders uit.',
                             )
                     ),
                     'text/html'
@@ -276,7 +276,7 @@ class AjaxController extends BaseController
                     $this->renderView(
                         'Design311WebsiteBundle:Mail:layout.html.twig',
                         array(
-                            'message' => $participant->getDinner()->getUser()->getDisplayName() . ' zal aanwezig zijn op je dinner.',
+                            'message' => $this->getUser()->getDisplayName() . ' zal aanwezig zijn op je dinner.',
                             )
                     ),
                     'text/html'

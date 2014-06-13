@@ -2,15 +2,15 @@
 <html lang="nl">
 <head>
 	<meta charset="UTF-8">
-	<title>{% block title %}Chaw: Social Dining & Recepten{% endblock %}</title>
+	<title>{% block title %}Chaw: Social Dinners & Recepten{% endblock %}</title>
 	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400%7cAveria+Libre' rel='stylesheet' type='text/css'>
 	{% block head %}{% endblock %}
-	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css?v1.6') }}">
+	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css?v1.8') }}">
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/print.css?v1.2') }}" media="print">
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/js/tipsy/jquery.tipsy.css') }}">
 	<link rel="icon" href="{{ asset('bundles/design311website/img/favicon.ico') }}" type="image/x-icon" />
 	<link rel="shortcut icon" href="{{ asset('bundles/design311website/img/favicon.ico') }}" type="image/x-icon" />
-	<meta name="description" content="{% block description %}Food-community voor iedereen die van lekker eten houd. Doorzoek de recepten of ga eens lekker eten bij een andere Foodie.{% endblock %}">
+	<meta name="description" content="{% block description %}Food-community voor iedereen die van lekker eten houd. Doorzoek de recepten of ga eens lekker eten bij een andere Foodie. Social Dinners & Recepten{% endblock %}">
 	<meta property="og:title" content="{{block('title')}}" />
 	<meta property="og:description" content="{{block('description')}}" />
 	<meta property="og:image" content="{% block ogimage %}{{ app.request.uriForPath('/bundles/design311website/img/chaw.png') }}{% endblock %}" />

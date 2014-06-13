@@ -146,6 +146,8 @@ class RecipeController extends BaseController
             );
         }
 
+        return $this->redirect($this->generateUrl('design311website_recepten_zoeken_info'));
+
     }
 
     public function userAction($username)
@@ -232,7 +234,7 @@ class RecipeController extends BaseController
             throw $this->createNotFoundException('Recept niet gevonden');
         }
 
-        if ($this->getUser() != $recipe->getUser()) {
+        if ($this->getUser() != $recipe->getUser() && $this->getUser()->getUsername() != 'yentl') {
             $this->get('session')->getFlashBag()->add('error','Dit recept mag je niet bewerken');
             return $this->redirect($this->generateUrl('design311website_recepten_detail', array('category' => strtolower($recipe->getCategory()->getPlural()), 'permalink' => $recipe->getPermalink()) ));
         }

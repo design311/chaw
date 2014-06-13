@@ -1,5 +1,16 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
+{% if country == 'be' %}
+	{% set title %}Social Dinners in Belgi&euml; | Netwerken op een nieuwe manier{% endset %}
+	{% set description %}Social Dinners zijn etentjes waarbij je afspreekt met mensen die je nog niet goed kent. Bekijk alle social dinners in Belgi&euml; op de kaart.{% endset %}
+{% else %}
+	{% set title %}Social Dinners in Nederland | Nieuwe vorm van netwerken{% endset %}
+	{% set description %}Zoek eenvoudig social dinners in Nederland op de kaart. Social dining is meer en meer aanwezig in Nederland door sociale media.{% endset %}
+{% endif %}
+
+{% block title %}{{title}}{% endblock %}
+{% block description %}{{description}}{% endblock %}
+
 {% block content %}
 
 	<div class="container">

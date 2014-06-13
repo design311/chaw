@@ -72,6 +72,7 @@ class DinnerController extends BaseController
 
     public function filterDinnersAction(Request $request)
     {
+        $maxprice = $request->get('maxprice') ? $request->get('maxprice') : 50;
 
         //todo only select what's needed
         $em = $this->getDoctrine()->getManager();
@@ -80,7 +81,7 @@ class DinnerController extends BaseController
             ->from('Design311WebsiteBundle:Dinner', 'd')
             ->select('d')
             ->andWhere($qb->expr()->gte('d.date', ':today'))
-            ->andWhere($qb->expr()->lte('d.price', $request->get('maxprice')))
+            ->andWhere($qb->expr()->lte('d.price', $maxprice))
             ->setParameter('today', new \DateTime());
 
         if ($request->get('diet') != null && $request->get('diet') != 0) {
