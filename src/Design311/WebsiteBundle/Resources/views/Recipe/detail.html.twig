@@ -3,12 +3,13 @@
 {% block title %}{{ (recipe.title ~ ' ('~recipe.readytime~' min) - ' ~ recipe.category ~ ' recept - Chaw recepten')|truncate(55) }}{% endblock %}
 {% block description %}{{ (recipe.recipe)|truncate(150) }}{% endblock %}
 {% block ogimage %}{{ app.request.uriForPath('/' ~ recipe.photos.0.webpath) }}{% endblock %}
+{% block ogtype %}article{% endblock %}
 
 {% block bodyclass %}recipepage recipe-detail printthis fullheight{% endblock %}
 
 {% block content %}
 	<div class="fixedfix"></div>
-	<div class="newestrecipes detailheader" style="background-image:url('{{ asset(recipe.photos.0.webPath)}}');">
+	<div class="newestrecipes detailheader" style="background-image:url('{{ recipe.photos.0.webPath | apply_filter('fullscreen') }}');">
 		{% include 'Design311WebsiteBundle:Shared:recipe-title.html.twig' with {'detail':true} %}
 	</div>
 	<div class="recipecontent">	
@@ -33,7 +34,8 @@
 
 				<div class="recipephotos">
 					{% for photo in recipe.photos %}
-						<img src="{{ asset(photo.webPath)}}" alt="{{photo.title}}" itemprop="image">
+						<img src="{{ photo.webPath | apply_filter('two_third') }}" alt="{{photo.title}}" itemprop="image" width="735" height="490">
+						<p>Afbeelding {{loop.index}}: <strong>{{photo.title}}</strong></p>
 					{% endfor %}
 				</div>
 	

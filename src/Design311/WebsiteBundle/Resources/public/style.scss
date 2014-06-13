@@ -485,7 +485,7 @@ button, input[type="submit"]{
 
 .recepten{
 	min-height:100%;
-	height:auto;
+	height:auto $i;
 	background:#fff;
 	.container{
 		display:table;

@@ -1,8 +1,15 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
 {% block title %}Foodie {{user.displayName}} - {{parent()}}{% endblock %}
-{% block description %}{{ user.description|truncate(150) }}{% endblock %}
+{% block description %}{% spaceless %}
+    {% if user.description is not empty %}
+        {{ user.description|truncate(150) }}
+    {% else %}
+        {{user.displayName}} is een Foodie, houdt van lekker eten en lid van Chaw. {{user.displayName}} heeft {{user.recipes|length}} {{user.recipes|length == 1 ? 'recept' : 'recepten'}} toegevoegd en deelgenomen aan {{user.dinnersParticipated|length}} social {{user.dinnersParticipated|length == 1 ? 'dinner' : 'dinners'}}
+    {% endif %}
+{% endspaceless %}{% endblock %}
 {% block ogimage %}{{ app.request.uriForPath('/' ~ user.avatar) }}{% endblock %}
+{% block ogtype %}profile{% endblock %}
 
 {% block bodyclass %}profile-view{% endblock %}
 
@@ -13,7 +20,7 @@
 <div class="container content">
 
 	<div class="one-third">
-		<img src="{{ user.avatar | apply_filter('avatar_355') }}" alt="Avatar {{user.displayname}}" class="avatar">
+		<img src="{{ user.avatar | apply_filter('avatar_355') }}" alt="Avatar {{user.displayname}}" class="avatar" width="355" height="355">
 	</div>
 	<div class="two-third">
 		<h1>{{user.displayName}}</h1>

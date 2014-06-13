@@ -78,25 +78,31 @@ avalanche_imagine:
     filters:
         recipe_thumb:
             type:    thumbnail
-            options: { size: [362, 242], mode: outbound }
+            options: { size: [362, 242], mode: outbound, quality: 60 }
         recipe_tiny:
             type:    thumbnail
-            options: { size: [235, 160], mode: outbound }
+            options: { size: [235, 160], mode: outbound, quality: 60 }
         recipe_category:
             type:    thumbnail
-            options: { size: [362, 200], mode: outbound }
+            options: { size: [362, 200], mode: outbound, quality: 60 }
         avatar:
             type:    thumbnail
-            options: { size: [315, 315], mode: outbound }
+            options: { size: [315, 315], mode: outbound, quality: 60 }
         avatar_tiny:
             type:    thumbnail
-            options: { size: [50, 50], mode: outbound }
+            options: { size: [50, 50], mode: outbound, quality: 60 }
         avatar_355:
             type:    thumbnail
-            options: { size: [355, 355], mode: outbound }
+            options: { size: [355, 355], mode: outbound, quality: 60 }
         onehalf:
             type:    thumbnail
-            options: { size: [520, 1500], mode: inset }
+            options: { size: [520, 1500], mode: inset, quality: 60 }
+        two_third:
+            type:    thumbnail
+            options: { size: [735, 1500], mode: inset, quality: 60 }
+        fullscreen:
+            type:    thumbnail
+            options: { size: [1920, 1280], mode: inset, quality: 60 }
 
 services:
     design311_website_bundle.photo_type_extension:

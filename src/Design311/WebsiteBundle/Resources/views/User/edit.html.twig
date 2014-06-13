@@ -23,7 +23,7 @@
         <a href="{{ path('design311website_profile_password') }}">Wachtwoord wijzigen?</a>
     </div>
     <div class="onehalf last">
-        <img src="{{ app.user.avatar | apply_filter('avatar') }}" alt="Avatar {{app.user.displayname}}">
+        <img src="{{ app.user.avatar | apply_filter('avatar_355') }}" alt="Avatar {{app.user.displayname}}" width="355" height="355">
         {{ form_row(form.file) }}
     </div>
     <div class="clear"></div>

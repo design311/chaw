@@ -12,7 +12,7 @@
 	{% if detail is defined and detail == true %}
 	<div class="widget dark recipe-user">
 		{% if recipe.user.avatar %}
-			<a href="{{path('design311website_profile_view', {'username': recipe.user.username|lower})}}"><img src="{{ recipe.user.avatar | apply_filter('avatar') }}" alt="Avatar {{recipe.user.displayname}}"></a>
+			<a href="{{path('design311website_profile_view', {'username': recipe.user.username|lower})}}"><img src="{{ recipe.user.avatar | apply_filter('avatar') }}" alt="Avatar {{recipe.user.displayname}}" width="315" height="315"></a>
 		{% endif %}
 		{{recipe.title}}, een recept van:
 		<h3 itemprop="author"><a href="{{path('design311website_profile_view', {'username': recipe.user.username|lower})}}">{{recipe.user.displayName}}</a></h3>

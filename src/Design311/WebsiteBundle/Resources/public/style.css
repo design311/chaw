@@ -1443,7 +1443,7 @@ a {
 
 .recepten {
   min-height: 100%;
-  height: auto;
+  height: auto !important;
   background: #fff; }
   .recepten .container, .recepten .newestrecipes .flex-control-nav, .newestrecipes .recepten .flex-control-nav {
     display: table;

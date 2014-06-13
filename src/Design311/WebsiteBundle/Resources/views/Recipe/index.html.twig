@@ -13,7 +13,7 @@
 			{% for recipe in newestrecipes %}
 				<li>
 					<a href="{{ path('design311website_recepten_detail', {'category': recipe.category.plural|lower, 'permalink': recipe.permalink})}}">
-						<div class="imagecontainer" style="background-image:url('{{ asset(recipe.photos[0].webPath) }}');"></div>
+						<div class="imagecontainer" style="background-image:url('{{ recipe.photos[0].webPath | apply_filter('fullscreen') }}');"></div>
 						{% include 'Design311WebsiteBundle:Shared:recipe-title.html.twig' %}
 					</a>
 				</li>
@@ -30,7 +30,7 @@
 				    	{% set lastrecipe = category.recipe | last %}
 				    	<div class="orangehover inversed">
 				    		<a href="{{ path('design311website_recepten_category', {'category': category.plural|lower})}}">
-					    		<img src="{{ lastrecipe.photos[0].webPath | apply_filter('recipe_category') }}" alt="{{ lastrecipe.photos[0].title }}" />
+					    		<img src="{{ lastrecipe.photos[0].webPath | apply_filter('recipe_category') }}" alt="{{ lastrecipe.photos[0].title }}" width="362" height="200" />
 					    		<div class="hover">
 					    			<h2 class="text">{{category.plural}}</h2>
 					    		</div>

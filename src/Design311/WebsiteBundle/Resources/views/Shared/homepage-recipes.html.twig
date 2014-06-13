@@ -4,7 +4,7 @@
 			{% for recipe in recipes|slice(0,6) %}
 				<div class="homerecipe{% if (loop.index + 1) is divisible by(3) %} middle{% endif %}">
 					<a href="{{path('design311website_recepten_detail', {'category': recipe.category.plural|lower, 'permalink': recipe.permalink})}}">
-						<img src="{{recipe.photos.0.webPath | apply_filter('recipe_tiny') }}" alt="{{recipe.photos.0.title}}">
+						<img src="{{recipe.photos.0.webPath | apply_filter('recipe_tiny') }}" alt="{{recipe.photos.0.title}}" width="235" height="160">
 						{{recipe.title}}
 					</a>
 				</div>
@@ -16,7 +16,7 @@
 					{% for recipe in recipes|slice(6) %}
 					<div class="homerecipe{% if (loop.index + 1) is divisible by(3) %} middle{% endif %}">
 						<a href="{{path('design311website_recepten_detail', {'category': recipe.category.plural|lower, 'permalink': recipe.permalink})}}">
-							<img src="{{recipe.photos.0.webPath | apply_filter('recipe_tiny') }}" alt="{{recipe.photos.0.title}}">
+							<img src="{{recipe.photos.0.webPath | apply_filter('recipe_tiny') }}" alt="{{recipe.photos.0.title}}" width="235" height="160">
 							{{recipe.title}}
 						</a>
 					</div>
