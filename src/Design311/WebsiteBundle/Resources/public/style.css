@@ -1852,15 +1852,27 @@ table.dinners {
 .flash-success, .success {
   background: #8bf97c;
   border-color: #118e00; }
+  .flash-success a, .success a {
+    color: #333333; }
+    .flash-success a:hover, .flash-success a:active, .flash-success a:focus, .success a:hover, .success a:active, .success a:focus {
+      color: #666666; }
 
 .flash-error, .error {
   background: #eb7764;
   border-color: #cd1d00;
   color: #fff; }
+  .flash-error a, .error a {
+    color: #fff; }
+    .flash-error a:hover, .flash-error a:active, .flash-error a:focus, .error a:hover, .error a:active, .error a:focus {
+      color: #ddd; }
 
 .flash-notice, .notice {
   background: #f0b174;
   border-color: #e46600; }
+  .flash-notice a, .notice a {
+    color: #333333; }
+    .flash-notice a:hover, .flash-notice a:active, .flash-notice a:focus, .notice a:hover, .notice a:active, .notice a:focus {
+      color: #666666; }
 
 .red {
   color: #cd1d00; }

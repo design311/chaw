@@ -51,6 +51,9 @@ class DinnerController extends BaseController
             ->select('d')
             ->where($qb->expr()->gte('d.date', ':today'))
             ->setParameter('today', new \DateTime())
+            ->leftJoin('d.participants', 'p')
+            ->groupBy('d.id')
+            ->having($qb->expr()->count('d.id') . '< d.maxInvitees')
             ->getQuery();
 
         $dinners = $query->execute();
@@ -82,7 +85,10 @@ class DinnerController extends BaseController
             ->select('d')
             ->andWhere($qb->expr()->gte('d.date', ':today'))
             ->andWhere($qb->expr()->lte('d.price', $maxprice))
-            ->setParameter('today', new \DateTime());
+            ->setParameter('today', new \DateTime())
+            ->leftJoin('d.participants', 'p')
+            ->groupBy('d.id')
+            ->having($qb->expr()->count('d.id') . '< d.maxInvitees');
 
         if ($request->get('diet') != null && $request->get('diet') != 0) {
             $qb = $qb->andWhere($qb->expr()->in('d.diet', $request->get('diet')));

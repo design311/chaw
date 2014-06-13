@@ -1040,15 +1040,33 @@ table.dinners{
 .flash-success, .success{
 	background:#8bf97c;
 	border-color:#118e00;
+	a{
+		color:$black;
+		&:hover, &:active, &:focus{
+			color:lighten($black,20);
+		}
+	}
 }
 .flash-error, .error{
 	background:#eb7764;
 	border-color:#cd1d00;
 	color:#fff;
+	a{
+		color:#fff;
+		&:hover, &:active, &:focus{
+			color:#ddd;
+		}
+	}
 }
 .flash-notice, .notice{
 	background:#f0b174;
 	border-color:#e46600;
+	a{
+		color:$black;
+		&:hover, &:active, &:focus{
+			color:lighten($black,20);
+		}
+	}
 }
 
 .red{

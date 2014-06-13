@@ -35,6 +35,10 @@ class BaseController extends Controller
         $permalink = preg_replace("/^\-|\-$/", "", $permalink); // Remove leading and trailing hyphens
         $permalink = strtolower($permalink);
 
+        if ($permalink == 'social-dinners-nederland' || $permalink == 'social-dinners-belgie') {
+            $permalink .= '-dinner';
+        }
+
         $i = 1;
         while(true){
             $result = $this->getDoctrine()->getRepository('Design311WebsiteBundle:'.$entity)->findOneByPermalink($permalink);

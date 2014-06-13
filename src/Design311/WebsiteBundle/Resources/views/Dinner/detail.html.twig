@@ -34,7 +34,7 @@
 					<li>Datum: <span itemprop="startDate" content="{{dinner.date|date('Y-m-d\TH:i:sO')}}">{{dinner.date | date("m/d/Y") }}</span></li>
 					<li>Tijdstip: {{dinner.date | date("G:i") }} uur</li>
 					<li>Adres:<br><span itemprop="location" itemscope itemtype="http://schema.org/PostalAddress">
-						<span itemprop="streetAddress">{{dinner.address.street}}{% if app.user in dinner.participants %} {{dinner.address.number}}{% endif %}</span><br>
+						<span itemprop="streetAddress">{{dinner.address.street}}{% if app.user in dinner.participants or app.user == dinner.user %} {{dinner.address.number}}{% endif %}</span><br>
 						<span itemprop="postalCode">{{dinner.address.zipcode}}</span> <span itemprop="addressLocality">{{dinner.address.city}}</span><br>
 						<span itemprop="addressCountry">{{dinner.address.country}}</span></span>
 					</li>
@@ -72,38 +72,56 @@
 		</div>
 		<div class="two-third main">
 			<h1 itemprop="name">{{dinner.title}}</h1>
+			{% if dinner.date < date() %}
+				<p class="message notice">Dit diner is al gepasseerd, <a href="{{path('design311website_dinners')}}">zoek snel een nieuw diner</a>.</p>
+			{% else %}
+			    {% if dinner.participants|length == dinner.maxInvitees %}
+					<p class="message notice">Dit diner is volgeboekt, <a href="{{path('design311website_dinners')}}">zoek snel een nieuw diner</a>.</p>
+			    {% endif %}
+			{% endif %}
 			{{dinner.menu|markdown}}
 
-			{% if app.user %}
+			{% if dinner.date < date() %}
+				<h2>Deelnemen</h2>
+				<p class="message notice">Deelnemen is niet meer mogelijk, dit diner is al gepasseerd, <a href="{{path('design311website_dinners')}}">zoek snel een nieuw diner</a>.</p>
+			{% else %}
 
-				{% set requestUsers = {} %}
-				{% for item in dinner.participantRequests %}
-				    {% set requestUsers = requestUsers|merge({(loop.index0): item.user.username}) %}
-				{% endfor %}
-
-				{% set participantUsers = {} %}
-				{% for item in dinner.participants %}
-				    {% set participantUsers = participantUsers|merge({(loop.index0): item.user.username}) %}
-				{% endfor %}
-
-				{% if app.user != dinner.user and app.user.username not in requestUsers and app.user.username not in participantUsers %}
+				{% if dinner.participants|length == dinner.maxInvitees %}
 					<h2>Deelnemen</h2>
-					<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
-					{{ form(form, {'attr': {'class': 'deelnemenform'}}) }}
+					<p class="message notice">Dit diner is volgeboekt, deelnemen is niet meer mogelijk. <a href="{{path('design311website_dinners')}}">Zoek snel een nieuw diner</a>.</p>
 				{% else %}
-					{% if app.user.username in participantUsers %}
-					    <h2>Deelnemen</h2>
-					    <p class="success message">Je neemt al deel aan dit dinner.</p>
-					{% else %}
-						{% if app.user != dinner.user %}
-					   		<h2>Deelnemen</h2>
-					   		<p class="success message">Je hebt al een deelnameverzoek verzonden.</p>
+					{% if app.user %}
+
+						{% set requestUsers = {} %}
+						{% for item in dinner.participantRequests %}
+						    {% set requestUsers = requestUsers|merge({(loop.index0): item.user.username}) %}
+						{% endfor %}
+
+						{% set participantUsers = {} %}
+						{% for item in dinner.participants %}
+						    {% set participantUsers = participantUsers|merge({(loop.index0): item.user.username}) %}
+						{% endfor %}
+
+						{% if app.user != dinner.user and app.user.username not in requestUsers and app.user.username not in participantUsers %}
+							<h2>Deelnemen</h2>
+							<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
+							{{ form(form, {'attr': {'class': 'deelnemenform'}}) }}
+						{% else %}
+							{% if app.user.username in participantUsers %}
+							    <h2>Deelnemen</h2>
+							    <p class="success message">Je neemt al deel aan dit dinner.</p>
+							{% else %}
+								{% if app.user != dinner.user %}
+							   		<h2>Deelnemen</h2>
+							   		<p class="success message">Je hebt al een deelnameverzoek verzonden.</p>
+								{% endif %}
+							{% endif %}
 						{% endif %}
+					{% else %}
+					    <h2>Krijg je al spontaan honger?</h2>
+					    <p><a href="{{ path('design311website_login') }}">Meld je aan om deel te nemen</a></p>
 					{% endif %}
 				{% endif %}
-			{% else %}
-			    <h2>Krijg je al spontaan honger?</h2>
-			    <p><a href="{{ path('design311website_login') }}">Meld je aan om deel te nemen</a></p>
 			{% endif %}
 
 			<div class="dinnerphotos">
