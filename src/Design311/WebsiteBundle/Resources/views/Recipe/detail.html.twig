@@ -35,7 +35,7 @@
 				<div class="recipephotos">
 					{% for photo in recipe.photos %}
 						<img src="{{ photo.webPath | apply_filter('two_third') }}" alt="{{photo.title}}" itemprop="image" width="735" height="490">
-						<p>Afbeelding {{loop.index}}: <strong>{{photo.title}}</strong></p>
+						<p><strong>{{photo.title}}</strong></p>
 					{% endfor %}
 				</div>
 	
