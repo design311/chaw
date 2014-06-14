@@ -113,7 +113,7 @@
 			var dinnersTable = $('#dinners').hide();
 			var nonefound = $('#nonefound').hide();
 			var tbody = $('#dinners tbody');
-			var dinners = $.parseJSON('{{dinners|raw}}');
+			var dinners = {{dinners|raw}};
 			var visibleDinners = [];
 			var detail = '{{ path('design311website_dinners_detail', {'permalink': 'permalink_holder'}) }}';
 			//var eventDates = [];

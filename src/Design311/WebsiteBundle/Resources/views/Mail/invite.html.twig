@@ -2,14 +2,14 @@
 
 {% block message %}
 
-	<p>{{name}} wil je graag uitnodigen voor zijn/haar dinner op <strong>{{dinner.date|date('d/m/Y')}}</strong> om <strong>{{dinner.date|date('G:i')}}</strong></p>
+	<p><a href="{{url('design311website_profile_view', {'username': user.username})}}">{{user.displayName}}</a> wil je graag uitnodigen voor zijn/haar diner "<a href="{{url('design311website_dinners_detail', {'permalink': dinner.permalink})}}">{{dinner.title}}</a>" op <strong>{{dinner.date|date('d/m/Y')}}</strong> om <strong>{{dinner.date|date('G:i')}}</strong></p>
 
 	<blockquote style="background:#dddddd;padding:20px;margin-left:20px">
 		{{message}}	
 	</blockquote>
 
-	<p>Deze uitnodiging <a href="{{ url('design311website_dinners_invite_accept', { 'permalink': dinner.permalink, 'inviteId': invite.id }) }}">accepteren</a> of <a href="{{ url('design311website_dinners_invite_decline', { 'permalink': dinner.permalink, 'inviteId': invite.id }) }}">liever niet</a></p>
+	<p>Deze uitnodiging <a href="{{ url('design311website_dinners_invite_accept', { 'permalink': dinner.permalink, 'inviteId': invite.id }) }}">accepteren</a> of <a href="{{ url('design311website_dinners_invite_decline', { 'permalink': dinner.permalink, 'inviteId': invite.id }) }}">zal niet aanwezig zijn</a>.</p>
 
-	<p>U kan {{name}} ook om meer informatie vragen door op deze e-mail te antwoorden.</p>
+	<p>U kan {{user.displayName}} ook om meer informatie vragen door op deze e-mail te antwoorden.</p>
 
 {% endblock %}

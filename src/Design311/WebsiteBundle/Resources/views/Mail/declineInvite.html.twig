@@ -1,0 +1,9 @@
+{% extends 'Design311WebsiteBundle:Mail:layout.html.twig' %}
+
+{% block message %}
+
+	<p><strong>Uitnodiging geweigerd</strong></p>
+
+	<p><a href="{{url('design311website_profile_view', {'username': user.username})}}">{{user.displayName}}</a> zal helaas niet aanwezig kunnen zijn op je diner "<a href="{{url('design311website_dinners_detail', {'permalink': dinner.permalink})}}">{{dinner.title}}</a>". <a href="{{url('design311website_dinners_invite', {'permalink': dinner.permalink})}}">Nodig snel iemand anders uit!</a></p>
+	
+{% endblock %}

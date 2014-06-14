@@ -128,15 +128,16 @@ class AjaxController extends BaseController
             $em->flush();
 
             $mail = \Swift_Message::newInstance()
-                ->setSubject($dinner->getUser()->getDisplayName() . ' heeft je verzoek geweigerd')
+                ->setSubject($this->getUser()->getDisplayName() . ' heeft je verzoek geweigerd')
                 ->setFrom('info@chaw.be')
                 ->setReplyTo('info@chaw.be')
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView(
-                        'Design311WebsiteBundle:Mail:layout.html.twig',
+                        'Design311WebsiteBundle:Mail:declineParticipate.html.twig',
                         array(
-                            'message' => $dinner->getUser()->getDisplayName() . ' heeft je deelnameverzoek geweigerd, dit kan voor heel veel verschillende redenen zijn, je hoeft je zeker niet aangevallen voelen. Kijk snel naar de andere etentjes.',
+                            'user' => $this->getUser(),
+                            'dinner' => $dinner,
                             )
                     ),
                     'text/html'
@@ -175,15 +176,16 @@ class AjaxController extends BaseController
             $em->flush();
 
             $mail = \Swift_Message::newInstance()
-                ->setSubject($participant->getDinner()->getUser()->getDisplayName() . ' heeft je verzoek geaccepteerd')
-                ->setFrom($participant->getDinner()->getUser()->getEmail())
-                ->setReplyTo($participant->getDinner()->getUser()->getEmail())
+                ->setSubject($this->getUser()->getDisplayName() . ' heeft je verzoek geaccepteerd')
+                ->setFrom($this->getUser()->getEmail())
+                ->setReplyTo($this->getUser()->getEmail())
                 ->setTo($participant->getUser()->getEmail())
                 ->setBody(
                     $this->renderView(
-                        'Design311WebsiteBundle:Mail:layout.html.twig',
+                        'Design311WebsiteBundle:Mail:acceptParticipate.html.twig',
                         array(
-                            'message' => $participant->getDinner()->getUser()->getDisplayName() . ' heeft je deelnameverzoek geaccepteerd, als je vragen hebt kan je contact opnemen met hem/haar door deze mail te beantwoorden.',
+                            'user' => $this->getUser(),
+                            'dinner' => $participant->getDinner()
                             )
                     ),
                     'text/html'
@@ -214,8 +216,6 @@ class AjaxController extends BaseController
 
             $dinner = $invite->getDinner(); //needed for redirect
 
-            $dinnerUser = $invite->getDinner()->getUser();
-
             $em = $this->getDoctrine()->getManager();
             $em->remove($invite);
             $em->flush();
@@ -224,12 +224,13 @@ class AjaxController extends BaseController
                 ->setSubject($this->getUser()->getDisplayName() . ' heeft je uitnodiging geweigerd')
                 ->setFrom($this->getUser()->getEmail())
                 ->setReplyTo($this->getUser()->getEmail())
-                ->setTo($dinnerUser->getEmail())
+                ->setTo($dinner->getUser()->getEmail())
                 ->setBody(
                     $this->renderView(
-                        'Design311WebsiteBundle:Mail:layout.html.twig',
+                        'Design311WebsiteBundle:Mail:declineInvite.html.twig',
                         array(
-                            'message' => $this->getUser()->getDisplayName() . ' zal niet aanwezig kunnen zijn op je dinner, nodig snel iemand anders uit.',
+                            'user' => $this->getUser(),
+                            'dinner' => $dinner
                             )
                     ),
                     'text/html'
@@ -274,9 +275,10 @@ class AjaxController extends BaseController
                 ->setTo($participant->getDinner()->getUser()->getEmail())
                 ->setBody(
                     $this->renderView(
-                        'Design311WebsiteBundle:Mail:layout.html.twig',
+                        'Design311WebsiteBundle:Mail:acceptInvite.html.twig',
                         array(
-                            'message' => $this->getUser()->getDisplayName() . ' zal aanwezig zijn op je dinner.',
+                            'user' => $this->getUser(),
+                            'dinner' => $participant->getDinner()
                             )
                     ),
                     'text/html'

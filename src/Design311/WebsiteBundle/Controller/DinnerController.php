@@ -139,7 +139,7 @@ class DinnerController extends BaseController
                         'Design311WebsiteBundle:Mail:participate.html.twig',
                         array(
                             'message' => $data['message'],
-                            'name' => $this->getUser()->getDisplayName(),
+                            'user' => $this->getUser(),
                             'dinner' => $dinner,
                             'participant' => $participantRequest
                             )
@@ -161,14 +161,19 @@ class DinnerController extends BaseController
 
     public function inviteAction(Request $request, $permalink)
     {
+        $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
+        
+        if ($this->getUser() != $dinner->getUser()) {
+            $this->get('session')->getFlashBag()->add('error','Dit is niet jouw diner');
+            return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
+        }
+
         $invalidMails = array();
 
         $data = array();
         $form = $this->createForm(new MailType(), $data, array(
             'action' => $this->generateUrl('design311website_dinners_invite', array('permalink' => $permalink))
             ));
-
-        $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
 
         $form->handleRequest($request);
 
@@ -207,7 +212,7 @@ class DinnerController extends BaseController
                                 'Design311WebsiteBundle:Mail:invite.html.twig',
                                 array(
                                     'message' => $data['message'],
-                                    'name' => $this->getUser()->getDisplayName(),
+                                    'user' => $this->getUser(),
                                     'dinner' => $dinner,
                                     'invite' => $invite
                                     )

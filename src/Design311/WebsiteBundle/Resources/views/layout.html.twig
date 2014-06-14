@@ -11,13 +11,15 @@
 	<link rel="icon" href="{{ asset('bundles/design311website/img/favicon.ico') }}" type="image/x-icon" />
 	<link rel="shortcut icon" href="{{ asset('bundles/design311website/img/favicon.ico') }}" type="image/x-icon" />
 	<meta name="description" content="{% block description %}Food-community voor iedereen die van lekker eten houd. Doorzoek de recepten of ga eens lekker eten bij een andere Foodie. Social Dinners & Recepten{% endblock %}">
-	<link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
 	<meta property="og:title" content="{{block('title')}}" />
 	<meta property="og:description" content="{{block('description')}}" />
-	<meta property="og:image" content="{% block ogimage %}{{ app.request.uriForPath('/bundles/design311website/img/chaw.png') }}{% endblock %}" />
 	<meta property="og:site_name" content="Chaw: Social Dining &amp; Recepten" />
 	<meta property="og:type" content="{% block ogtype %}website{% endblock %}" />
+	{% if not app.request.attributes.has('exception') %}
+	<meta property="og:image" content="{% block ogimage %}{{ app.request.uriForPath('/bundles/design311website/img/chaw.png') }}{% endblock %}" />
 	<meta property="og:url" content="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
+	<link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
+	{% endif %}
 	<meta property="fb:app_id" content="535100956594371" />
 	<meta name="viewport" content="initial-scale=1, width=device-width">
 </head>
@@ -37,7 +39,7 @@
 	        {{ flashMessage }} <a href="#" class="flash-close">(x)</a>
 	    </div>
 	{% endfor %}
-	{% if not (app.request.attributes.get('_route') == 'design311website_homepage' and not app.user) %}
+	{% if app.request.attributes.has('exception') or not (app.request.attributes.get('_route') == 'design311website_homepage' and not app.user) %}
 	<div class="header">
 		<div class="topbar">
 			<div class="container">
@@ -52,9 +54,9 @@
 		<div class="container">
 			<ul class="menu desktop">
 				<li class="logo notranslate"><a href="{{ path('design311website_homepage') }}">Chaw</a></li>
-				<li><a href="{{ path('design311website_homepage') }}"{% if 'design311website_homepage' == app.request.attributes.get('_route') %} class="active"{% endif %}>Home</a></li>
-				<li><a href="{{ path('design311website_dinners') }}"{% if 'dinners' in app.request.attributes.get('_route') %} class="active"{% endif %}>Dinners</a></li>
-				<li><a href="{{ path('design311website_recepten') }}"{% if 'recepten' in app.request.attributes.get('_route') %} class="active"{% endif %}>Recepten</a></li>
+				<li><a href="{{ path('design311website_homepage') }}"{% if not app.request.attributes.has('exception') and 'design311website_homepage' == app.request.attributes.get('_route') %} class="active"{% endif %}>Home</a></li>
+				<li><a href="{{ path('design311website_dinners') }}"{% if not app.request.attributes.has('exception') and 'dinners' in app.request.attributes.get('_route') %} class="active"{% endif %}>Dinners</a></li>
+				<li><a href="{{ path('design311website_recepten') }}"{% if not app.request.attributes.has('exception') and 'recepten' in app.request.attributes.get('_route') %} class="active"{% endif %}>Recepten</a></li>
 				<!-- <li><a href="#" class="tooltip" title="Binnenkort beschikbaar">Foodspiration</a></li> -->
 			</ul>
 			<div class="menu mobile">
@@ -79,7 +81,7 @@
 	{% endif %}
 	<h1 class="print averia print-title">Chaw.be</h1>
 	<p class="print print-notice">Waarom zou je deze pagina willen printen? Laat het ons weten: <a href="mailto:info@chaw.be">info@chaw.be</a></p>
-	<div class="contentblock"{% if 'design311website_recepten_detail' == app.request.attributes.get('_route') %} itemscope itemtype="http://schema.org/Recipe"{% endif %}>
+	<div class="contentblock"{% if not app.request.attributes.has('exception') and 'design311website_recepten_detail' == app.request.attributes.get('_route') %} itemscope itemtype="http://schema.org/Recipe"{% endif %}>
 		{% block content %}{% endblock %}
 		<div class="clear"></div>
 

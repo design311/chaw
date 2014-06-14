@@ -14,6 +14,11 @@
 
 {% block bodyclass %}mapheader dinner-detail fullheight{% endblock %}
 
+{% set participantUsers = {} %}
+{% for item in dinner.participants %}
+    {% set participantUsers = participantUsers|merge({(loop.index0): item.user.username}) %}
+{% endfor %}
+
 {% block content %}
 
 <div class="mapcontainer">
@@ -30,6 +35,9 @@
 				<h3>Algemene informatie</h3>
 				<ul class="borderlist">
 					<li>Organisator: <a href="{{ path('design311website_profile_view', {'username': dinner.user.username|lower}) }}">{{dinner.user.displayName}}</a></li>
+					{% if app.user.username in participantUsers or app.user == dinner.user %}
+					<li>E-mail: <a href="mailto:{{dinner.user.email}}">{{dinner.user.email}}</a></li>
+					{% endif %}
 					<li>Maximum aantal personen: {{dinner.maxInvitees}}</li>
 					<li itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">Prijs: <span itemprop="lowprice">€{{dinner.price}}</span></li>
 					<li>Datum: <span itemprop="startDate" content="{{dinner.date|date('Y-m-d\TH:i:sO')}}">{{dinner.date | date("m/d/Y") }}</span></li>
@@ -44,9 +52,9 @@
 			<div class="widget">
 				<h3>Deelnemers</h3>
 				{% if dinner.participants|length > 0 %}
-				<ul class="participantlist">
+				<ul class="participantlist {% if app.user == dinner.user %}double{% endif %}">
 				{% for participant in dinner.participants %}
-				    <li class="participant"><a href="{{ path('design311website_profile_view', {'username': participant.user.username|lower}) }}"><img src="{{participant.user.avatar | apply_filter('avatar_tiny') }}" alt="{{participant.user.displayName}}" width="50" height="50">{{participant.user.displayName}}</a></li>
+				    <li class="participant"><a href="{{ path('design311website_profile_view', {'username': participant.user.username|lower}) }}"><img src="{{participant.user.avatar | apply_filter('avatar_tiny') }}" alt="{{participant.user.displayName}}" width="50" height="50"><strong>{{participant.user.displayName}}</strong></a>{% if app.user == dinner.user %}<br><a href="mailto:{{participant.user.email}}">{{participant.user.email}}</a>{% endif %}</li>
 				{% endfor %}
 				</ul>
 				{% else %}
@@ -60,9 +68,12 @@
 			<div class="widget">
 				<h3>Verzoeken</h3>
 				{% if dinner.participantRequests|length > 0 %}
-				<ul class="participantlist">
+				<ul class="participantlist {% if app.user == dinner.user %}double{% endif %}">
 				{% for request in dinner.participantRequests %}
-				    <li class="participant"><a href="{{ path('design311website_profile_view', {'username': request.user.username|lower}) }}"><img src="{{request.user.avatar | apply_filter('avatar_tiny') }}" alt="{{request.user.displayName}}" width="50" height="50">{{request.user.displayName}}</a></li>
+				    <li>
+				    	<div class="participant"><a href="{{ path('design311website_profile_view', {'username': request.user.username|lower}) }}"><img src="{{request.user.avatar | apply_filter('avatar_tiny') }}" alt="{{request.user.displayName}}" width="50" height="50"><strong>{{request.user.displayName}}</strong></a>{% if app.user == dinner.user %}<br><a href="mailto:{{request.user.email}}">{{request.user.email}}</a>{% endif %}</div>
+				    	<a href="{{ url('design311website_dinners_participant_accept', { 'permalink': dinner.permalink, 'participantId': request.id }) }}">Accepteer</a> of <a href="{{ url('design311website_dinners_participant_decline', { 'permalink': dinner.permalink, 'participantId': request.id }) }}">liever niet</a>
+				    </li>
 				{% endfor %}
 				</ul>
 				{% else %}
@@ -93,30 +104,27 @@
 				{% else %}
 					{% if app.user %}
 
-						{% set requestUsers = {} %}
-						{% for item in dinner.participantRequests %}
-						    {% set requestUsers = requestUsers|merge({(loop.index0): item.user.username}) %}
-						{% endfor %}
+						{% if app.user != dinner.user %}
 
-						{% set participantUsers = {} %}
-						{% for item in dinner.participants %}
-						    {% set participantUsers = participantUsers|merge({(loop.index0): item.user.username}) %}
-						{% endfor %}
+							{% set requestUsers = {} %}
+							{% for item in dinner.participantRequests %}
+							    {% set requestUsers = requestUsers|merge({(loop.index0): item.user.username}) %}
+							{% endfor %}
 
-						{% if app.user != dinner.user and app.user.username not in requestUsers and app.user.username not in participantUsers %}
-							<h2>Deelnemen</h2>
-							<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
-							{{ form(form, {'attr': {'class': 'deelnemenform'}}) }}
-						{% else %}
-							{% if app.user.username in participantUsers %}
-							    <h2>Deelnemen</h2>
-							    <p class="success message">Je neemt al deel aan dit dinner.</p>
+							{% if app.user.username not in requestUsers and app.user.username not in participantUsers %}
+								<h2>Deelnemen</h2>
+								<p>Krijg je al spontaan honger? Stel jezelf even kort voor aan de organisator.</p>
+								{{ form(form, {'attr': {'class': 'deelnemenform'}}) }}
 							{% else %}
-								{% if app.user != dinner.user %}
+								{% if app.user.username in participantUsers %}
+								    <h2>Deelnemen</h2>
+								    <p class="success message">Je neemt al deel aan dit dinner.</p>
+								{% else %}
 							   		<h2>Deelnemen</h2>
 							   		<p class="success message">Je hebt al een deelnameverzoek verzonden.</p>
 								{% endif %}
 							{% endif %}
+
 						{% endif %}
 					{% else %}
 					    <h2>Krijg je al spontaan honger?</h2>

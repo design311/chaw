@@ -1427,14 +1427,19 @@ table.dinners{
 	li{
 		margin-bottom:1em;
 	}
+	&.double{
+		.participant{
+			line-height:25px;
+		}
+	}
 }
 
 .participant{
+	line-height:50px;
 	img{
 		float:left;
 		margin-right:1em;
 	}
-	line-height:50px;
 }
 
 .form{

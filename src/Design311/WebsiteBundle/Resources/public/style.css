@@ -2126,6 +2126,8 @@ table.dinners {
   list-style: none; }
   .participantlist li {
     margin-bottom: 1em; }
+  .participantlist.double .participant {
+    line-height: 25px; }
 
 .participant {
   line-height: 50px; }
