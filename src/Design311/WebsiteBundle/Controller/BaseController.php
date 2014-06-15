@@ -39,6 +39,8 @@ class BaseController extends Controller
             $permalink .= '-dinner';
         }
 
+        $basepermalink = $permalink;
+
         $i = 1;
         while(true){
             $result = $this->getDoctrine()->getRepository('Design311WebsiteBundle:'.$entity)->findOneByPermalink($permalink);
@@ -46,7 +48,7 @@ class BaseController extends Controller
                 return $permalink;
                 break; // not needed, but better be sure. Infinite loops are no fun
             }
-            $permalink = $permalink . '-'.$i++;
+            $permalink = $basepermalink . '-'.$i++;
         }
     }
     

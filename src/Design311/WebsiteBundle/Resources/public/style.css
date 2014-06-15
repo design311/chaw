@@ -1097,7 +1097,7 @@ button, input[type="submit"] {
   border: 0;
   width: auto; }
   button:disabled, input[type="submit"]:disabled {
-    background: #ccc;
+    background: #ddd;
     color: #333333; }
 
 .inputinfo {
@@ -2286,6 +2286,11 @@ table.dinners {
   position: absolute;
   top: -999em;
   left: -999em; }
+
+.submitloader {
+  float: right;
+  margin: 16px;
+  display: none; }
 
 @media screen and (max-width: 1240px) {
   .container, .newestrecipes .flex-control-nav {

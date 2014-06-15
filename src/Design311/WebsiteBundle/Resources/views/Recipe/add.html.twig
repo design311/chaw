@@ -9,10 +9,16 @@
 	<div class="container">
 	{% if recipe is defined %}
 		<h1 class="fl">Recept bewerken</h1>
-		<div class="fr"><a href="#" class="button button-orange" id="topsubmit">Wijzigingen opslaan</a></div>
+		<img src="{{ asset('bundles/design311website/img/loader.gif') }}" alt="Loading..." width="16" height="16" id="loading" class="submitloader">
+		<div class="fr">
+			<div><a href="#" class="button button-orange" id="topsubmit">Wijzigingen opslaan</a></div>
+		</div>
 	{% else %}
 	    <h1 class="fl">Recept toevoegen</h1>
-		<div class="fr"><a href="#" class="button button-orange" id="topsubmit">Recept toevoegen</a></div>
+	    <img src="{{ asset('bundles/design311website/img/loader.gif') }}" alt="Loading..." width="16" height="16" id="loading" class="submitloader">
+		<div class="fr">
+			<div><a href="#" class="button button-orange" id="topsubmit">Recept toevoegen</a></div>
+		</div>
 	{% endif %}
 	<div class="clear"></div>
 	{{ form_start(form) }}
@@ -97,6 +103,7 @@
 			    {% endfor %}
 			    </div>
 			{% endif %}
+			<img src="{{ asset('bundles/design311website/img/loader.gif') }}" alt="Loading..." width="16" height="16" id="loading" class="submitloader">
 			{% if recipe is defined %}
 				{{ form_row(form.submit, {'label':'Wijzigingen opslaan'}) }}
 			{% else %}

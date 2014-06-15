@@ -9,9 +9,11 @@
 <div class="container">
 	{% if dinner is defined %}
 		<h1 class="fl">Dinner bewerken</h1>
+		<img src="{{ asset('bundles/design311website/img/loader.gif') }}" alt="Loading..." width="16" height="16" id="loading" class="submitloader">
 		<div class="fr"><a href="#" class="button button-orange" id="topsubmit">Wijzigingen opslaan</a></div>
 	{% else %}
 	    <h1 class="fl">Dinner organiseren</h1>
+		<img src="{{ asset('bundles/design311website/img/loader.gif') }}" alt="Loading..." width="16" height="16" id="loading" class="submitloader">
 		<div class="fr"><a href="#" class="button button-orange" id="topsubmit">Dinner organiseren</a></div>
 	{% endif %}
 	<div class="clear"></div>
@@ -102,6 +104,7 @@
 			    {% endfor %}
 			    </div>
 			{% endif %}
+			<img src="{{ asset('bundles/design311website/img/loader.gif') }}" alt="Loading..." width="16" height="16" id="loading" class="submitloader">
 			{% if dinner is defined %}
 				{{ form_row(form.submit, {'label':'Wijzigingen opslaan'}) }}
 			{% else %}

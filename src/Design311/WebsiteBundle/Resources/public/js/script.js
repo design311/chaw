@@ -130,6 +130,12 @@ $(function(){
 		$(this).siblings('ul').slideToggle();
 		return false;
 	})
+
+	$('form').submit(function(){
+		$('.submitloader').show();
+		$('#topsubmit').removeClass('button-orange');
+		$('button[type="submit"], input[type="submit"]').attr('disabled', true);
+	})
 })
 
 //images loaded
