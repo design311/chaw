@@ -68,7 +68,8 @@
 					<li><a href="{{ path('design311website_recepten') }}">Recepten</a></li>
 					{% if app.user %}
 						<li><a href="{{ path('design311website_profile_view', {'username': app.user.username|lower}) }}">{{app.user.displayname}}</a></li>
-						<li><a href="{{ path('design311website_recepten_shoppinglist') }}">Winkellijstje bekijken (<span class="shoppinglistcount">{{app.user.shoppinglist|length}}</span>)</a><a href="{{ path('design311website_logout') }}">Logout</a></li>
+						<li><a href="{{ path('design311website_recepten_shoppinglist') }}">Winkellijstje bekijken (<span class="shoppinglistcount">{{app.user.shoppinglist|length}}</span>)</a></li>
+						<li><a href="{{ path('design311website_logout') }}">Logout</a></li>
 					{% else %}
 						<li><a href="{{ path('design311website_login') }}">Login</a></li>
 						<li><a href="{{ path('design311website_register') }}">Registreren</a></li>

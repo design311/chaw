@@ -8,26 +8,23 @@
 	
 		<div class="activities">
 			<div class="one-third">
-				<h2 class="averia">Dinners voor mij binnenkort</h2>
+				<h2 class="averia">Dinners waar je aan deelneemt</h2>
 				{% if dinnerevents|length == 0 %}
 				<p>Er zijn geen dinners voor je gepland, <a href="{{ path('design311website_dinners') }}">neem deel aan een dinner</a> of <a href="{{ path('design311website_dinners_add') }}">organiseer er zelf één</a>.</p>
-				{% endif %}
-				{% if dinnerevents|length != 0 %}
-					{% include 'Design311WebsiteBundle:Shared:dinnerlist.html.twig' with {'dinners': dinnerevents} %}
+				{% else %}
+					{% include 'Design311WebsiteBundle:Shared:homepage-dinners.html.twig' with {'dinners': dinnerevents} %}
 				{% endif %}
 				<h2 class="averia">Mijn Dinners</h2>
 				{% if dinners|length == 0 %}
 				<p>Je hebt nog geen dinners gepland, <a href="{{ path('design311website_dinners_add') }}">organiseer er één</a>.</p>
-				{% endif %}
-				{% if dinners|length != 0 %}
-					{% include 'Design311WebsiteBundle:Shared:dinnerlist.html.twig' with {'dinners': dinners} %}
+				{% else %}
+					{% include 'Design311WebsiteBundle:Shared:homepage-dinners.html.twig' with {'dinners': dinners} %}
 				{% endif %}
 				<h2 class="averia">Dinners waar je aan deelnam</h2>
 				{% if pastdinners|length == 0 %}
 				<p>Je hebt nog niet aan een dinner deelgenomen, <a href="{{ path('design311website_dinners') }}">kies er eentje uit</a> of <a href="{{ path('design311website_dinners_add') }}">organiseer er zelf één</a>.</p>
-				{% endif %}
-				{% if pastdinners|length != 0 %}
-					{% include 'Design311WebsiteBundle:Shared:dinnerlist.html.twig' with {'dinners': pastdinners} %}
+				{% else %}
+					{% include 'Design311WebsiteBundle:Shared:homepage-dinners.html.twig' with {'dinners': pastdinners} %}
 				{% endif %}
 			</div>
 			<div class="two-third last">

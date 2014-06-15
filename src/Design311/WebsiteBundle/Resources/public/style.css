@@ -2332,17 +2332,10 @@ table.dinners {
     .header .menu a {
       padding: 0 10px; }
 
-  .onehalf {
+  .onehalf, .one-third, .two-third {
     padding: 0 !important;
-    width: 100%; }
-
-  .one-third {
-    padding: 0 !important;
-    width: 100%; }
-
-  .two-third {
-    padding: 0 !important;
-    width: 100%; }
+    width: 100%;
+    margin-bottom: 2em; }
 
   .home .description {
     width: 100%;
@@ -2377,10 +2370,16 @@ table.dinners {
     display: none; }
   .profile-view .content {
     margin-top: 0; } }
-@media screen and (max-width: 730px) {
-  .newestrecipes .recipemeta {
-    display: none; } }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 500px) {
+  h1 {
+    font-size: 1.6em; }
+
+  h2 {
+    font-size: 1.4em; }
+
+  h3 {
+    font-size: 1.2em; }
+
   .mobile {
     display: block; }
 
@@ -2429,4 +2428,10 @@ table.dinners {
     margin-bottom: 20px; }
 
   .topbar {
-    display: none; } }
+    display: none; }
+
+  .footer .links.social li {
+    display: block; }
+
+  .recipe-detail.fixed .detailheader {
+    position: absolute; } }

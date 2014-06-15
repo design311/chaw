@@ -1728,24 +1728,10 @@ table.dinners{
 		}
 	}
 
-	.onehalf{
+	.onehalf, .one-third, .two-third{
 		padding:0 $i;
 		width:100%;
-	}
-
-	.one-third{
-		padding:0 $i;
-		width:100%;
-
-	}
-
-	.two-third{
-		padding:0 $i;
-		width:100%;
-	}
-
-	.menu{
-
+		margin-bottom:2em;
 	}
 
 	.home{
@@ -1803,15 +1789,21 @@ table.dinners{
 	}
 }
 
-@media screen and (max-width:730px){
-	.newestrecipes{
-		.recipemeta{
-			display:none;
-		}
-	}
-}
+@media screen and (max-width:500px){
 
-@media screen and (max-width:450px){
+	h1{
+		font-size:1.6em;
+	}
+
+	h2{
+		font-size:1.4em;
+	}
+
+	h3{
+		font-size:1.2em;
+	}
+
+
 	.mobile{
 		display:block;
 	}
@@ -1876,5 +1868,17 @@ table.dinners{
 
 	.topbar{
 		display:none;
+	}
+
+	.footer{
+		.links.social{
+			li{
+				display:block;
+			}
+		}
+	}
+
+	.recipe-detail.fixed .detailheader{
+		position:absolute;
 	}
 }
