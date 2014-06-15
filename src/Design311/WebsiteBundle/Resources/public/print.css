@@ -12,7 +12,7 @@
 .hide4print {
   display: none; }
 
-.flash, .header {
+.flash, .header, .footer, .share {
   display: none; }
 
 .container, .onehalf, .one-third, .two-third {

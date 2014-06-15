@@ -26,6 +26,7 @@ class DinnerType extends AbstractType
             ));
         $builder->add('menu', 'textarea');
         $builder->add('maxinvitees', 'integer', array('label' => 'Aantal gasten'));
+        $builder->add('inviteonly', 'checkbox', array('label' => 'Enkel op uitnodiging', 'required' => false));
         $builder->add('price', 'money', array('currency' => false, 'label' => 'Prijs'));
         $builder->add('change_address', 'hidden', array(
             'mapped' => false,

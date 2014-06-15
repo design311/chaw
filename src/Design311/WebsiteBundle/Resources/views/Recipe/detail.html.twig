@@ -32,6 +32,16 @@
 				<h2>Bereidingswijze</h2>
 				<div itemprop="recipeInstructions">{{recipe.recipe|markdown}}</div>
 
+				<div class="share">
+					<strong>Dit recept delen</strong>
+					<ul>
+						<li><a href="https://twitter.com/intent/tweet?text={{recipe.title|url_encode}}&amp;url={{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}&amp;via=chaw_BE" target="_blank"><i class="sprite medium twitter"></i></a></li>
+						<li><a href="https://www.facebook.com/sharer/sharer.php?u={{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" target="_blank"><i class="sprite medium facebook"></i></a></li>
+						<li><a href="https://plus.google.com/share?url={{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" target="_blank"><i class="sprite medium googleplus"></i></a></li>
+					</ul>
+				</div>
+
+
 				<div class="recipephotos">
 					{% for photo in recipe.photos %}
 						<img src="{{ photo.webPath | apply_filter('two_third') }}" alt="{{photo.title}}" itemprop="image" width="735" height="490">

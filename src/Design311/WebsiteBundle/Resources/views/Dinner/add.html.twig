@@ -33,8 +33,11 @@
 				{{ form_row(form.price) }}
 			</div>
 			<i class="clear"></i>
-			{{ form_row(form.diet) }}
-			<p class="inputinfo">Staat je eetgewoonte er niet bij? Mail: <a href="mailto:info@chaw.be">info@chaw.be</a></p>
+			{{ form_row(form.inviteonly) }}
+			<div class="diet">
+				{{ form_row(form.diet) }}
+				<p class="inputinfo">Staat je eetgewoonte er niet bij? Mail: <a href="mailto:info@chaw.be">info@chaw.be</a></p>
+			</div>
 			{% if dinner is defined %}
 				{{ form_row(form.change_address, {'value': '0'}) }}
 				<div id="current_address"><strong>Adres</strong> <a href="#" id="change_address">(wijzigen)</a><br>
@@ -42,7 +45,7 @@
 				{{dinner.address.zipcode}} {{dinner.address.city}}<br>
 				{{dinner.address.country}}
 				</div>
-				<div id="edit_address" style="display:none;">
+				<div id="edit_address" class="offscreen">
 					{{ form_row(form.address) }}
 					<a href="#" id="cancel_change">Annuleren</a>
 				</div>
@@ -57,8 +60,15 @@
 					{{app.user.address.zipcode}} {{app.user.address.city}}<br>
 					{{app.user.address.country}}
 					</div>
-					<div id="edit_address" style="display:none;">
-						{{ form_row(form.address) }}
+					<div id="edit_address" class="offscreen">
+						{{ form_label(form.address) }}
+						<div id="dinner_address">
+						{{ form_row(form.address.street, {'value': app.user.address.street}) }}
+						{{ form_row(form.address.number, {'value': app.user.address.number}) }}
+						{{ form_row(form.address.zipcode, {'value': app.user.address.zipcode}) }}
+						{{ form_row(form.address.city, {'value': app.user.address.city}) }}
+						{{ form_row(form.address.country, {'value': app.user.address.country}) }}
+						</div>
 						<a href="#" id="cancel_change">Annuleren</a>
 					</div>
 				{% endif %}
@@ -115,13 +125,13 @@
 			// address changing
 			$('#change_address').click(function(){
 				$(this).parent().hide();
-				$('#edit_address').show();
+				$('#edit_address').removeClass('offscreen');
 				$('#dinner_change_address').val(1);
 				return false;
 			})
 
 			$('form').on('click', '#cancel_change', function(){
-				$(this).parent().hide();
+				$(this).parent().addClass('offscreen');
 				$('#current_address').show();
 				$('#dinner_change_address').val(0);
 				return false;

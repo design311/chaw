@@ -1110,6 +1110,9 @@ table.dinners{
 		float:right;
 		margin-top:3em;
 	}
+	input[type="checkbox"]{
+		margin-left:5px;
+	}
 }
 
 #topsubmit{
@@ -1622,6 +1625,28 @@ table.dinners{
 	.content{
 		background:#fff;
 	}
+}
+
+.share{
+	ul{
+		@include minireset;
+		display:inline;
+		position:relative;
+		bottom:-7px;
+		left:5px;
+	}
+	li{
+		display:inline;
+	}
+	i{
+		border-radius:7px;
+	}
+}
+
+.offscreen{
+	position:absolute;
+	top:-999em;
+	left:-999em;
 }
 
 @media screen and (max-width:1240px){

@@ -57,6 +57,13 @@ class Dinner
     private $maxInvitees;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="inviteonly", type="boolean")
+     */
+    private $inviteonly = false;
+
+    /**
      * @var decimal
      *
      * @ORM\Column(name="price", type="decimal", precision=5, scale=2)
@@ -498,5 +505,28 @@ class Dinner
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Set inviteonly
+     *
+     * @param boolean $inviteonly
+     * @return Dinner
+     */
+    public function setInviteonly($inviteonly)
+    {
+        $this->inviteonly = $inviteonly;
+
+        return $this;
+    }
+
+    /**
+     * Get inviteonly
+     *
+     * @return boolean 
+     */
+    public function getInviteonly()
+    {
+        return $this->inviteonly;
     }
 }

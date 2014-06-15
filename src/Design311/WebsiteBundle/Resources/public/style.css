@@ -1903,6 +1903,8 @@ table.dinners {
 .dinnerform #dinner_submit {
   float: right;
   margin-top: 3em; }
+.dinnerform input[type="checkbox"] {
+  margin-left: 5px; }
 
 #topsubmit {
   margin-top: 0.3em; }
@@ -2266,6 +2268,24 @@ table.dinners {
 
 .dinnerindex .content, .dinner-detail .content {
   background: #fff; }
+
+.share ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline;
+  position: relative;
+  bottom: -7px;
+  left: 5px; }
+.share li {
+  display: inline; }
+.share i {
+  border-radius: 7px; }
+
+.offscreen {
+  position: absolute;
+  top: -999em;
+  left: -999em; }
 
 @media screen and (max-width: 1240px) {
   .container, .newestrecipes .flex-control-nav {

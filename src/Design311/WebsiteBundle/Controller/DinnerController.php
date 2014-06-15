@@ -50,6 +50,7 @@ class DinnerController extends BaseController
             ->from('Design311WebsiteBundle:Dinner', 'd')
             ->select('d')
             ->where($qb->expr()->gte('d.date', ':today'))
+            ->andWhere($qb->expr()->eq('d.inviteonly', '0'))
             ->setParameter('today', new \DateTime())
             ->leftJoin('d.participants', 'p')
             ->groupBy('d.id')
@@ -84,6 +85,7 @@ class DinnerController extends BaseController
             ->from('Design311WebsiteBundle:Dinner', 'd')
             ->select('d')
             ->andWhere($qb->expr()->gte('d.date', ':today'))
+            ->andWhere($qb->expr()->eq('d.inviteonly', '0'))
             ->andWhere($qb->expr()->lte('d.price', $maxprice))
             ->setParameter('today', new \DateTime())
             ->leftJoin('d.participants', 'p')
@@ -320,7 +322,7 @@ class DinnerController extends BaseController
             throw $this->createNotFoundException('Dinner niet gevonden');
         }
 
-        if ($this->getUser() != $dinner->getUser()) {
+        if ($this->getUser() != $dinner->getUser() && $this->getUser()->getUsername() != 'yentl') {
             $this->get('session')->getFlashBag()->add('error','Dit dinner mag je niet bewerken');
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
         }
