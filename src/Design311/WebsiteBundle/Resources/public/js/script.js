@@ -131,10 +131,19 @@ $(function(){
 		return false;
 	})
 
-	$('form').submit(function(){
-		$('.submitloader').show();
-		$('#topsubmit').removeClass('button-orange');
-		$('button[type="submit"], input[type="submit"]').attr('disabled', true);
+	$('form').submit(function(e){
+		$(this).validate({
+			errorPlacement: function(error,element) {
+				return true;
+			},
+		});
+		if ($(this).valid()) {
+			$('.submitloader').show();
+			$('#topsubmit').removeClass('button-orange');
+			$('button[type="submit"], input[type="submit"]').attr('disabled', true);
+			return true;
+		}
+		return false;
 	})
 })
 

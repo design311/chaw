@@ -1081,6 +1081,22 @@ table.dinners{
 	color:$orange;
 }
 
+form{
+	.error{
+		background:initial;
+		color:initial;
+		border-color:#cd1d00;
+	}
+	input[type="file"].error{
+		color:#cd1d00;
+	}
+	.select2-container.error{
+		.select2-choices{
+			border-color:#cd1d00 $i;
+		}
+	}
+}
+
 .dinnerform{
 	h1{
 		margin-top:0;
@@ -1880,5 +1896,19 @@ table.dinners{
 
 	.recipe-detail.fixed .detailheader{
 		position:absolute;
+	}
+
+	.recipeindex{
+
+		.header{
+			position:absolute;
+			top:0;
+			left:0;
+			width:100%;
+			z-index:500;
+		}
+		.newestrecipes{
+			height:100%;
+		}
 	}
 }

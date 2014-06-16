@@ -5,7 +5,7 @@
 	<title>{% block title %}Chaw: Social Dinners & Recepten{% endblock %}</title>
 	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400%7cAveria+Libre' rel='stylesheet' type='text/css'>
 	{% block head %}{% endblock %}
-	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css?v1.12') }}">
+	<link rel="stylesheet" href="{{ asset('bundles/design311website/style.css?v1.13.2') }}">
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/print.css?v1.3') }}" media="print">
 	<link rel="stylesheet" href="{{ asset('bundles/design311website/js/tipsy/jquery.tipsy.css') }}">
 	<link rel="icon" href="{{ asset('bundles/design311website/img/favicon.ico') }}" type="image/x-icon" />
@@ -115,6 +115,7 @@
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="{{ asset('bundles/design311website/js/tipsy/jquery.tipsy.min.js') }}"></script>
+	<script src="{{ asset('bundles/design311website/js/jquery-validate/jquery.validate.min.js') }}"></script>
 	{% block footer %}{% endblock %}
 	<script>var loginpage = "{{path('design311website_login_required', {'auth': 'auth'})}}"</script>
 	<script src="{{ asset('bundles/design311website/js/script.js?v1.2') }}"></script>

@@ -1883,6 +1883,15 @@ table.dinners {
 .orange {
   color: #ff5c23; }
 
+form .error {
+  background: initial;
+  color: initial;
+  border-color: #cd1d00; }
+form input[type="file"].error {
+  color: #cd1d00; }
+form .select2-container.error .select2-choices {
+  border-color: #cd1d00 !important; }
+
 .dinnerform h1 {
   margin-top: 0;
   line-height: 1; }
@@ -2434,4 +2443,13 @@ table.dinners {
     display: block; }
 
   .recipe-detail.fixed .detailheader {
-    position: absolute; } }
+    position: absolute; }
+
+  .recipeindex .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 500; }
+  .recipeindex .newestrecipes {
+    height: 100%; } }

@@ -21,7 +21,7 @@
 		</div>
 	{% endif %}
 	<div class="clear"></div>
-	{{ form_start(form) }}
+	{{ form_start(form, {'attr':{'autocomplete':'off'}} ) }}
 		<div class="onehalf">
 			{{form_row(form.title)}}
 			<div>
