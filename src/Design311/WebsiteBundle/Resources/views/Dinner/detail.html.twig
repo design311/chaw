@@ -40,7 +40,7 @@
 					{% endif %}
 					<li>Maximum aantal personen: {{dinner.maxInvitees}}</li>
 					<li itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">Prijs: <span itemprop="lowprice">€{{dinner.price}}</span></li>
-					<li>Datum: <span itemprop="startDate" content="{{dinner.date|date('d-m-Y\TH:i:sO')}}">{{dinner.date | date("m/d/Y") }}</span></li>
+					<li>Datum: <span itemprop="startDate" content="{{dinner.date|date('m-d-Y\TH:i:sO')}}">{{dinner.date | date("d/m/Y") }}</span></li>
 					<li>Tijdstip: {{dinner.date | date("G:i") }} uur</li>
 					<li>Adres:<br><span itemprop="location" itemscope itemtype="http://schema.org/PostalAddress">
 						<span itemprop="streetAddress">{{dinner.address.street}}{% if app.user in dinner.participants or app.user == dinner.user %} {{dinner.address.number}}{% endif %}</span><br>

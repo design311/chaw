@@ -35,7 +35,7 @@
 				<strong class="usernameexists"></strong>
 				{{form_errors(form.username) }}
 				{{form_widget(form.username) }}
-				<p class="inputinfo">Gebruik enkel kleine letters, cijfers en - voor je gebruikersnaam</p>
+				<p class="inputinfo">Gebruik enkel kleine letters, cijfers en - voor je gebruikersnaam, gebruik geen spaties.</p>
 			</div>
 		{{ form_end(form) }}
 	</div>
@@ -51,6 +51,12 @@
     		var username = $.trim($('#userregister_username').val().toLowerCase());
     		$('#userregister_username').val(username);
 
+    		if(/^[a-z0-9-]*$/.test(username) == false) {
+				$('#userregister_submit').prop('disabled', true);
+				$('.usernameexists').text('(niet geldig)').addClass('red').removeClass('green');
+				return false;
+			}
+
     		if (username != '') {
 	    		$.ajax({	
 					url: "{{path('design311website_ajax_username_exists')}}",
@@ -64,7 +70,7 @@
 						}
 						else{
 							$('#userregister_submit').prop('disabled', false);
-							$('.usernameexists').text('('+username + ' is beschikbaar)').addClass('green').removeClass('red');
+							$('.usernameexists').text('(\''+username + '\' is beschikbaar)').addClass('green').removeClass('red');
 						}
 					}
 				});

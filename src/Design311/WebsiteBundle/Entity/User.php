@@ -145,7 +145,7 @@ class User implements UserInterface
     private $avatar = 'default.png';
 
     /**
-     * @Assert\File(maxSize="1M")
+     * @Assert\File(maxSize="4M")
      */
     private $file;
 
