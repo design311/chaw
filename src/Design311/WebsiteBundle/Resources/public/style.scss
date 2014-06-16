@@ -617,6 +617,12 @@ button, input[type="submit"]{
 .newestrecipes{
 	h1{
 		margin-top:0;
+		white-space:nowrap;
+		text-overflow:ellipsis;
+		overflow:hidden;
+	}
+	.fl{
+		width:100%;
 	}
 	.flexslider{
 		height:100%;
@@ -778,9 +784,6 @@ button, input[type="submit"]{
 	h1{
 		margin-bottom:10px;
 		line-height:1;
-		white-space:nowrap;
-		text-overflow:ellipsis;
-		overflow:hidden;
 	}
 	.fl{
 		width:100%;
@@ -1730,6 +1733,8 @@ form{
 	.container{
 		width:100%;
 		padding:20px;
+		padding-right:20px $i;
+		padding-left:20px $i;
 	}
 
 	.header{
@@ -1910,5 +1915,20 @@ form{
 		.newestrecipes{
 			height:100%;
 		}
+	}
+
+	.homerecipe{
+		width:100%;
+		img{
+			width:100%;
+		}
+		&.middle{
+			margin:0;
+		}
+	}
+
+	.recipeblock{
+		width:100%;
+		padding:0 $i;
 	}
 }

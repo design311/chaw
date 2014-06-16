@@ -1535,7 +1535,12 @@ a {
   height: 60%; }
 
 .newestrecipes h1 {
-  margin-top: 0; }
+  margin-top: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; }
+.newestrecipes .fl {
+  width: 100%; }
 .newestrecipes .flexslider {
   height: 100%; }
 .newestrecipes .flex-control-nav {
@@ -1665,10 +1670,7 @@ a {
     cursor: pointer; }
   .detailheader h1 {
     margin-bottom: 10px;
-    line-height: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden; }
+    line-height: 1; }
   .detailheader .fl {
     width: 100%; }
 
@@ -2332,7 +2334,9 @@ form .select2-container.error .select2-choices {
 @media screen and (max-width: 960px) {
   .container, .newestrecipes .flex-control-nav {
     width: 100%;
-    padding: 20px; }
+    padding: 20px;
+    padding-right: 20px !important;
+    padding-left: 20px !important; }
 
   .header .container, .header .newestrecipes .flex-control-nav, .newestrecipes .header .flex-control-nav {
     padding: 0 20px !important; }
@@ -2452,4 +2456,15 @@ form .select2-container.error .select2-choices {
     width: 100%;
     z-index: 500; }
   .recipeindex .newestrecipes {
-    height: 100%; } }
+    height: 100%; }
+
+  .homerecipe {
+    width: 100%; }
+    .homerecipe img {
+      width: 100%; }
+    .homerecipe.middle {
+      margin: 0; }
+
+  .recipeblock {
+    width: 100%;
+    padding: 0 !important; } }
