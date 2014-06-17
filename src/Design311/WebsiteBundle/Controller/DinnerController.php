@@ -14,7 +14,6 @@ use Design311\WebsiteBundle\Entity\Address;
 use Design311\WebsiteBundle\Entity\DinnerParticipantRequest;
 use Design311\WebsiteBundle\Entity\DinnerInvite;
 
-
 class DinnerController extends BaseController
 {
     private function getDinnersJson($dinners){
@@ -166,7 +165,7 @@ class DinnerController extends BaseController
         $dinner = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Dinner')->findOneByPermalink($permalink);
         
         if ($this->getUser() != $dinner->getUser()) {
-            $this->get('session')->getFlashBag()->add('error','Dit is niet jouw diner');
+            $this->get('session')->getFlashBag()->add('error','Dit is niet jouw dinner');
             return $this->redirect($this->generateUrl('design311website_dinners_detail', array('permalink' => $dinner->getPermalink()) ));
         }
 

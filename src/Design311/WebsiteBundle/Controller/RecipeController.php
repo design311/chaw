@@ -184,7 +184,7 @@ class RecipeController extends BaseController
             ));
         $form->handleRequest($request);
     
-        $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
+        $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findBy(array(), array('name' => 'ASC'));
 
         if ($form->isValid()) {
 
@@ -254,7 +254,7 @@ class RecipeController extends BaseController
             ));
         $form->handleRequest($request);
     
-        $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findAll();
+        $currentIngredients = $this->getDoctrine()->getRepository('Design311WebsiteBundle:Ingredient')->findBy(array(), array('name' => 'ASC'));
 
         if ($form->isValid()) {
 

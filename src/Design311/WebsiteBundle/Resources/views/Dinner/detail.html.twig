@@ -1,7 +1,7 @@
 {% extends 'Design311WebsiteBundle::layout.html.twig' %}
 
 {% block title %}{{ (dinner.title ~ ' - Social Dinner')|truncate(55) }}{% endblock %}
-{% block description %}{{ ('Social dinner bij ' ~ dinner.user.displayName ~ ': ' ~ dinner.menu ~ ' Geniet van een heerlijk diner en ontmoet nieuwe mensen via social dining')|truncate(150) }}{% endblock %}
+{% block description %}{{ ('Social dinner bij ' ~ dinner.user.displayName ~ ': ' ~ dinner.menu ~ ' Geniet van een heerlijk dinner en ontmoet nieuwe mensen via social dining')|truncate(150) }}{% endblock %}
 
 {% block ogimage %}{% spaceless %}   
 	{% if dinner.photos.0 is defined %}
@@ -85,13 +85,13 @@
 		<div class="two-third main">
 			<h1 itemprop="name">{{dinner.title}}</h1>
 			{% if dinner.date < date() %}
-				<p class="message notice">Dit diner is al gepasseerd, <a href="{{path('design311website_dinners')}}">zoek snel een nieuw diner</a>.</p>
+				<p class="message notice">Dit dinner is al gepasseerd, <a href="{{path('design311website_dinners')}}">zoek snel een nieuw dinner</a>.</p>
 			{% else %}
 				{% if dinner.inviteonly == true %}
-				    <p class="message notice">Dit diner is enkel op uitnodiging, <a href="{{path('design311website_dinners')}}">zoek snel een ander diner</a>.</p>
+				    <p class="message notice">Dit dinner is enkel op uitnodiging, <a href="{{path('design311website_dinners')}}">zoek snel een ander dinner</a>.</p>
 				{% else %}
 				    {% if dinner.participants|length == dinner.maxInvitees %}
-						<p class="message notice">Dit diner is volgeboekt, <a href="{{path('design311website_dinners')}}">zoek snel een nieuw diner</a>.</p>
+						<p class="message notice">Dit dinner is volgeboekt, <a href="{{path('design311website_dinners')}}">zoek snel een nieuw dinner</a>.</p>
 				    {% endif %}
 				{% endif %}
 			{% endif %}
@@ -108,17 +108,17 @@
 
 			{% if dinner.date < date() %}
 				<h2>Deelnemen</h2>
-				<p class="message notice">Deelnemen is niet meer mogelijk, dit diner is al gepasseerd, <a href="{{path('design311website_dinners')}}">zoek snel een nieuw diner</a>.</p>
+				<p class="message notice">Deelnemen is niet meer mogelijk, dit dinner is al gepasseerd, <a href="{{path('design311website_dinners')}}">zoek snel een nieuw dinner</a>.</p>
 			{% else %}
 
 				{% if dinner.inviteonly == true %}
 					<h2>Deelnemen</h2>
-					<p class="message notice">Deelnemen is niet mogelijk, dit diner is enkel op uitnodiging, <a href="{{path('design311website_dinners')}}">zoek snel een ander diner</a>.</p>
+					<p class="message notice">Deelnemen is niet mogelijk, dit dinner is enkel op uitnodiging, <a href="{{path('design311website_dinners')}}">zoek snel een ander dinner</a>.</p>
 				{% else %}
 
 					{% if dinner.participants|length == dinner.maxInvitees %}
 						<h2>Deelnemen</h2>
-						<p class="message notice">Dit diner is volgeboekt, deelnemen is niet meer mogelijk. <a href="{{path('design311website_dinners')}}">Zoek snel een nieuw diner</a>.</p>
+						<p class="message notice">Dit dinner is volgeboekt, deelnemen is niet meer mogelijk. <a href="{{path('design311website_dinners')}}">Zoek snel een nieuw dinner</a>.</p>
 					{% else %}
 						{% if app.user %}
 
