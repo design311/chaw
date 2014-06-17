@@ -105,7 +105,7 @@ design311website_recepten_zoeken_info:
     defaults: { _controller: Design311WebsiteBundle:Recipe:searchInfo }
 
 design311website_recepten_shoppinglist:
-    path:     /recepten/shoppinglist/
+    path:     /recepten/winkellijstje/
     defaults: { _controller: Design311WebsiteBundle:Recipe:shoppinglist }
 
 design311website_recepten_zoeken:

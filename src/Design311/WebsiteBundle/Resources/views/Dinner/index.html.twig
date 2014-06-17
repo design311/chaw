@@ -432,16 +432,6 @@
 			var currentMonth = new Date(today);
 			updateCalendar(currentMonth);
 
-			/*function updateCalendarEvents(){
-				$('#calendar td.event').removeClass('event');
-				$.each(eventDates, function(i, event) {
-					event = new Date(event);
-					if (event.getMonth() == currentMonth.getMonth()) {
-						$('#day-'+event.getDate()).addClass('event');
-					};
-				});
-			}*/
-
 			function updateCalendar(currentMonth){
 				$('#current_month').text(months[currentMonth.getMonth()]);
 				$('#current_year').text(currentMonth.getFullYear());
@@ -496,7 +486,6 @@
 				table += '</tr>';
 
 				$('#calendar tbody').append(table);
-				//updateCalendarEvents();
 			}
 
 

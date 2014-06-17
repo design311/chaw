@@ -11,7 +11,6 @@ use Design311\WebsiteBundle\Form\Type\RecipeType;
 use Design311\WebsiteBundle\Form\Type\SearchRecipeType;
 use Design311\WebsiteBundle\Entity\Recipe;
 
-
 class RecipeController extends BaseController
 {
     private function searchRecipeForm(){
@@ -179,6 +178,7 @@ class RecipeController extends BaseController
 
     public function addAction(Request $request)
     {
+
         $form = $this->createForm(new RecipeType(), new Recipe(), array(
             'action' => $this->generateUrl('design311website_recepten_add')
             ));
@@ -207,6 +207,8 @@ class RecipeController extends BaseController
             
             $recipe->setUser($this->getUser());
             $recipe->setPermalink($this->getPermalink($recipe->getTitle(), 'Recipe'));
+
+            $this->tweet($recipe);
 
             $em->persist($recipe);
             $em->flush();
@@ -432,13 +434,6 @@ class RecipeController extends BaseController
             $total += $number;
         }
 
-        //echo ((strlen((int)$total) + 1) / 3);die;
-        /*  if (strlen((int)$total) > 5) {
-            if (array_key_exists(1000, $this->units[$unittype])) {
-                $total = $total / 1000 . $this->units[$unittype][1000][0];
-            }
-        }*/
-
         if ($unittype) {
             return $total . $this->units[$unittype][1][0];
         }
@@ -468,5 +463,64 @@ class RecipeController extends BaseController
             $number .= $part;
         }
         return array($number, $unit);
+    }
+
+    private function tweet($recipe){
+        require_once($this->get('kernel')->getRootDir().'/../vendor/j7mbo/twitter-api-php/TwitterAPIExchange.php');
+        // Set access tokens here - see: https://dev.twitter.com/apps/
+        $settings = array(
+            'oauth_access_token' => "1632021078-rFYdZx5QK4HuxXEEakGc0KutVLbcUyDQ5hhY7TQ",
+            'oauth_access_token_secret' => "wel1nxjHtbYpZPdODfR6bedSz9zsxDOSm1FIptbwxORap",
+            'consumer_key' => "FMuDzf4f2CLBM9tKJCZeAoXHz",
+            'consumer_secret' => "eaS0d1l3XfVN8lgvcRAMhETXZWopB3K1cC3TOWU8BpzHnAnsVG"
+        );
+
+        // URL for REST request, see: https://dev.twitter.com/docs/api/1.1/ 
+        $url = 'https://api.twitter.com/1.1/statuses/update.json';
+        $requestMethod = 'POST';
+
+        $chars = 140 - 26; // url + space
+        $chars -= 14; // Nieuw recept
+
+        $tweet = 'Nieuw recept: ';
+        $title = $recipe->getTitle();
+        $diet = $recipe->getDiet();
+        $category = $recipe->getCategory();
+
+        if (strlen($title) < $chars) {
+            $tweet .= $title;
+            $chars -= strlen($title);
+            $tweet .= ' ' . $this->generateUrl('design311website_recepten_detail', array('category' => strtolower($recipe->getCategory()->getPlural()), 'permalink' => $recipe->getPermalink()), true );
+
+            if (strlen($diet) + 1 < $chars) {
+                $tweet .= ' #'.strtolower($diet);
+                $chars -= strlen($diet) + 2;
+            }
+            if (strlen(' #recept') < $chars) {
+                $tweet .= ' #recept';
+                $chars -= strlen(' #recept');
+            }
+            if (strlen($category) + 1 < $chars) {
+                $tweet .= ' #'.strtolower($category);
+                $chars -= strlen($category) + 2;
+            }
+        }
+        else{
+            $tweet .= substr($title, 0, $chars-3) . '...';
+            $tweet .= ' ' . $this->generateUrl('design311website_recepten_detail', array('category' => strtolower($recipe->getCategory()->getPlural()), 'permalink' => $recipe->getPermalink()), true );
+        }
+
+        // POST fields required by the URL above. See relevant docs as above 
+        $postfields = array(
+            'status' => $tweet 
+        );
+
+        // Perform the request and echo the response **
+        $twitter = new \TwitterAPI\TwitterAPIExchange($settings);
+
+
+        $status = $twitter->buildOauth($url, $requestMethod)
+                     ->setPostfields($postfields)
+                     ->performRequest();
     }
 }

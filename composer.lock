@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9edcc604e05b37187b2a1d409b6027da",
+    "hash": "cf721b6ef41d4d858567abbcd3cfb366",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -871,6 +871,45 @@
                 "password"
             ],
             "time": "2013-04-30 19:58:08"
+        },
+        {
+            "name": "j7mbo/twitter-api-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/J7mbo/twitter-api-php.git",
+                "reference": "ab76f1c1e6bf83f0a257216cbaf9932b7cc19a3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/J7mbo/twitter-api-php/zipball/ab76f1c1e6bf83f0a257216cbaf9932b7cc19a3f",
+                "reference": "ab76f1c1e6bf83f0a257216cbaf9932b7cc19a3f",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "TwitterAPIExchange.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GNU Public License"
+            ],
+            "authors": [
+                {
+                    "name": "James Mallison",
+                    "homepage": "https://github.com/j7mbo/twitter-api-php"
+                }
+            ],
+            "description": "Simple PHP Wrapper for Twitter API v1.1 calls",
+            "homepage": "https://github.com/j7mbo/twitter-api-php",
+            "keywords": [
+                "api",
+                "php",
+                "twitter"
+            ],
+            "time": "2013-10-03 10:04:59"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -2552,7 +2591,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "knplabs/knp-markdown-bundle": 20,
-        "presta/sitemap-bundle": 20
+        "presta/sitemap-bundle": 20,
+        "j7mbo/twitter-api-php": 20
     },
     "platform": {
         "php": ">=5.3.3"

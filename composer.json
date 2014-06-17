@@ -24,7 +24,8 @@
         "raulfraile/ladybug-bundle": "~1.0",
         "knplabs/knp-markdown-bundle": "1.2.*@dev",
         "avalanche123/imagine-bundle": "v2.1",
-        "presta/sitemap-bundle": "dev-master"
+        "presta/sitemap-bundle": "dev-master",
+        "j7mbo/twitter-api-php": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
